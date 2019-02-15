@@ -1,4 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
+import uiConst from "./const/uiConst";
 
 const theme = createMuiTheme({
     palette: {
@@ -6,7 +7,7 @@ const theme = createMuiTheme({
             light: '#595a5f',
             main: '#3f4045',
             dark: '#2a2b2f',
-            contrastText: '#fff',
+            contrastText: "#fffff"
         }
     },
 
@@ -15,16 +16,13 @@ const theme = createMuiTheme({
     },
     overrides: {
         MuiAppBar: {
-            palette: {
-                primary: "#2a2b2f",
-            },
             root: {
                 backgroundColor: "#2a2b2f",
                 color: "#ffffff",
-                height: "24px",
-                minHeight: "24px",
+                height: uiConst.TOP_MENU_SIZE + "px",
+                minHeight: uiConst.TOP_MENU_SIZE + "px",
                 "@media (min-width: 600px)": {
-                    minHeight: "24px"
+                    minHeight: uiConst.TOP_MENU_SIZE + "px"
                 },
                 boxShadow: "none"
             }

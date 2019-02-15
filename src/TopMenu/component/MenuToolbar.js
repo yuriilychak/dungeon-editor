@@ -1,5 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from "@material-ui/core/Toolbar";
+import uiConst from "../../const/uiConst";
 
 const padding = 8;
 
@@ -7,10 +8,10 @@ const MenuToolbar = withStyles({
     root: {
         paddingLeft: padding + "px",
         paddingRight: padding + "px",
-        height: "24px",
-        minHeight: "24px",
+        height: uiConst.TOP_MENU_SIZE + "px",
+        minHeight: uiConst.TOP_MENU_SIZE + "px",
         "@media (min-width: 600px)": {
-            minHeight: "24px"
+            minHeight: uiConst.TOP_MENU_SIZE + "px"
         }
     }
 })(Toolbar);
