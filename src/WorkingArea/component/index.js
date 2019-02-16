@@ -6,7 +6,10 @@ const styles = {
     root: {
         textAlign: 'center',
         height: "100%",
-        width: "100%"
+        width: "100%",
+        boxShadow: "none",
+        backgroundColor: "#181818",
+        borderRadius: "0"
     }
 };
 

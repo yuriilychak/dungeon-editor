@@ -1,3 +1,3 @@
 export default {
-    TOP_MENU_SIZE: 24
+    TOP_MENU_HEIGHT: 24
 };

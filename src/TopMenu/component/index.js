@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
-import MenuToolbar from "./MenuToolbar";
-import AppBar from '@material-ui/core/AppBar';
-import MenuButton from "./MenuButton";
+import Toolbar from "./Toolbar";
+import AppBar from "./AppBar";
+import Button from "./Button";
+
+
 
 export default class TopMenu extends Component {
     render() {
         return (
             <AppBar position="static">
-                <MenuToolbar>
-                    <MenuButton>File</MenuButton>
-                    <MenuButton>Edit</MenuButton>
-                </MenuToolbar>
+                <Toolbar>
+                    <Button>File</Button>
+                    <Button>Edit</Button>
+                </Toolbar>
             </AppBar>
         );
     }

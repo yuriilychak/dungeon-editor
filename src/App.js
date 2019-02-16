@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import WorkingArea from "./WorkingArea/component";
 import uiConst from "./const/uiConst";
+import BottomMenu from "./BottomMenu/component";
+import RightMenu from "./RightMenu/component";
 
 const styles = theme => ({
     root: {
@@ -17,7 +19,7 @@ const styles = theme => ({
     },
     grid: {
         flexGrow: 1,
-        height: "calc(100% - " + uiConst.TOP_MENU_SIZE + "px)"
+        height: "calc(100% - " + uiConst.TOP_MENU_HEIGHT + "px)"
     },
     fullHeight: {
         height: "100%"
@@ -50,7 +52,7 @@ class App extends Component {
   render() {
       const { classes } = this.props;
       const { t } = this.props;
-
+      //<h2>{t('Welcome to React')}</h2>
       return (
           <MuiThemeProvider theme={theme}>
               <div className={classes.root}>
@@ -62,12 +64,12 @@ class App extends Component {
                                   <WorkingArea/>
                               </div>
                               <div className={classes.bottomMenu}>
-                                  bottom Panel
+                                  <BottomMenu/>
                               </div>
                           </Grid>
                           <Grid item xs={2} className={classes.rightColumn}>
-                              right panel
-                              <h2>{t('Welcome to React')}</h2>
+                              <RightMenu/>
+
                           </Grid>
                       </Grid>
                   </div>
