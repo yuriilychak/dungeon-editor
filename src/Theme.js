@@ -13,6 +13,7 @@ const theme = createMuiTheme({
 
     typography: {
         useNextVariants: true,
+        fontFamily: "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
     },
     overrides: {
         MuiAppBar: {
