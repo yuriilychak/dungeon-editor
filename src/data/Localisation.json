@@ -1,0 +1,19 @@
+{
+  "resources": {
+    "en": {
+      "translation": {
+        "TopMenu_File": "File",
+        "TopMenu_Edit": "Edit",
+        "TopMenu_View": "View",
+        "TopMenu_Help": "Help",
+        "TopMenu_Window": "window"
+      }
+    }
+  },
+  "lng": "en",
+  "fallbackLng": "en",
+
+  "interpolation": {
+    "escapeValue": false
+  }
+}

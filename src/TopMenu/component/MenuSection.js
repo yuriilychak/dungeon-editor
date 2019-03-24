@@ -7,23 +7,13 @@ import MenuItem from './MenuItem';
 import MenuList from './MenuList';
 import MenuBackground from "./MenuBackground";
 
-export default class MenuSection extends Component {
-    state = {
-        open: false,
-    };
+import { withTranslation } from 'react-i18next';
 
-    constructor(props) {
-        super(props);
-
-
-        this._onOpen = this._onOpen.bind(this);
-        this._onClose = this._onClose.bind(this);
-    }
-
-
+class MenuSection extends Component {
     render() {
-        const {open} = this.state;
-        const {title} = this.props;
+        const {titleLocale, t, onOpen, onClose, isOpen} = this.props;
+
+        console.log("render");
 
         return (
             <div>
@@ -31,15 +21,15 @@ export default class MenuSection extends Component {
                     buttonRef={node => {
                         this.anchorEl = node;
                     }}
-                    aria-owns={open ? 'menu-list-grow' : undefined}
+                    aria-owns={isOpen ? 'menu-list-grow' : undefined}
                     aria-haspopup="true"
-                    onClick={this._onOpen}
+                    onClick={onOpen}
                 >
-                   {title}
+                   {t(titleLocale)}
                 </Button>
                 <Popper
                     placement="bottom-start"
-                    open={open} anchorEl={this.anchorEl} transition disablePortal>
+                    open={isOpen} anchorEl={this.anchorEl} transition disablePortal>
                     {({ TransitionProps, placement }) => (
                         <Grow
                             {...TransitionProps}
@@ -47,11 +37,11 @@ export default class MenuSection extends Component {
                             style={{ transformOrigin: placement === 'bottom' ? 'left top' : 'left bottom' }}
                         >
                             <MenuBackground>
-                                <ClickAwayListener onClickAway={this._onClose}>
+                                <ClickAwayListener onClickAway={onClose}>
                                     <MenuList>
-                                        <MenuItem onClick={this._onClose}>Profile</MenuItem>
-                                        <MenuItem onClick={this._onClose}>My account</MenuItem>
-                                        <MenuItem onClick={this._onClose}>Logout</MenuItem>
+                                        <MenuItem onClick={onClose}>Profile</MenuItem>
+                                        <MenuItem onClick={onClose}>My account</MenuItem>
+                                        <MenuItem onClick={onClose}>Logout</MenuItem>
                                     </MenuList>
                                 </ClickAwayListener>
                             </MenuBackground>
@@ -62,21 +52,10 @@ export default class MenuSection extends Component {
         );
     }
 
-    /**
-     * @method
-     * @private
-     */
-
-    _onOpen() {
-        this.setState({ open: true });
-    }
-
-    /**
-     * @method
-     * @private
-     */
-
-    _onClose() {
-        this.setState({ open: false });
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return this.props.isOpen !== nextProps.isOpen;
     }
 }
+
+
+export default withTranslation()(MenuSection);

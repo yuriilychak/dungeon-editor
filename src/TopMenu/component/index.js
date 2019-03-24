@@ -1,17 +1,24 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Toolbar from "./Toolbar";
 import AppBar from "./AppBar";
 import MenuSection from "./MenuSection";
 
-export default class TopMenu extends Component {
-    render() {
-        return (
-            <AppBar position="static">
-                <Toolbar>
-                    <MenuSection title={"File"}/>
-                    <MenuSection title={"Edit"}/>
-                </Toolbar>
-            </AppBar>
-        );
-    }
+export default (props) => {
+    const {staticData, onOpenTab, onCloseTab, openMenu} = props;
+    const {sections} = staticData;
+
+    const tabs = sections.map(section => <MenuSection
+        {...section}
+        onOpen={()=> onOpenTab(section.key)}
+        onClose={onCloseTab}
+        isOpen={section.key === openMenu}
+    />);
+
+    return (
+        <AppBar position="static">
+            <Toolbar>
+                {tabs}
+            </Toolbar>
+        </AppBar>
+    );
 }

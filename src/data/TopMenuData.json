@@ -1,0 +1,24 @@
+{
+    "sections": [
+      {
+        "key": 1,
+        "titleLocale": "TopMenu_File"
+      },
+      {
+        "key": 2,
+        "titleLocale": "TopMenu_Edit"
+      },
+      {
+        "key": 3,
+        "titleLocale": "TopMenu_View"
+      },
+      {
+        "key": 4,
+        "titleLocale": "TopMenu_Window"
+      },
+      {
+        "key": 5,
+        "titleLocale": "TopMenu_Help"
+      }
+    ]
+}

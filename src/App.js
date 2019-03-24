@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import TopMenu from "./TopMenu/component";
+import ConTopMenu from "./TopMenu/container";
 
-import { withTranslation } from "react-i18next";
 import theme from "./Theme";
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import WorkingArea from "./WorkingArea/component";
 import uiConst from "./const/uiConst";
@@ -51,12 +49,11 @@ class App extends Component {
 
   render() {
       const { classes } = this.props;
-      const { t } = this.props;
-      //<h2>{t('Welcome to React')}</h2>
+
       return (
           <MuiThemeProvider theme={theme}>
               <div className={classes.root}>
-                  <TopMenu/>
+                  <ConTopMenu/>
                   <div className={classes.grid}>
                       <Grid container className={classes.fullHeight}>
                           <Grid item xs={10} className={classes.leftColumn}>
@@ -69,7 +66,6 @@ class App extends Component {
                           </Grid>
                           <Grid item xs={2} className={classes.rightColumn}>
                               <RightMenu/>
-
                           </Grid>
                       </Grid>
                   </div>
@@ -79,4 +75,4 @@ class App extends Component {
   }
 }
 
-export default withTranslation()(withStyles(styles)(App));
+export default withStyles(styles)(App);
