@@ -1,24 +1,54 @@
 {
-    "sections": [
+    "tabs": [
       {
         "key": 1,
-        "titleLocale": "TopMenu_File"
+        "locale": "TopMenu_File",
+        "sections": [
+          {
+            "id": 0,
+            "locale": "TopMenu_NewProject"
+          },
+          {
+            "id": 1,
+            "locale": "TopMenu_OpenProject"
+          },
+          {
+            "id": 2,
+            "locale": "TopMenu_SaveAll"
+          },
+          {
+            "id": 3,
+            "locale": "TopMenu_SaveAll"
+          },
+          {
+            "id": 4,
+            "locale": "TopMenu_Export"
+          },
+          {
+            "id": 5,
+            "locale": "TopMenu_Settings"
+          },
+          {
+            "id": 6,
+            "locale": "TopMenu_Quit"
+          }
+        ]
       },
       {
         "key": 2,
-        "titleLocale": "TopMenu_Edit"
+        "locale": "TopMenu_Edit"
       },
       {
         "key": 3,
-        "titleLocale": "TopMenu_View"
+        "locale": "TopMenu_View"
       },
       {
         "key": 4,
-        "titleLocale": "TopMenu_Window"
+        "locale": "TopMenu_Window"
       },
       {
         "key": 5,
-        "titleLocale": "TopMenu_Help"
+        "locale": "TopMenu_Help"
       }
     ]
 }

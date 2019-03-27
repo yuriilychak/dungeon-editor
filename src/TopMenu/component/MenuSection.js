@@ -11,25 +11,25 @@ import { withTranslation } from 'react-i18next';
 
 class MenuSection extends Component {
     render() {
-        const {titleLocale, t, onOpen, onClose, isOpen} = this.props;
+        const {locale, t, onOpen, onClose, isOpen} = this.props;
 
-        console.log("render");
+        let anchorElement = null;
 
         return (
             <div>
                 <Button
                     buttonRef={node => {
-                        this.anchorEl = node;
+                        anchorElement = node;
                     }}
                     aria-owns={isOpen ? 'menu-list-grow' : undefined}
                     aria-haspopup="true"
                     onClick={onOpen}
                 >
-                   {t(titleLocale)}
+                   {t(locale)}
                 </Button>
                 <Popper
                     placement="bottom-start"
-                    open={isOpen} anchorEl={this.anchorEl} transition disablePortal>
+                    open={isOpen} anchorEl={anchorElement} transition disablePortal>
                     {({ TransitionProps, placement }) => (
                         <Grow
                             {...TransitionProps}
