@@ -12,12 +12,15 @@ import { withTranslation } from 'react-i18next';
 const MenuSection = props => {
     const {locale, t, onOpen, onClose, onSelectSection, isOpen, sections, id, toggledSections} = props;
     let anchorElement = null;
-    const sectionComponents = sections.map(section => <MenuItem
-        onClick={ onSelectSection }
-        key={section.id}
-        isSelected={section.isToggle && toggledSections && toggledSections.includes(section.id)}
-        {...section}
-    />);
+    const sectionComponents = sections.map(section => (
+        <MenuItem
+            onClick={ onSelectSection }
+            key={section.id}
+            isSelected={section.isToggle && toggledSections && toggledSections.includes(section.id)}
+            {...section}
+        />)
+    );
+    const growId = "menu-list-grow";
 
     return (
         <div>
@@ -25,7 +28,7 @@ const MenuSection = props => {
                 buttonRef={node => {
                     anchorElement = node;
                 }}
-                aria-owns={isOpen ? 'menu-list-grow' : undefined}
+                aria-owns={isOpen ? growId : undefined}
                 aria-haspopup="true"
                 onClick={() => { onOpen(id) }}
             >
@@ -33,12 +36,15 @@ const MenuSection = props => {
             </Button>
             <Popper
                 placement="bottom-start"
-                open={isOpen} anchorEl={anchorElement} transition disablePortal>
-                {({ TransitionProps, placement }) => (
+                open={isOpen}
+                anchorEl={anchorElement}
+                transition disablePortal
+            >
+                {({ TransitionProps }) => (
                     <Grow
                         {...TransitionProps}
-                        id="menu-list-grow"
-                        style={{ transformOrigin: placement === 'bottom' ? 'left top' : 'left bottom' }}
+                        id={growId}
+                        style={{ transformOrigin: 'left bottom' }}
                     >
                         <MenuBackground>
                             <ClickAwayListener onClickAway={onClose}>

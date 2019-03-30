@@ -19,5 +19,6 @@ export default {
     NEW_GUIDES: 13,
     CLEAR_GUIDES: 14,
     HELP: 15,
-    ABOUT: 16
+    ABOUT: 16,
+    PUBLISH: 17
 }

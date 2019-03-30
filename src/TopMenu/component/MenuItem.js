@@ -48,20 +48,24 @@ const rightRowStyle = {
 
 const Icon = withStyles(iconStyle)(Check);
 const Item = withStyles(menuItemStyles)(MenuItem);
-const LeftRow = withStyles(leftRowStyle)(props => <div className={props.classes.root}>{props.children}</div>);
-const RightRow = withStyles(rightRowStyle)(props => <div className={props.classes.root}>{props.children}</div>);
+const createRow = style => withStyles(style)(props => <div className={props.classes.root}>{props.children}</div>);
+const LeftRow = createRow(leftRowStyle);
+const RightRow = createRow(rightRowStyle);
 const EmptyIcon = () => (<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>);
 
 const Element = props => {
     const { onClick, id, t, locale, hotKey, isSelected} = props;
-    return <Item onClick={() => { onClick(id) }}>
-        <LeftRow>
-            {isSelected ? <Icon/> : <EmptyIcon/>}
-            {t(locale)}
-        </LeftRow>
-        <RightRow>{hotKey}</RightRow>
-    </Item>
+
+    return (
+        <Item onClick={() => { onClick(id) }}>
+            <LeftRow>
+                {isSelected ? <Icon/> : <EmptyIcon/>}
+                {t(locale)}
+            </LeftRow>
+            <RightRow>{hotKey}</RightRow>
+        </Item>
+    )
 };
 
 
-export default memo(withTranslation()(Element));
+export default withTranslation()(memo(Element));

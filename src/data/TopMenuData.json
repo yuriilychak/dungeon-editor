@@ -30,6 +30,12 @@
             "isToggle": false
           },
           {
+            "id": 17,
+            "locale": "TopMenu_Publish",
+            "hotKey": "Ctr+P",
+            "isToggle": false
+          },
+          {
             "id": 4,
             "locale": "TopMenu_Quit",
             "hotKey": "Ctr+Q",
@@ -95,7 +101,7 @@
             "id": 12,
             "locale": "TopMenu_LockGuides",
             "hotKey": "",
-            "isToggle": false
+            "isToggle": true
           },
           {
             "id": 13,

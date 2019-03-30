@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 import { openTab,  closeTab, selectToggle } from '../action';
 import TopMenu from "../component";
 
+import SUBSECTIONS from "../enum/Subsection";
+
 const mapStateToProps = (state) => {
     return {
         ...state.topMenu
@@ -17,6 +19,15 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(closeTab());
         },
         onSelectSection: id => {
+
+            switch (id) {
+                case SUBSECTIONS.QUIT: {
+                    window.close();
+                    break;
+                }
+                default: {
+                }
+            }
             dispatch(selectToggle(id));
             //dispatch(closeTab());
         }

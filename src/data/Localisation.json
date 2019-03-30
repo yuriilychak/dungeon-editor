@@ -10,7 +10,7 @@
         "TopMenu_NewProject": "New project",
         "TopMenu_OpenProject": "Open project",
         "TopMenu_SaveAll": "Save all",
-        "TopMenu_Export": "Export",
+        "TopMenu_Export": "Export project",
         "TopMenu_Quit": "Quit",
         "TopMenu_Undo": "Undo",
         "TopMenu_Redo": "Redo",
@@ -22,7 +22,8 @@
         "TopMenu_LockGuides": "Lock guides",
         "TopMenu_NewGuides": "New guides",
         "TopMenu_ClearGuides": "Clear guides",
-        "TopMenu_About": "About"
+        "TopMenu_About": "About",
+        "TopMenu_Publish": "Publish"
       }
     }
   },
