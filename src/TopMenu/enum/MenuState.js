@@ -7,6 +7,5 @@ export default {
     FILE: 1,
     EDIT: 2,
     VIEW: 3,
-    HELP: 4,
-    WINDOW: 5
+    HELP: 4
 }

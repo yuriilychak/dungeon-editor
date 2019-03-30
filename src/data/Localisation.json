@@ -6,7 +6,23 @@
         "TopMenu_Edit": "Edit",
         "TopMenu_View": "View",
         "TopMenu_Help": "Help",
-        "TopMenu_Window": "window"
+        "TopMenu_Window": "Window",
+        "TopMenu_NewProject": "New project",
+        "TopMenu_OpenProject": "Open project",
+        "TopMenu_SaveAll": "Save all",
+        "TopMenu_Export": "Export",
+        "TopMenu_Quit": "Quit",
+        "TopMenu_Undo": "Undo",
+        "TopMenu_Redo": "Redo",
+        "TopMenu_ChangeSize": "Drag change size",
+        "TopMenu_ChangeScale": "Drag change scale",
+        "TopMenu_Anchor": "Anchor",
+        "TopMenu_Ruler": "Ruler",
+        "TopMenu_Guides": "Guides",
+        "TopMenu_LockGuides": "Lock guides",
+        "TopMenu_NewGuides": "New guides",
+        "TopMenu_ClearGuides": "Clear guides",
+        "TopMenu_About": "About"
       }
     }
   },

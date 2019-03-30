@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { openTab,  closeTab } from '../action';
+import { openTab,  closeTab, selectToggle } from '../action';
 import TopMenu from "../component";
 
 const mapStateToProps = (state) => {
@@ -10,11 +10,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onOpenTab: (id) => {
+        onOpenTab: id => {
             dispatch(openTab(id));
         },
         onCloseTab: () => {
             dispatch(closeTab());
+        },
+        onSelectSection: id => {
+            dispatch(selectToggle(id));
+            //dispatch(closeTab());
         }
     }
 };

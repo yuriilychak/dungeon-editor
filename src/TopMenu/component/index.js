@@ -4,14 +4,17 @@ import AppBar from "./AppBar";
 import MenuSection from "./MenuSection";
 
 export default (props) => {
-    const {staticData, onOpenTab, onCloseTab, openMenu} = props;
+    const {staticData, onOpenTab, onCloseTab, onSelectSection, openMenu, toggledSections} = props;
     const {tabs} = staticData;
 
     const tabComponents = tabs.map(section => <MenuSection
         {...section}
-        onOpen={()=> onOpenTab(section.key)}
+        key={section.id}
+        onOpen={onOpenTab}
         onClose={onCloseTab}
-        isOpen={section.key === openMenu}
+        onSelectSection={onSelectSection}
+        isOpen={section.id === openMenu}
+        toggledSections={section.useToggles ? toggledSections : undefined}
     />);
 
     return (
