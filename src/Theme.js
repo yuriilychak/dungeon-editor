@@ -27,8 +27,19 @@ const theme = createMuiTheme({
                 },
                 boxShadow: "none",
             }
+        },
+        MuiDialog: {
+            paper: {
+                backgroundColor: "#3f4045",
+                color: "#ffffff",
+                borderRadius: 0
+            }
+        },
+        MuiDialogTitle: {
+            root: {
+                color: "#ffffff"
+            }
         }
-
     }
 });
 

@@ -10,6 +10,7 @@ import WorkingArea from "./WorkingArea/component";
 import uiConst from "./const/uiConst";
 import BottomMenu from "./BottomMenu/component";
 import RightMenu from "./RightMenu/component";
+import NewProjectDialog from "./NewProjectDialog/container";
 
 const styles = theme => ({
     root: {
@@ -53,6 +54,7 @@ class App extends Component {
       return (
           <MuiThemeProvider theme={theme}>
               <div className={classes.root}>
+                  <NewProjectDialog/>
                   <ConTopMenu/>
                   <div className={classes.grid}>
                       <Grid container className={classes.fullHeight}>

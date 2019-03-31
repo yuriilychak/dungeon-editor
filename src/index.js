@@ -7,6 +7,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import Localisation from "./data/Localisation.json";
 import topMenuReducer from "./TopMenu/reducer";
+import newProjectDialogReducer from "./NewProjectDialog/reducer";
 
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux';
@@ -14,7 +15,8 @@ import { Provider } from 'react-redux';
 i18n.use(initReactI18next).init(Localisation);
 
 const store = createStore(combineReducers({
-    topMenu: topMenuReducer
+    topMenu: topMenuReducer,
+    newProjectDialog: newProjectDialogReducer
 }));
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));

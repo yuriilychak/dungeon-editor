@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { openTab,  closeTab, selectToggle } from '../action';
 import TopMenu from "../component";
+import { changeDialogVisible } from "../../NewProjectDialog/action";
 
 import SUBSECTIONS from "../enum/Subsection";
 
@@ -21,6 +22,11 @@ const mapDispatchToProps = (dispatch) => {
         onSelectSection: id => {
 
             switch (id) {
+                case SUBSECTIONS.NEW_PROJECT: {
+                    dispatch(changeDialogVisible(true));
+                    dispatch(closeTab());
+                    break;
+                }
                 case SUBSECTIONS.QUIT: {
                     window.close();
                     break;

@@ -1,0 +1,3 @@
+export default {
+    CHANGE_ACTIVITY: "NEW_PROJECT.CHANGE_ACTIVITY"
+};
