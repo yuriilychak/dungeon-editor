@@ -39,14 +39,7 @@ const styles = theme => ({
     },
     contentText: {
         color: theme.palette.primary.contrastText
-    },
-    inputLabel: {
-        color: "#ffffff",
-        borderBottomColor: "#ffffff",
-        '&$cssFocused': {
-            color: "#1d9cf9",
-        },
-    },
+    }
 });
 
 const NewProjectDialog = props => {
@@ -56,7 +49,6 @@ const NewProjectDialog = props => {
     return (
         <Dialog
             open={props.isPopupOpen}
-            onClose={props.onClosePopup}
             aria-labelledby="form-dialog-title"
         >
             <DialogTitle id="form-dialog-title" className={classes.titleText} disableTypography>New project</DialogTitle>
@@ -65,15 +57,9 @@ const NewProjectDialog = props => {
                     To create new project, please enter project name here.
                 </DialogContentText>
                 <TextField
-                    InputLabel
-                    margin="dense"
-                    id="name"
                     label="Project name"
-                    type="email"
-                    fullWidth
-                    InputProps={{
-                        className: classes.inputLabel,
-                    }}
+                    id="mui-theme-provider-standard-input"
+                    autoComplete="off"
                 />
             </DialogContent>
             <DialogActions>
