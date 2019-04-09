@@ -6,11 +6,11 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from './MenuItem';
 import MenuList from './MenuList';
 import MenuBackground from "./MenuBackground";
-
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const MenuSection = props => {
-    const {locale, t, onOpen, onClose, onSelectSection, isOpen, sections, id, toggledSections} = props;
+    const { t } = useTranslation();
+    const {locale, onOpen, onClose, onSelectSection, isOpen, sections, id, toggledSections} = props;
     let anchorElement = null;
     const sectionComponents = sections.map(section => (
         <MenuItem
@@ -61,4 +61,4 @@ const MenuSection = props => {
 };
 
 
-export default memo(withTranslation()(MenuSection));
+export default memo(MenuSection);

@@ -1,7 +1,9 @@
 import NEW_PROJECT_DIALOG from "../state";
+import StaticData from "../../data/NewProjectDialogData.json";
 
-const initialState = {
-    isPopupOpen: false,
+export const initialState = {
+    staticData: StaticData,
+    isPopupOpen: false
 };
 
 const actionHandlers = {

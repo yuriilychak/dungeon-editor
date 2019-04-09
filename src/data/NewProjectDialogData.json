@@ -1,0 +1,10 @@
+{
+  "locale": {
+    "buttonCancel": "NewProjectDialog_Cancel",
+    "buttonSubmit": "NewProjectDialog_Submit",
+    "contentText": "NewProjectDialog_ContentText",
+    "contentTitle": "NewProjectDialog_ContentTitle",
+    "inputTitle": "NewProjectDialog_InputTitle"
+  },
+  "maxNameLength": 20
+}
