@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -8,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { useTranslation } from "react-i18next";
+import ProjectNameInput from "./ProjectNameInput";
 
 
 const NewProjectDialog = props => {
@@ -20,10 +20,8 @@ const NewProjectDialog = props => {
 
     const [projectName, setProjectName] = useState(emptyStr);
 
-    const onProjectNameChange = e => {
-        const newName = e.target.value.match(/[\w]+/);
-        const result = newName ? newName[0] : emptyStr;
-        setProjectName(result);
+    const onProjectNameChange = nextName => {
+        setProjectName(nextName);
     };
 
     const onCancelNewProject = () => {
@@ -48,16 +46,11 @@ const NewProjectDialog = props => {
                 <DialogContentText>
                     {t(locale.contentText)}
                 </DialogContentText>
-                <TextField
-                    label={t(locale.inputTitle)}
-                    id="mui-theme-provider-standard-input"
-                    autoComplete="off"
-                    value={projectName}
-                    fullWidth
+                <ProjectNameInput
+                    titleLocale={t(locale.inputTitle)}
                     onChange={onProjectNameChange}
-                    inputProps={{
-                        maxLength: maxNameLength
-                    }}
+                    maxLength={maxNameLength}
+                    defaultName={projectName}
                 />
             </DialogContent>
             <DialogActions>
