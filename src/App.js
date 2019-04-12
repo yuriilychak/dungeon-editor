@@ -7,7 +7,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import WorkingArea from "./WorkingArea/component";
-import uiConst from "./const/uiConst";
+import uiConst from "./constant/uiConst";
 import BottomMenu from "./BottomMenu/component";
 import RightMenu from "./RightMenu/component";
 import NewProjectDialog from "./NewProjectDialog/container";

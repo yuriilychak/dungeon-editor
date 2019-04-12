@@ -1,6 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from "@material-ui/core/Toolbar";
-import uiConst from "../../const/uiConst";
+import uiConst from "../../constant/uiConst";
 
 const padding = 8;
 

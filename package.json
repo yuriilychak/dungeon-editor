@@ -35,6 +35,15 @@
     "setupFilesAfterEnv": [
       "<rootDir>/src/enzumeSetup.js"
     ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!<rootDir>/src/serviceWorker.js",
+      "!<rootDir>/src/Theme.js",
+      "!<rootDir>/src/**/constant/*.js",
+      "!<rootDir>/src/**/container/*.js",
+      "!<rootDir>/src/**/enum/*.js",
+      "!<rootDir>/src/**/state/*.js"
+    ],
     "transform": {
       "\\.js$": "<rootDir>/node_modules/babel-jest"
     },

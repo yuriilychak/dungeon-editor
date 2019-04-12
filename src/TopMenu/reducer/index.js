@@ -4,7 +4,7 @@ import SUBSECTIONS from "../enum/Subsection";
 import StaticData from "../../data/TopMenuData.json";
 import MENU_STATE from "../enum/MenuState";
 
-const initialState = {
+export const initialState = {
     staticData: StaticData,
     openMenu: MENU_STATE.NONE,
     toggledSections: [

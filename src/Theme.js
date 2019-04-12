@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import uiConst from "./const/uiConst";
+import uiConst from "./constant/uiConst";
 
 const contrastText = "#ffffff";
 const hoverText = "#1d9cf9";

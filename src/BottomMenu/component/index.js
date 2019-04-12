@@ -23,12 +23,19 @@ const styles = theme => ({
 });
 
 class BottomMenu extends Component {
-    state = {
-        value: 0,
-    };
-    handleChange = (event, value) => {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: 0,
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event, value) {
         this.setState({ value });
-    };
+    }
+
     render() {
         const {classes} = this.props;
         const { value } = this.state;
