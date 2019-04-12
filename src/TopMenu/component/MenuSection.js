@@ -12,8 +12,8 @@ const MenuSection = props => {
     const { t } = useTranslation();
     const {locale, onOpen, onClose, onSelectSection, isOpen, sections, id, toggledSections} = props;
     let anchorElement = null;
-    const sectionComponents = sections.map(section => (
-        <MenuItem
+    const sectionComponents = sections.map(section =>
+        (<MenuItem
             onClick={ onSelectSection }
             key={section.id}
             isSelected={section.isToggle && toggledSections && toggledSections.includes(section.id)}
