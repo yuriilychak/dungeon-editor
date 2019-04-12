@@ -1,31 +1,38 @@
 import TextField from '@material-ui/core/TextField';
-import React, { useState } from "react";
+import React, {Component} from "react";
+import PropTypes from 'prop-types';
 
+export default class ProjectNameInput extends Component {
 
-const ProjectNameInput = props => {
-    const [projectName, setProjectName] = useState(props.defaultName);
+    constructor(props) {
+        super(props);
 
-    const onProjectNameChange = e => {
-        const newName = e.target.value.match(/[\w]+/);
-        const result = newName ? newName[0] : props.defaultName;
-
-        if (projectName !== result) {
-            props.onChange(result);
+        this.state = {
+            projectName: ""
         }
+    }
 
-        setProjectName(result);
+    onProjectNameChange = e => {
+        const newName = e.target.value.match(/[\w]+/);
+        const result = newName ? newName[0] : "";
+        this.setState({projectName: result});
     };
 
-    return  <TextField
-        label={props.titleLocale}
-        autoComplete="off"
-        value={projectName}
-        fullWidth
-        onChange={onProjectNameChange}
-        inputProps={{
-            maxLength: props.maxLength
-        }}
-     />;
-};
+    render() {
+        return <TextField
+            label={this.props.titleLocale}
+            autoComplete="off"
+            value={this.state.projectName}
+            fullWidth
+            onChange={this.onProjectNameChange}
+            inputProps={{
+                maxLength: this.props.maxLength
+            }}
+        />;
+    }
+}
 
-export default ProjectNameInput;
+ProjectNameInput.propTypes = {
+    titleLocale: PropTypes.string,
+    maxLength: PropTypes.number
+};

@@ -100,6 +100,7 @@ const theme = createMuiTheme({
                 color: contrastText,
                 backgroundColor: "#1d9cf9",
                 borderBottom: "4px solid #004995",
+                boxShadow: "none",
                 '&:active': {
                     borderBottom: "none",
                 },
@@ -111,6 +112,7 @@ const theme = createMuiTheme({
                 color: contrastText,
                 backgroundColor: "#f4385b",
                 borderBottom: "4px solid #801227",
+                boxShadow: "none",
                 '&:active': {
                     borderBottom: "none",
                 },

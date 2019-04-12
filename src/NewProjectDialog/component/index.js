@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,29 +9,21 @@ import PropTypes from 'prop-types';
 import { useTranslation } from "react-i18next";
 import ProjectNameInput from "./ProjectNameInput";
 
-
 const NewProjectDialog = props => {
-    const emptyStr = "";
     const { t } = useTranslation();
     const { staticData, isPopupOpen } = props;
     const { locale, maxNameLength } = staticData;
     const contentTextId = "form-dialog-title";
     const buttonType = "contained";
 
-    const [projectName, setProjectName] = useState(emptyStr);
-
-    const onProjectNameChange = nextName => {
-        setProjectName(nextName);
-    };
+    let nameInputRef = React.createRef();
 
     const onCancelNewProject = () => {
-        setProjectName(emptyStr);
         props.onClosePopup();
     };
 
     const onSubmitNewProject = () => {
-        setProjectName(emptyStr);
-        props.onSubmitProject();
+        props.onSubmitProject(nameInputRef.state.projectName);
     };
 
     return (
@@ -47,10 +39,9 @@ const NewProjectDialog = props => {
                     {t(locale.contentText)}
                 </DialogContentText>
                 <ProjectNameInput
+                    ref={ref => nameInputRef = ref}
                     titleLocale={t(locale.inputTitle)}
-                    onChange={onProjectNameChange}
                     maxLength={maxNameLength}
-                    defaultName={projectName}
                 />
             </DialogContent>
             <DialogActions>
