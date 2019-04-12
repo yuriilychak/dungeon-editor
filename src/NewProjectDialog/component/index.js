@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -15,15 +15,25 @@ const NewProjectDialog = props => {
     const { locale, maxNameLength } = staticData;
     const contentTextId = "form-dialog-title";
     const buttonType = "contained";
+    const [ isError, setError ] = useState(false);
 
     let nameInputRef = React.createRef();
 
     const onCancelNewProject = () => {
+        setError(false);
         props.onClosePopup();
     };
 
     const onSubmitNewProject = () => {
-        props.onSubmitProject(nameInputRef.state.projectName);
+        const projectName = nameInputRef.state.projectName;
+
+        if (projectName === "") {
+            setError(true);
+            return;
+        }
+
+        setError(false);
+        props.onSubmitProject(projectName);
     };
 
     return (
@@ -39,16 +49,28 @@ const NewProjectDialog = props => {
                     {t(locale.contentText)}
                 </DialogContentText>
                 <ProjectNameInput
-                    ref={ref => nameInputRef = ref}
-                    titleLocale={t(locale.inputTitle)}
-                    maxLength={maxNameLength}
+                    isError={ isError }
+                    ref={ ref => nameInputRef = ref }
+                    titleLocale={ t(locale.inputTitle) }
+                    errorLocale={t(locale.inputError)}
+                    maxLength={ maxNameLength }
                 />
             </DialogContent>
             <DialogActions>
-                <Button color="secondary" variant={buttonType} onClick={onCancelNewProject}>
+                <Button
+                    color="secondary"
+                    variant={buttonType}
+                    onClick={onCancelNewProject}
+                    id="newProjectDialog-cancel"
+                >
                     {t(locale.buttonCancel)}
                 </Button>
-                <Button color="primary" variant={buttonType} onClick={onSubmitNewProject}>
+                <Button
+                    color="primary"
+                    variant={buttonType}
+                    onClick={onSubmitNewProject}
+                    id="newProjectDialog-submit"
+                >
                     {t(locale.buttonSubmit)}
                 </Button>
             </DialogActions>
@@ -64,6 +86,7 @@ NewProjectDialog.propTypes = {
             buttonSubmit: PropTypes.string,
             contentTitle: PropTypes.string,
             contentText: PropTypes.string,
+            inputError: PropTypes.string,
             inputTitle: PropTypes.string
         }),
         maxNameLength: PropTypes.number

@@ -6,6 +6,7 @@
         "NewProjectDialog_Submit": "Submit",
         "NewProjectDialog_ContentText": "To create new project, please enter project name here.",
         "NewProjectDialog_ContentTitle": "New project",
+        "NewProjectDialog_InputError": "Name empty",
         "NewProjectDialog_InputTitle": "Project name",
         "TopMenu_File": "File",
         "TopMenu_Edit": "Edit",

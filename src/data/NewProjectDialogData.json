@@ -4,6 +4,7 @@
     "buttonSubmit": "NewProjectDialog_Submit",
     "contentText": "NewProjectDialog_ContentText",
     "contentTitle": "NewProjectDialog_ContentTitle",
+    "inputError": "NewProjectDialog_InputError",
     "inputTitle": "NewProjectDialog_InputTitle"
   },
   "maxNameLength": 20

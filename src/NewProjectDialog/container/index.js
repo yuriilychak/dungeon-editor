@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch) => {
         onClosePopup: () => {
             dispatch(changeDialogVisible(false));
         },
-        onSubmitProject: (data) => {
+        onSubmitProject: projectName => {
             dispatch(changeDialogVisible(false));
         }
     }
