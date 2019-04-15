@@ -2,6 +2,10 @@
   "resources": {
     "en": {
       "translation": {
+        "ExportProjectDialog_Cancel": "Cancel",
+        "ExportProjectDialog_ContentText": "Wait until generate zip.",
+        "ExportProjectDialog_ContentTitle": "Export project",
+        "ExportProjectDialog_Save": "Save",
         "NewProjectDialog_Cancel":  "Cancel",
         "NewProjectDialog_Submit": "Submit",
         "NewProjectDialog_ContentText": "To create new project, please enter project name here.",

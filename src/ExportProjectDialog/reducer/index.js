@@ -1,12 +1,15 @@
 import STATE from "../state";
+import StaticData from "../../data/ExportProjectDialogData";
 
 export const initialState = {
+    staticData: StaticData,
     isPopupOpen: false
 };
 
 const actionHandlers = {
     [STATE.CHANGE_ACTIVITY]: (state, action) => {
         return {
+            ...state,
             isPopupOpen: action.payload
         }
     }

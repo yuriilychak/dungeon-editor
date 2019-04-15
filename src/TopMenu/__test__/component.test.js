@@ -110,8 +110,10 @@ describe('TopMenu test',()=> {
 
             wrapper.find("li").first().simulate("click");
 
-            expect(wrapper.props().onClick).toHaveBeenCalled();
-            expect(wrapper.props().onClick).toHaveBeenCalledWith(0);
+            const onClick = wrapper.props().onClick;
+
+            expect(onClick).toHaveBeenCalled();
+            expect(onClick).toHaveBeenCalledWith(0);
         });
     });
 

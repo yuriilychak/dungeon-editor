@@ -2,6 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import uiConst from "./constant/uiConst";
 
 const contrastText = "#ffffff";
+const disabledText = "#bbbbbb";
 const hoverText = "#1d9cf9";
 
 const theme = createMuiTheme({
@@ -28,10 +29,10 @@ const theme = createMuiTheme({
             root: {
                 backgroundColor: "#2a2b2f",
                 color: contrastText,
-                height: uiConst.TOP_MENU_HEIGHT + "px",
-                minHeight: uiConst.TOP_MENU_HEIGHT + "px",
+                height: uiConst.TOP_MENU_HEIGHT,
+                minHeight: uiConst.TOP_MENU_HEIGHT,
                 "@media (min-width: 600px)": {
-                    minHeight: uiConst.TOP_MENU_HEIGHT + "px"
+                    minHeight: uiConst.TOP_MENU_HEIGHT
                 },
                 boxShadow: "none",
             }
@@ -109,7 +110,7 @@ const theme = createMuiTheme({
                 },
                 '&$disabled': {
                     backgroundColor: "#1c8ab1",
-                    color: "#dddddd",
+                    color: disabledText,
                     borderBottom: "4px solid #1C5375",
                 }
             },
@@ -124,12 +125,28 @@ const theme = createMuiTheme({
                 '&:hover': {
                     backgroundColor: "#a52941",
                 },
+                '&$disabled': {
+                    backgroundColor: "#a53c4c",
+                    color: disabledText,
+                    borderBottom: "4px solid #79273A",
+                }
             }
         },
         MuiDialogContentText: {
             root: {
                 color: contrastText
             }
+        },
+        MuiLinearProgress: {
+            root: {
+                margin: "8px 0",
+            },
+            barColorPrimary: {
+                backgroundColor: "#1d9cf9",
+            },
+            barColorSecondary: {
+                backgroundColor: "#f4385b",
+            },
         }
     }
 });

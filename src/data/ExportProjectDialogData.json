@@ -1,0 +1,8 @@
+{
+  "locale": {
+    "buttonCancel": "ExportProjectDialog_Cancel",
+    "buttonSave": "ExportProjectDialog_Save",
+    "contentText": "ExportProjectDialog_ContentText",
+    "contentTitle": "ExportProjectDialog_ContentTitle"
+  }
+}
