@@ -1,0 +1,3 @@
+export default {
+    INIT_NEW_PROJECT: "PROJECT_DATA.INIT_NEW_PROJECT"
+};
