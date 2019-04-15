@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import topMenuReducer from "./TopMenu/reducer";
 import newProjectDialogReducer from "./NewProjectDialog/reducer";
+import exportProjectDialogReducer from "./ExportProjectDialog/reducer";
 
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux';
@@ -12,6 +13,7 @@ import "./Locale";
 
 const store = createStore(combineReducers({
     topMenu: topMenuReducer,
+    exportProjectDialog: exportProjectDialogReducer,
     newProjectDialog: newProjectDialogReducer
 }));
 
