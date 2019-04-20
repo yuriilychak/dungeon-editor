@@ -3,6 +3,7 @@ import { openTab,  closeTab, selectToggle } from '../action';
 import TopMenu from "../component";
 import { showNewProjectDialog } from "../../NewProjectDialog/action";
 import { showExportProjectDialog } from "../../ExportProjectDialog/action";
+import ProjectData from "../../ProjectData";
 
 import SUBSECTIONS from "../enum/Subsection";
 
@@ -30,6 +31,7 @@ const mapDispatchToProps = (dispatch) => {
                 }
                 case SUBSECTIONS.EXPORT: {
                     dispatch(showExportProjectDialog());
+                    ProjectData.export();
                     dispatch(closeTab());
                     break;
                 }

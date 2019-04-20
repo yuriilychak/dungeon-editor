@@ -5,7 +5,7 @@ import MenuBackground from "../component/MenuBackground";
 import MenuItem from "../component/MenuItem";
 import MenuList from "../component/MenuList";
 import MenuSection from "../component/MenuSection";
-import ToolBar from "../component/ToolBar";
+import Toolbar from "../component/Toolbar";
 import TopMenu from "../component";
 import React from "react";
 import { initialState } from '../reducer';
@@ -39,17 +39,19 @@ describe('TopMenu test',()=> {
 
         expect(wrapper.html()).toMatchSnapshot();
     });
+
     it ( 'ToolBar snapshot', () => {
         const wrapper = createMount()(
-            <ToolBar>
+            <Toolbar>
                 <Button>test1</Button>
                 <Button>test2</Button>
                 <Button>test3</Button>
-            </ToolBar>
+            </Toolbar>
         );
 
         expect(wrapper.html()).toMatchSnapshot();
     });
+
     it ( 'MenuBackground snapshot', () => {
         const wrapper = createMount()(
             <MenuBackground>
@@ -197,7 +199,5 @@ describe('TopMenu test',()=> {
             expect(wrapper.props().onOpen).toHaveBeenCalled();
             expect(wrapper.props().onOpen).toHaveBeenCalledWith(1);
         });
-
     });
-
 });

@@ -1,4 +1,4 @@
-import { changeDialogVisible } from '../action';
+import { hideNewProjectDialog, showNewProjectDialog } from '../action';
 import types from '../state';
 
 describe('NewProjectDialog actions', () => {
@@ -11,7 +11,7 @@ describe('NewProjectDialog actions', () => {
             type: types.CHANGE_ACTIVITY,
             payload: true
         };
-        expect(changeDialogVisible(false)).toEqual(expectedAction1);
-        expect(changeDialogVisible(true)).toEqual(expectedAction2);
+        expect(hideNewProjectDialog()).toEqual(expectedAction1);
+        expect(showNewProjectDialog()).toEqual(expectedAction2);
     })
 });

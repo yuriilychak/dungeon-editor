@@ -3,6 +3,10 @@
     "buttonCancel": "ExportProjectDialog_Cancel",
     "buttonSave": "ExportProjectDialog_Save",
     "contentText": "ExportProjectDialog_ContentText",
-    "contentTitle": "ExportProjectDialog_ContentTitle"
+    "contentTitle": "ExportProjectDialog_ContentTitle",
+    "exportBeginText": "ExportProjectDialog_Export_Begin",
+    "exportCompleteText": "ExportProjectDialog_Export_Complete",
+    "exportGenerateText": "ExportProjectDialog_Export_Generate",
+    "exportProgressText": "ExportProjectDialog_Export_Progress"
   }
 }

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { changeDialogVisible } from '../action';
-import { initNewProject } from '../../ProjectData/action';
+import { hideNewProjectDialog } from '../action';
+import ProjectData from '../../ProjectData';
 import NewProjectDialog from "../component";
 
 const mapStateToProps = (state) => {
@@ -12,11 +12,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onClosePopup: () => {
-            dispatch(changeDialogVisible(false));
+            dispatch(hideNewProjectDialog());
         },
         onSubmitProject: projectName => {
-            dispatch(initNewProject(projectName));
-            dispatch(changeDialogVisible(false));
+            ProjectData.rename(projectName);
+            dispatch(hideNewProjectDialog());
         }
     }
 };

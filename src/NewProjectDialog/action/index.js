@@ -1,11 +1,9 @@
-import NEW_PROJECT_DIALOG from "../state";
+import STATE from "../state";
 
-export const showNewProjectDialog = () => ({
-    type: NEW_PROJECT_DIALOG.CHANGE_ACTIVITY,
-    payload: true
-});
+export const showNewProjectDialog = () => changeDialogActivity(true);
+export const hideNewProjectDialog = () => changeDialogActivity(false);
 
-export const changeDialogVisible = activity => ({
-    type: NEW_PROJECT_DIALOG.CHANGE_ACTIVITY,
+const changeDialogActivity = activity => ({
+    type: STATE.CHANGE_ACTIVITY,
     payload: activity
 });

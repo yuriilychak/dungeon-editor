@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { hideExportProjectDialog } from '../action';
 import ExportProjectDialog from "../component";
+import ProjectData from "../../ProjectData";
 
 const mapStateToProps = (state) => {
     return {
@@ -15,6 +16,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(hideExportProjectDialog());
         },
         onExportProject: () => {
+            ProjectData.save();
             dispatch(hideExportProjectDialog());
         }
     }

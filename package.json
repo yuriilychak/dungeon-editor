@@ -7,7 +7,10 @@
     "@material-ui/icons": "^3.0.2",
     "@material-ui/styles": "^3.0.0-alpha.10",
     "@material-ui/utils": "^3.0.0-alpha.3",
+    "@types/jszip": "^3.1.5",
+    "file-saver": "^2.0.1",
     "i18next": "^15.0.9",
+    "jszip": "^3.2.1",
     "npm": "^6.9.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -19,6 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "lint": "eslint --ext .jsx --ext .js src/",
     "build": "react-scripts build",
     "test": "jest --coverage",
     "eject": "react-scripts eject"
@@ -62,6 +66,8 @@
     "babel-preset-react": "^6.24.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.12.4",
     "jest": "^24.7.1",
     "react-test-renderer": "^16.8.6"
   }
