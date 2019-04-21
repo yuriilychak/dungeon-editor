@@ -5,8 +5,7 @@ import ProjectData from "../../ProjectData";
 
 const mapStateToProps = (state) => {
     return {
-        ...state.exportProjectDialog,
-        progress: 50
+        ...state.exportProjectDialog
     }
 };
 
