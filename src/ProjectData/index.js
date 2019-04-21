@@ -1,17 +1,28 @@
 import JSZip from "jszip";
 import store from "../store";
-import projectTemplate from "../data/ProjectTemplate";
+import projectTemplate from "./data/ProjectTemplate";
 import {changeProgress} from "../ExportProjectDialog/action";
 import { saveAs } from 'file-saver';
 
 export default {
+
     /**
      * @type {Object}
+     * @private
      */
+
     _projectData: null,
 
     /**
+     * @type {?JSZip}
+     * @private
+     */
+
+    _zip: null,
+
+    /**
      * @type {?Blob}
+     * @private
      */
 
     _zipData: null,
@@ -41,19 +52,30 @@ export default {
      */
 
     export() {
-        const zip = new JSZip();
+        this._zip = new JSZip();
 
         store.dispatch(changeProgress(50, "meta.json"));
 
-        zip.file("meta.json", JSON.stringify(this._projectData));
+        this._zip.file("meta.json", JSON.stringify(this._projectData));
 
         store.dispatch(changeProgress(100));
 
-        zip.generateAsync({type:"blob"})
+        this._zip.generateAsync({ type: "blob" })
             .then(content => {
                 this._zipData = content;
                 store.dispatch(changeProgress(100, null, true));
             });
+    },
+
+    /**
+     * @desc Clear zip
+     * @function
+     * @public
+     */
+
+    clearZipData() {
+        this._zip = null;
+        this._zipData = null;
     },
 
     /**
@@ -62,6 +84,10 @@ export default {
      */
 
     save() {
+        if (this._zipData === null) {
+            return;
+        }
+        this._zip = null;
         saveAs(this._zipData, `${this._projectData.name}.zip`);
     }
 }
