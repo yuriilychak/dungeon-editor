@@ -35,6 +35,11 @@ const mapDispatchToProps = (dispatch) => {
                     dispatch(closeTab());
                     break;
                 }
+                case SUBSECTIONS.OPEN_PROJECT: {
+                    ProjectData.import();
+                    dispatch(closeTab());
+                    break;
+                }
                 case SUBSECTIONS.QUIT: {
                     window.close();
                     break;

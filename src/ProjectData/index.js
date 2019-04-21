@@ -1,8 +1,9 @@
 import JSZip from "jszip";
+import fileDialog from "file-dialog";
+import { saveAs } from "file-saver";
 import store from "../store";
 import projectTemplate from "./data/ProjectTemplate";
 import {changeProgress} from "../ExportProjectDialog/action";
-import { saveAs } from 'file-saver';
 
 export default {
 
@@ -89,5 +90,21 @@ export default {
         }
         this._zip = null;
         saveAs(this._zipData, `${this._projectData.name}.zip`);
+    },
+
+    /**
+     * @function
+     * @public
+     */
+
+    import() {
+        fileDialog({ multiple: false, accept: "application/zip" })
+            .then(file =>
+                    JSZip.loadAsync(file[0]).then(content =>
+                        content.file("meta.json").async("text").then(data => {
+                            this._projectData = JSON.parse(data);
+                        })
+                    )
+            );
     }
 }
