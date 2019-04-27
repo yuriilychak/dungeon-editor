@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import {withStyles} from "@material-ui/core";
 import Panel from "./Panel";
+import Library from "../../Library/component";
 
 const styles = theme => ({
     root: {
@@ -14,16 +15,16 @@ const styles = theme => ({
     }
 });
 
-class RightMenu extends Component {
-    render() {
-        const {classes} = this.props;
-        return (
-            <Paper className={classes.root}>
-                <Panel title={"Properties"}>body</Panel>
-                <Panel title={"Library"}>body</Panel>
-            </Paper>
-        );
-    }
-}
+const RightMenu = props => {
+    const {classes} = props;
+    return (
+        <Paper className={classes.root}>
+            <Panel title={"Properties"}>body</Panel>
+            <Panel title={"Library"}>
+                <Library/>
+            </Panel>
+        </Paper>
+    );
+};
 
 export default withStyles(styles)(RightMenu);

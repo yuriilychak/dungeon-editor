@@ -1,7 +1,7 @@
 import TOP_MENU from "../state";
 import SUBSECTIONS from "../enum/Subsection";
 
-import StaticData from "../../data/TopMenuData.json";
+import StaticData from "../data/index.json";
 import MENU_STATE from "../enum/MenuState";
 
 export const initialState = {

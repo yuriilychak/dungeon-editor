@@ -1,5 +1,5 @@
 import STATE from "../state";
-import StaticData from "../../data/ExportProjectDialogData";
+import StaticData from "../data";
 
 /**
  * @typedef {Object}
