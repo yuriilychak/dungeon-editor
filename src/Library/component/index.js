@@ -3,6 +3,12 @@ import Fade from '@material-ui/core/Fade';
 import {useDropzone} from 'react-dropzone';
 import { makeStyles } from '@material-ui/styles';
 
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 const useStyles = makeStyles({
     root: {
         width: "100%",
@@ -44,12 +50,35 @@ const Library = props => {
             onClick: event => event.stopPropagation()
         })} className={classes.root}>
             <input {...getInputProps()}/>
-            Library
-                <Fade in={isDragActive}>
-                    <div className={classes.drag}>
-                        Drop the files here ...
-                    </div>
-                </Fade>
+            <div>
+                <ExpansionPanel>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography>Expansion Panel 1</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Typography>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                            sit amet blandit leo lobortis eget.
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+                <ExpansionPanel>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography>Expansion Panel 1</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Typography>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                            sit amet blandit leo lobortis eget.
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+            </div>
+            <Fade in={isDragActive}>
+                <div className={classes.drag}>
+                    Drop the files here ...
+                </div>
+            </Fade>
         </div>
     );
 };
