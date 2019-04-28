@@ -4,13 +4,16 @@ import uiConst from "./constant/uiConst";
 const contrastText = "#ffffff";
 const disabledText = "#bbbbbb";
 const hoverText = "#1d9cf9";
+const backLight = '#595a5f';
+const backMain = '#3f4045';
+const backDark = '#2a2b2f';
 
 const theme = createMuiTheme({
     palette: {
         primary: {
-            light: '#595a5f',
-            main: '#3f4045',
-            dark: '#2a2b2f',
+            light: backLight,
+            main: backMain,
+            dark: backDark,
             contrastText: contrastText
         }
     },
@@ -147,6 +150,39 @@ const theme = createMuiTheme({
             barColorSecondary: {
                 backgroundColor: "#f4385b",
             },
+        },
+        MuiExpansionPanel: {
+            root: {
+                color: contrastText,
+                fontSize: ".8rem",
+                minHeight: 32,
+                backgroundColor: backDark,
+                borderBottom: "2px solid #595a5f",
+                borderRadius: 0
+            },
+            expanded: {
+                margin: 0
+            },
+
+        },
+        MuiExpansionPanelSummary: {
+            root: {
+                padding: "0 12px",
+                minHeight: 32,
+                '&$expanded': {
+                    minHeight: 32,
+                }
+            },
+            content: {
+                margin: "4px 0px",
+                '&$expanded': {
+                    margin: "4px 0px"
+                }
+            },
+            expandIcon: {
+                padding: "2px",
+                color: contrastText
+            }
         }
     }
 });

@@ -13,6 +13,27 @@ html, #root {
   height: 100vh;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #595a5f;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f50057;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ae0045;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
   monospace;
