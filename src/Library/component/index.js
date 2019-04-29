@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 import Fade from '@material-ui/core/Fade';
 import {useDropzone} from 'react-dropzone';
 import { makeStyles } from '@material-ui/styles';
+import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 import ContentFolder from "./ContentFolder";
 import TextureIcon from "../data/icon/texture.svg";
@@ -9,6 +11,7 @@ import SkeletonIcon from "../data/icon/skeleton.svg";
 import ParticleIcon from "../data/icon/particle.svg";
 import ElementIcon from "../data/icon/element.svg";
 import FontIcon from "../data/icon/font.svg";
+
 
 const useStyles = makeStyles({
     root: {
@@ -50,6 +53,7 @@ const useStyles = makeStyles({
 });
 
 const Library = props => {
+    const { t } = useTranslation();
     const onDrop = useCallback(acceptedFiles => {
         console.log("file", acceptedFiles);
     }, []);
@@ -60,30 +64,31 @@ const Library = props => {
     });
     const classes = useStyles();
 
+    const { tabs, files } = props;
+    const icons = [
+        ElementIcon,
+        FontIcon,
+        ParticleIcon,
+        SkeletonIcon,
+        TextureIcon
+    ];
+
+    const tabViews = tabs.map(tab => (
+        <ContentFolder
+            title={t(tab.locale)}
+            key={tab.id}
+            icon={icons[tab.id]}
+            emptyText={t(props.emptyLocale)}
+            files={files[tab.id]}
+        />
+        )
+    );
+
     return (
         <div {...getRootProps({className: 'dropzone'})} className={classes.root}>
             <input {...getInputProps()} />
             <div className={classes.overflow}>
-                <ContentFolder title={"Elements"} icon={ElementIcon}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
-                </ContentFolder>
-                <ContentFolder title={"Fonts"} icon={FontIcon}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
-                </ContentFolder>
-                <ContentFolder title={"Particles"} icon={ParticleIcon}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
-                </ContentFolder>
-                <ContentFolder title={"Skeletons"} icon={SkeletonIcon}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
-                </ContentFolder>
-                <ContentFolder title={"Textures"} icon={TextureIcon}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
-                </ContentFolder>
+                { tabViews }
             </div>
             <Fade in={isDragActive}>
                 <div className={classes.drag}>
@@ -92,6 +97,19 @@ const Library = props => {
             </Fade>
         </div>
     );
+};
+
+Library.propTypes = {
+    tabs: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        locale: PropTypes.string.isRequired
+    })).isRequired,
+    files: PropTypes.arrayOf(
+        PropTypes.arrayOf(
+            PropTypes.object.isRequired
+        )
+    ),
+    emptyLocale: PropTypes.string.isRequired
 };
 
 export default Library;

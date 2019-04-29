@@ -23,8 +23,7 @@ const ExportProjectDialog = props => {
     const { t } = useTranslation();
     const classes = useStyles();
     const contentTextId = "export-project-title";
-    const { isPopupOpen, onClosePopup, onExportProject, staticData, progressData } = props;
-    const { locale } = staticData;
+    const { isPopupOpen, onClosePopup, onExportProject, locale, progressData } = props;
     const buttonType = "contained";
     let progress = 0;
 
@@ -97,17 +96,15 @@ const ExportProjectDialog = props => {
 };
 
 ExportProjectDialog.propTypes = {
-    staticData: PropTypes.shape({
-        locale: PropTypes.shape({
-            buttonCancel: PropTypes.string.isRequired,
-            buttonSave: PropTypes.string.isRequired,
-            contentText: PropTypes.string.isRequired,
-            contentTitle: PropTypes.string.isRequired,
-            exportBeginText: PropTypes.string.isRequired,
-            exportCompleteText: PropTypes.string.isRequired,
-            exportGenerateText: PropTypes.string.isRequired,
-            exportProgressText: PropTypes.string.isRequired
-        })
+    locale: PropTypes.shape({
+        buttonCancel: PropTypes.string.isRequired,
+        buttonSave: PropTypes.string.isRequired,
+        contentText: PropTypes.string.isRequired,
+        contentTitle: PropTypes.string.isRequired,
+        exportBeginText: PropTypes.string.isRequired,
+        exportCompleteText: PropTypes.string.isRequired,
+        exportGenerateText: PropTypes.string.isRequired,
+        exportProgressText: PropTypes.string.isRequired
     }).isRequired,
     onExportProject: PropTypes.func.isRequired,
     onClosePopup: PropTypes.func.isRequired,

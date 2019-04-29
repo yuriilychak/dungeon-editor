@@ -16,14 +16,15 @@ const useStyles = makeStyles({
 
 const ContentFolder = props => {
     const classes = useStyles();
+    const { title, emptyText, icon, files } = props;
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                <img src={props.icon} className={classes.icon}/>
-                {props.title}
+                <img src={icon} className={classes.icon} alt={"empty Icon"}/>
+                {title}
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                {props.children}
+                {emptyText}
             </ExpansionPanelDetails>
         </ExpansionPanel>
     );

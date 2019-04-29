@@ -2,7 +2,7 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import {withStyles} from "@material-ui/core";
 import Panel from "./Panel";
-import Library from "../../Library/component";
+import ConLibrary from "../../Library/container";
 
 const styles = theme => ({
     root: {
@@ -21,7 +21,7 @@ const RightMenu = props => {
         <Paper className={classes.root}>
             <Panel title={"Properties"}>body</Panel>
             <Panel title={"Library"}>
-                <Library/>
+                <ConLibrary/>
             </Panel>
         </Paper>
     );

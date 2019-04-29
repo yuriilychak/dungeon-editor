@@ -22,7 +22,7 @@ import StaticData from "../data";
  */
 
 export const initialState = {
-    staticData: StaticData,
+    ...StaticData,
     isPopupOpen: false,
     progressData: null
 };

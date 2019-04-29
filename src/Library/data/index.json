@@ -1,0 +1,24 @@
+{
+  "tabs": [
+    {
+      "id": 0,
+      "locale": "Library_Elements"
+    },
+    {
+      "id": 1,
+      "locale": "Library_Fonts"
+    },
+    {
+      "id": 2,
+      "locale": "Library_Particles"
+    },
+    {
+      "id": 3,
+      "locale": "Library_Skeletons"
+    },
+    {
+      "id": 4,
+      "locale": "Library_Textures"
+    }
+  ]
+}

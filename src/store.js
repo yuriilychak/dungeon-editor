@@ -1,6 +1,7 @@
 import topMenuReducer from "./TopMenu/reducer";
 import newProjectDialogReducer from "./NewProjectDialog/reducer";
 import exportProjectDialogReducer from "./ExportProjectDialog/reducer";
+import libraryReducer from "./Library/reducer";
 import { createStore, combineReducers } from 'redux';
 
 /**
@@ -12,6 +13,7 @@ import { createStore, combineReducers } from 'redux';
 
 const store = createStore(combineReducers({
     topMenu: topMenuReducer,
+    libraryReducer: libraryReducer,
     exportProjectDialog: exportProjectDialogReducer,
     newProjectDialog: newProjectDialogReducer
 }));
