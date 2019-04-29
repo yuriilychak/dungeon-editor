@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
+import React, {useCallback} from 'react';
 import Fade from '@material-ui/core/Fade';
 import {useDropzone} from 'react-dropzone';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 
 import ContentFolder from "./ContentFolder";
 import TextureIcon from "../data/icon/texture.svg";
@@ -53,18 +53,33 @@ const useStyles = makeStyles({
 });
 
 const Library = props => {
-    const { t } = useTranslation();
-    const onDrop = useCallback(acceptedFiles => {
-        console.log("file", acceptedFiles);
-    }, []);
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    const {
+        tabs,
+        files,
+        onAddFiles,
+        onRemoveElement,
+        onRemoveParticle,
+        onRemoveSkeletone,
+        onRemoveFont,
+        onRemoveTexture
+    } = props;
+    const {t} = useTranslation();
+    const onDrop = useCallback(onAddFiles, []);
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({
         onDrop,
         noClick: true,
         noKeyboard: true
     });
     const classes = useStyles();
 
-    const { tabs, files } = props;
+    const removeCallbacks = [
+        onRemoveElement,
+        onRemoveFont,
+        onRemoveParticle,
+        onRemoveSkeletone,
+        onRemoveTexture
+    ];
+
     const icons = [
         ElementIcon,
         FontIcon,
@@ -74,13 +89,14 @@ const Library = props => {
     ];
 
     const tabViews = tabs.map(tab => (
-        <ContentFolder
-            title={t(tab.locale)}
-            key={tab.id}
-            icon={icons[tab.id]}
-            emptyText={t(props.emptyLocale)}
-            files={files[tab.id]}
-        />
+            <ContentFolder
+                title={t(tab.locale)}
+                key={tab.id}
+                icon={icons[tab.id]}
+                emptyText={t(props.emptyLocale)}
+                files={files[tab.id]}
+                onRemoveElement={removeCallbacks[tab.id]}
+            />
         )
     );
 
@@ -88,7 +104,7 @@ const Library = props => {
         <div {...getRootProps({className: 'dropzone'})} className={classes.root}>
             <input {...getInputProps()} />
             <div className={classes.overflow}>
-                { tabViews }
+                {tabViews}
             </div>
             <Fade in={isDragActive}>
                 <div className={classes.drag}>

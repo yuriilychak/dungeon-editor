@@ -4,6 +4,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from "react";
 import { makeStyles } from '@material-ui/styles';
+import ElementItem from "./ElementItem";
 
 const useStyles = makeStyles({
     icon: {
@@ -17,6 +18,10 @@ const useStyles = makeStyles({
 const ContentFolder = props => {
     const classes = useStyles();
     const { title, emptyText, icon, files } = props;
+    const content = files.length !== 0 ? files.map( file => (
+        <ElementItem key={file.id} {...file} onRemoveElement={props.onRemoveElement}/>
+    )) : emptyText;
+
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
@@ -24,10 +29,10 @@ const ContentFolder = props => {
                 {title}
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                {emptyText}
+                {content}
             </ExpansionPanelDetails>
         </ExpansionPanel>
     );
 };
 
-export default ContentFolder;
+export default React.memo(ContentFolder);

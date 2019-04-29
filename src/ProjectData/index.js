@@ -4,11 +4,30 @@ import { saveAs } from "file-saver";
 import store from "../store";
 import projectTemplate from "./data/ProjectTemplate";
 import {changeProgress} from "../ExportProjectDialog/action";
+import {addTexture, removeTexture} from "../Library/action";
+
+const EMPTY_ATLAS_ID = 0;
+
+/**
+ * @name TextureData
+ * @typedef {Object}
+ * @property {string} name
+ * @property {number} id
+ * @property {string} atlas
+ * @property {string} format
+ */
+
+/**
+ * @name ProjectData
+ * @typedef {Object}
+ * @property {string} name
+ * @property {Array.<TextureData>} textures
+ */
 
 export default {
 
     /**
-     * @type {Object}
+     * @type {?ProjectData}
      * @private
      */
 
@@ -27,6 +46,13 @@ export default {
      */
 
     _zipData: null,
+
+    /**
+     * @type {number}
+     * @private
+     */
+
+    _guid: 0,
 
     /**
      * @function
@@ -106,5 +132,52 @@ export default {
                         })
                     )
             );
+    },
+
+    /**
+     * @function
+     * @param {Array.<File>} files
+     */
+
+    addFiles(files) {
+        const fileCount = files.length;
+        let i, file, fileData, name, nameSplit, format;
+
+        for (i = 0; i < fileCount; ++i) {
+            file = files[i];
+
+            if (file.type.indexOf("image") !== -1) {
+                nameSplit = file.name.split(".");
+                nameSplit.pop();
+                name = nameSplit.join(".");
+                format = file.type.split("/")[1];
+                fileData = {
+                    name,
+                    format,
+                    id: ++this._guid,
+                    atlas: EMPTY_ATLAS_ID
+                };
+                this._projectData.textures.push(fileData);
+                store.dispatch(addTexture(fileData));
+            }
+        }
+    },
+
+    removeTexture(id) {
+        const textures = this._projectData.textures;
+        const textureCount = textures.length;
+        let i, texture;
+
+        for (i = 0; i < textureCount; ++i) {
+            texture = textures[i];
+
+            if (texture.id !== id) {
+                continue;
+            }
+            textures.splice(i, 1);
+            store.dispatch(removeTexture(id));
+            return;
+        }
+
     }
 }

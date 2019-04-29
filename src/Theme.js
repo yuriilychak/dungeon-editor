@@ -170,6 +170,7 @@ const theme = createMuiTheme({
                 padding: "0 12px",
                 minHeight: 32,
                 '&$expanded': {
+                    borderBottom: "2px dashed #595a5f",
                     minHeight: 32,
                 }
             },
@@ -182,6 +183,12 @@ const theme = createMuiTheme({
             expandIcon: {
                 padding: "2px",
                 color: contrastText
+            }
+        },
+        MuiExpansionPanelDetails: {
+            root: {
+                padding: "6px 12px 12px 12px",
+                flexDirection: "column"
             }
         }
     }

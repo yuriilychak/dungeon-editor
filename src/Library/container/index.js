@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import Library from "../component";
+import ProjectData from "../../ProjectData";
 
 const mapStateToProps = (state) => {
     return {
@@ -9,9 +10,19 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onRemoveFile: () => {
+        onRemoveElement: (id) => {
         },
-        onAddFiles: () => {
+        onRemoveParticle: (id) => {
+        },
+        onRemoveSkeletone: (id) => {
+        },
+        onRemoveFont: (id) => {
+        },
+        onRemoveTexture: id => {
+            ProjectData.removeTexture(id);
+        },
+        onAddFiles: files => {
+            ProjectData.addFiles(files);
         }
     }
 };

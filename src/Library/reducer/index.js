@@ -21,8 +21,26 @@ import STATE from "../state";
 
 export const initialState = {
     ...StaticData,
-    files: [ [], [], [], [] ],
+    files: [ [], [], [], [], [] ],
     emptyLocale: "Library_EmptyFiles"
+};
+
+const addFileInfo = (state, action, index) => {
+    const files = state.files.slice(0);
+    files[index] = [...files[index], action.payload];
+    return {
+        ...state,
+        files
+    }
+};
+
+const removeFileInfo = (state, action, index) => {
+    const files = state.files.slice(0);
+    files[index] = files[index].filter( file => file.id !== action.payload);
+    return {
+        ...state,
+        files
+    }
 };
 
 /**
@@ -30,13 +48,12 @@ export const initialState = {
  */
 
 const actionHandlers = {
-    [STATE.ADD_FILES]: (state, action) => ({
-        ...state
-    }),
-    [STATE.REMOVE_FILE]: (state, action) => ({
-        ...state
-    })
-
+    [STATE.ADD_ELEMENT]: (state, action) => addFileInfo(state, action, 0),
+    [STATE.ADD_FONT]: (state, action) => addFileInfo(state, action, 1),
+    [STATE.ADD_PARTICLE]: (state, action) => addFileInfo(state, action, 2),
+    [STATE.ADD_SKELETON]: (state, action) => addFileInfo(state, action, 3),
+    [STATE.ADD_TEXTURE]: (state, action) => addFileInfo(state, action, 4),
+    [STATE.REMOVE_TEXTURE]: (state, action) => removeFileInfo(state, action, 4)
 };
 
 /**
