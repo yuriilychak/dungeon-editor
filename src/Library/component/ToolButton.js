@@ -16,11 +16,11 @@ const useStyles = makeStyles({
 });
 
 const ToolButton = ({title, onClick, Icon}) => {
-    const classes = useStyles();
+    const {button, icon} = useStyles();
     return (
         <Tooltip title={title}>
-            <IconButton className={classes.button} onClick={onClick}>
-                <Icon className={classes.icon} />
+            <IconButton className={button} onClick={onClick}>
+                <Icon className={icon} />
             </IconButton>
         </Tooltip>
     );

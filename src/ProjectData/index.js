@@ -16,7 +16,6 @@ const EMPTY_ATLAS_ID = 0;
  * @property {string} atlas
  * @property {string} format
  * @property {boolean} hasPreview
- * @property {string} source
  */
 
 /**
@@ -64,6 +63,13 @@ export default {
     _fileReader: null,
 
     /**
+     * @type {Object.<number, string>}
+     * @private
+     */
+
+    _textureSources: null,
+
+    /**
      * @function
      * @public
      */
@@ -71,6 +77,7 @@ export default {
     init() {
         this._projectData =  {...projectTemplate};
         this._fileReader = new FileReader();
+        this._textureSources = {};
     },
 
     /**
@@ -91,9 +98,23 @@ export default {
     export() {
         this._zip = new JSZip();
 
-        store.dispatch(changeProgress(50, "meta.json"));
+        const textures = this._projectData.textures;
+        const textureCount = textures.length;
+        let i, texture;
+        const fileCount = textureCount + 1;
+        let currentFileIndex = 1;
+        const percentPerFile = 100 / (fileCount + 1);
 
         this._zip.file("meta.json", JSON.stringify(this._projectData));
+
+        store.dispatch(changeProgress(percentPerFile * currentFileIndex, "meta.json"));
+
+        for (i = 0; i < textureCount; ++i) {
+            ++currentFileIndex;
+            texture = textures[i];
+            this._zip.file(`textures/${texture.name}.${texture.format}`, this._textureSources[texture.id].split(',')[1], {base64: true});
+            store.dispatch(changeProgress(percentPerFile * currentFileIndex, `${texture.name}.${texture.format}`));
+        }
 
         store.dispatch(changeProgress(100));
 
@@ -133,13 +154,22 @@ export default {
      * @public
      */
 
-    import() {
+    async import() {
         fileDialog({ multiple: false, accept: "application/zip" })
             .then(file =>
-                    JSZip.loadAsync(file[0]).then(content =>
-                        content.file("meta.json").async("text").then(data => {
-                            this._projectData = JSON.parse(data);
-                        })
+                    JSZip.loadAsync(file[0]).then(async (content) => {
+                            const metaData = await this._extractFile(content, "meta.json");
+                            this._projectData = JSON.parse(metaData);
+                            const textures = this._projectData.textures;
+                            const textureCount = textures.length;
+                            let i, texture, source;
+
+                            for (i = 0; i < textureCount; ++i) {
+                                texture = textures[i];
+                                source = `data:image/${texture.format};base64,` + (await this._extractFile(content, `textures/${texture.name}.${texture.format}`));
+                                this._updateSource(texture, source)
+                            }
+                        }
                     )
             );
     },
@@ -152,29 +182,65 @@ export default {
 
     async addFiles(files) {
         const fileCount = files.length;
-        let i, file, fileData, name, nameSplit, format;
+        let i, file;
 
         for (i = 0; i < fileCount; ++i) {
             file = files[i];
 
             if (file.type.indexOf("image") !== -1) {
-                nameSplit = file.name.split(".");
-                nameSplit.pop();
-                name = nameSplit.join(".");
-                format = file.type.split("/")[1];
-                fileData = {
-                    name,
-                    format,
-                    id: ++this._guid,
-                    atlas: EMPTY_ATLAS_ID,
-                    hasPreview: true,
-                    source: await this._readUploadedFileAsDataUrl(file)
-                };
-
-                this._projectData.textures.push(fileData);
-                store.dispatch(addTexture(fileData));
+                await this._addTexture(file);
             }
         }
+    },
+
+    /**
+     * @param {File} file
+     * @return {Promise<void>}
+     * @private
+     */
+
+    async _addTexture(file) {
+        const nameSplit = file.name.split(".");
+        nameSplit.pop();
+
+        const name = nameSplit.join(".");
+        const format = file.type.split("/")[1];
+        const id = ++this._guid;
+        const source = await this._readUploadedFileAsDataUrl(file);
+        const fileData = {
+            name,
+            format,
+            id,
+            atlas: EMPTY_ATLAS_ID,
+            hasPreview: true
+        };
+        this._projectData.textures.push(fileData);
+        this._updateSource(fileData, source);
+    },
+
+    _extractFile(zip, path) {
+        const pathSplit = path.split(".");
+        const resolution = pathSplit[pathSplit.length - 1];
+        const type = resolution === "png" || resolution === "jpeg" ? "base64" : "text";
+        return new Promise((resolve, reject) => {
+            zip.file(path).async(type).then(data => {
+                resolve(data);
+            }).catch(()=>
+                reject(new DOMException("Problem parsing input file."))
+            )
+        });
+    },
+
+    /**
+     * @function
+     * @param {TextureData} texture
+     * @param {string} source
+     * @private
+     */
+
+    _updateSource(texture, source) {
+        this._textureSources[texture.id] = source;
+        store.dispatch(addTexture({...texture, source}));
     },
 
     /**
@@ -211,9 +277,9 @@ export default {
                 continue;
             }
             textures.splice(i, 1);
+            delete this._textureSources[id];
             store.dispatch(removeTexture(id));
             return;
         }
-
     }
 }
