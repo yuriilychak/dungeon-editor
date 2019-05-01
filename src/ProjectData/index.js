@@ -15,6 +15,8 @@ const EMPTY_ATLAS_ID = 0;
  * @property {number} id
  * @property {string} atlas
  * @property {string} format
+ * @property {boolean} hasPreview
+ * @property {string} source
  */
 
 /**
@@ -55,12 +57,20 @@ export default {
     _guid: 0,
 
     /**
+     * @type {?FileReader}
+     * @private
+     */
+
+    _fileReader: null,
+
+    /**
      * @function
      * @public
      */
 
     init() {
         this._projectData =  {...projectTemplate};
+        this._fileReader = new FileReader();
     },
 
     /**
@@ -136,10 +146,11 @@ export default {
 
     /**
      * @function
+     * @async
      * @param {Array.<File>} files
      */
 
-    addFiles(files) {
+    async addFiles(files) {
         const fileCount = files.length;
         let i, file, fileData, name, nameSplit, format;
 
@@ -155,12 +166,37 @@ export default {
                     name,
                     format,
                     id: ++this._guid,
-                    atlas: EMPTY_ATLAS_ID
+                    atlas: EMPTY_ATLAS_ID,
+                    hasPreview: true,
+                    source: await this._readUploadedFileAsDataUrl(file)
                 };
+
                 this._projectData.textures.push(fileData);
                 store.dispatch(addTexture(fileData));
             }
         }
+    },
+
+    /**
+     * @function
+     * @private
+     * @param {File} file
+     * @return {Promise<string>}
+     * @private
+     */
+
+    _readUploadedFileAsDataUrl(file) {
+        return new Promise((resolve, reject) => {
+            this._fileReader.onerror = () => {
+                this._fileReader.abort();
+                reject(new DOMException("Problem parsing input file."));
+            };
+
+            this._fileReader.onload = () => {
+                resolve(this._fileReader.result);
+            };
+            this._fileReader.readAsDataURL(file);
+        });
     },
 
     removeTexture(id) {

@@ -20,5 +20,10 @@
       "id": 4,
       "locale": "Library_Textures"
     }
-  ]
+  ],
+  "locales": {
+    "emptyTab": "Library_EmptyFiles",
+    "itemDelete": "Library_Item_Delete",
+    "itemRename": "Library_Item_Rename"
+  }
 }

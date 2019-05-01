@@ -1,12 +1,10 @@
 import React from "react";
 import {makeStyles} from '@material-ui/styles';
 import Toolbar from "@material-ui/core/es/Toolbar/Toolbar";
-import ImageIcon from '@material-ui/icons/Image';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import ToolButton from "./ToolButton";
 
 const useStyles = makeStyles({
     root: {
@@ -25,34 +23,60 @@ const useStyles = makeStyles({
         whiteSpace: "nowrap",
         overflow: "hidden"
     },
-    button: {
-        fontSize: 20,
-        padding: 0
-    },
     icon: {
         fontSize: 20,
         fill: "#ffffff"
+    },
+    preview: {
+        maxWidth: 70,
+        height: "auto"
     }
 });
 
-const ElementItem = props => {
-    const classes = useStyles();
-    return <Toolbar className={classes.root}>
-        <ImageIcon className={classes.icon} />
-        <span className={classes.text}>
-         {props.name}
-        </span>
-        <Tooltip title="Rename">
-            <IconButton className={classes.button}>
-                <EditIcon className={classes.icon} />
-            </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete">
-        <IconButton className={classes.button} onClick={() => {props.onRemoveElement(props.id)}}>
-            <DeleteIcon className={classes.icon} />
-        </IconButton>
-        </Tooltip>
-    </Toolbar>
+const ElementItem = ({
+                         name,
+                         id,
+                         hasPreview,
+                         onRemoveElement,
+                         source,
+                         deleteText,
+                         renameText,
+                         Icon
+}) => {
+    const { root, icon, text, preview} = useStyles();
+
+    const result = (
+        <Toolbar className={root}>
+            <Icon className={icon}/>
+            <span className={text}>
+             {name}
+            </span>
+            <ToolButton
+                title={renameText}
+                Icon={EditIcon}
+                onClick={() => {}}
+            />
+            <ToolButton
+                title={deleteText}
+                Icon={DeleteIcon}
+                onClick={() => {onRemoveElement(id)}}
+            />
+        </Toolbar>
+    );
+
+    return hasPreview ?
+        <Tooltip
+            title={
+                <img
+                    src={source}
+                    className={preview}
+                    alt={"empty Preview"}
+                />
+            }
+            placement={"left"}>
+            {result}
+        </Tooltip> :
+        result;
 };
 
 export default ElementItem;

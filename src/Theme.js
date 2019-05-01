@@ -190,6 +190,13 @@ const theme = createMuiTheme({
                 padding: "6px 12px 12px 12px",
                 flexDirection: "column"
             }
+        },
+        MuiTooltip: {
+            tooltip: {
+                color: contrastText,
+                backgroundColor: hoverText,
+                borderRadius: 0
+            }
         }
     }
 });

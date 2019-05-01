@@ -13,6 +13,8 @@
         "Library_Elements": "Elements",
         "Library_EmptyFiles": "Category empty. Add files via drag'n'drop or add icon",
         "Library_Fonts": "Fonts",
+        "Library_Item_Delete": "Delete",
+        "Library_Item_Rename": "Rename",
         "Library_Particles": "Particles",
         "Library_Skeletons": "Skeletons",
         "Library_Textures": "Textures",

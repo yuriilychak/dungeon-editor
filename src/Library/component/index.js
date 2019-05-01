@@ -54,6 +54,7 @@ const useStyles = makeStyles({
 
 const Library = props => {
     const {
+        locales,
         tabs,
         files,
         onAddFiles,
@@ -88,13 +89,19 @@ const Library = props => {
         TextureIcon
     ];
 
+    const emptyTabLocale = t(locales.emptyTab);
+    const deleteItemLocale = t(locales.itemDelete);
+    const renameItemLocale = t(locales.itemRename);
+
     const tabViews = tabs.map(tab => (
             <ContentFolder
                 title={t(tab.locale)}
                 key={tab.id}
                 icon={icons[tab.id]}
-                emptyText={t(props.emptyLocale)}
+                emptyText={emptyTabLocale}
                 files={files[tab.id]}
+                deleteText={deleteItemLocale}
+                renameText={renameItemLocale}
                 onRemoveElement={removeCallbacks[tab.id]}
             />
         )
@@ -120,12 +127,16 @@ Library.propTypes = {
         id: PropTypes.number.isRequired,
         locale: PropTypes.string.isRequired
     })).isRequired,
+    locales: PropTypes.shape({
+        emptyTab: PropTypes.string.isRequired,
+        itemDelete: PropTypes.string.isRequired,
+        itemRename: PropTypes.string.isRequired
+    }).isRequired,
     files: PropTypes.arrayOf(
         PropTypes.arrayOf(
             PropTypes.object.isRequired
         )
-    ),
-    emptyLocale: PropTypes.string.isRequired
+    )
 };
 
 export default Library;
