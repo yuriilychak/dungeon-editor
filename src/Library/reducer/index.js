@@ -21,8 +21,7 @@ import STATE from "../state";
 
 export const initialState = {
     ...StaticData,
-    files: [ [], [], [], [], [] ],
-    emptyLocale: "Library_EmptyFiles"
+    files: [ [], [], [], [], [] ]
 };
 
 const addFileInfo = (state, action, index) => {
@@ -53,7 +52,12 @@ const actionHandlers = {
     [STATE.ADD_PARTICLE]: (state, action) => addFileInfo(state, action, 2),
     [STATE.ADD_SKELETON]: (state, action) => addFileInfo(state, action, 3),
     [STATE.ADD_TEXTURE]: (state, action) => addFileInfo(state, action, 4),
-    [STATE.REMOVE_TEXTURE]: (state, action) => removeFileInfo(state, action, 4)
+    [STATE.REMOVE_ELEMENT]: (state, action) => removeFileInfo(state, action, 0),
+    [STATE.REMOVE_FONT]: (state, action) => removeFileInfo(state, action, 1),
+    [STATE.REMOVE_PARTICLE]: (state, action) => removeFileInfo(state, action, 2),
+    [STATE.REMOVE_SKELETON]: (state, action) => removeFileInfo(state, action, 3),
+    [STATE.REMOVE_TEXTURE]: (state, action) => removeFileInfo(state, action, 4),
+    [STATE.CLEAR]: (state, action) => ({...state, files: [ [], [], [], [], [] ]})
 };
 
 /**

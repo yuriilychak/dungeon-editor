@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch) => {
         onRemoveSkeletone: (id) => {
         },
         onRemoveFont: (id) => {
+            ProjectData.removeFont(id);
         },
         onRemoveTexture: id => {
             ProjectData.removeTexture(id);

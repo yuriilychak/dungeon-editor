@@ -12,7 +12,6 @@ import ParticleIcon from "../data/icon/particle.svg";
 import ElementIcon from "../data/icon/element.svg";
 import FontIcon from "../data/icon/font.svg";
 
-
 const useStyles = makeStyles({
     root: {
         width: "100%",
