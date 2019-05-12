@@ -56,6 +56,7 @@ const FONT_TYPE = {
  * @name ProjectData
  * @typedef {Object}
  * @property {string} name
+ * @property {number} guid
  * @property {Array.<TextureData>} textures
  * @property {Array.<FontData>} fonts
  */
@@ -82,13 +83,6 @@ export default {
      */
 
     _zipData: null,
-
-    /**
-     * @type {number}
-     * @private
-     */
-
-    _guid: 0,
 
     /**
      * @type {?FileReader}
@@ -147,6 +141,30 @@ export default {
     _textureFormats: ["png", "jpeg", "jpg"],
 
     /**
+     * @type {{name: string, format: string}}
+     * @private
+     */
+
+    _metaJsonConfig: {
+        name: "meta",
+        format: "json"
+    },
+
+    /**
+     * @type {string}
+     * @private
+     */
+
+    _fontDir: "fonts",
+
+    /**
+     * @type {string}
+     * @private
+     */
+
+    _textureDir: "textures",
+
+    /**
      * @function
      * @public
      */
@@ -181,32 +199,34 @@ export default {
         const textureCount = this._projectData.textures.length;
         const fontCount = this._projectData.fonts.length;
         const fileCount = textureCount + fontCount + 1;
-        let currentFileIndex = 1;
         const percentPerFile = 100 / (fileCount + 1);
+        let currentFileIndex = 1;
+        let progress = percentPerFile * currentFileIndex;
+        let fileId;
 
-        this._zip.file("meta.json", JSON.stringify(this._projectData));
-
-        store.dispatch(changeProgress(percentPerFile * currentFileIndex, "meta.json"));
+        this._packJson(this._metaJsonConfig, this._projectData, progress);
 
         this._projectData.textures.forEach(texture => {
             ++currentFileIndex;
-            this._zip.file(`textures/${texture.name}.${texture.format}`, this._textureSources[texture.id].split(',')[1], {base64: true});
-            store.dispatch(changeProgress(percentPerFile * currentFileIndex, `${texture.name}.${texture.format}`));
+            progress = percentPerFile * currentFileIndex;
+            fileId = texture.id;
+
+            this._packBinary(texture, this._textureSources[fileId], progress, this._textureDir);
         });
 
         this._projectData.fonts.forEach( font => {
             ++currentFileIndex;
+            progress = percentPerFile * currentFileIndex;
+            fileId = font.id;
 
             if (font.type === FONT_TYPE.VECTOR) {
-                this._zip.file(`fonts/${font.name}.${font.format}`, this._vectorFontSources[font.id].split(',')[1], {base64: true});
+                this._packBinary(font, this._vectorFontSources[fileId], progress, this._fontDir);
             }
             else {
-                const texture = this._bitmapFontTextures[font.id];
-                this._zip.file(`fonts/${font.name}.${font.format}`, JSON.stringify(this._bitmapFontSources[font.id]));
-                this._zip.file(`fonts/${font.name}.${texture.format}`, texture.data.split(',')[1], {base64: true});
+                const texture = this._bitmapFontTextures[fileId];
+                this._packJson(font, this._bitmapFontSources[fileId], progress, this._fontDir);
+                this._packBinary(texture, texture.data, progress, this._fontDir);
             }
-
-            store.dispatch(changeProgress(percentPerFile * currentFileIndex, `${font.name}.${font.format}`));
         });
 
         store.dispatch(changeProgress(100));
@@ -216,6 +236,20 @@ export default {
                 this._zipData = content;
                 store.dispatch(changeProgress(100, null, true));
             });
+    },
+
+    _packBinary(data, source, progress, directory = null) {
+        this._packFile(data, source.split(',')[1], progress, directory, { base64: true });
+    },
+
+    _packJson(data, source, progress, directory = null) {
+        this._packFile(data, JSON.stringify(source), progress, directory);
+    },
+
+    _packFile(data, source, progress, directory, options = undefined) {
+        const path = this._getPath(data.name, data.format, directory);
+        this._zip.file(path, source, options);
+        store.dispatch(changeProgress(progress, path));
     },
 
     /**
@@ -253,19 +287,46 @@ export default {
             .then(file =>
                     JSZip.loadAsync(file[0]).then(async content => {
                         store.dispatch(clearLibrary());
-                        const metaData = await this._extractFile(content, "meta.json");
+                        const metaData = await this._extractFile(content, this._metaJsonConfig);
                         this._projectData = JSON.parse(metaData);
                         const textures = this._projectData.textures;
                         const textureCount = textures.length;
-                        let i, texture, source;
+                        const fonts = this._projectData.fonts;
+                        const fontCount = fonts.length;
+                        let i, texture, font, source;
 
                         for (i = 0; i < textureCount; ++i) {
                             texture = textures[i];
-                            source = `data:image/${texture.format};base64,` + (await this._extractFile(content, `textures/${texture.name}.${texture.format}`));
-                            this._updateTextureSource(texture, source)
+                            source = await this._extractImage(content, texture, this._textureDir);
+                            this._updateTextureSource(texture, source);
+                        }
+
+                        for (i = 0; i < fontCount; ++i) {
+                            font = fonts[i];
+                            if (font.type === FONT_TYPE.VECTOR) {
+                                source = this._extractVectorFont(content, font, this._fontDir);
+                                this._updateVectorFontSource(font, source);
+                            }
+                            else {
+                                const fontSource = await this._extractFile(content, font, this._fontDir);
+                                const textureSource = await this._extractImage(content, {name: font.name, format: font.textureFormat}, this._fontDir);
+                                this._updateBitmapFontSource(font, fontSource, textureSource, font.textureFormat);
+                            }
                         }
                     })
             );
+    },
+
+    async _extractImage(content, data, directory = null) {
+        return `data:image/${data.format};base64,${await this._extractFile(content, data, directory, true)}`;
+    },
+
+    async _extractVectorFont(content, font, directory = null) {
+        return `data:application/x-font-${font.format};base64,${await this._extractFile(content, font, directory, true)}`;
+    },
+
+    _getPath(name, format, directory) {
+        return directory !== null ? `${directory}/${name}.${format}` : `${name}.${format}`;
     },
 
     /**
@@ -311,9 +372,10 @@ export default {
             fontData = {
                 name: font.name,
                 format: font.format,
-                id: ++this._guid,
+                id: ++this._projectData.guid,
                 type: FONT_TYPE.VECTOR,
-                hasPreview: false
+                hasPreview: false,
+                textureFormat: ""
             };
 
             this._projectData.fonts.push(fontData);
@@ -337,9 +399,10 @@ export default {
             fontData = {
                 name: font.name,
                 format: font.format,
-                id: ++this._guid,
+                id: ++this._projectData.guid,
                 type: FONT_TYPE.BITMAP,
-                hasPreview: false
+                hasPreview: false,
+                textureFormat: texture.format
             };
 
             this._projectData.fonts.push(fontData);
@@ -363,7 +426,7 @@ export default {
             const fileData = {
                 name: texture.name,
                 format: texture.format,
-                id: ++this._guid,
+                id: ++this._projectData.guid,
                 atlas: EMPTY_ATLAS_ID,
                 hasPreview: true
             };
@@ -425,10 +488,9 @@ export default {
         return FILE_TYPE.NONE;
     },
 
-    _extractFile(zip, path) {
-        const pathSplit = path.split(".");
-        const resolution = pathSplit[pathSplit.length - 1];
-        const type = this._textureFormats.indexOf(resolution) !== -1 ? "base64" : "text";
+    _extractFile(zip, data, directory = null, isBinary = false) {
+        const path = this._getPath(data.name, data.format, directory);
+        const type = isBinary ? "base64" : "text";
         return new Promise((resolve, reject) => {
             zip.file(path).async(type).then(data => {
                 resolve(data);
@@ -451,7 +513,6 @@ export default {
         let sourceObject = null;
 
         if ((/<[^>]+>|\\n+/g).test(sourceFont)) {
-            console.log("xml");
             sourceObject = this._parseXmlData(sourceFont);
         }
         else if ((/^\s*{\s*[A-Z0-9._]+\s*:\s*[A-Z0-9._]+\s*(,\s*[A-Z0-9._]+\s*:\s*[A-Z0-9._]+\s*)*\}\s*$/i).test(sourceFont)) {
@@ -464,6 +525,7 @@ export default {
         this._bitmapFontSources[font.id] = sourceObject;
         this._bitmapFontTextures[font.id] = {
             data: sourceTexture,
+            name: font.name,
             format: textureFormat
         };
         store.dispatch(addFont(font));
