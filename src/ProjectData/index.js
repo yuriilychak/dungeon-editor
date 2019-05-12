@@ -286,8 +286,6 @@ export default {
 
         this._addFonts(fileElements);
         this._addTexture(fileElements);
-
-        console.log(fileElements);
     },
 
     _addFonts(elements) {
@@ -335,7 +333,7 @@ export default {
 
             this._removeElement(elements, font);
             this._removeElement(elements, texture);
-            this._updateBitmapFontSource(fontData, font.data, texture.data);
+            this._updateBitmapFontSource(fontData, font.data, texture.data, texture.format);
         });
     },
 
@@ -432,13 +430,107 @@ export default {
      * @param {FontData} font
      * @param {string} sourceFont
      * @param {string} sourceTexture
+     * @param {string} textureFormat
      * @private
      */
 
-    _updateBitmapFontSource(font, sourceFont, sourceTexture) {
-        this._bitmapFontSources[font.id] = sourceFont;
-        this._bitmapFontTextures[font.id] = sourceTexture;
+    _updateBitmapFontSource(font, sourceFont, sourceTexture, textureFormat) {
+        let sourceObject = null;
+
+        if ((/<[^>]+>|\\n+/g).test(sourceFont)) {
+            console.log("xml");
+            sourceObject = this._parseXmlData(sourceFont);
+        }
+        else if ((/^\s*{\s*[A-Z0-9._]+\s*:\s*[A-Z0-9._]+\s*(,\s*[A-Z0-9._]+\s*:\s*[A-Z0-9._]+\s*)*\}\s*$/i).test(sourceFont)) {
+            sourceObject = JSON.parse(sourceFont);
+        }
+        else {
+            sourceObject = this._parseTextData(sourceFont);
+        }
+
+        this._bitmapFontSources[font.id] = sourceObject;
+        this._bitmapFontTextures[font.id] = {
+            data: sourceTexture,
+            format: textureFormat
+        };
         store.dispatch(addFont(font));
+    },
+
+    _parseXmlData(data) {
+        /**
+         * @type {string[]}
+         */
+        const rows = data.split("\n");
+        const result = {
+            chars: [],
+            kerning: []
+        };
+
+        rows.forEach(row => {
+            const trimmedRow = row.trim().replace(/[<"/>]/g, "");
+            this._parseRow(result, trimmedRow)
+        });
+        return result;
+    },
+
+    _parseTextData(data) {
+        /**
+         * @type {string[]}
+         */
+        const rows = data.split("\n");
+        const result = {
+            chars: [],
+            kerning: []
+        };
+        rows.forEach(row => this._parseRow(result, row));
+
+        return result;
+    },
+
+    _parseRow(result, row) {
+        switch (true) {
+            case row.startsWith("kerning "): {
+                result.kerning.push(this._convertLineToJson(row));
+                break;
+            }
+            case row.startsWith("info "):
+            case row.startsWith("common "): {
+                Object.assign(result, this._convertLineToJson(row));
+                break;
+            }
+            case row.startsWith("char "): {
+                result.chars.push(this._convertLineToJson(row));
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    },
+
+    _convertLineToJson(row) {
+        let values = row.split(" ");
+        let splitValue;
+        values.shift();
+        values = values.map( value => {
+            splitValue = value.split("=");
+
+            if (isNaN(splitValue[1])) {
+                if (splitValue[1].indexOf(",") !== -1) {
+                    splitValue[1] = `[${splitValue[1]}]`;
+                }
+                else {
+                    splitValue[1] = `"${splitValue[1]}"`;
+                }
+            }
+            else if (splitValue[1].length === 0) {
+                splitValue[1] = "\"\"";
+            }
+
+            return `"${splitValue[0]}":${splitValue[1]}`;
+        });
+        const jsonString = `{ ${values.join(", ")} }`;
+        return JSON.parse(jsonString);
     },
 
     /**
