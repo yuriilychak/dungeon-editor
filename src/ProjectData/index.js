@@ -178,10 +178,9 @@ export default {
     export() {
         this._zip = new JSZip();
 
-        const textures = this._projectData.textures;
-        const textureCount = textures.length;
-        let i, texture;
-        const fileCount = textureCount + 1;
+        const textureCount = this._projectData.textures.length;
+        const fontCount = this._projectData.fonts.length;
+        const fileCount = textureCount + fontCount + 1;
         let currentFileIndex = 1;
         const percentPerFile = 100 / (fileCount + 1);
 
@@ -189,12 +188,26 @@ export default {
 
         store.dispatch(changeProgress(percentPerFile * currentFileIndex, "meta.json"));
 
-        for (i = 0; i < textureCount; ++i) {
+        this._projectData.textures.forEach(texture => {
             ++currentFileIndex;
-            texture = textures[i];
             this._zip.file(`textures/${texture.name}.${texture.format}`, this._textureSources[texture.id].split(',')[1], {base64: true});
             store.dispatch(changeProgress(percentPerFile * currentFileIndex, `${texture.name}.${texture.format}`));
-        }
+        });
+
+        this._projectData.fonts.forEach( font => {
+            ++currentFileIndex;
+
+            if (font.type === FONT_TYPE.VECTOR) {
+                this._zip.file(`fonts/${font.name}.${font.format}`, this._vectorFontSources[font.id].split(',')[1], {base64: true});
+            }
+            else {
+                const texture = this._bitmapFontTextures[font.id];
+                this._zip.file(`fonts/${font.name}.${font.format}`, JSON.stringify(this._bitmapFontSources[font.id]));
+                this._zip.file(`fonts/${font.name}.${texture.format}`, texture.data.split(',')[1], {base64: true});
+            }
+
+            store.dispatch(changeProgress(percentPerFile * currentFileIndex, `${font.name}.${font.format}`));
+        });
 
         store.dispatch(changeProgress(100));
 
