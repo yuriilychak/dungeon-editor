@@ -6,7 +6,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from "./store";
 import "./Locale";
+import ProjectData from "./ProjectData";
 
+ProjectData.init();
 
 ReactDOM.render(
     <Provider store={store}>

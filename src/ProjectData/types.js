@@ -23,8 +23,11 @@
  * @typedef {Object}
  * @property {string} name
  * @property {number} guid
- * @property {Array.<TextureData>} textures
+ * @property {Array.<Object>} elements
  * @property {Array.<FontData>} fonts
+ * @property {Array.<Object>} particles
+ * @property {Array.<Object>} skeletons
+ * @property {Array.<TextureData>} textures
  */
 
 /**

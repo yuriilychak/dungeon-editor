@@ -22,6 +22,11 @@ export default class FileComponent {
 
     async import(zip, files, progressCallback, errorCallback) {
         this.clear();
+
+        if (!files) {
+            return;
+        }
+
         this._fileInfo = files;
     }
 
@@ -131,7 +136,7 @@ export default class FileComponent {
     }
 
     /**
-     * @protected
+     * @public
      * @returns {string}
      */
 

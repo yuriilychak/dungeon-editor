@@ -3,10 +3,13 @@ import fileDialog from "file-dialog";
 import { saveAs } from "file-saver";
 import store from "../store";
 import {changeProgress} from "../ExportProjectDialog/action";
-import {addTexture, addFont, removeTexture, removeFont, clearLibrary} from "../Library/action";
+import * as LibraryActions from "../Library/action";
 import FileUtil from "./FileUtil";
-import TextureComponent from "./component/TextureComponent";
 import FontComponent from "./component/FontComponent";
+import ParticleComponent from "./component/ParticleComponent";
+import TextureComponent from "./component/TextureComponent";
+import ElementComponent from "./component/ElementComponent";
+import SkeletonComponent from "./component/SkeletonComponent";
 
 export default {
     /**
@@ -48,18 +51,41 @@ export default {
     },
 
     /**
-     * @type {TextureComponent}
+     * @type {FileComponent[]}
      * @private
      */
 
-    _textureComponent: new TextureComponent("textures"),
+    _components: null,
 
     /**
-     * @type {FontComponent}
+     * @type {Function[]}
      * @private
      */
 
-    _fontComponent: new FontComponent("fonts"),
+    _addHandlers: null,
+
+    /**
+     * @method
+     * @public
+     */
+
+    init() {
+        this._components = [
+            new ElementComponent("elements"),
+            new FontComponent("fonts"),
+            new ParticleComponent("particles"),
+            new SkeletonComponent("skeletons"),
+            new TextureComponent("textures"),
+        ];
+
+        this._addHandlers = [
+            data => store.dispatch(LibraryActions.addElement(data)),
+            data => store.dispatch(LibraryActions.addFont(data)),
+            data => store.dispatch(LibraryActions.addParticle(data)),
+            data => store.dispatch(LibraryActions.addSkeleton(data)),
+            data => store.dispatch(LibraryActions.addTexture(data))
+        ];
+    },
 
     /**
      * @function
@@ -77,41 +103,39 @@ export default {
      */
 
     export() {
-        this._zip = new JSZip();
+        const zip = new JSZip();
+        const maxPercent = 100;
+        let fileCount = 1;
 
-        const textureCount = this._textureComponent.fileCount;
-        const fontCount = this._fontComponent.fileCount;
-        const fileCount = textureCount + fontCount + 1;
-        const percentPerFile = 100 / (fileCount + 1);
+        this._components.forEach(component => fileCount += component.fileCount);
+
+        const percentPerFile = maxPercent / (fileCount + 1);
         let currentFileIndex = 0;
         let progress = 0;
+
         const progressCallback = path => {
             ++currentFileIndex;
             progress = percentPerFile * currentFileIndex;
             store.dispatch(changeProgress(progress, path));
         };
+        const projectData = {
+            name: this._projectName,
+            guid: this._guid
+        };
 
-        FileUtil.packJson(
-            this._zip,
-            this._metaJsonConfig,
-            {
-                name: this._projectName,
-                guid: this._guid,
-                textures: this._textureComponent.info,
-                fonts: this._fontComponent.info
-            },
-            progressCallback
-        );
+        this._components.forEach(component => {
+            component.export(zip, progressCallback);
+            projectData[component.fileDir] = component.info;
+        });
 
-        this._textureComponent.export(this._zip, progressCallback);
-        this._fontComponent.export(this._zip, progressCallback);
+        FileUtil.packJson(zip, this._metaJsonConfig, projectData, progressCallback);
 
-        store.dispatch(changeProgress(100));
+        store.dispatch(changeProgress(maxPercent));
 
-        this._zip.generateAsync({ type: "blob" })
+        zip.generateAsync({ type: "blob" })
             .then(content => {
                 this._zipData = content;
-                store.dispatch(changeProgress(100, null, true));
+                store.dispatch(changeProgress(maxPercent, null, true));
             });
     },
 
@@ -122,7 +146,6 @@ export default {
      */
 
     clearZipData() {
-        this._zip = null;
         this._zipData = null;
     },
 
@@ -135,7 +158,6 @@ export default {
         if (this._zipData === null) {
             return;
         }
-        this._zip = null;
         saveAs(this._zipData, `${this._projectName}.zip`);
     },
 
@@ -148,15 +170,23 @@ export default {
         fileDialog({ multiple: false, accept: "application/zip" })
             .then(file =>
                     JSZip.loadAsync(file[0]).then(async content => {
-                        store.dispatch(clearLibrary());
+                        store.dispatch(LibraryActions.clearLibrary());
                         const metaData = await FileUtil.extractFile(content, this._metaJsonConfig);
+                        /**
+                         * @type {ProjectData}
+                         */
                         const projectData = JSON.parse(metaData);
 
                         this._guid = projectData.guid;
                         this._projectName = projectData.name;
 
-                        await this._textureComponent.import(content, projectData.textures, this._addTextureHandler);
-                        await this._fontComponent.import(content, projectData.fonts, this._addFontHandler);
+                        const componentCount = this._components.length;
+                        let i, component;
+
+                        for (i = 0; i < componentCount; ++i) {
+                            component = this._components[i];
+                            await component.import(content, projectData[component.fileDir], this._addHandlers[i]);
+                        }
                     })
             );
     },
@@ -170,29 +200,36 @@ export default {
     async addFiles(files) {
         const fileElements = await FileUtil.readUploadedFiles(files);
 
-        this._guid = this._fontComponent.add(fileElements, this._guid, this._addFontHandler);
-        this._guid = this._textureComponent.add(fileElements, this._guid, this._addTextureHandler);
+        this._components.forEach((component, index) => {
+            this._guid = component.add(fileElements, this._guid, this._addHandlers[index]);
+        });
     },
 
-    removeTexture(id) {
-        if (!this._textureComponent.remove(id)) {
-            return;
-        }
-        store.dispatch(removeTexture(id));
+    removeElement(id) {
+        this._removeFile(id, 0, LibraryActions.removeElement);
     },
 
     removeFont(id) {
-        if (!this._fontComponent.remove(id)) {
-            return;
+        this._removeFile(id, 1, LibraryActions.removeFont);
+    },
+
+    removeParticle(id) {
+        this._removeFile(id, 2, LibraryActions.removeParticle);
+    },
+
+    removeSkeleton(id) {
+        this._removeFile(id, 3, LibraryActions.removeSkeleton);
+    },
+
+    removeTexture(id) {
+        this._removeFile(id, 4, LibraryActions.removeTexture);
+    },
+
+    _removeFile(id, componentIndex, action) {
+        if (!this._components[componentIndex].remove(id)) {
+            return false;
         }
-        store.dispatch(removeFont(id));
-    },
-
-    _addFontHandler(data) {
-        store.dispatch(addFont(data));
-    },
-
-    _addTextureHandler(data) {
-        store.dispatch(addTexture(data));
+        store.dispatch(action(id));
+        return true;
     }
 }

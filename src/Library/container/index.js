@@ -8,13 +8,16 @@ const mapStateToProps = (state) => {
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
         onRemoveElement: (id) => {
+            ProjectData.removeElement(id);
         },
         onRemoveParticle: (id) => {
+            ProjectData.removeParticle(id);
         },
         onRemoveSkeletone: (id) => {
+            ProjectData.removeSkeleton(id);
         },
         onRemoveFont: (id) => {
             ProjectData.removeFont(id);
