@@ -121,6 +121,10 @@ export default class FileComponent {
      */
 
     removeElement(elements, searchElement) {
+        if (!searchElement) {
+            return false;
+        }
+
         const spliceIndex = elements.findIndex(element => element === searchElement);
 
         if (spliceIndex === -1) {

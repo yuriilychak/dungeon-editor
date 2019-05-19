@@ -109,7 +109,7 @@ export default class FontComponent extends FileComponent {
             fontData = {
                 name: font.name,
                 format: font.format,
-                id: ++this._projectData.guid,
+                id: ++guid,
                 type: FONT_TYPE.BITMAP,
                 hasPreview: false,
                 textureFormat: texture.format
