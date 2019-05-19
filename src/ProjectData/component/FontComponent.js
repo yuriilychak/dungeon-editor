@@ -44,48 +44,22 @@ export default class FontComponent extends FileComponent {
 
     /**
      * @method
-     * @public
+     * @protected
      * @param {JSZip} zip
-     * @param {ProgressCallback} progressCallback
+     * @param {FontResourceData} font
+     * @param {Function} progressCallback
+     * @param {Function} errorCallback
      */
 
-    export(zip, progressCallback) {
-        let fileId;
-        this.info.forEach(
-            /**
-             * @param {FontData} font
-             */
-            font => {
-                fileId = font.id;
-
-                if (font.type === FONT_TYPE.VECTOR) {
-                    FileUtil.packBinary(zip, font, this._vectorSources[fileId], progressCallback, this.fileDir);
-                }
-                else {
-                    const texture = this._bitmapTextures[fileId];
-                    FileUtil.packJson(zip, font, this._bitmapSources[fileId], progressCallback, this.fileDir);
-                    FileUtil.packBinary(zip, texture, texture.data, ()=>{}, this.fileDir);
-                }
-            });
-    }
-
-    async import(zip, files, progressCallback, errorCallback) {
-        await super.import(zip, files, progressCallback, errorCallback);
-
-        const fontCount = this.fileCount;
-        let i, font, source;
-
-        for (i = 0; i < fontCount; ++i) {
-            font = this.info[i];
-            if (font.type === FONT_TYPE.VECTOR) {
-                source = await FileUtil.extractVectorFont(zip, font, this.fileDir);
-                this._updateVectorFontSource(font, source, progressCallback);
-            }
-            else {
-                const fontSource = await FileUtil.extractFile(zip, font, this.fileDir);
-                const textureSource = await FileUtil.extractImage(zip, {name: font.name, format: font.textureFormat}, this.fileDir);
-                this._updateBitmapFontSource(font, fontSource, textureSource, font.textureFormat, progressCallback);
-            }
+    async importElement(zip, font, progressCallback, errorCallback) {
+        if (font.type === FONT_TYPE.VECTOR) {
+            const source = await FileUtil.extractVectorFont(zip, font, this.fileDir);
+            this._updateVectorFontSource(font, source, progressCallback);
+        }
+        else {
+            const fontSource = await FileUtil.extractFile(zip, font, this.fileDir);
+            const textureSource = await FileUtil.extractImage(zip, {name: font.name, format: font.textureFormat}, this.fileDir);
+            this._updateBitmapFontSource(font, fontSource, textureSource, font.textureFormat, progressCallback);
         }
     }
 
@@ -179,6 +153,27 @@ export default class FontComponent extends FileComponent {
         }
 
         return font;
+    }
+
+    /**
+     * @method
+     * @protected
+     * @param {JSZip} zip
+     * @param {FontData} element
+     * @param {Function} progressCallback
+     */
+
+    exportElement(zip, element, progressCallback) {
+        const fileId = element.id;
+
+        if (element.type === FONT_TYPE.VECTOR) {
+            FileUtil.packBinary(zip, element, this._vectorSources[fileId], progressCallback, this.fileDir);
+        }
+        else {
+            const texture = this._bitmapTextures[fileId];
+            FileUtil.packJson(zip, element, this._bitmapSources[fileId], progressCallback, this.fileDir);
+            FileUtil.packBinary(zip, texture, texture.data, ()=>{}, this.fileDir);
+        }
     }
 
     /**

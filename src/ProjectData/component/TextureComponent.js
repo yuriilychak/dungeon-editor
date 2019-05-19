@@ -19,30 +19,29 @@ export default class TextureComponent extends FileComponent {
 
     /**
      * @method
-     * @public
+     * @protected
      * @param {JSZip} zip
-     * @param {ProgressCallback} progressCallback
+     * @param {FileData} element
+     * @param {Function} progressCallback
      */
 
-    export(zip, progressCallback) {
-        let fileId;
-        this.info.forEach(texture => {
-            fileId = texture.id;
-            FileUtil.packBinary(zip, texture, this._sources[fileId], progressCallback, this.fileDir);
-        });
+    exportElement(zip, element, progressCallback) {
+        const fileId = element.id;
+        FileUtil.packBinary(zip, element, this._sources[fileId], progressCallback, this.fileDir);
     }
 
-    async import(zip, files, progressCallback, errorCallback) {
-        await super.import(zip, files, progressCallback, errorCallback);
+    /**
+     * @method
+     * @protected
+     * @param {JSZip} zip
+     * @param {FileData} file
+     * @param {Function} progressCallback
+     * @param {Function} errorCallback
+     */
 
-        const textureCount = this.fileCount;
-        let i, texture, source;
-
-        for (i = 0; i < textureCount; ++i) {
-            texture = this.info[i];
-            source = await FileUtil.extractImage(zip, texture, this.fileDir);
-            this._updateTextureSource(texture, source, progressCallback);
-        }
+    async importElement(zip, file, progressCallback, errorCallback) {
+        const  source = await FileUtil.extractImage(zip, file, this.fileDir);
+        this._updateTextureSource(file, source, progressCallback);
     }
 
     clear() {

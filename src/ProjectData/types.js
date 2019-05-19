@@ -46,6 +46,16 @@
  */
 
 /**
+ * @name FontResourceData
+ * @typedef {Object}
+ * @property {string} name
+ * @property {string} format
+ * @property {number} id
+ * @property {FONT_TYPE} type
+ * @property {string} textureFormat
+ */
+
+/**
  * @name BMFontTextureData
  * @typedef {Object}
  * @property {string} name

@@ -20,6 +20,15 @@ export default class FileComponent {
         this._fileDir = fileDir;
     }
 
+    /**
+     * @method
+     * @protected
+     * @param {JSZip} zip
+     * @param {FileData[]} files
+     * @param {Function} progressCallback
+     * @param {Function} errorCallback
+     */
+
     async import(zip, files, progressCallback, errorCallback) {
         this.clear();
 
@@ -28,9 +37,26 @@ export default class FileComponent {
         }
 
         this._fileInfo = files;
+
+        const fileCount = this._fileInfo.length;
+
+        for (let i = 0; i < fileCount; ++i) {
+            await this.importElement(zip, this._fileInfo[i], progressCallback, errorCallback);
+        }
     }
 
-    export(zip, progressCallback) {}
+    /**
+     * @method
+     * @public
+     * @param {Object} projectData
+     * @param {JSZip} zip
+     * @param {Function} progressCallback
+     */
+
+    export(projectData, zip, progressCallback) {
+        projectData[this._fileDir] = this._fileInfo;
+        this._fileInfo.forEach(info => this.exportElement(zip, info, progressCallback));
+    }
 
     /**
      * @method
@@ -116,6 +142,27 @@ export default class FileComponent {
             formats.indexOf(element.format) !== -1
         );
     }
+
+    /**
+     * @method
+     * @protected
+     * @param {JSZip} zip
+     * @param {FileData} element
+     * @param {Function} progressCallback
+     */
+
+    exportElement(zip, element, progressCallback) {}
+
+    /**
+     * @method
+     * @protected
+     * @param {JSZip} zip
+     * @param {FileData} file
+     * @param {Function} progressCallback
+     * @param {Function} errorCallback
+     */
+
+    async importElement(zip, file, progressCallback, errorCallback) {}
 
     /**
      * @public

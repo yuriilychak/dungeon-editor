@@ -123,10 +123,7 @@ export default {
             guid: this._guid
         };
 
-        this._components.forEach(component => {
-            component.export(zip, progressCallback);
-            projectData[component.fileDir] = component.info;
-        });
+        this._components.forEach(component => component.export(projectData, zip, progressCallback));
 
         FileUtil.packJson(zip, this._metaJsonConfig, projectData, progressCallback);
 

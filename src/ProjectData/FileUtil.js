@@ -56,7 +56,6 @@ export default {
     extractFile(zip, data, directory = null, isBinary = false) {
         const path = this._getPath(data, directory);
         const type = isBinary ? "base64" : "text";
-        console.log(path);
         return new Promise((resolve, reject) => {
             zip.file(path).async(type).then(data => {
                 resolve(data);
