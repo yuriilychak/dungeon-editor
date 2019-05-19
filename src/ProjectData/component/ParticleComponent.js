@@ -1,5 +1,7 @@
 import FileComponent from "./FileComponent";
 import FileUtil from "../FileUtil";
+import FILE_TYPE from "../enum/FileType";
+import FILE_FORMAT from "../enum/FileFormat";
 
 export default class ParticleComponent extends FileComponent {
     constructor(fileDir) {
@@ -36,7 +38,70 @@ export default class ParticleComponent extends FileComponent {
      */
 
     async importElement(zip, file, progressCallback, errorCallback) {
-        const source = JSON.parse(await FileUtil.extractFile(zip, file, this.fileDir));
-        this._updateTextureSource(file, source, progressCallback);
+        this._updateSource(file, await FileUtil.extractFile(zip, file, this.fileDir), progressCallback);
+    }
+
+    /**
+     * @desc Add elements to storage. Return last generated guid.
+     * @method
+     * @public
+     * @param {Object[]} elements
+     * @param {number} guid
+     * @param {Function} progressCallback
+     * @returns {number}
+     */
+
+    add(elements, guid, progressCallback) {
+        const jsons = this.filterFiles(elements, FILE_TYPE.TEXT, FILE_FORMAT.JSON);
+
+        let data;
+
+
+        jsons.forEach(json => {
+            if (json.data.indexOf("maxParticles") === -1) {
+                return;
+            }
+
+            data = {
+                name: json.name,
+                format: json.format,
+                id: ++guid,
+                hasPreview: false
+            };
+
+            this.addFileInfo(data);
+            this.removeElement(elements, json);
+            this._updateSource(data, json.data, progressCallback);
+        });
+
+        return guid;
+    }
+
+    clear() {
+        super.clear();
+        this._sources = {};
+    }
+
+    /**
+     * @public
+     * @param {number} id
+     * @returns {Object | null}
+     */
+
+    remove(id) {
+        const particle = super.remove(id);
+
+        if (!particle) {
+            return particle;
+        }
+
+        delete this._sources[id];
+
+        return particle;
+    }
+
+    _updateSource(data, source, progressCallback) {
+        this._sources[data.id] = JSON.parse(source);
+        progressCallback(data);
     }
 }

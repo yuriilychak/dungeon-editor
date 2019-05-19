@@ -41,8 +41,14 @@ export default class TextureComponent extends FileComponent {
 
     async importElement(zip, file, progressCallback, errorCallback) {
         const  source = await FileUtil.extractImage(zip, file, this.fileDir);
-        this._updateTextureSource(file, source, progressCallback);
+        this._updateSource(file, source, progressCallback);
     }
+
+    /**
+     * @desc Clear sources and file information;
+     * @method
+     * @public
+     */
 
     clear() {
         super.clear();
@@ -73,7 +79,7 @@ export default class TextureComponent extends FileComponent {
                 hasPreview: true
             };
             this.addFileInfo(fileData);
-            this._updateTextureSource(fileData, texture.data, progressCallback);
+            this._updateSource(fileData, texture.data, progressCallback);
             this.removeElement(elements, texture);
         });
         return guid;
@@ -105,7 +111,7 @@ export default class TextureComponent extends FileComponent {
      * @param {Function} progressCallback
      */
 
-    _updateTextureSource(texture, source, progressCallback) {
+    _updateSource(texture, source, progressCallback) {
         this._sources[texture.id] = source;
         progressCallback({...texture, source});
     }

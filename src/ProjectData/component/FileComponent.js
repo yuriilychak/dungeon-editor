@@ -59,6 +59,7 @@ export default class FileComponent {
     }
 
     /**
+     * @desc Clear sources and file information;
      * @method
      * @public
      */
@@ -77,7 +78,9 @@ export default class FileComponent {
      * @returns {number}
      */
 
-    add(elements, guid, progressCallback) {}
+    add(elements, guid, progressCallback) {
+        return guid;
+    }
 
     /**
      * @param {FileData} value

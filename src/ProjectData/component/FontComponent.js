@@ -124,6 +124,12 @@ export default class FontComponent extends FileComponent {
         return guid;
     }
 
+    /**
+     * @desc Clear sources and file information;
+     * @method
+     * @public
+     */
+
     clear() {
         super.clear();
         this._vectorSources = {};
