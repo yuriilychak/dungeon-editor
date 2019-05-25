@@ -22,7 +22,7 @@ export default class FileComponent {
 
     /**
      * @method
-     * @protected
+     * @public
      * @param {JSZip} zip
      * @param {FileData[]} files
      * @param {Function} progressCallback

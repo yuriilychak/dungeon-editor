@@ -2,23 +2,28 @@
   "tabs": [
     {
       "id": 0,
-      "locale": "Library_Elements"
+      "locale": "Library_Elements",
+      "icon": "element"
     },
     {
       "id": 1,
-      "locale": "Library_Fonts"
+      "locale": "Library_Fonts",
+      "icon": "font"
     },
     {
       "id": 2,
-      "locale": "Library_Particles"
+      "locale": "Library_Particles",
+      "icon": "particle"
     },
     {
       "id": 3,
-      "locale": "Library_Skeletons"
+      "locale": "Library_Skeletons",
+      "icon":"skeleton"
     },
     {
       "id": 4,
-      "locale": "Library_Textures"
+      "locale": "Library_Textures",
+      "icon": "texture"
     }
   ],
   "locales": {

@@ -10,20 +10,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onRemoveElement: (id) => {
-            ProjectData.removeElement(id);
-        },
-        onRemoveParticle: (id) => {
-            ProjectData.removeParticle(id);
-        },
-        onRemoveSkeletone: (id) => {
-            ProjectData.removeSkeleton(id);
-        },
-        onRemoveFont: (id) => {
-            ProjectData.removeFont(id);
-        },
-        onRemoveTexture: id => {
-            ProjectData.removeTexture(id);
+        onRemoveFile: (id, sectionId) => {
+            ProjectData.removeFile(id, sectionId);
         },
         onAddFiles: files => {
             ProjectData.addFiles(files);

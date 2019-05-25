@@ -5,6 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Tooltip from '@material-ui/core/Tooltip';
 import ToolButton from "./ToolButton";
+import Icon from "./Icon";
 
 const useStyles = makeStyles({
     root: {
@@ -23,10 +24,6 @@ const useStyles = makeStyles({
         whiteSpace: "nowrap",
         overflow: "hidden"
     },
-    icon: {
-        fontSize: 20,
-        fill: "#ffffff"
-    },
     preview: {
         maxWidth: 70,
         height: "auto"
@@ -41,13 +38,15 @@ const ElementItem = ({
                          source,
                          deleteText,
                          renameText,
-                         Icon
+                         icon,
+                         sectionId
+
 }) => {
-    const { root, icon, text, preview} = useStyles();
+    const { root, text, preview} = useStyles();
 
     const result = (
         <Toolbar className={root}>
-            <Icon className={icon}/>
+            <Icon name={`${icon}_element`}/>
             <span className={text}>
              {name}
             </span>
@@ -59,7 +58,7 @@ const ElementItem = ({
             <ToolButton
                 title={deleteText}
                 Icon={DeleteIcon}
-                onClick={() => {onRemoveElement(id)}}
+                onClick={() => {onRemoveElement(id, sectionId)}}
             />
         </Toolbar>
     );

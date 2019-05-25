@@ -6,11 +6,6 @@ import PropTypes from "prop-types";
 import {useTranslation} from "react-i18next";
 
 import ContentFolder from "./ContentFolder";
-import TextureIcon from "../data/icon/texture.svg";
-import SkeletonIcon from "../data/icon/skeleton.svg";
-import ParticleIcon from "../data/icon/particle.svg";
-import ElementIcon from "../data/icon/element.svg";
-import FontIcon from "../data/icon/font.svg";
 
 const useStyles = makeStyles({
     root: {
@@ -57,11 +52,7 @@ const Library = props => {
         tabs,
         files,
         onAddFiles,
-        onRemoveElement,
-        onRemoveParticle,
-        onRemoveSkeletone,
-        onRemoveFont,
-        onRemoveTexture
+        onRemoveFile
     } = props;
     const {t} = useTranslation();
     const onDrop = useCallback(onAddFiles, []);
@@ -72,22 +63,6 @@ const Library = props => {
     });
     const classes = useStyles();
 
-    const removeCallbacks = [
-        onRemoveElement,
-        onRemoveFont,
-        onRemoveParticle,
-        onRemoveSkeletone,
-        onRemoveTexture
-    ];
-
-    const icons = [
-        ElementIcon,
-        FontIcon,
-        ParticleIcon,
-        SkeletonIcon,
-        TextureIcon
-    ];
-
     const emptyTabLocale = t(locales.emptyTab);
     const deleteItemLocale = t(locales.itemDelete);
     const renameItemLocale = t(locales.itemRename);
@@ -95,13 +70,14 @@ const Library = props => {
     const tabViews = tabs.map(tab => (
             <ContentFolder
                 title={t(tab.locale)}
+                icon={tab.icon}
                 key={tab.id}
-                icon={icons[tab.id]}
+                id={tab.id}
                 emptyText={emptyTabLocale}
                 files={files[tab.id]}
                 deleteText={deleteItemLocale}
                 renameText={renameItemLocale}
-                onRemoveElement={removeCallbacks[tab.id]}
+                onRemoveElement={onRemoveFile}
             />
         )
     );
@@ -124,7 +100,8 @@ const Library = props => {
 Library.propTypes = {
     tabs: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number.isRequired,
-        locale: PropTypes.string.isRequired
+        locale: PropTypes.string.isRequired,
+        icon: PropTypes.string.isRequired
     })).isRequired,
     locales: PropTypes.shape({
         emptyTab: PropTypes.string.isRequired,

@@ -24,40 +24,30 @@ export const initialState = {
     files: [ [], [], [], [], [] ]
 };
 
-const addFileInfo = (state, action, index) => {
-    const files = state.files.slice(0);
-    files[index] = [...files[index], action.payload];
-    return {
-        ...state,
-        files
-    }
-};
-
-const removeFileInfo = (state, action, index) => {
-    const files = state.files.slice(0);
-    files[index] = files[index].filter( file => file.id !== action.payload);
-    return {
-        ...state,
-        files
-    }
-};
-
 /**
  * @type {Object.<string, function(LibraryState, ActionData): LibraryState>}
  */
 
 const actionHandlers = {
-    [STATE.ADD_ELEMENT]: (state, action) => addFileInfo(state, action, 0),
-    [STATE.ADD_FONT]: (state, action) => addFileInfo(state, action, 1),
-    [STATE.ADD_PARTICLE]: (state, action) => addFileInfo(state, action, 2),
-    [STATE.ADD_SKELETON]: (state, action) => addFileInfo(state, action, 3),
-    [STATE.ADD_TEXTURE]: (state, action) => addFileInfo(state, action, 4),
-    [STATE.REMOVE_ELEMENT]: (state, action) => removeFileInfo(state, action, 0),
-    [STATE.REMOVE_FONT]: (state, action) => removeFileInfo(state, action, 1),
-    [STATE.REMOVE_PARTICLE]: (state, action) => removeFileInfo(state, action, 2),
-    [STATE.REMOVE_SKELETON]: (state, action) => removeFileInfo(state, action, 3),
-    [STATE.REMOVE_TEXTURE]: (state, action) => removeFileInfo(state, action, 4),
-    [STATE.CLEAR]: (state, action) => ({...state, files: [ [], [], [], [], [] ]})
+    [STATE.ADD_FILE]: (state, action) => {
+        const files = state.files.slice(0);
+        const index = action.payload.sectionId;
+        files[index] = [...files[index], action.payload.data];
+        return {
+            ...state,
+            files
+        }
+    },
+    [STATE.REMOVE_FILE]: (state, action) => {
+        const files = state.files.slice(0);
+        const index = action.payload.sectionId;
+        files[index] = files[index].filter( file => file.id !== action.payload.id);
+        return {
+            ...state,
+            files
+        }
+    },
+    [STATE.CLEAR]: (state) => ({...state, files: [ [], [], [], [], [] ]})
 };
 
 /**

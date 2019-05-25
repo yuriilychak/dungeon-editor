@@ -65,6 +65,14 @@ export default {
     _addHandlers: null,
 
     /**
+     * @type {Function}
+     * @private
+     */
+
+    _errorHandler: null,
+
+
+    /**
      * @method
      * @public
      */
@@ -78,13 +86,14 @@ export default {
             new TextureComponent("textures"),
         ];
 
-        this._addHandlers = [
-            data => store.dispatch(LibraryActions.addElement(data)),
-            data => store.dispatch(LibraryActions.addFont(data)),
-            data => store.dispatch(LibraryActions.addParticle(data)),
-            data => store.dispatch(LibraryActions.addSkeleton(data)),
-            data => store.dispatch(LibraryActions.addTexture(data))
-        ];
+        this._addHandlers = this._components.map((component, index) => (
+            data => store.dispatch(LibraryActions.addFile(data, index)
+            )
+        ));
+
+        this._errorHandler = error => {
+            console.warn(`error when import: ${error}`);
+        }
     },
 
     /**
@@ -182,7 +191,7 @@ export default {
 
                         for (i = 0; i < componentCount; ++i) {
                             component = this._components[i];
-                            await component.import(content, projectData[component.fileDir], this._addHandlers[i]);
+                            await component.import(content, projectData[component.fileDir], this._addHandlers[i], this._errorHandler);
                         }
                     })
             );
@@ -202,31 +211,11 @@ export default {
         });
     },
 
-    removeElement(id) {
-        this._removeFile(id, 0, LibraryActions.removeElement);
-    },
-
-    removeFont(id) {
-        this._removeFile(id, 1, LibraryActions.removeFont);
-    },
-
-    removeParticle(id) {
-        this._removeFile(id, 2, LibraryActions.removeParticle);
-    },
-
-    removeSkeleton(id) {
-        this._removeFile(id, 3, LibraryActions.removeSkeleton);
-    },
-
-    removeTexture(id) {
-        this._removeFile(id, 4, LibraryActions.removeTexture);
-    },
-
-    _removeFile(id, componentIndex, action) {
-        if (!this._components[componentIndex].remove(id)) {
+    removeFile(id, sectionIndex) {
+        if (!this._components[sectionIndex].remove(id)) {
             return false;
         }
-        store.dispatch(action(id));
+        store.dispatch(LibraryActions.removeFile(id, sectionIndex));
         return true;
     }
 }
