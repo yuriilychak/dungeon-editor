@@ -3,7 +3,6 @@ import {makeStyles} from '@material-ui/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 
-
 const useStyles = makeStyles({
     button: {
         fontSize: 20,
@@ -15,11 +14,16 @@ const useStyles = makeStyles({
     }
 });
 
-const ToolButton = ({title, onClick, Icon}) => {
+const ToolButton = ({title, onClick, Icon, owner, hasPopup}) => {
     const {button, icon} = useStyles();
     return (
         <Tooltip title={title}>
-            <IconButton className={button} onClick={onClick}>
+            <IconButton
+                className={button}
+                onClick={onClick}
+                aria-owns={owner}
+                aria-haspopup={hasPopup}
+            >
                 <Icon className={icon} />
             </IconButton>
         </Tooltip>

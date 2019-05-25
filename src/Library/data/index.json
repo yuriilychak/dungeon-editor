@@ -27,8 +27,13 @@
     }
   ],
   "locales": {
+    "addToLibrary": "Library_AddToLibrary",
+    "dropMessage": "Library_DropMessage",
     "emptyTab": "Library_EmptyFiles",
-    "itemDelete": "Library_Item_Delete",
-    "itemRename": "Library_Item_Rename"
+    "itemDelete": "Library_ItemDelete",
+    "itemRename": "Library_ItemRename",
+    "projectExport": "Library_ProjectExport",
+    "projectPublish": "Library_ProjectPublish",
+    "sectionTitle": "Library_Title"
   }
 }

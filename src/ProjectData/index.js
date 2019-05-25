@@ -197,13 +197,20 @@ export default {
             );
     },
 
+    addFiles() {
+        fileDialog({ multiple: true })
+            .then(async files => {
+                await this.importFiles(Object.values(files));
+            });
+    },
+
     /**
      * @function
      * @async
      * @param {Array.<File>} files
      */
 
-    async addFiles(files) {
+    async importFiles(files) {
         const fileElements = await FileUtil.readUploadedFiles(files);
 
         this._components.forEach((component, index) => {

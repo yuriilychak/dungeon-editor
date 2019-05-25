@@ -9,7 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import WorkingArea from "./WorkingArea/component";
 import uiConst from "./constant/uiConst";
 import BottomMenu from "./BottomMenu/component";
-import RightMenu from "./RightMenu/component";
+import Panel from "./common-ui/RightPanel";
+import ConLibrary from "./Library/container";
 import NewProjectDialog from "./NewProjectDialog/container";
 import ExportProjectDialog from "./ExportProjectDialog/container";
 
@@ -69,7 +70,8 @@ class App extends Component {
                               </div>
                           </Grid>
                           <Grid item xs={2} className={classes.rightColumn}>
-                              <RightMenu/>
+                              <Panel title={"Properties"}>body</Panel>
+                              <ConLibrary/>
                           </Grid>
                       </Grid>
                   </div>

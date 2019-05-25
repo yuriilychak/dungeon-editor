@@ -149,7 +149,7 @@ export default {
      */
 
     _getFileType(fileName) {
-        if ((/\.(ttf|otf|woff|png|jpeg|webp)$/i).test(fileName)) {
+        if ((/\.(ttf|otf|woff|png|jpeg|jpg|webp)$/i).test(fileName)) {
             return FILE_TYPE.BINARY;
         }
         else if ((/\.(json|atlas|fnt|txt|xml)$/i).test(fileName)) {

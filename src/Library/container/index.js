@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import Library from "../component";
 import ProjectData from "../../ProjectData";
+import {showExportProjectDialog} from "../../ExportProjectDialog/action";
+import {closeTab} from "../../TopMenu/action";
 
 const mapStateToProps = (state) => {
     return {
@@ -15,7 +17,16 @@ const mapDispatchToProps = dispatch => {
         },
         onAddFiles: files => {
             ProjectData.addFiles(files);
-        }
+        },
+        onDropFiles: files => {
+            ProjectData.importFiles(files);
+        },
+        onExportProject: () => {
+            dispatch(showExportProjectDialog());
+            ProjectData.export();
+            dispatch(closeTab());
+        },
+        onPublishProject: () => {}
     }
 };
 

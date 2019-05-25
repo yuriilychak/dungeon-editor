@@ -17,7 +17,8 @@ const styles = theme => ({
         backgroundColor: theme.palette.primary.main
     },
     body: {
-        flexGrow : 1
+        flexGrow : 1,
+        backgroundColor: theme.palette.primary.dark
     },
     titleText: {
         textAlign: "left",
@@ -26,13 +27,13 @@ const styles = theme => ({
     }
 });
 
-const Panel = ({classes, title, children, titleContent}) => (
+const RightPanel = ({classes, title, children, titleChildren}) => (
     <div className={classes.root}>
         <div className={classes.titleContainer}>
             <Typography className={classes.titleText} variant="button">
                 {title}
             </Typography>
-            {titleContent}
+            {titleChildren}
         </div>
         <div className={classes.body}>
             {children}
@@ -40,4 +41,4 @@ const Panel = ({classes, title, children, titleContent}) => (
     </div>
 );
 
-export default withStyles(styles)(Panel);
+export default withStyles(styles)(RightPanel);
