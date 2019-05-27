@@ -187,7 +187,7 @@ const theme = createMuiTheme({
         },
         MuiExpansionPanelDetails: {
             root: {
-                padding: "6px 12px 12px 12px",
+                padding: "6px 0 6px 0",
                 flexDirection: "column"
             }
         },

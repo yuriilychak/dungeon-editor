@@ -21,7 +21,7 @@ import STATE from "../state";
 
 export const initialState = {
     ...StaticData,
-    files: [ [], [], [], [], [] ]
+    files: [[], [], [], [], []]
 };
 
 /**
@@ -31,8 +31,14 @@ export const initialState = {
 const actionHandlers = {
     [STATE.ADD_FILE]: (state, action) => {
         const files = state.files.slice(0);
-        const index = action.payload.sectionId;
-        files[index] = [...files[index], action.payload.data];
+        const {sectionId, data} = action.payload;
+        const file = {
+            title: data.name,
+            id: data.id,
+            hasPreview: false,
+            isDirectory: false
+        };
+        files[sectionId] = [...files[sectionId], file];
         return {
             ...state,
             files
@@ -41,13 +47,33 @@ const actionHandlers = {
     [STATE.REMOVE_FILE]: (state, action) => {
         const files = state.files.slice(0);
         const index = action.payload.sectionId;
-        files[index] = files[index].filter( file => file.id !== action.payload.id);
+        files[index] = files[index].filter(file => file.id !== action.payload.id);
         return {
             ...state,
             files
         }
     },
-    [STATE.CLEAR]: (state) => ({...state, files: [ [], [], [], [], [] ]})
+    [STATE.UPDATE_TREE]: (state, action) => {
+        const files = state.files.slice(0);
+        const {fileTree, sectionId} = action.payload;
+        files[sectionId] = fileTree;
+        return {...state, files};
+    },
+    [STATE.ADD_DIRECTORY]: (state, action) => {
+        const files = state.files.slice(0);
+        const {path, sectionId} = action.payload;
+        files[sectionId] = files[sectionId].slice(0);
+        files[sectionId].push({
+            title: "new_dir",
+            id: 35,
+            hasPreview: false,
+            isDirectory: true
+        });
+
+        console.log(files);
+        return {...state, files};
+    },
+    [STATE.CLEAR]: state => ({...state, files: [[], [], [], [], []]})
 };
 
 /**

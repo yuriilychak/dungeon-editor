@@ -5,7 +5,7 @@ import {makeStyles} from "@material-ui/styles";
 import PropTypes from "prop-types";
 import {useTranslation} from "react-i18next";
 import RightPanel from "../../common-ui/RightPanel";
-import ContentFolder from "./ContentFolder";
+import SectionFolder from "./SectionFolder";
 import Add from "@material-ui/icons/Add";
 import Publish from "@material-ui/icons/Publish";
 import SaveAlt from "@material-ui/icons/SaveAlt";
@@ -58,8 +58,10 @@ const Library = props => {
         onAddFiles,
         onDropFiles,
         onRemoveFile,
+        onAddDirectory,
         onExportProject,
-        onPublishProject
+        onPublishProject,
+        onUpdateTree
     } = props;
     const {t} = useTranslation();
     const onDrop = useCallback(onDropFiles, []);
@@ -75,7 +77,7 @@ const Library = props => {
     const renameItemLocale = t(locales.itemRename);
 
     const tabViews = tabs.map(tab => (
-            <ContentFolder
+            <SectionFolder
                 title={t(tab.locale)}
                 icon={tab.icon}
                 key={tab.id}
@@ -84,7 +86,9 @@ const Library = props => {
                 files={files[tab.id]}
                 deleteText={deleteItemLocale}
                 renameText={renameItemLocale}
-                onRemoveElement={onRemoveFile}
+                onAddDirectory={onAddDirectory}
+                onUpdateTree={onUpdateTree}
+                onRemoveFile={onRemoveFile}
             />
         )
     );

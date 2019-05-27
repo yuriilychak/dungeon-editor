@@ -1,0 +1,74 @@
+.rstcustom__lineBlock {
+    width: 10px !important;
+}
+
+.rstcustom__rowContents {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    flex-grow: 1;
+    padding: 0 5px;
+}
+
+.rstcustom__row {
+    flex-grow: 1;
+    height: 100%;
+}
+
+.rstcustom__node {
+    height: 20px !important;
+    padding: 5px 0;
+}
+
+.rstcustom__toolbarButton {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.rstcustom__rowLabel {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: left;
+    flex-grow: 1;
+    padding: 0 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.rstcustom__expandButton::after {
+    border: solid transparent 6px;
+    border-top-color: white;
+    border-left-width: 5px;
+    border-right-width: 5px;
+
+}
+
+.rstcustom__expandButton:hover::after {
+    border-top-color: white;
+}
+
+.rstcustom__expandButton::after {
+    -webkit-transform: translate3d(-50%, -50%, 0) rotateZ(-90deg);
+    transform: translate3d(-50%, -50%, 0) rotateZ(-90deg);
+}
+
+.rstcustom__collapseButton:hover::after {
+    border-top-color: white;
+}
+
+.rstcustom__collapseButton::after {
+    content: '';
+    position: absolute;
+    -webkit-transform-origin: 5px 5px;
+    -ms-transform-origin: 5px 4px;
+    transform-origin: 5px 5px;
+    -webkit-transform: translate3d(-50%, -25%, 0);
+    transform: translate3d(-50%, -25%, 0);
+    border: solid transparent 6px;
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-color: white;
+}

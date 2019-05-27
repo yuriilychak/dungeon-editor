@@ -5,13 +5,15 @@ const useStyles = makeStyles({
     root: {
         width: 16,
         height: 16,
-        paddingRight: "8px !important",
-        fill: "#ffffff"
+        paddingRight: "0 !important",
+        fill: "#ffffff",
+        userDrag: "none",
+        userSelect: "none"
     }
 });
 
 const Icon = ({name}) => (
-    <img src={`${process.env.PUBLIC_URL}/icon/${name}.svg`} className={useStyles().root} alt={"empty Icon"}/>
+    <img src={`${process.env.PUBLIC_URL}/icon/${name}.svg`} className={useStyles().root} alt={"empty Icon"} draggable={false}/>
 );
 
 export default Icon;

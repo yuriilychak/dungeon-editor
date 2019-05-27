@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 import ConTopMenu from "./TopMenu/container";
 
 import theme from "./Theme";
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
 import WorkingArea from "./WorkingArea/component";
 import uiConst from "./constant/uiConst";
 import BottomMenu from "./BottomMenu/component";
@@ -43,7 +43,7 @@ const styles = theme => ({
     },
     paper: {
         padding: theme.spacing.unit * 2,
-        textAlign: 'center',
+        textAlign: "center",
         color: theme.palette.text.secondary,
     }
 });
@@ -70,7 +70,9 @@ class App extends Component {
                               </div>
                           </Grid>
                           <Grid item xs={2} className={classes.rightColumn}>
-                              <Panel title={"Properties"}>body</Panel>
+                              <Panel title={"Properties"}>
+                                  Test
+                              </Panel>
                               <ConLibrary/>
                           </Grid>
                       </Grid>
