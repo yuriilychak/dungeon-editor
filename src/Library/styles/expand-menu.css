@@ -1,13 +1,9 @@
-.rstcustom__lineBlock {
-    width: 10px !important;
-}
-
 .rstcustom__rowContents {
     display: flex;
     align-items: center;
     justify-content: left;
     flex-grow: 1;
-    padding: 0 5px;
+    padding: 0 10px;
 }
 
 .rstcustom__row {
@@ -38,6 +34,11 @@
     text-overflow: ellipsis;
 }
 
+.rstcustom__expandButton {
+    -webkit-transform: translate3d(-35%, -50%, 0);
+    transform: translate3d(-35%, -50%, 0);
+}
+
 .rstcustom__expandButton::after {
     border: solid transparent 6px;
     border-top-color: white;
@@ -51,12 +52,17 @@
 }
 
 .rstcustom__expandButton::after {
-    -webkit-transform: translate3d(-50%, -50%, 0) rotateZ(-90deg);
-    transform: translate3d(-50%, -50%, 0) rotateZ(-90deg);
+    -webkit-transform: translate3d(-35%, -50%, 0) rotateZ(-90deg);
+    transform: translate3d(-35%, -50%, 0) rotateZ(-90deg);
 }
 
 .rstcustom__collapseButton:hover::after {
     border-top-color: white;
+}
+
+.rstcustom__collapseButton {
+    -webkit-transform: translate3d(-35%, -50%, 0);
+    transform: translate3d(-35%, -50%, 0);
 }
 
 .rstcustom__collapseButton::after {
@@ -65,8 +71,8 @@
     -webkit-transform-origin: 5px 5px;
     -ms-transform-origin: 5px 4px;
     transform-origin: 5px 5px;
-    -webkit-transform: translate3d(-50%, -25%, 0);
-    transform: translate3d(-50%, -25%, 0);
+    -webkit-transform: translate3d(-35%, -25%, 0);
+    transform: translate3d(-35%, -25%, 0);
     border: solid transparent 6px;
     border-left-width: 5px;
     border-right-width: 5px;

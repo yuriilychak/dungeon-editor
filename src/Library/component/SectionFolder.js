@@ -131,6 +131,7 @@ const SectionFolder = ({
                 theme={FileExplorerTheme}
                 canDrag={({node}) => !node.dragDisabled}
                 canDrop={({nextParent}) => !nextParent || nextParent.isDirectory}
+                scaffoldBlockPxWidth={10}
                 generateNodeProps={generateNodeProps}
             />
         </div>
