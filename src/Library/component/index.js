@@ -72,20 +72,24 @@ const Library = props => {
     });
     const classes = useStyles();
 
+    const addDirectoryLocale = t(locales.addDirectory);
+    const addElementLocale = t(locales.addElement);
     const emptyTabLocale = t(locales.emptyTab);
     const deleteItemLocale = t(locales.itemDelete);
     const renameItemLocale = t(locales.itemRename);
 
     const tabViews = tabs.map(tab => (
             <SectionFolder
-                title={t(tab.locale)}
                 icon={tab.icon}
                 key={tab.id}
                 id={tab.id}
-                emptyText={emptyTabLocale}
-                files={files[tab.id]}
+                addDirectoryText={addDirectoryLocale}
+                addElementText={addElementLocale}
                 deleteText={deleteItemLocale}
+                emptyText={emptyTabLocale}
                 renameText={renameItemLocale}
+                titleText={t(tab.locale)}
+                files={files[tab.id]}
                 onAddDirectory={onAddDirectory}
                 onUpdateTree={onUpdateTree}
                 onRemoveFile={onRemoveFile}
@@ -99,7 +103,7 @@ const Library = props => {
             titleChildren={
                 <Fragment>
                     <ToolButton
-                        title={t(locales.addToLibrary)}
+                        title={t(locales.addFile)}
                         Icon={Add}
                         onClick={onAddFiles}
                     />
@@ -138,7 +142,9 @@ Library.propTypes = {
         icon: PropTypes.string.isRequired
     })).isRequired,
     locales: PropTypes.shape({
-        addToLibrary: PropTypes.string.isRequired,
+        addDirectory: PropTypes.string.isRequired,
+        addElement: PropTypes.string.isRequired,
+        addFile: PropTypes.string.isRequired,
         dropMessage: PropTypes.string.isRequired,
         emptyTab: PropTypes.string.isRequired,
         itemDelete: PropTypes.string.isRequired,
@@ -152,11 +158,13 @@ Library.propTypes = {
             PropTypes.object.isRequired
         )
     ),
+    onAddDirectory: PropTypes.func.isRequired,
     onAddFiles: PropTypes.func.isRequired,
     onDropFiles: PropTypes.func.isRequired,
     onRemoveFile: PropTypes.func.isRequired,
     onExportProject: PropTypes.func.isRequired,
-    onPublishProject: PropTypes.func.isRequired
+    onPublishProject: PropTypes.func.isRequired,
+    onUpdateTree: PropTypes.func.isRequired
 };
 
 export default Library;

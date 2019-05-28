@@ -1,6 +1,17 @@
 import React from "react";
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+import {makeStyles} from "@material-ui/styles";
+
+const useStyles = makeStyles({
+    iconButton: {
+        padding: 0
+    },
+    icon: {
+        fontSize: 14,
+        fill: "#ffffff"
+    }
+});
 
 const ToolButton = ({
                         title,
@@ -8,25 +19,20 @@ const ToolButton = ({
                         Icon,
                         owner,
                         hasPopup,
-                        fontSize = 14,
-                        padding = 0
-                    }) => (
-    <Tooltip title={title}>
-        <IconButton
-            style={{
-                fontSize,
-                padding
-            }}
-            onClick={onClick}
-            aria-owns={owner}
-            aria-haspopup={hasPopup}
-        >
-            <Icon style={{
-                fontSize,
-                fill: "#ffffff"
-            }}/>
-        </IconButton>
-    </Tooltip>
-);
+                    }) => {
+    const {iconButton, icon} = useStyles();
+    return (
+        <Tooltip title={title}>
+            <IconButton
+                className={iconButton}
+                onClick={onClick}
+                aria-owns={owner}
+                aria-haspopup={hasPopup}
+            >
+                <Icon className={icon}/>
+            </IconButton>
+        </Tooltip>
+    );
+};
 
 export default ToolButton;

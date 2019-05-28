@@ -27,7 +27,9 @@
     }
   ],
   "locales": {
-    "addToLibrary": "Library_AddToLibrary",
+    "addDirectory": "Library_AddDirectory",
+    "addElement": "Library_AddElement",
+    "addFile": "Library_AddFile",
     "dropMessage": "Library_DropMessage",
     "emptyTab": "Library_EmptyFiles",
     "itemDelete": "Library_ItemDelete",
