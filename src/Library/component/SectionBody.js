@@ -35,6 +35,7 @@ const SectionBody = ({
                          renameText,
                          deleteText,
                          addDirectoryText,
+                         onAddDirectory,
                          onRemoveFile,
                          onUpdateTree
                      }) => {
@@ -70,8 +71,7 @@ const SectionBody = ({
                 <ToolButton
                     title={addDirectoryText}
                     Icon={FolderAdd}
-                    onClick={() => {
-                    }}
+                    onClick={() => onAddDirectory(id, rowInfo)}
                 />
             );
 

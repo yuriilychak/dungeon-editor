@@ -61,20 +61,58 @@ const actionHandlers = {
     },
     [STATE.ADD_DIRECTORY]: (state, action) => {
         const files = state.files.slice(0);
-        const {path, sectionId} = action.payload;
-        files[sectionId] = files[sectionId].slice(0);
-        files[sectionId].push({
-            title: "new_dir",
-            id: 35,
+        const {sectionId, dirData} = action.payload;
+        const fileTree = files[sectionId].slice(0);
+        const parentId = dirData.parentId;
+        const result = {
+            title: dirData.name,
+            id: dirData.id,
             hasPreview: false,
             isDirectory: true
-        });
+        };
 
-        console.log(files);
+        if (parentId === -1) {
+            fileTree.push(result);
+        }
+        else {
+            const parent = findDir(fileTree, parentId);
+
+            if (!parent) {
+                return state;
+            }
+
+            if (!parent.children) {
+                parent.children = [];
+            }
+
+            parent.children.push(result);
+        }
+
+        files[sectionId] = fileTree;
+
         return {...state, files};
     },
     [STATE.CLEAR]: state => ({...state, files: [[], [], [], [], []]})
 };
+
+function findDir(data, id) {
+    const dirs = data.filter(element => element.isDirectory);
+    let result = dirs.find( dir => dir.id === id);
+
+    if (result) {
+        return result;
+    }
+
+    dirs.forEach( dir => {
+        if (!dir.children || result) {
+            return;
+        }
+
+        result = findDir(dir.children, id);
+    });
+
+    return result;
+}
 
 /**
  * @param {LibraryState} state

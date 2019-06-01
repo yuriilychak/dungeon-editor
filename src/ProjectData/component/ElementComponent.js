@@ -42,16 +42,14 @@ export default class ElementComponent extends FileComponent {
     }
 
     /**
-     * @desc Add elements to storage. Return last generated guid.
+     * @desc Add elements to storage.
      * @method
      * @public
      * @param {Object[]} elements
-     * @param {number} guid
      * @param {Function} progressCallback
-     * @returns {number}
      */
 
-    add(elements, guid, progressCallback) {
+    add(elements, progressCallback) {
         const jsons = this.filterFiles(elements, FILE_TYPE.TEXT, FILE_FORMAT.JSON);
 
         let data;
@@ -65,16 +63,14 @@ export default class ElementComponent extends FileComponent {
             data = {
                 name: json.name,
                 format: json.format,
-                id: ++guid,
+                id: this.fileGuid,
                 hasPreview: false
             };
 
             this.addFileInfo(data);
             this.removeElement(elements, json);
             this._updateSource(data, json.data, progressCallback);
-        });
-
-        return guid;
+        });;
     }
 
     /**

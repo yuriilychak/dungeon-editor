@@ -34,17 +34,12 @@ const SectionHeader = ({
         <ToolButton
             title={addElementText}
             Icon={Add}
-            onClick={(e) => {
-                e.stopPropagation()
-            }}
+            onClick={() => {}}
         />
         <ToolButton
             title={addDirectoryText}
             Icon={CreateNewFolder}
-            onClick={event => {
-                event.stopPropagation();
-                onAddDirectory([], id);
-            }}
+            onClick={() => onAddDirectory(id)}
         />
     </Fragment>
 );

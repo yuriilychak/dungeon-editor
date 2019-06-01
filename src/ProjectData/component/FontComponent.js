@@ -64,16 +64,14 @@ export default class FontComponent extends FileComponent {
     }
 
     /**
-     * @desc Add elements to storage. Return last generated guid.
+     * @desc Add elements to storage.
      * @method
      * @public
      * @param {Object[]} elements
-     * @param {number} guid
      * @param {Function} progressCallback
-     * @returns {number}
      */
 
-    add(elements, guid, progressCallback) {
+    add(elements, progressCallback) {
         const vectorFonts = this.filterFiles(elements, FILE_TYPE.BINARY, FILE_FORMAT.VECTOR_FONTS);
         const bitmapFonts = this.filterFiles(elements, FILE_TYPE.TEXT, FILE_FORMAT.BITMAP_FONTS);
 
@@ -83,7 +81,7 @@ export default class FontComponent extends FileComponent {
             fontData = {
                 name: font.name,
                 format: font.format,
-                id: ++guid,
+                id: this.fileGuid,
                 type: FONT_TYPE.VECTOR,
                 hasPreview: false,
                 textureFormat: ""
@@ -109,7 +107,7 @@ export default class FontComponent extends FileComponent {
             fontData = {
                 name: font.name,
                 format: font.format,
-                id: ++guid,
+                id: this.fileGuid,
                 type: FONT_TYPE.BITMAP,
                 hasPreview: false,
                 textureFormat: texture.format
@@ -120,8 +118,6 @@ export default class FontComponent extends FileComponent {
             this.removeElement(elements, texture);
             this._updateBitmapFontSource(fontData, font.data, texture.data, texture.format, progressCallback);
         });
-
-        return guid;
     }
 
     /**

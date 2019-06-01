@@ -57,16 +57,15 @@ export default class TextureComponent extends FileComponent {
     }
 
     /**
-     * @desc Add elements to storage. Return last generated guid.
+     * @desc Add elements to storage.
      * @method
      * @public
      * @param {Object[]} elements
-     * @param {number} guid
      * @param {Function} progressCallback
      * @returns {number}
      */
 
-    add(elements, guid, progressCallback) {
+    add(elements, progressCallback) {
         const textures = this.filterFiles(elements, FILE_TYPE.BINARY, FILE_FORMAT.TEXTURES);
         let fileData;
 
@@ -74,7 +73,7 @@ export default class TextureComponent extends FileComponent {
             fileData = {
                 name: texture.name,
                 format: texture.format,
-                id: ++guid,
+                id: this.fileGuid,
                 atlas: EMPTY_ATLAS_ID,
                 hasPreview: true
             };
@@ -82,7 +81,6 @@ export default class TextureComponent extends FileComponent {
             this._updateSource(fileData, texture.data, progressCallback);
             this.removeElement(elements, texture);
         });
-        return guid;
     }
 
     /**

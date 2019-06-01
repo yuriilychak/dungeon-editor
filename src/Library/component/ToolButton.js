@@ -25,7 +25,10 @@ const ToolButton = ({
         <Tooltip title={title}>
             <IconButton
                 className={iconButton}
-                onClick={onClick}
+                onClick={event => {
+                    event.stopPropagation();
+                    onClick();
+                }}
                 aria-owns={owner}
                 aria-haspopup={hasPopup}
             >

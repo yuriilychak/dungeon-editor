@@ -47,15 +47,15 @@ export const updateTree = (fileTree, sectionId) => ({
 
 /**
  * @function
- * @param {string[]} path
+ * @param {Object} parent
  * @param {number} sectionId
  * @return {ActionData}
  */
 
-export const addDirectory = (path, sectionId) => ({
+export const addDirectory = (sectionId, dirData) => ({
     type: state.ADD_DIRECTORY,
     payload: {
-        path,
+        dirData,
         sectionId
     }
 });

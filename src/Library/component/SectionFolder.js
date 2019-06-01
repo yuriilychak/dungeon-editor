@@ -44,6 +44,7 @@ const SectionFolder = ({
                     deleteText={deleteText}
                     emptyText={emptyText}
                     renameText={renameText}
+                    onAddDirectory={onAddDirectory}
                     onRemoveFile={onRemoveFile}
                     onUpdateTree={onUpdateTree}
                 />

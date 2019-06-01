@@ -10,7 +10,14 @@ export default class FileComponent {
          * @type {FileData[]}
          * @private
          */
-        this._fileInfo = [];
+        this._files = [];
+
+        /**
+         * @type {DirectoryData[]}
+         * @private
+         */
+
+        this._directories = [];
 
         /**
          * @type {string}
@@ -18,30 +25,50 @@ export default class FileComponent {
          */
 
         this._fileDir = fileDir;
+
+        /**
+         * @type {number}
+         * @private
+         */
+
+        this._fileGuid = 0;
+
+        /**
+         * @type {number}
+         * @private
+         */
+
+        this._directoryGuid = 0;
     }
 
     /**
      * @method
      * @public
      * @param {JSZip} zip
-     * @param {FileData[]} files
+     * @param {SectionData} sectionData
      * @param {Function} progressCallback
+     * @param {Function} dirCallback
      * @param {Function} errorCallback
      */
 
-    async import(zip, files, progressCallback, errorCallback) {
+    async import(zip, sectionData, progressCallback, dirCallback, errorCallback) {
         this.clear();
 
-        if (!files) {
+        if (!sectionData) {
             return;
         }
 
-        this._fileInfo = files;
+        this._directories = sectionData.directories;
+        this._directoryGuid = sectionData.directoryGuid;
+        this._fileGuid = sectionData.fileGuid;
+        this._files = sectionData.files;
 
-        const fileCount = this._fileInfo.length;
+        this._generateDirs(dirCallback);
+
+        const fileCount = this._files.length;
 
         for (let i = 0; i < fileCount; ++i) {
-            await this.importElement(zip, this._fileInfo[i], progressCallback, errorCallback);
+            await this.importElement(zip, this._files[i], progressCallback, errorCallback);
         }
     }
 
@@ -54,8 +81,13 @@ export default class FileComponent {
      */
 
     export(projectData, zip, progressCallback) {
-        projectData[this._fileDir] = this._fileInfo;
-        this._fileInfo.forEach(info => this.exportElement(zip, info, progressCallback));
+        projectData[this._fileDir] = {
+            files: this._files,
+            fileGuid: this._fileGuid,
+            directoryGuid: this._directoryGuid,
+            directories: this._directories
+        };
+        this._files.forEach(info => this.exportElement(zip, info, progressCallback));
     }
 
     /**
@@ -65,21 +97,39 @@ export default class FileComponent {
      */
 
     clear() {
-        this._fileInfo.length = 0;
+        this._fileGuid = 0;
+        this._directoryGuid = 0;
+        this._files.length = 0;
+        this._directories.length = 0;
     }
 
     /**
-     * @desc Add elements to storage. Return last generated guid.
+     * @desc Add elements to storage.
      * @method
      * @public
      * @param {Object[]} elements
-     * @param {number} guid
      * @param {Function} progressCallback
-     * @returns {number}
      */
 
-    add(elements, guid, progressCallback) {
-        return guid;
+    add(elements, progressCallback) {}
+
+    /**
+     * @desc Add directory.
+     * @method
+     * @public
+     * @param {number} [parentId = -1]
+     * @returns {DirectoryData}
+     */
+
+    addDirectory(parentId = -1) {
+        const id = ++this._directoryGuid;
+        const dirData = {
+            parentId,
+            id,
+            name: `empty_dir_${id}`
+        };
+        this._directories.push(dirData);
+        return dirData;
     }
 
     /**
@@ -88,7 +138,7 @@ export default class FileComponent {
      */
 
     addFileInfo(value) {
-        this._fileInfo.push(value);
+        this._files.push(value);
         return true;
     }
 
@@ -99,15 +149,15 @@ export default class FileComponent {
      */
 
     remove(id) {
-        const index = this._fileInfo.findIndex(element => element.id === id);
+        const index = this._files.findIndex(element => element.id === id);
 
         if (index === -1) {
             return null;
         }
 
-        const element = this._fileInfo[index];
+        const element = this._files[index];
 
-        this._fileInfo.splice(index, 1);
+        this._files.splice(index, 1);
 
         return element;
     }
@@ -171,13 +221,32 @@ export default class FileComponent {
 
     async importElement(zip, file, progressCallback, errorCallback) {}
 
+    _generateDirs(onGenerateDir, parentId = -1) {
+        const dirsToCreate = this._directories.filter(dir => dir.parentId === parentId);
+
+        dirsToCreate.forEach(dir => {
+            onGenerateDir(dir);
+            this._generateDirs(onGenerateDir, dir.id);
+        });
+    }
+
+    /**
+     * @prtexted
+     * @returns {number}
+     */
+
+    get fileGuid() {
+        ++this._fileGuid;
+        return this._fileGuid;
+    }
+
     /**
      * @public
      * @returns {FileData[]}
      */
 
     get info() {
-        return this._fileInfo;
+        return this._files;
     }
 
     /**
@@ -186,7 +255,7 @@ export default class FileComponent {
      */
 
     get fileCount() {
-        return this._fileInfo.length;
+        return this._files.length;
     }
 
     /**

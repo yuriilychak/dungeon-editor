@@ -3,7 +3,7 @@ import Library from "../component";
 import ProjectData from "../../ProjectData";
 import {showExportProjectDialog} from "../../ExportProjectDialog/action";
 import {closeTab} from "../../TopMenu/action";
-import { updateTree, addDirectory } from "../action";
+import { updateTree } from "../action";
 
 const mapStateToProps = (state) => {
     return {
@@ -25,8 +25,8 @@ const mapDispatchToProps = dispatch => {
         onUpdateTree: (files, sectionId) => {
             dispatch(updateTree(files, sectionId));
         },
-        onAddDirectory: (path, sectionId) => {
-            dispatch(addDirectory(path, sectionId));
+        onAddDirectory: (sectionId, parent = null) => {
+            ProjectData.adDirectory(sectionId, parent);
         },
         onExportProject: () => {
             dispatch(showExportProjectDialog());

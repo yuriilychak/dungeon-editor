@@ -39,6 +39,23 @@
  */
 
 /**
+ * @name DirectoryData
+ * @typedef {Object}
+ * @property {string} name
+ * @property {number} parentId
+ * @property {number} id
+ */
+
+/**
+ * @name SectionData
+ * @typedef {Object}
+ * @property {FileData[]} files
+ * @property {DirectoryData[]} directories
+ * @property {number} directoryGuid
+ * @property {number} fileGuid
+ */
+
+/**
  * @name ResourceData
  * @typedef {Object}
  * @property {string} name

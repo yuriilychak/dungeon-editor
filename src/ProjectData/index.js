@@ -34,13 +34,6 @@ export default {
     _projectName: "emptyProject",
 
     /**
-     * @type {number}
-     * @private
-     */
-
-    _guid: 0,
-
-    /**
      * @type {{name: string, format: string}}
      * @private
      */
@@ -65,6 +58,13 @@ export default {
     _addHandlers: null,
 
     /**
+     * @type {Function[]}
+     * @private
+     */
+
+    _dirHandlers: null,
+
+    /**
      * @type {Function}
      * @private
      */
@@ -87,8 +87,11 @@ export default {
         ];
 
         this._addHandlers = this._components.map((component, index) => (
-            data => store.dispatch(LibraryActions.addFile(data, index)
-            )
+            data => store.dispatch(LibraryActions.addFile(data, index))
+        ));
+
+        this._dirHandlers = this._components.map((component, index) => (
+            dirData => store.dispatch(LibraryActions.addDirectory(index, dirData))
         ));
 
         this._errorHandler = error => {
@@ -128,8 +131,7 @@ export default {
             store.dispatch(changeProgress(progress, path));
         };
         const projectData = {
-            name: this._projectName,
-            guid: this._guid
+            name: this._projectName
         };
 
         this._components.forEach(component => component.export(projectData, zip, progressCallback));
@@ -183,7 +185,6 @@ export default {
                          */
                         const projectData = JSON.parse(metaData);
 
-                        this._guid = projectData.guid;
                         this._projectName = projectData.name;
 
                         const componentCount = this._components.length;
@@ -191,7 +192,13 @@ export default {
 
                         for (i = 0; i < componentCount; ++i) {
                             component = this._components[i];
-                            await component.import(content, projectData[component.fileDir], this._addHandlers[i], this._errorHandler);
+                            await component.import(
+                                content,
+                                projectData[component.fileDir],
+                                this._addHandlers[i],
+                                this._dirHandlers[i],
+                                this._errorHandler
+                            );
                         }
                     })
             );
@@ -214,7 +221,7 @@ export default {
         const fileElements = await FileUtil.readUploadedFiles(files);
 
         this._components.forEach((component, index) => {
-            this._guid = component.add(fileElements, this._guid, this._addHandlers[index]);
+            component.add(fileElements, this._addHandlers[index]);
         });
     },
 
@@ -224,5 +231,16 @@ export default {
         }
         store.dispatch(LibraryActions.removeFile(id, sectionIndex));
         return true;
+    },
+
+    adDirectory(sectionIndex, parent = null) {
+        let parentId = -1;
+
+        if (parent !== null) {
+            parentId = parent.node.id;
+        }
+
+        const dirData = this._components[sectionIndex].addDirectory(parentId);
+        store.dispatch(LibraryActions.addDirectory(sectionIndex, dirData));
     }
 }
