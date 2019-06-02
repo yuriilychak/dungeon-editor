@@ -225,11 +225,24 @@ export default {
         });
     },
 
-    removeFile(id, sectionIndex) {
-        if (!this._components[sectionIndex].remove(id)) {
+    /**
+     * @function
+     * @public
+     * @param {number} id
+     * @param {number} sectionIndex
+     * @param {boolean} isDirectory
+     * @returns {boolean}
+     */
+
+    removeFile(id, sectionIndex, isDirectory) {
+        const removedFiles = this._components[sectionIndex].remove(id, isDirectory);
+
+        if (removedFiles.length === 0) {
             return false;
         }
+
         store.dispatch(LibraryActions.removeFile(id, sectionIndex));
+
         return true;
     },
 

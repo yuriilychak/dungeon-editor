@@ -33,8 +33,21 @@ const actionHandlers = {
     [STATE.ADD_FILE]: (state, action) => addElementToTree(action, false, state),
     [STATE.REMOVE_FILE]: (state, action) => {
         const files = state.files.slice(0);
-        const index = action.payload.sectionId;
-        files[index] = files[index].filter(file => file.id !== action.payload.id);
+        const { sectionId, id } = action.payload;
+        const fileTree = files[sectionId];
+        const element = findElement(fileTree, id);
+        const parentId = element.parentId;
+
+        if (parentId === -1) {
+            files[sectionId] = fileTree.filter(element => element.id !== id);
+        }
+        else {
+            const parent = findElement(fileTree, parentId);
+            parent.children = parent.children.filter(element => element.id !== id);
+
+            files[sectionId] = fileTree.slice(0);
+        }
+
         return {
             ...state,
             files
@@ -43,11 +56,23 @@ const actionHandlers = {
     [STATE.UPDATE_TREE]: (state, action) => {
         const files = state.files.slice(0);
         const {fileTree, sectionId} = action.payload;
+        refreshParentIds(fileTree);
+
         files[sectionId] = fileTree;
+
         return {...state, files};
     },
     [STATE.CLEAR]: state => ({...state, files: [[], [], [], [], []]})
 };
+
+function refreshParentIds(files, parentId = -1) {
+    files.forEach(file => {
+        file.parentId = parentId;
+        if (file.isDirectory && file.children && file.children.length !== 0) {
+            refreshParentIds(file.children, file.id);
+        }
+    })
+}
 
 function addElementToTree(action, isDirectory, state) {
     const files = state.files.slice(0);
@@ -66,7 +91,7 @@ function addElementToTree(action, isDirectory, state) {
         fileTree.push(file);
     }
     else {
-        const parent = findDir(fileTree, parentId);
+        const parent = findElement(fileTree, parentId);
 
         if (!parent) {
             return state;
@@ -87,9 +112,9 @@ function addElementToTree(action, isDirectory, state) {
     };
 }
 
-function findDir(data, id) {
+function findElement(data, id) {
     const dirs = data.filter(element => element.isDirectory);
-    let result = dirs.find( dir => dir.id === id);
+    let result = data.find( element => element.id === id);
 
     if (result) {
         return result;
@@ -100,7 +125,7 @@ function findDir(data, id) {
             return;
         }
 
-        result = findDir(dir.children, id);
+        result = findElement(dir.children, id);
     });
 
     return result;

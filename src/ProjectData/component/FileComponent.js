@@ -33,14 +33,14 @@ export default class FileComponent {
          * @private
          */
 
-        this._fileGuid = 0;
+        this._guid = 0;
 
         /**
-         * @type {number}
+         * @type {Object.<string, Object | string>}
          * @private
          */
 
-        this._directoryGuid = 0;
+        this._sources = {};
     }
 
     /**
@@ -66,8 +66,7 @@ export default class FileComponent {
         }
 
         this._directories = sectionData.directories;
-        this._directoryGuid = sectionData.directoryGuid;
-        this._fileGuid = sectionData.fileGuid;
+        this._guid = sectionData.guid;
         this._files = sectionData.files;
 
         this._generateDirs(dirCallback);
@@ -90,8 +89,7 @@ export default class FileComponent {
     export(projectData, zip, progressCallback) {
         projectData[this._rootName] = {
             files: this._files,
-            fileGuid: this._fileGuid,
-            directoryGuid: this._directoryGuid,
+            guid: this._guid,
             directories: this._directories
         };
         this._files.forEach(info => {
@@ -106,10 +104,10 @@ export default class FileComponent {
      */
 
     clear() {
-        this._fileGuid = 0;
-        this._directoryGuid = 0;
+        this._guid = 0;
         this._files.length = 0;
         this._directories.length = 0;
+        this._sources = {};
     }
 
     /**
@@ -131,7 +129,7 @@ export default class FileComponent {
      */
 
     addDirectory(parentId = ROOT_DIR_ID) {
-        const id = ++this._directoryGuid;
+        const id = ++this._guid;
         const dirData = {
             parentId,
             id,
@@ -144,21 +142,43 @@ export default class FileComponent {
     /**
      * @public
      * @param {number} id
-     * @returns {Object | null}
+     * @param {boolean} isDirectory
+     * @returns {number[]}
      */
 
-    remove(id) {
-        const index = this._files.findIndex(element => element.id === id);
+    remove(id, isDirectory) {
+        const searchArray = isDirectory ? this._directories : this._files;
+        const index = searchArray.findIndex(element => element.id === id);
+        let result = [];
 
         if (index === -1) {
-            return null;
+            return result;
         }
 
-        const element = this._files[index];
+        const element = searchArray[index];
 
-        this._files.splice(index, 1);
+        searchArray.splice(index, 1);
 
-        return element;
+        if (!isDirectory) {
+            delete this._sources[element.id];
+        }
+
+        result.push(id);
+
+        if (isDirectory) {
+            const filesToRemove = this._files.filter(element => element.parentId === id);
+            const dirsToRemove = this._directories.filter(element => element.parentId === id);
+
+            filesToRemove.forEach(element => {
+                result = result.concat(this.remove(element.id, false));
+            });
+
+            dirsToRemove.forEach(element => {
+                result = result.concat(this.remove(element.id, true));
+            });
+        }
+
+        return result;
     }
 
     refreshHierarchy(files, parentId = ROOT_DIR_ID) {
@@ -198,12 +218,10 @@ export default class FileComponent {
      * @method
      * @protected
      * @param {FileData} value
-     * @returns {boolean}
      */
 
     addFileInfo(value) {
         this._files.push(value);
-        return true;
     }
 
     /**
@@ -283,7 +301,7 @@ export default class FileComponent {
             name: name,
             format: format,
             parentId: ROOT_DIR_ID,
-            id: ++this._fileGuid,
+            id: ++this._guid,
             hasPreview: hasPreview
         };
     }
@@ -298,6 +316,30 @@ export default class FileComponent {
 
     joinPath(path, element) {
         return `${path}.${element.format}`;
+    }
+
+    /**
+     * @method
+     * @protected
+     * @param {FileData} data
+     * @param {*} source
+     * @param {Function} progressCallback
+     */
+
+    updateSource(data, source, progressCallback) {
+        this._sources[data.id] = source;
+        progressCallback(data);
+    }
+
+    /**
+     * @method
+     * @protected
+     * @param {number} id
+     * @returns {Object | string | null}
+     */
+
+    getSources(id) {
+        return this._sources[id] || null;
     }
 
     /**

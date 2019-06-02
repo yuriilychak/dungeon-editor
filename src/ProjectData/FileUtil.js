@@ -197,7 +197,6 @@ export default {
      */
 
     packFile(zip, path, source, progressCallback, options = undefined) {
-        console.log(path, source);
         zip.file(path, source, options);
         progressCallback(path);
     },

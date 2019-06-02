@@ -4,17 +4,6 @@ import FILE_TYPE from "../enum/FileType";
 import FILE_FORMAT from "../enum/FileFormat";
 
 export default class ElementComponent extends FileComponent {
-    constructor(fileDir) {
-        super(fileDir);
-
-        /**
-         * @type {Object.<string, Object>}
-         * @private
-         */
-
-        this._sources = {};
-    }
-
     /**
      * @method
      * @protected
@@ -26,7 +15,7 @@ export default class ElementComponent extends FileComponent {
 
     exportElement(zip, element, progressCallback, path) {
         const fileId = element.id;
-        FileUtil.packJson(zip, this.joinPath(path, element), this._sources[fileId], progressCallback);
+        FileUtil.packJson(zip, this.joinPath(path, element), this.getSources(fileId), progressCallback);
     }
 
     /**
@@ -40,7 +29,7 @@ export default class ElementComponent extends FileComponent {
      */
 
     async importElement(zip, file, path, progressCallback, errorCallback) {
-        this._updateSource(file, await FileUtil.extractFile(zip, this.joinPath(path, file)), progressCallback);
+        this.updateSource(file, await FileUtil.extractFile(zip, this.joinPath(path, file)), progressCallback);
     }
 
     /**
@@ -56,7 +45,6 @@ export default class ElementComponent extends FileComponent {
 
         let data;
 
-
         jsons.forEach(json => {
             if (json.data.indexOf("uiElements") === -1) {
                 return;
@@ -66,41 +54,11 @@ export default class ElementComponent extends FileComponent {
 
             this.addFileInfo(data);
             this.removeElement(elements, json);
-            this._updateSource(data, json.data, progressCallback);
+            this.updateSource(data, json.data, progressCallback);
         });
     }
 
-    /**
-     * @desc Clear sources and file information;
-     * @method
-     * @public
-     */
-
-    clear() {
-        super.clear();
-        this._sources = {};
-    }
-
-    /**
-     * @public
-     * @param {number} id
-     * @returns {Object | null}
-     */
-
-    remove(id) {
-        const particle = super.remove(id);
-
-        if (!particle) {
-            return particle;
-        }
-
-        delete this._sources[id];
-
-        return particle;
-    }
-
-    _updateSource(data, source, progressCallback) {
-        this._sources[data.id] = JSON.parse(source);
-        progressCallback(data);
+    updateSource(data, source, progressCallback) {
+        super.updateSource(data, JSON.parse(source), progressCallback);
     }
 }

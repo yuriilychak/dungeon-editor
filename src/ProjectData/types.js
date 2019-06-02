@@ -53,8 +53,7 @@
  * @typedef {Object}
  * @property {FileData[]} files
  * @property {DirectoryData[]} directories
- * @property {number} directoryGuid
- * @property {number} fileGuid
+ * @property {number} guid
  */
 
 /**

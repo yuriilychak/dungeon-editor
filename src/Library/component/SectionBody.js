@@ -62,7 +62,7 @@ const SectionBody = ({
             <ToolButton
                 title={deleteText}
                 Icon={DeleteIcon}
-                onClick={onRemoveFile}
+                onClick={() => onRemoveFile(rowInfo.node.id, id, isDirectory)}
             />
         ];
 

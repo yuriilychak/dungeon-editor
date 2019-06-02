@@ -4,31 +4,6 @@ import FILE_FORMAT from "../enum/FileFormat";
 import FileUtil from "../FileUtil";
 
 export default class SkeletonComponent extends FileComponent {
-    constructor(fileDir) {
-        super(fileDir);
-
-        /**
-         * @type {Object.<string, Object>}
-         * @private
-         */
-
-        this._skeletonSources = {};
-
-        /**
-         * @type {Object.<string, string>}
-         * @private
-         */
-
-        this._skeletonAtlases = {};
-
-        /**
-         * @type {Object.<string, string>}
-         * @private
-         */
-
-        this._skeletonTextures = {};
-    }
-
     /**
      * @method
      * @protected
@@ -40,7 +15,7 @@ export default class SkeletonComponent extends FileComponent {
      */
 
     async importElement(zip, file, path, progressCallback, errorCallback) {
-        const skeletonSource = await FileUtil.extractFile(zip, this.joinPath(path, file));
+        const data = await FileUtil.extractFile(zip, this.joinPath(path, file));
         let atlas = null;
         let texture = null;
 
@@ -59,7 +34,7 @@ export default class SkeletonComponent extends FileComponent {
             texture.data = await FileUtil.extractImage(zip, texture, this.joinPath(path, texture));
         }
 
-        this._updateSource(file, skeletonSource, atlas, texture, progressCallback);
+        this.updateSource(file, { data, atlas, texture }, progressCallback);
     }
 
     /**
@@ -72,29 +47,14 @@ export default class SkeletonComponent extends FileComponent {
      */
 
     exportElement(zip, element, progressCallback, path) {
-        const fileId = element.id;
-        FileUtil.packJson(zip, this.joinPath(path, element), this._skeletonSources[fileId], progressCallback);
+        const source = this.getSources(element.id);
+        FileUtil.packJson(zip, this.joinPath(path, element), source.data, progressCallback);
+
         if (element.hasAtlas) {
-            const atlasData = this._skeletonAtlases[fileId];
-            const textureData = this._skeletonTextures[fileId];
             const emptyCallback = () => {};
-
-            FileUtil.packFile(zip, this.joinPath(path, atlasData), atlasData.data, emptyCallback);
-            FileUtil.packBinary(zip, this.joinPath(path, textureData), textureData.data, emptyCallback);
+            FileUtil.packFile(zip, this.joinPath(path, source.atlas), source.atlas.data, emptyCallback);
+            FileUtil.packBinary(zip, this.joinPath(path, source.texture), source.texture.data, emptyCallback);
         }
-    }
-
-    /**
-     * @desc Clear sources and file information;
-     * @method
-     * @public
-     */
-
-    clear() {
-        super.clear();
-        this._skeletonSources = {};
-        this._skeletonAtlases = {};
-        this._skeletonTextures = {};
     }
 
     /**
@@ -140,54 +100,7 @@ export default class SkeletonComponent extends FileComponent {
             this.removeElement(elements, atlas);
             this.removeElement(elements, texture);
 
-            this._updateSource(
-                data,
-                json.data,
-                hasAtlas ? atlas: null,
-                hasAtlas ? texture: null,
-                progressCallback
-            );
+            this.updateSource(data, {data: json.data, atlas, texture}, progressCallback);
         });
-    }
-
-    /**
-     * @public
-     * @param {number} id
-     * @returns {Object | null}
-     */
-
-    remove(id) {
-        const element = super.remove(id);
-
-        if (!element) {
-            return element;
-        }
-
-        delete this._skeletonSources[id];
-        delete this._skeletonAtlases[id];
-        delete this._skeletonTextures[id];
-
-        return element;
-    }
-
-    /**
-     * @method
-     * @private
-     * @param {FileData} data
-     * @param {string} skeletonSource
-     * @param {string} atlasSource
-     * @param {string} textureSource
-     * @param {Function} progressCallback
-     */
-
-    _updateSource(data, skeletonSource, atlasSource, textureSource, progressCallback) {
-        this._skeletonSources[data.id] = JSON.parse(skeletonSource);
-
-        if (atlasSource && textureSource) {
-            this._skeletonAtlases[data.id] = atlasSource;
-            this._skeletonTextures[data.id] = textureSource;
-        }
-
-        progressCallback(data);
     }
 }

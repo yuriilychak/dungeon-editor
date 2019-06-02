@@ -17,31 +17,6 @@ const FONT_TYPE = {
 
 
 export default class FontComponent extends FileComponent {
-    constructor(fileDir) {
-        super(fileDir);
-
-        /**
-         * @type {Object.<string, string>}
-         * @private
-         */
-
-        this._vectorSources = {};
-
-        /**
-         * @type {Object.<string, string>}
-         * @private
-         */
-
-        this._bitmapSources = {};
-
-        /**
-         * @type {Object.<number, BMFontTextureData>}
-         * @private
-         */
-
-        this._bitmapTextures = {};
-    }
-
     /**
      * @method
      * @protected
@@ -54,14 +29,21 @@ export default class FontComponent extends FileComponent {
 
     async importElement(zip, font, path, progressCallback, errorCallback) {
         if (font.type === FONT_TYPE.VECTOR) {
-            const source = await FileUtil.extractVectorFont(zip, font, this.joinPath(path, font));
-            this._updateVectorFontSource(font, source, progressCallback);
+            this.updateSource(
+                font,
+                await FileUtil.extractVectorFont(zip, font, this.joinPath(path, font)),
+                progressCallback
+            );
         }
         else {
             const fontSource = await FileUtil.extractFile(zip, this.joinPath(path, font));
             const textureConfig = {name: font.name, format: font.textureFormat};
             const textureSource = await FileUtil.extractImage(zip, textureConfig, this.joinPath(path, textureConfig));
-            this._updateBitmapFontSource(font, fontSource, textureSource, font.textureFormat, progressCallback);
+            this.updateSource(
+                font,
+                this._generateBMFontSource(font.name, fontSource, textureSource, font.textureFormat),
+                progressCallback
+            );
         }
     }
 
@@ -88,7 +70,7 @@ export default class FontComponent extends FileComponent {
 
             this.addFileInfo(fontData);
             this.removeElement(elements, font);
-            this._updateVectorFontSource(fontData, font.data, progressCallback);
+            this.updateSource(fontData, font.data, progressCallback);
         });
 
         bitmapFonts.forEach(font => {
@@ -112,45 +94,12 @@ export default class FontComponent extends FileComponent {
             this.addFileInfo(fontData);
             this.removeElement(elements, font);
             this.removeElement(elements, texture);
-            this._updateBitmapFontSource(fontData, font.data, texture.data, texture.format, progressCallback);
+            this.updateSource(
+                fontData,
+                this._generateBMFontSource(fontData.name, font.data, texture.data, texture.format),
+                progressCallback
+            );
         });
-    }
-
-    /**
-     * @desc Clear sources and file information;
-     * @method
-     * @public
-     */
-
-    clear() {
-        super.clear();
-        this._vectorSources = {};
-        this._bitmapSources = {};
-        this._bitmapTextures = {};
-    }
-
-    /**
-     * @public
-     * @param {number} id
-     * @returns {Object | null}
-     */
-
-    remove(id) {
-        const font = super.remove(id);
-
-        if (!font) {
-            return font;
-        }
-
-        if (font.type === FONT_TYPE.BITMAP) {
-            delete this._bitmapTextures[id];
-            delete this._bitmapSources[id];
-        }
-        else {
-            delete this._vectorSources[id];
-        }
-
-        return font;
     }
 
     /**
@@ -166,56 +115,44 @@ export default class FontComponent extends FileComponent {
         const fileId = element.id;
 
         if (element.type === FONT_TYPE.VECTOR) {
-            FileUtil.packBinary(zip, this.joinPath(path, element), this._vectorSources[fileId], progressCallback);
+            FileUtil.packBinary(zip, this.joinPath(path, element), this.getSources(fileId), progressCallback);
         }
         else {
-            const texture = this._bitmapTextures[fileId];
-            FileUtil.packJson(zip, this.joinPath(path, element), this._bitmapSources[fileId], progressCallback);
+            const source = this.getSources(fileId);
+            const texture = source.texture;
+            FileUtil.packJson(zip, this.joinPath(path, element), source.data, progressCallback);
             FileUtil.packBinary(zip, this.joinPath(path, texture), texture.data, ()=>{});
         }
     }
 
     /**
-     * @function
-     * @param {FontData} font
-     * @param {string} sourceFont
-     * @param {Function} progressCallback
-     * @private
-     */
-
-    _updateVectorFontSource(font, sourceFont, progressCallback) {
-        this._vectorSources[font.id] = sourceFont;
-        progressCallback(font);
-    }
-
-    /**
-     * @function
-     * @param {FontData} font
-     * @param {string} sourceFont
-     * @param {string} sourceTexture
+     * @method
+     * @param {string} name
+     * @param {string} fontSource
+     * @param {string} textureSource
      * @param {string} textureFormat
-     * @param {Function} progressCallback
+     * @returns {Object}
      * @private
      */
 
-    _updateBitmapFontSource(font, sourceFont, sourceTexture, textureFormat, progressCallback) {
-        let sourceObject = null;
+    _generateBMFontSource(name, fontSource, textureSource, textureFormat) {
+        let data = null;
 
-        try {
-            sourceObject = JSON.parse(sourceFont);
-        } catch (e) {
-            sourceObject = (/<[^>]+>|\\n+/g).test(sourceFont) ?
-                this._parseXmlData(sourceFont) :
-                this._parseTextData(sourceFont);
-        }
-
-        this._bitmapSources[font.id] = sourceObject;
-        this._bitmapTextures[font.id] = {
-            data: sourceTexture,
-            name: font.name,
+        const texture = {
+            data: textureSource,
+            name: name,
             format: textureFormat
         };
-        progressCallback(font);
+
+        try {
+            data = JSON.parse(fontSource);
+            return { data, texture };
+        } catch (e) {
+            data = (/<[^>]+>|\\n+/g).test(fontSource) ?
+                this._parseXmlData(fontSource) :
+                this._parseTextData(fontSource);
+            return { data, texture };
+        }
     }
 
     _parseXmlData(data) {
