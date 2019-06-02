@@ -36,6 +36,8 @@
  * @property {string} name
  * @property {string} format
  * @property {number} id
+ * @property {number} parentId
+ * @property {boolean} hasPreview
  */
 
 /**

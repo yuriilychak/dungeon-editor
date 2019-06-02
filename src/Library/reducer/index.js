@@ -29,21 +29,8 @@ export const initialState = {
  */
 
 const actionHandlers = {
-    [STATE.ADD_FILE]: (state, action) => {
-        const files = state.files.slice(0);
-        const {sectionId, data} = action.payload;
-        const file = {
-            title: data.name,
-            id: data.id,
-            hasPreview: false,
-            isDirectory: false
-        };
-        files[sectionId] = [...files[sectionId], file];
-        return {
-            ...state,
-            files
-        }
-    },
+    [STATE.ADD_DIRECTORY]: (state, action) => addElementToTree(action, true, state),
+    [STATE.ADD_FILE]: (state, action) => addElementToTree(action, false, state),
     [STATE.REMOVE_FILE]: (state, action) => {
         const files = state.files.slice(0);
         const index = action.payload.sectionId;
@@ -59,41 +46,46 @@ const actionHandlers = {
         files[sectionId] = fileTree;
         return {...state, files};
     },
-    [STATE.ADD_DIRECTORY]: (state, action) => {
-        const files = state.files.slice(0);
-        const {sectionId, dirData} = action.payload;
-        const fileTree = files[sectionId].slice(0);
-        const parentId = dirData.parentId;
-        const result = {
-            title: dirData.name,
-            id: dirData.id,
-            hasPreview: false,
-            isDirectory: true
-        };
-
-        if (parentId === -1) {
-            fileTree.push(result);
-        }
-        else {
-            const parent = findDir(fileTree, parentId);
-
-            if (!parent) {
-                return state;
-            }
-
-            if (!parent.children) {
-                parent.children = [];
-            }
-
-            parent.children.push(result);
-        }
-
-        files[sectionId] = fileTree;
-
-        return {...state, files};
-    },
     [STATE.CLEAR]: state => ({...state, files: [[], [], [], [], []]})
 };
+
+function addElementToTree(action, isDirectory, state) {
+    const files = state.files.slice(0);
+    const {sectionId, data} = action.payload;
+    const file = {
+        title: data.name,
+        id: data.id,
+        parentId: data.parentId,
+        hasPreview: false,
+        isDirectory: isDirectory
+    };
+    const parentId = file.parentId;
+    const fileTree = files[sectionId].slice(0);
+
+    if (parentId === -1) {
+        fileTree.push(file);
+    }
+    else {
+        const parent = findDir(fileTree, parentId);
+
+        if (!parent) {
+            return state;
+        }
+
+        if (!parent.children) {
+            parent.children = [];
+        }
+
+        parent.children.push(file);
+    }
+
+    files[sectionId] = fileTree;
+
+    return {
+        ...state,
+        files
+    };
+}
 
 function findDir(data, id) {
     const dirs = data.filter(element => element.isDirectory);

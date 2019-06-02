@@ -136,7 +136,7 @@ export default {
 
         this._components.forEach(component => component.export(projectData, zip, progressCallback));
 
-        FileUtil.packJson(zip, this._metaJsonConfig, projectData, progressCallback);
+        FileUtil.packJson(zip, `${this._metaJsonConfig.name}.${this._metaJsonConfig.format}`, projectData, progressCallback);
 
         store.dispatch(changeProgress(maxPercent));
 
@@ -179,7 +179,7 @@ export default {
             .then(file =>
                     JSZip.loadAsync(file[0]).then(async content => {
                         store.dispatch(LibraryActions.clearLibrary());
-                        const metaData = await FileUtil.extractFile(content, this._metaJsonConfig);
+                        const metaData = await FileUtil.extractFile(content,`${this._metaJsonConfig.name}.${this._metaJsonConfig.format}`);
                         /**
                          * @type {ProjectData}
                          */
@@ -194,7 +194,7 @@ export default {
                             component = this._components[i];
                             await component.import(
                                 content,
-                                projectData[component.fileDir],
+                                projectData[component.rootName],
                                 this._addHandlers[i],
                                 this._dirHandlers[i],
                                 this._errorHandler
@@ -232,6 +232,18 @@ export default {
         store.dispatch(LibraryActions.removeFile(id, sectionIndex));
         return true;
     },
+
+    refreshHierarchy(files, sectionIndex) {
+        this._components[sectionIndex].refreshHierarchy(files);
+        store.dispatch(LibraryActions.updateTree(files, sectionIndex));
+    },
+
+    /**
+     * @function
+     * @public
+     * @param {number} sectionIndex
+     * @param {Object} [parent = null]
+     */
 
     adDirectory(sectionIndex, parent = null) {
         let parentId = -1;

@@ -21,11 +21,12 @@ export default class ParticleComponent extends FileComponent {
      * @param {JSZip} zip
      * @param {FileData} element
      * @param {Function} progressCallback
+     * @param {string} path
      */
 
-    exportElement(zip, element, progressCallback) {
+    exportElement(zip, element, progressCallback, path) {
         const fileId = element.id;
-        FileUtil.packJson(zip, element, this._sources[fileId], progressCallback, this.fileDir);
+        FileUtil.packJson(zip, this.joinPath(path, element), this._sources[fileId], progressCallback);
     }
 
     /**
@@ -33,12 +34,13 @@ export default class ParticleComponent extends FileComponent {
      * @protected
      * @param {JSZip} zip
      * @param {FileData} file
+     * @param {string} path
      * @param {Function} progressCallback
      * @param {Function} errorCallback
      */
 
-    async importElement(zip, file, progressCallback, errorCallback) {
-        this._updateSource(file, await FileUtil.extractFile(zip, file, this.fileDir), progressCallback);
+    async importElement(zip, file, path, progressCallback, errorCallback) {
+        this._updateSource(file, await FileUtil.extractFile(zip, this.joinPath(path, file)), progressCallback);
     }
 
     /**
@@ -61,12 +63,7 @@ export default class ParticleComponent extends FileComponent {
                 return;
             }
 
-            data = {
-                name: json.name,
-                format: json.format,
-                id: this.fileGuid,
-                hasPreview: false
-            };
+            data = this.generateFileData(json.name, json.format);
 
             this.addFileInfo(data);
             this.removeElement(elements, json);

@@ -23,11 +23,12 @@ export default class TextureComponent extends FileComponent {
      * @param {JSZip} zip
      * @param {FileData} element
      * @param {Function} progressCallback
+     * @param {string} path
      */
 
-    exportElement(zip, element, progressCallback) {
+    exportElement(zip, element, progressCallback, path) {
         const fileId = element.id;
-        FileUtil.packBinary(zip, element, this._sources[fileId], progressCallback, this.fileDir);
+        FileUtil.packBinary(zip, this.joinPath(path, element), this._sources[fileId], progressCallback);
     }
 
     /**
@@ -35,12 +36,13 @@ export default class TextureComponent extends FileComponent {
      * @protected
      * @param {JSZip} zip
      * @param {FileData} file
+     * @param {string} path
      * @param {Function} progressCallback
      * @param {Function} errorCallback
      */
 
-    async importElement(zip, file, progressCallback, errorCallback) {
-        const  source = await FileUtil.extractImage(zip, file, this.fileDir);
+    async importElement(zip, file, path, progressCallback, errorCallback) {
+        const  source = await FileUtil.extractImage(zip, file, this.joinPath(path, file));
         this._updateSource(file, source, progressCallback);
     }
 
@@ -71,11 +73,8 @@ export default class TextureComponent extends FileComponent {
 
         textures.forEach(texture => {
             fileData = {
-                name: texture.name,
-                format: texture.format,
-                id: this.fileGuid,
-                atlas: EMPTY_ATLAS_ID,
-                hasPreview: true
+                ...this.generateFileData(texture.name, texture.format, true),
+                atlas: EMPTY_ATLAS_ID
             };
             this.addFileInfo(fileData);
             this._updateSource(fileData, texture.data, progressCallback);

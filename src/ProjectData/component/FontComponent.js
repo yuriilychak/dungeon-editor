@@ -47,18 +47,20 @@ export default class FontComponent extends FileComponent {
      * @protected
      * @param {JSZip} zip
      * @param {FontResourceData} font
+     * @param {string} path
      * @param {Function} progressCallback
      * @param {Function} errorCallback
      */
 
-    async importElement(zip, font, progressCallback, errorCallback) {
+    async importElement(zip, font, path, progressCallback, errorCallback) {
         if (font.type === FONT_TYPE.VECTOR) {
-            const source = await FileUtil.extractVectorFont(zip, font, this.fileDir);
+            const source = await FileUtil.extractVectorFont(zip, font, this.joinPath(path, font));
             this._updateVectorFontSource(font, source, progressCallback);
         }
         else {
-            const fontSource = await FileUtil.extractFile(zip, font, this.fileDir);
-            const textureSource = await FileUtil.extractImage(zip, {name: font.name, format: font.textureFormat}, this.fileDir);
+            const fontSource = await FileUtil.extractFile(zip, this.joinPath(path, font));
+            const textureConfig = {name: font.name, format: font.textureFormat};
+            const textureSource = await FileUtil.extractImage(zip, textureConfig, this.joinPath(path, textureConfig));
             this._updateBitmapFontSource(font, fontSource, textureSource, font.textureFormat, progressCallback);
         }
     }
@@ -79,11 +81,8 @@ export default class FontComponent extends FileComponent {
 
         vectorFonts.forEach(font => {
             fontData = {
-                name: font.name,
-                format: font.format,
-                id: this.fileGuid,
+                ...this.generateFileData(font.name, font.format),
                 type: FONT_TYPE.VECTOR,
-                hasPreview: false,
                 textureFormat: ""
             };
 
@@ -105,11 +104,8 @@ export default class FontComponent extends FileComponent {
             }
 
             fontData = {
-                name: font.name,
-                format: font.format,
-                id: this.fileGuid,
+                ...this.generateFileData(font.name, font.format),
                 type: FONT_TYPE.BITMAP,
-                hasPreview: false,
                 textureFormat: texture.format
             };
 
@@ -163,18 +159,19 @@ export default class FontComponent extends FileComponent {
      * @param {JSZip} zip
      * @param {FontData} element
      * @param {Function} progressCallback
+     * @param {string} path
      */
 
-    exportElement(zip, element, progressCallback) {
+    exportElement(zip, element, progressCallback, path) {
         const fileId = element.id;
 
         if (element.type === FONT_TYPE.VECTOR) {
-            FileUtil.packBinary(zip, element, this._vectorSources[fileId], progressCallback, this.fileDir);
+            FileUtil.packBinary(zip, this.joinPath(path, element), this._vectorSources[fileId], progressCallback);
         }
         else {
             const texture = this._bitmapTextures[fileId];
-            FileUtil.packJson(zip, element, this._bitmapSources[fileId], progressCallback, this.fileDir);
-            FileUtil.packBinary(zip, texture, texture.data, ()=>{}, this.fileDir);
+            FileUtil.packJson(zip, this.joinPath(path, element), this._bitmapSources[fileId], progressCallback);
+            FileUtil.packBinary(zip, this.joinPath(path, texture), texture.data, ()=>{});
         }
     }
 

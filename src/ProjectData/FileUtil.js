@@ -20,12 +20,12 @@ export default {
      * @member fileUtil
      * @param {JSZip} zip
      * @param {ResourceData} data
-     * @param {?string} [directory = null]
+     * @param {string} path
      * @returns {Promise<string>}
      */
 
-    async extractImage(zip, data, directory = null) {
-        return `data:image/${data.format};base64,${await this.extractFile(zip, data, directory, true)}`;
+    async extractImage(zip, data, path) {
+        return `data:image/${data.format};base64,${await this.extractFile(zip, path, true)}`;
     },
 
     /**
@@ -34,12 +34,12 @@ export default {
      * @member fileUtil
      * @param {JSZip} zip
      * @param {ResourceData} data
-     * @param {?string} [directory = null]
+     * @param {string} path
      * @returns {Promise<string>}
      */
 
-    async extractVectorFont(zip, data, directory = null) {
-        return `data:application/x-font-${data.format};base64,${await this.extractFile(zip, data, directory, true)}`;
+    async extractVectorFont(zip, data, path) {
+        return `data:application/x-font-${data.format};base64,${await this.extractFile(zip, path, true)}`;
     },
 
     /**
@@ -47,14 +47,12 @@ export default {
      * @function
      * @member fileUtil
      * @param {JSZip} zip
-     * @param {ResourceData} data
-     * @param {?string} [directory = null]
+     * @param {string} path
      * @param {boolean} isBinary
      * @returns {Promise<string>}
      */
 
-    extractFile(zip, data, directory = null, isBinary = false) {
-        const path = this._getPath(data, directory);
+    extractFile(zip, path, isBinary = false) {
         const type = isBinary ? "base64" : "text";
         return new Promise((resolve, reject) => {
             zip.file(path).async(type).then(data => {
@@ -164,14 +162,13 @@ export default {
      * @function
      * @member fileUtil
      * @param {JSZip} zip
-     * @param {ResourceData} data
+     * @param {string} path
      * @param {string} source
      * @param {ProgressCallback} progressCallback
-     * @param {?string} [directory = null]
      */
 
-    packBinary(zip, data, source, progressCallback, directory = null) {
-        this.packFile(zip, data, source.split(',')[1], progressCallback, directory, { base64: true });
+    packBinary(zip, path, source, progressCallback) {
+        this.packFile(zip, path, source.split(',')[1], progressCallback, { base64: true });
     },
 
     /**
@@ -179,14 +176,13 @@ export default {
      * @function
      * @member fileUtil
      * @param {JSZip} zip
-     * @param {ResourceData} data
+     * @param {string} path
      * @param {Object} source
      * @param {ProgressCallback} progressCallback
-     * @param {?string} [directory = null]
      */
 
-    packJson(zip, data, source, progressCallback, directory = null) {
-        this.packFile(zip, data, JSON.stringify(source), progressCallback, directory);
+    packJson(zip, path, source, progressCallback) {
+        this.packFile(zip, path, JSON.stringify(source), progressCallback);
     },
 
     /**
@@ -194,15 +190,14 @@ export default {
      * @function
      * @member fileUtil
      * @param {JSZip} zip
-     * @param {ResourceData} data
+     * @param {string} path
      * @param {string} source
      * @param {ProgressCallback} progressCallback
-     * @param {?string} [directory = null]
      * @param {?Object} [options = undefined]
      */
 
-    packFile(zip, data, source, progressCallback, directory, options = undefined) {
-        const path = this._getPath(data, directory);
+    packFile(zip, path, source, progressCallback, options = undefined) {
+        console.log(path, source);
         zip.file(path, source, options);
         progressCallback(path);
     },

@@ -94,18 +94,21 @@ const SectionBody = ({
         };
     };
 
+    let nodeCount = 0;
+
     const calculateHeight = elements => {
         let result = 0;
         elements.forEach(element => {
             result += 24;
-            if (element.expanded) {
+            ++nodeCount;
+            if (element.expanded && element.children && element.children.length !== 0) {
                 result += calculateHeight(element.children);
             }
         });
         return result;
     };
 
-    const height = calculateHeight(files) + 6;
+    const height = calculateHeight(files) + nodeCount;
 
     return (
         <div style={{height, width: "100%"}}>

@@ -1,11 +1,13 @@
+const ROOT_DIR_ID = -1;
+
 export default class FileComponent {
 
     /**
      * @constructor
-     * @param {string} fileDir
+     * @param {string} rootName
      */
 
-    constructor(fileDir) {
+    constructor(rootName) {
         /**
          * @type {FileData[]}
          * @private
@@ -24,7 +26,7 @@ export default class FileComponent {
          * @private
          */
 
-        this._fileDir = fileDir;
+        this._rootName = rootName;
 
         /**
          * @type {number}
@@ -40,6 +42,11 @@ export default class FileComponent {
 
         this._directoryGuid = 0;
     }
+
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @method
@@ -68,7 +75,7 @@ export default class FileComponent {
         const fileCount = this._files.length;
 
         for (let i = 0; i < fileCount; ++i) {
-            await this.importElement(zip, this._files[i], progressCallback, errorCallback);
+            await this.importElement(zip, this._files[i], this._generatePath(this._files[i]), progressCallback, errorCallback);
         }
     }
 
@@ -81,13 +88,15 @@ export default class FileComponent {
      */
 
     export(projectData, zip, progressCallback) {
-        projectData[this._fileDir] = {
+        projectData[this._rootName] = {
             files: this._files,
             fileGuid: this._fileGuid,
             directoryGuid: this._directoryGuid,
             directories: this._directories
         };
-        this._files.forEach(info => this.exportElement(zip, info, progressCallback));
+        this._files.forEach(info => {
+            this.exportElement(zip, info, progressCallback, this._generatePath(info));
+        });
     }
 
     /**
@@ -121,7 +130,7 @@ export default class FileComponent {
      * @returns {DirectoryData}
      */
 
-    addDirectory(parentId = -1) {
+    addDirectory(parentId = ROOT_DIR_ID) {
         const id = ++this._directoryGuid;
         const dirData = {
             parentId,
@@ -130,16 +139,6 @@ export default class FileComponent {
         };
         this._directories.push(dirData);
         return dirData;
-    }
-
-    /**
-     * @param {FileData} value
-     * @returns {boolean}
-     */
-
-    addFileInfo(value) {
-        this._files.push(value);
-        return true;
     }
 
     /**
@@ -160,6 +159,51 @@ export default class FileComponent {
         this._files.splice(index, 1);
 
         return element;
+    }
+
+    refreshHierarchy(files, parentId = ROOT_DIR_ID) {
+        let searchArray, id, element, isDirectory;
+
+        files.forEach(file => {
+            isDirectory = file.isDirectory;
+            searchArray = isDirectory ? this._directories : this._files;
+            id = file.id;
+            element = searchArray.find(file => file.id === id);
+
+            if (!element) {
+                return;
+            }
+
+            element.parentId = parentId;
+
+            if (!isDirectory) {
+                return;
+            }
+
+            if (file.children && file.children.length !== 0) {
+                this.refreshHierarchy(file.children, id);
+                return;
+            }
+
+            file.expanded = false;
+        });
+    }
+
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @method
+     * @protected
+     * @param {FileData} value
+     * @returns {boolean}
+     */
+
+    addFileInfo(value) {
+        this._files.push(value);
+        return true;
     }
 
     /**
@@ -186,11 +230,12 @@ export default class FileComponent {
     }
 
     /**
+     * @method
+     * @protected
      * @param {Array.<Object>} elements
      * @param {FILE_TYPE} fileType
      * @param {Array.<string>} formats
      * @returns {Array.<Object>}
-     * @protected
      */
 
     filterFiles(elements, fileType, formats) {
@@ -206,22 +251,68 @@ export default class FileComponent {
      * @param {JSZip} zip
      * @param {FileData} element
      * @param {Function} progressCallback
+     * @param {string} path
      */
 
-    exportElement(zip, element, progressCallback) {}
+    exportElement(zip, element, progressCallback, path) {}
 
     /**
      * @method
      * @protected
      * @param {JSZip} zip
      * @param {FileData} file
+     * @param {string} path
      * @param {Function} progressCallback
      * @param {Function} errorCallback
      */
 
-    async importElement(zip, file, progressCallback, errorCallback) {}
+    async importElement(zip, file, path, progressCallback, errorCallback) {}
 
-    _generateDirs(onGenerateDir, parentId = -1) {
+    /**
+     * @desc Generate base template for files.
+     * @method
+     * @protected
+     * @param {string} name
+     * @param {string} format
+     * @param {boolean} [hasPreview = false]
+     * @returns {FileData}
+     */
+
+    generateFileData(name, format, hasPreview = false) {
+        return {
+            name: name,
+            format: format,
+            parentId: ROOT_DIR_ID,
+            id: ++this._fileGuid,
+            hasPreview: hasPreview
+        };
+    }
+
+    /**
+     * @method
+     * @protected
+     * @param {string} path
+     * @param {FileData} element
+     * @returns {string}
+     */
+
+    joinPath(path, element) {
+        return `${path}.${element.format}`;
+    }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @method
+     * @param {Function} onGenerateDir
+     * @param {number} [parentId = -1]
+     * @private
+     */
+
+    _generateDirs(onGenerateDir, parentId = ROOT_DIR_ID) {
         const dirsToCreate = this._directories.filter(dir => dir.parentId === parentId);
 
         dirsToCreate.forEach(dir => {
@@ -230,15 +321,40 @@ export default class FileComponent {
         });
     }
 
+    _generatePath(fileInfo) {
+        const path = this._searchPath(fileInfo, []);
+        path.unshift(this._rootName);
+        return `/${path.join("/")}`;
+    }
+
     /**
-     * @prtexted
-     * @returns {number}
+     *
+     * @param {FileData} element
+     * @param {string[]} path
+     * @returns {string[]}
+     * @private
      */
 
-    get fileGuid() {
-        ++this._fileGuid;
-        return this._fileGuid;
+    _searchPath(element, path) {
+        if (!element) {
+            return path;
+        }
+
+        path.unshift(element.name);
+
+        if (element.parentId === ROOT_DIR_ID) {
+            return path;
+        }
+
+        element = this._directories.find(dir => dir.id === element.parentId);
+
+        return this._searchPath(element, path);
     }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @public
@@ -263,7 +379,7 @@ export default class FileComponent {
      * @returns {string}
      */
 
-    get fileDir() {
-        return this._fileDir;
+    get rootName() {
+        return this._rootName;
     }
 }

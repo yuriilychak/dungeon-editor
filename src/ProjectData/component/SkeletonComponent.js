@@ -34,12 +34,13 @@ export default class SkeletonComponent extends FileComponent {
      * @protected
      * @param {JSZip} zip
      * @param {FileData} file
+     * @param {string} path
      * @param {Function} progressCallback
      * @param {Function} errorCallback
      */
 
-    async importElement(zip, file, progressCallback, errorCallback) {
-        const skeletonSource = await FileUtil.extractFile(zip, file, this.fileDir);
+    async importElement(zip, file, path, progressCallback, errorCallback) {
+        const skeletonSource = await FileUtil.extractFile(zip, this.joinPath(path, file));
         let atlas = null;
         let texture = null;
 
@@ -54,8 +55,8 @@ export default class SkeletonComponent extends FileComponent {
                 format: file.textureFormat
             };
 
-            atlas.data = await FileUtil.extractFile(zip, atlas, this.fileDir);
-            texture.data = await FileUtil.extractFile(zip, texture, this.fileDir, true);
+            atlas.data = await FileUtil.extractFile(zip, this.joinPath(path, atlas));
+            texture.data = await FileUtil.extractImage(zip, texture, this.joinPath(path, texture));
         }
 
         this._updateSource(file, skeletonSource, atlas, texture, progressCallback);
@@ -67,18 +68,19 @@ export default class SkeletonComponent extends FileComponent {
      * @param {JSZip} zip
      * @param {FileData} element
      * @param {Function} progressCallback
+     * @param {string} path
      */
 
-    exportElement(zip, element, progressCallback) {
+    exportElement(zip, element, progressCallback, path) {
         const fileId = element.id;
-        FileUtil.packJson(zip, element, this._skeletonSources[fileId], progressCallback, this.fileDir);
+        FileUtil.packJson(zip, this.joinPath(path, element), this._skeletonSources[fileId], progressCallback);
         if (element.hasAtlas) {
             const atlasData = this._skeletonAtlases[fileId];
             const textureData = this._skeletonTextures[fileId];
             const emptyCallback = () => {};
 
-            FileUtil.packFile(zip, atlasData, atlasData.data, emptyCallback, this.fileDir);
-            FileUtil.packBinary(zip, textureData, textureData.data, emptyCallback, this.fileDir);
+            FileUtil.packFile(zip, this.joinPath(path, atlasData), atlasData.data, emptyCallback);
+            FileUtil.packBinary(zip, this.joinPath(path, textureData), textureData.data, emptyCallback);
         }
     }
 
@@ -127,10 +129,7 @@ export default class SkeletonComponent extends FileComponent {
             }
 
             data = {
-                name: json.name,
-                format: json.format,
-                id: this.fileGuid,
-                hasPreview: false,
+                ...this.generateFileData(json.name, json.format),
                 hasAtlas: hasAtlas,
                 textureFormat: hasAtlas ? texture.format : ""
             };
