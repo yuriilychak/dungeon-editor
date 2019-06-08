@@ -1,10 +1,10 @@
 import TextField from '@material-ui/core/TextField';
 import React, {Component} from "react";
-import PropTypes from 'prop-types';
+import { string, bool, number } from 'prop-types';
 
 const emptyString = "";
 
-export default class ProjectNameInput extends Component {
+export default class NameInput extends Component {
 
     constructor(props) {
         super(props);
@@ -42,9 +42,9 @@ export default class ProjectNameInput extends Component {
     }
 }
 
-ProjectNameInput.propTypes = {
-    errorLocale: PropTypes.string,
-    isError: PropTypes.bool,
-    maxLength: PropTypes.number,
-    titleLocale: PropTypes.string
+NameInput.propTypes = {
+    errorLocale: string,
+    isError: bool,
+    maxLength: number,
+    titleLocale: string
 };

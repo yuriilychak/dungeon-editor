@@ -71,6 +71,12 @@ export default {
 
     _errorHandler: null,
 
+    /**
+     * @type {?{ id: number, sectionId: number} | null}
+     * @private
+     */
+
+    _renameData: null,
 
     /**
      * @method
@@ -267,5 +273,25 @@ export default {
 
         const dirData = this._components[sectionIndex].addDirectory(parentId);
         store.dispatch(LibraryActions.addDirectory(sectionIndex, dirData));
+    },
+
+    bindFileRename(id, sectionId) {
+        this._renameData = { id, sectionId };
+    },
+
+    resetFileRename() {
+        this._renameData = null;
+    },
+
+    renameFile(newName) {
+        if (this._renameData === null) {
+            return;
+        }
+
+        const { sectionId, id } = this._renameData;
+
+        this._components[sectionId].renameFile(id, newName);
+
+        store.dispatch(LibraryActions.renameFile(id, sectionId, newName));
     }
 }

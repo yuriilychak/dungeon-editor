@@ -62,6 +62,23 @@ const actionHandlers = {
 
         return {...state, files};
     },
+    [STATE.RENAME_FILE]: (state, action) => {
+        const files = state.files.slice(0);
+        const {id, sectionId, name} = action.payload;
+        const fileTree = files[sectionId];
+
+        const element = findElement(fileTree, id);
+
+        if (!element) {
+            return state;
+        }
+
+        element.title = name;
+
+        files[sectionId] = fileTree.slice(0);
+
+        return {...state, files};
+    },
     [STATE.CLEAR]: state => ({...state, files: [[], [], [], [], []]})
 };
 

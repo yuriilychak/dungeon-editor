@@ -22,6 +22,23 @@ export const addFile = (data, sectionId) => ({
  * @return {ActionData}
  */
 
+export const renameFile = (id, sectionId, name) => ({
+    type: state.RENAME_FILE,
+    payload: {
+        id,
+        sectionId,
+        name
+    }
+});
+
+
+/**
+ * @function
+ * @param {number} id
+ * @param {number} sectionId
+ * @return {ActionData}
+ */
+
 export const removeFile = (id, sectionId) => ({
     type: state.REMOVE_FILE,
     payload: {

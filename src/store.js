@@ -1,5 +1,6 @@
 import topMenuReducer from "./top-menu/reducer";
 import newProjectDialogReducer from "./new-project-dialog/reducer";
+import renameFileDialogReducer from "./rename-file-dialog/reducer";
 import exportProjectDialogReducer from "./export-project-dialog/reducer";
 import libraryReducer from "./library/reducer";
 import { createStore, combineReducers } from 'redux';
@@ -13,7 +14,8 @@ import { createStore, combineReducers } from 'redux';
 
 const store = createStore(combineReducers({
     topMenu: topMenuReducer,
-    libraryReducer: libraryReducer,
+    library: libraryReducer,
+    renameFileDialog: renameFileDialogReducer,
     exportProjectDialog: exportProjectDialogReducer,
     newProjectDialog: newProjectDialogReducer
 }));

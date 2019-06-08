@@ -1,0 +1,3 @@
+export default {
+    CHANGE_ACTIVITY: "RENAME_FILE.CHANGE_ACTIVITY"
+};

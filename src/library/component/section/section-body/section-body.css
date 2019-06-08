@@ -8,5 +8,7 @@
 }
 
 .section-body-empty {
+    user-drag: none;
+    user-select: none;
     padding: 0 12px 6px 12px;
 }

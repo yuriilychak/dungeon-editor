@@ -210,6 +210,29 @@ export default class FileComponent {
     }
 
     /**
+     * @desc Rename file.
+     * @method
+     * @public
+     * @param {number} id
+     * @param {string} name
+     * @returns {boolean}
+     */
+
+    renameFile(id, name) {
+        let element =
+            this._files.find(element => element.id === id) ||
+            this._directories.find(element => element.id === id);
+
+        if (!element) {
+            return false;
+        }
+
+        element.name = name;
+
+        return true;
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */

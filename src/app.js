@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./App.css";
 import ConTopMenu from "./top-menu/container";
 
 import theme from "./Theme";
@@ -13,6 +12,7 @@ import Panel from "./common-ui/titled-panel/titled-panel";
 import ConLibrary from "./library/container";
 import NewProjectDialog from "./new-project-dialog/container";
 import ExportProjectDialog from "./export-project-dialog/container";
+import RenameFileDialog from "./rename-file-dialog/container";
 
 const styles = theme => ({
     root: {
@@ -58,6 +58,7 @@ class App extends Component {
               <div className={classes.root}>
                   <NewProjectDialog/>
                   <ExportProjectDialog/>
+                  <RenameFileDialog/>
                   <ConTopMenu/>
                   <div className={classes.grid}>
                       <Grid container className={classes.fullHeight}>

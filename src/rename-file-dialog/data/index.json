@@ -1,0 +1,11 @@
+{
+  "locale": {
+    "buttonCancel": "RenameFileDialog_Cancel",
+    "buttonSubmit": "RenameFileDialog_Submit",
+    "contentText": "RenameFileDialog_ContentText",
+    "contentTitle": "RenameFileDialog_ContentTitle",
+    "inputError": "RenameFileDialog_InputError",
+    "inputTitle": "RenameFileDialog_InputTitle"
+  },
+  "maxNameLength": 20
+}

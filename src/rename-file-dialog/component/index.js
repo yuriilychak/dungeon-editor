@@ -1,5 +1,5 @@
 import React, { useState, memo } from 'react';
-import { bool, func, string, number, shape } from 'prop-types';
+import { bool, shape, string, func, number } from 'prop-types';
 import { useTranslation } from "react-i18next";
 
 import Button from '@material-ui/core/Button';
@@ -11,7 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import {NameInput} from "../../common-ui/name-input";
 
-const NewProjectDialog = props => {
+const RenameFileDialog = props => {
     const { t } = useTranslation();
     const { staticData, isPopupOpen } = props;
     const { locale, maxNameLength } = staticData;
@@ -35,7 +35,7 @@ const NewProjectDialog = props => {
         }
 
         setError(false);
-        props.onSubmitProject(projectName);
+        props.onSubmitRename(projectName);
     };
 
     return (
@@ -80,7 +80,7 @@ const NewProjectDialog = props => {
     );
 };
 
-NewProjectDialog.propTypes = {
+RenameFileDialog.propTypes = {
     isPopupOpen: bool,
     staticData: shape({
         locale: shape({
@@ -97,4 +97,4 @@ NewProjectDialog.propTypes = {
     onSubmitProject: func
 };
 
-export default memo(NewProjectDialog);
+export default memo(RenameFileDialog);

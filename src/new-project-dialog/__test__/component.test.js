@@ -1,5 +1,5 @@
 import NewProjectDialog from "../component";
-import ProjectNameInput from "../component/ProjectNameInput";
+import NameInput from "../../common-ui/name-input/name-input";
 import { initialState } from '../reducer';
 import React from "react";
 import { createMount } from '@material-ui/core/test-utils';
@@ -68,7 +68,7 @@ describe('new-project-dialog index test',()=>{
 
 });
 
-describe( 'new-project-dialog ProjectNameInput test', () => {
+describe( 'new-project-dialog NameInput test', () => {
 
     const props = {
         isError: false,
@@ -78,7 +78,7 @@ describe( 'new-project-dialog ProjectNameInput test', () => {
     };
 
     const wrapper = createMount()(
-        <ProjectNameInput
+        <NameInput
             {...props}
         />
     );
@@ -91,7 +91,7 @@ describe( 'new-project-dialog ProjectNameInput test', () => {
     it('Error snapshot', () => {
         const errorProps = {...props, isError: true};
         const errorWrapper = createMount()(
-            <ProjectNameInput
+            <NameInput
                 {...errorProps}
             />
         );

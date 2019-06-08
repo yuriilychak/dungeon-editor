@@ -2,10 +2,11 @@ import { connect } from 'react-redux';
 import Library from "../component";
 import ProjectData from "../../project-data";
 import {showExportProjectDialog} from "../../export-project-dialog/action";
+import {showRenameFileDialog} from "../../rename-file-dialog/action";
 
 const mapStateToProps = (state) => {
     return {
-        ...state.libraryReducer
+        ...state.library
     }
 };
 
@@ -26,8 +27,9 @@ const mapDispatchToProps = dispatch => {
         onAddDirectory: (sectionId, parent = null) => {
             ProjectData.adDirectory(sectionId, parent);
         },
-        onRenameFile:(id, sectionId, prevName) => {
-            console.log(prevName);
+        onRenameFile:(id, sectionId) => {
+            ProjectData.bindFileRename(id, sectionId);
+            dispatch(showRenameFileDialog());
         },
         onExportProject: () => {
             dispatch(showExportProjectDialog());
