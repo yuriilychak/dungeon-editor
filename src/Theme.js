@@ -178,6 +178,10 @@ const theme = createMuiTheme({
                 margin: "4px 0px",
                 '&$expanded': {
                     margin: "4px 0px"
+                },
+                "& > :last-child": {
+                    paddingRight: 0,
+                    marginRight: 16
                 }
             },
             expandIcon: {
@@ -196,6 +200,22 @@ const theme = createMuiTheme({
                 color: contrastText,
                 backgroundColor: hoverText,
                 borderRadius: 0
+            }
+        },
+        MuiSvgIcon: {
+            root: {
+                fontSize: 14,
+                fill: contrastText
+            }
+        },
+        MuiIconButton: {
+            root: {
+                padding: 2,
+
+            },
+            label: {
+                color: contrastText,
+                fontSize: 14
             }
         }
     }

@@ -1,0 +1,12 @@
+.section-body-icon {
+    font-size: 16px !important;
+}
+
+.section-body-text {
+    color: white;
+    font-size: 14px;
+}
+
+.section-body-empty {
+    padding: 0 12px 6px 12px;
+}

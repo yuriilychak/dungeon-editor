@@ -1,7 +1,7 @@
-import topMenuReducer from "./TopMenu/reducer";
-import newProjectDialogReducer from "./NewProjectDialog/reducer";
-import exportProjectDialogReducer from "./ExportProjectDialog/reducer";
-import libraryReducer from "./Library/reducer";
+import topMenuReducer from "./top-menu/reducer";
+import newProjectDialogReducer from "./new-project-dialog/reducer";
+import exportProjectDialogReducer from "./export-project-dialog/reducer";
+import libraryReducer from "./library/reducer";
 import { createStore, combineReducers } from 'redux';
 
 /**
