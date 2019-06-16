@@ -23,6 +23,7 @@ const SectionBody = ({
                          onAddDirectory,
                          onRemoveFile,
                          onRenameFile,
+                         onSelectFile,
                          onUpdateTree
                      }) => {
 
@@ -66,7 +67,7 @@ const SectionBody = ({
         }
 
         return {
-            onClick: event => console.log(event),
+            onClick: () => onSelectFile(id, rowInfo.node),
             icons,
             buttons,
             className: "section-body-text"
@@ -93,6 +94,7 @@ SectionBody.propTypes = {
     onAddDirectory: func.isRequired,
     onRemoveFile: func.isRequired,
     onRenameFile: func.isRequired,
+    onSelectFile: func.isRequired,
     onUpdateTree: func.isRequired
 };
 

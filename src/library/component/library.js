@@ -23,6 +23,7 @@ const Library = props => {
         onAddDirectory,
         onExportProject,
         onPublishProject,
+        onSelectFile,
         onUpdateTree
     } = props;
     const {t} = useTranslation();
@@ -49,6 +50,7 @@ const Library = props => {
                 onUpdateTree={onUpdateTree}
                 onRemoveFile={onRemoveFile}
                 onRenameFile={onRenameFile}
+                onSelectFile={onSelectFile}
             />
         )
     );
@@ -116,6 +118,7 @@ Library.propTypes = {
     onExportProject: func.isRequired,
     onPublishProject: func.isRequired,
     onRenameFile: func.isRequired,
+    onSelectFile: func.isRequired,
     onUpdateTree: func.isRequired
 };
 

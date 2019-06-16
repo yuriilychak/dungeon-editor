@@ -35,7 +35,10 @@ const mapDispatchToProps = dispatch => {
             dispatch(showExportProjectDialog());
             ProjectData.export();
         },
-        onPublishProject: () => {}
+        onPublishProject: () => {},
+        onSelectFile: (id, data) => {
+            console.log(id, data);
+        }
     }
 };
 

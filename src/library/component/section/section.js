@@ -1,5 +1,5 @@
-import React, { memo } from "react";
-import { number, string, func, arrayOf, object } from "prop-types";
+import React, {memo} from "react";
+import {number, string, func, arrayOf, object} from "prop-types";
 
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -10,24 +10,25 @@ import {SectionHeader} from "./section-header";
 import {SectionBody} from "./section-body";
 
 const Section = ({
-                           id,
-                           icon,
-                           files,
-                           addDirectoryText,
-                           addElementText,
-                           emptyText,
-                           deleteText,
-                           renameText,
-                           titleText,
-                           onAddDirectory,
-                           onUpdateTree,
-                           onRemoveFile,
-                           onRenameFile
-                       }) => {
+                     id,
+                     icon,
+                     files,
+                     addDirectoryText,
+                     addElementText,
+                     emptyText,
+                     deleteText,
+                     renameText,
+                     titleText,
+                     onAddDirectory,
+                     onUpdateTree,
+                     onRemoveFile,
+                     onRenameFile,
+                     onSelectFile
+                 }) => {
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={<ExpandMoreIcon/>}
             >
                 <SectionHeader
                     id={id}
@@ -35,7 +36,8 @@ const Section = ({
                     titleText={titleText}
                     addDirectoryText={addDirectoryText}
                     addElementText={addElementText}
-                    onAddNewFile={() => {}}
+                    onAddNewFile={() => {
+                    }}
                     onAddDirectory={onAddDirectory}
                 />
             </ExpansionPanelSummary>
@@ -51,6 +53,7 @@ const Section = ({
                     onAddDirectory={onAddDirectory}
                     onRemoveFile={onRemoveFile}
                     onRenameFile={onRenameFile}
+                    onSelectFile={onSelectFile}
                     onUpdateTree={onUpdateTree}
                 />
             </ExpansionPanelDetails>
@@ -71,7 +74,8 @@ Section.propTypes = {
     onAddDirectory: func.isRequired,
     onUpdateTree: func.isRequired,
     onRemoveFile: func.isRequired,
-    onRenameFile: func.isRequired
+    onRenameFile: func.isRequired,
+    onSelectFile: func.isRequired,
 };
 
 export default memo(Section);
