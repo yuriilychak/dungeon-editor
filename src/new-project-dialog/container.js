@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { hideNewProjectDialog } from '../action';
-import ProjectData from '../../project-data';
-import NewProjectDialog from "../component";
+import { hideNewProjectDialog } from './action';
+import ProjectData from '../project-data';
+import { NewProjectDialog } from "./component";
 
 const mapStateToProps = (state) => {
     return {

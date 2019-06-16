@@ -18,7 +18,7 @@ describe('new-project-dialog actions', () => {
         expect(showExportProjectDialog()).toEqual(expectedAction);
     });
 
-    it('changeProgress', () => {
+    it('changeProgress with full data', () => {
         const expectedAction = {
             type: types.PROGRESS,
             payload: {
@@ -28,5 +28,17 @@ describe('new-project-dialog actions', () => {
             }
         };
         expect(changeProgress(50, "text.json", false)).toEqual(expectedAction);
+    });
+
+    it('changeProgress with percent only', () => {
+        const expectedAction = {
+            type: types.PROGRESS,
+            payload: {
+                progress: 50,
+                fileName: null,
+                isComplete: false
+            }
+        };
+        expect(changeProgress(50)).toEqual(expectedAction);
     });
 });

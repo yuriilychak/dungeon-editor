@@ -11,8 +11,8 @@ import uiConst from "./constant/uiConst";
 import BottomMenu from "./bottom-menu/component";
 import Panel from "./common-ui/titled-panel/titled-panel";
 import ConLibrary from "./library/container";
-import NewProjectDialog from "./new-project-dialog/container";
-import ExportProjectDialog from "./export-project-dialog/container";
+import { NewProjectDialog } from "./new-project-dialog";
+import { ExportProjectDialog } from "./export-project-dialog";
 import { RenameFileDialog } from "./rename-file-dialog";
 
 const styles = theme => ({

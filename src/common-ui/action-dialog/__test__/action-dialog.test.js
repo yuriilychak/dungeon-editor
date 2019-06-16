@@ -18,6 +18,8 @@ describe('ActionDialog test',()=>{
             dialogId={dialogId}
             onSubmit={onSubmit}
             onReject={onReject}
+            submitTitle={title}
+            rejectTitle={title}
         />
     );
 
@@ -36,6 +38,8 @@ describe('ActionDialog test',()=>{
                 dialogId={dialogId}
                 onSubmit={onSubmit}
                 onReject={onReject}
+                submitTitle={title}
+                rejectTitle={title}
             />
         );
         expect(wrapper.html()).toMatchSnapshot();

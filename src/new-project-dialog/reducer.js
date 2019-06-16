@@ -1,5 +1,5 @@
-import NEW_PROJECT_DIALOG from "../state";
-import StaticData from "../data/index.json";
+import NEW_PROJECT_DIALOG from "./state";
+import StaticData from "./data/index.json";
 
 export const initialState = {
     staticData: StaticData,

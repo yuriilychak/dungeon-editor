@@ -1,4 +1,4 @@
-import STATE from "../state";
+import STATE from "./state";
 
 export const showNewProjectDialog = () => changeDialogActivity(true);
 export const hideNewProjectDialog = () => changeDialogActivity(false);

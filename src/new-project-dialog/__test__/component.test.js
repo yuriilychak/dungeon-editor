@@ -1,4 +1,4 @@
-import NewProjectDialog from "../component";
+import NewProjectDialog from "../component/new-project-dialog";
 import { initialState } from '../reducer';
 import React from "react";
 import { createMount } from '@material-ui/core/test-utils';
@@ -60,7 +60,7 @@ describe('new-project-dialog index test',()=>{
     it('Click cancel', () => {
         jest.spyOn(wrapper.props(), "onClosePopup");
 
-        const button = wrapper.find('#new-project-cancel').first();
+        const button = wrapper.find('#new-project-reject').first();
         button.simulate('click');
         expect(wrapper.props().onClosePopup).toHaveBeenCalled();
     });

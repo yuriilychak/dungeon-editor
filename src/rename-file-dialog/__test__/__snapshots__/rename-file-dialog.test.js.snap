@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rename-file-dialog index test Close snapshot 1`] = `""`;
+
+exports[`rename-file-dialog index test Open snapshot 1`] = `""`;
