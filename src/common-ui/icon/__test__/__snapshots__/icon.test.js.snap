@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon test default snapshot 1`] = `"<img src=\\"undefined/icon/test.svg\\" class=\\"icon-root\\" alt=\\"empty Icon\\" draggable=\\"false\\">"`;
+
+exports[`Icon test with icon default snapshot 1`] = `"<img src=\\"undefined/icon/test.svg\\" class=\\"icon-root\\" alt=\\"empty Icon\\" draggable=\\"false\\">"`;

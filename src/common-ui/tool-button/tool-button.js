@@ -1,32 +1,49 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import { string, func, bool } from "prop-types";
+import {string, func, bool} from "prop-types";
 
 const ToolButton = ({
                         title,
                         onClick,
                         Icon,
-                        owner,
-                        hasPopup,
-                    }) => (
-    <Tooltip title={title}>
+                        owner
+                    }) => {
+
+    const click = event => {
+        event.stopPropagation();
+        onClick();
+    };
+
+    const hasPopup = !!title;
+
+    if (hasPopup) {
+        return (
+            <Tooltip title={title}>
+                <IconButton
+                    onClick={click}
+                    aria-owns={owner}
+                    aria-haspopup={hasPopup}
+                >
+                    <Icon/>
+                </IconButton>
+            </Tooltip>
+        )
+    }
+
+    return (
         <IconButton
-            onClick={event => {
-                event.stopPropagation();
-                onClick();
-            }}
+            onClick={click}
             aria-owns={owner}
-            aria-haspopup={hasPopup}
         >
             <Icon/>
         </IconButton>
-    </Tooltip>
-);
+    );
+
+};
 
 ToolButton.defultProps = {
-    title: "Unknown",
-    hasPopup: false
+    title: ""
 };
 
 ToolButton.propTypes = {
@@ -34,7 +51,7 @@ ToolButton.propTypes = {
     hasPopup: bool,
     Icon: func.isRequired,
     owner: string,
-    onClick: func
+    onClick: func.isRequired
 };
 
 export default ToolButton;

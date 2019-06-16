@@ -20,7 +20,6 @@ const FileTree = ({
         const customProps = generateNodeProps(rowInfo);
 
         if (isDirectory) {
-
             if (!customProps.icon) {
                 customProps.icon = [];
             }
@@ -36,11 +35,12 @@ const FileTree = ({
     };
 
     let nodeCount = 0;
+    const rowHeight = 24;
 
     const calculateHeight = elements => {
         let result = 0;
         elements.forEach(element => {
-            result += 24;
+            result += rowHeight;
             ++nodeCount;
             if (element.expanded && element.children && element.children.length !== 0) {
                 result += calculateHeight(element.children);
@@ -52,7 +52,7 @@ const FileTree = ({
     const height = calculateHeight(treeData) + nodeCount;
 
     return (
-        <div style={{height, width: "100%"}}>
+        <div style={{height}} className="file-tree-root">
             <SortableTree
                 treeData={treeData}
                 onChange={onChange}

@@ -1,6 +1,7 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import {withStyles} from "@material-ui/core";
+import { string, element, arrayOf, oneOfType, shape } from "prop-types";
 
 const styles = theme => ({
     root: {
@@ -40,5 +41,17 @@ const TitledPanel = ({classes, title, children, titleChildren}) => (
         </div>
     </div>
 );
+
+TitledPanel.propTypes = {
+    classes: shape({
+        body: string.isRequired,
+        root: string.isRequired,
+        titleContainer: string.isRequired,
+        titleText: string.isRequired
+    }).isRequired,
+    title: string.isRequired,
+    children: oneOfType([arrayOf(element), element, string]).isRequired,
+    titleChildren: oneOfType([arrayOf(element), element, string])
+};
 
 export default withStyles(styles)(TitledPanel);

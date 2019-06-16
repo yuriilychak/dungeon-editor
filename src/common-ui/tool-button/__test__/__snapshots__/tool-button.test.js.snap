@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ToolButton test with icon default snapshot 1`] = `"<button class=\\"MuiButtonBase-root-7 MuiIconButton-root-1\\" tabindex=\\"0\\" type=\\"button\\" aria-owns=\\"test\\"><span class=\\"MuiIconButton-label-6\\"><div>Icon</div></span><span class=\\"MuiTouchRipple-root-10\\"></span></button>"`;
+
+exports[`ToolButton test with icon with tooltip snapshot 1`] = `"<button class=\\"MuiButtonBase-root-7 MuiIconButton-root-1\\" tabindex=\\"0\\" type=\\"button\\" aria-owns=\\"test\\" aria-haspopup=\\"true\\" title=\\"title\\"><span class=\\"MuiIconButton-label-6\\"><div>Icon</div></span><span class=\\"MuiTouchRipple-root-10\\"></span></button>"`;

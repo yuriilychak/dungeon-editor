@@ -31,14 +31,9 @@ const DropArea = ({
     );
 };
 
-DropArea.defaultProps = {
-    children: null,
-    dropMessage: "Unknown"
-};
-
 DropArea.propTypes = {
-    children: oneOfType([element, arrayOf(element)]),
-    dropMessage: string,
+    children: oneOfType([element, arrayOf(element), string]),
+    dropMessage: string.isRequired,
     onDropFiles: func.isRequired
 };
 

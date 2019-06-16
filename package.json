@@ -44,6 +44,10 @@
     "not op_mini all"
   ],
   "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "identity-obj-proxy"
+    },
     "setupFilesAfterEnv": [
       "<rootDir>/src/enzumeSetup.js"
     ],
@@ -51,6 +55,8 @@
       "src/**/*.{js,jsx}",
       "!<rootDir>/src/serviceWorker.js",
       "!<rootDir>/src/Theme.js",
+      "!<rootDir>/src/**/index.js",
+      "!<rootDir>/src/**/types.js",
       "!<rootDir>/src/**/constant/*.js",
       "!<rootDir>/src/**/container/*.js",
       "!<rootDir>/src/**/enum/*.js",

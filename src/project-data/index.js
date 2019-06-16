@@ -11,7 +11,7 @@ import TextureComponent from "./component/TextureComponent";
 import ElementComponent from "./component/ElementComponent";
 import SkeletonComponent from "./component/SkeletonComponent";
 
-export default {
+const ProjectData = {
     /**
      * @type {?JSZip}
      * @private
@@ -294,4 +294,6 @@ export default {
 
         store.dispatch(LibraryActions.renameFile(id, sectionId, newName));
     }
-}
+};
+
+export default ProjectData;

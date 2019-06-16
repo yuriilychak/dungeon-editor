@@ -1,3 +1,7 @@
+.file-tree-root {
+    width: 100%;
+}
+
 .rstcustom__rowContents {
     display: flex;
     align-items: center;

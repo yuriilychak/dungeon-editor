@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DropArea test default snapshot 1`] = `"<div class=\\"drop-area-root\\"><input multiple=\\"\\" type=\\"file\\" style=\\"display: none;\\" autocomplete=\\"off\\" tabindex=\\"-1\\"><div class=\\"drop-area-overflow\\"></div><div class=\\"drop-area-drag\\" style=\\"opacity: 0;\\">Test</div></div>"`;
+
+exports[`DropArea test with children snapshot 1`] = `"<div class=\\"drop-area-root\\"><input multiple=\\"\\" type=\\"file\\" style=\\"display: none;\\" autocomplete=\\"off\\" tabindex=\\"-1\\"><div class=\\"drop-area-overflow\\">Children</div><div class=\\"drop-area-drag\\" style=\\"opacity: 0;\\">Test</div></div>"`;
