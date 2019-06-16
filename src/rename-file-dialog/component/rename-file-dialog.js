@@ -1,11 +1,11 @@
 import React, { useState, memo } from 'react';
-import { bool, func, string, number, shape } from 'prop-types';
+import { bool, shape, string, func, number } from 'prop-types';
 import { useTranslation } from "react-i18next";
 
 import {ActionDialog} from "../../common-ui/action-dialog";
 import {NameInput} from "../../common-ui/name-input";
 
-const NewProjectDialog = props => {
+const RenameFileDialog = props => {
     const { t } = useTranslation();
     const { staticData, isPopupOpen } = props;
     const { locale, maxNameLength } = staticData;
@@ -27,19 +27,20 @@ const NewProjectDialog = props => {
         }
 
         setError(false);
-        props.onSubmitProject(projectName);
+        props.onSubmitRename(projectName);
     };
 
     return (
         <ActionDialog
             open={isPopupOpen}
-            dialogId={"new-project"}
+            dialogId={"rename-file-dialog"}
             title={t(locale.contentTitle)}
             description={t(locale.contentText)}
             submitTitle={t(locale.buttonSubmit)}
             rejectTitle={t(locale.buttonCancel)}
-            onReject={onCancelNewProject}
             onSubmit={onSubmitNewProject}
+            onReject={onCancelNewProject}
+
         >
             <NameInput
                 isError={ isError }
@@ -52,7 +53,7 @@ const NewProjectDialog = props => {
     );
 };
 
-NewProjectDialog.propTypes = {
+RenameFileDialog.propTypes = {
     isPopupOpen: bool,
     staticData: shape({
         locale: shape({
@@ -69,4 +70,4 @@ NewProjectDialog.propTypes = {
     onSubmitProject: func
 };
 
-export default memo(NewProjectDialog);
+export default memo(RenameFileDialog);

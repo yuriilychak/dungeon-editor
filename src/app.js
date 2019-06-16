@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import ConTopMenu from "./top-menu/container";
+
 
 import theme from "./Theme";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
+import { TopMenu } from "./top-menu";
 import Grid from "@material-ui/core/Grid";
 import WorkingArea from "./working-area/component";
 import uiConst from "./constant/uiConst";
@@ -12,7 +13,7 @@ import Panel from "./common-ui/titled-panel/titled-panel";
 import ConLibrary from "./library/container";
 import NewProjectDialog from "./new-project-dialog/container";
 import ExportProjectDialog from "./export-project-dialog/container";
-import RenameFileDialog from "./rename-file-dialog/container";
+import { RenameFileDialog } from "./rename-file-dialog";
 
 const styles = theme => ({
     root: {
@@ -59,7 +60,7 @@ class App extends Component {
                   <NewProjectDialog/>
                   <ExportProjectDialog/>
                   <RenameFileDialog/>
-                  <ConTopMenu/>
+                  <TopMenu/>
                   <div className={classes.grid}>
                       <Grid container className={classes.fullHeight}>
                           <Grid item xs={10} className={classes.leftColumn}>

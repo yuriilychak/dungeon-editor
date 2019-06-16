@@ -1,4 +1,4 @@
-import STATE from "../state";
+import STATE from "./state";
 
 export const showRenameFileDialog = () => changeDialogActivity(true);
 export const hideRenameFileDialog = () => changeDialogActivity(false);

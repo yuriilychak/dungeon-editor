@@ -1,12 +1,14 @@
 import React, { memo } from 'react';
-import Button from "./Button";
+import { useTranslation } from "react-i18next";
+
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Popper from '@material-ui/core/Popper';
-import MenuItem from './MenuItem';
-import MenuList from './MenuList';
-import MenuBackground from "./MenuBackground";
-import { useTranslation } from "react-i18next";
+
+import Button from "./button";
+import MenuItem from './menu-item';
+import MenuList from './menu-list';
+import MenuBackground from "./menu-background";
 
 const MenuSection = props => {
     const { t } = useTranslation();

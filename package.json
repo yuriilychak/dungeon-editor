@@ -58,9 +58,9 @@
       "!<rootDir>/src/**/index.js",
       "!<rootDir>/src/**/types.js",
       "!<rootDir>/src/**/constant/*.js",
-      "!<rootDir>/src/**/container/*.js",
+      "!<rootDir>/src/**/container.js",
       "!<rootDir>/src/**/enum/*.js",
-      "!<rootDir>/src/**/state/*.js"
+      "!<rootDir>/src/**/state.js"
     ],
     "transform": {
       "\\.js$": "<rootDir>/node_modules/babel-jest"

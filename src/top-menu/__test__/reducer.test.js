@@ -1,7 +1,7 @@
 import { default as reducer, initialState } from '../reducer';
 import types from '../state';
-import MENU_STATE from "../enum/MenuState";
-import SUBSECTIONS from "../enum/Subsection";
+import MENU_STATE from "../enum/menu-state";
+import SUBSECTIONS from "../enum/subsection";
 
 describe('new-project-dialog reducer', () => {
     it('handle empty state', () => {

@@ -1,32 +1,16 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import PropTypes from "prop-types";
-import { makeStyles } from '@material-ui/styles';
+import { string, func, shape, number, bool } from "prop-types";
 import { useTranslation } from "react-i18next";
 
-const useStyles = makeStyles({
-    button: {
-        minWidth: 100
-    },
-    container: {
-        minWidth: 400
-    }
-});
+import DialogContentText from '@material-ui/core/DialogContentText';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+import {ActionDialog} from "../../common-ui/action-dialog";
 
 const ExportProjectDialog = props => {
     const { t } = useTranslation();
-    const classes = useStyles();
-    const contentTextId = "export-project-title";
     const { isPopupOpen, onClosePopup, onExportProject, locale, progressData } = props;
-    const buttonType = "contained";
     let progress = 0;
-
     let progressText = "";
 
     if (progressData !== null) {
@@ -51,68 +35,42 @@ const ExportProjectDialog = props => {
     }
 
     return (
-        <Dialog
+        <ActionDialog
             open={isPopupOpen}
-            aria-labelledby={contentTextId}
-            classes={{
-                paper: classes.container
-            }}
+            dialogId="export-project"
+            title={t(locale.contentTitle)}
+            description={t(locale.contentText)}
+            submitTitle={t(locale.buttonSave)}
+            rejectTitle={t(locale.buttonCancel)}
+            onSubmit={onExportProject}
+            onReject={onClosePopup}
         >
-            <DialogTitle id={contentTextId}>
-                { t(locale.contentTitle) }
-            </DialogTitle>
-            <DialogContent>
                 <DialogContentText>
-                    { t(locale.contentText) }
-                </DialogContentText>
-                <DialogContentText>
-                        { progressText }
+                    { progressText }
                 </DialogContentText>
                 <LinearProgress color="primary" variant="determinate" value={progress} />
-            </DialogContent>
-            <DialogActions>
-                <Button
-                    color="secondary"
-                    variant={ buttonType }
-                    className={ classes.button }
-                    onClick={ onClosePopup }
-                    id="exportProjectDialog-cancel"
-                >
-                    { t(locale.buttonCancel) }
-                </Button>
-                <Button
-                    disabled={ progress !== 100 }
-                    color="primary"
-                    variant={ buttonType }
-                    className={ classes.button }
-                    onClick={ onExportProject }
-                    id="exportProjectDialog-save"
-                >
-                    { t(locale.buttonSave) }
-                </Button>
-            </DialogActions>
-        </Dialog>
+        </ActionDialog>
     );
 };
 
 ExportProjectDialog.propTypes = {
-    locale: PropTypes.shape({
-        buttonCancel: PropTypes.string.isRequired,
-        buttonSave: PropTypes.string.isRequired,
-        contentText: PropTypes.string.isRequired,
-        contentTitle: PropTypes.string.isRequired,
-        exportBeginText: PropTypes.string.isRequired,
-        exportCompleteText: PropTypes.string.isRequired,
-        exportGenerateText: PropTypes.string.isRequired,
-        exportProgressText: PropTypes.string.isRequired
+    locale: shape({
+        buttonCancel: string.isRequired,
+        buttonSave: string.isRequired,
+        contentText: string.isRequired,
+        contentTitle: string.isRequired,
+        exportBeginText: string.isRequired,
+        exportCompleteText: string.isRequired,
+        exportGenerateText: string.isRequired,
+        exportProgressText: string.isRequired
     }).isRequired,
-    onExportProject: PropTypes.func.isRequired,
-    onClosePopup: PropTypes.func.isRequired,
-    isPopupOpen: PropTypes.bool.isRequired,
-    progressData: PropTypes.shape({
-        progress: PropTypes.number.isRequired,
-        fileName: PropTypes.string,
-        isComplete: PropTypes.bool.isRequired
+    onExportProject: func.isRequired,
+    onClosePopup: func.isRequired,
+    isPopupOpen: bool.isRequired,
+    progressData: shape({
+        progress: number.isRequired,
+        fileName: string,
+        isComplete: bool.isRequired
     })
 
 };

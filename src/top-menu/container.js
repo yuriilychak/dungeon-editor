@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
-import { openTab,  closeTab, selectToggle } from '../action';
-import TopMenu from "../component";
-import { showNewProjectDialog } from "../../new-project-dialog/action";
-import { showExportProjectDialog } from "../../export-project-dialog/action";
-import ProjectData from "../../project-data";
+import { openTab,  closeTab, selectToggle } from './action';
+import { TopMenu } from "./component";
+import { showNewProjectDialog } from "../new-project-dialog/action";
+import { showExportProjectDialog } from "../export-project-dialog/action";
+import ProjectData from "../project-data";
 
-import SUBSECTIONS from "../enum/Subsection";
+import SUBSECTIONS from "./enum/subsection";
 
 const mapStateToProps = (state) => {
     return {

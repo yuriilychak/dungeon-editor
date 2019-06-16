@@ -1,8 +1,8 @@
-import TOP_MENU from "../state";
-import SUBSECTIONS from "../enum/Subsection";
+import TOP_MENU from "./state";
+import SUBSECTIONS from "./enum/subsection";
 
-import StaticData from "../data/index.json";
-import MENU_STATE from "../enum/MenuState";
+import StaticData from "./data/index.json";
+import MENU_STATE from "./enum/menu-state";
 
 export const initialState = {
     staticData: StaticData,
@@ -78,7 +78,7 @@ const actionHandlers = {
     }
 };
 
-export default function topMenuReducer(state = initialState, action) {
+export default function(state = initialState, action) {
     const actionHandler = actionHandlers[action.type];
     return actionHandler ? actionHandler(state, action) : state;
 }

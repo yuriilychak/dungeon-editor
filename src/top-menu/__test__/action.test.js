@@ -1,7 +1,7 @@
 import { openTab, selectToggle, closeTab } from '../action';
 import types from '../state';
-import MENU_STATE from "../enum/MenuState";
-import SUBSECTION from "../enum/Subsection";
+import MENU_STATE from "../enum/menu-state";
+import SUBSECTION from "../enum/subsection";
 
 describe('top-menu actions', () => {
     it('openTab', () => {

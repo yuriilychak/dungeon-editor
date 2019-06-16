@@ -1,5 +1,5 @@
-import STATE from "../state";
-import StaticData from "../data/index.json";
+import STATE from "./state";
+import StaticData from "./data/index.json";
 
 export const initialState = {
     staticData: StaticData,
