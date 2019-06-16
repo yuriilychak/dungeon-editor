@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import Library from "../component";
-import ProjectData from "../../project-data";
-import {showExportProjectDialog} from "../../export-project-dialog/action";
-import {showRenameFileDialog} from "../../rename-file-dialog/action";
+import { Library } from "./component";
+import ProjectData from "../project-data/project-data";
+import {showExportProjectDialog} from "../export-project-dialog/action";
+import {showRenameFileDialog} from "../rename-file-dialog/action";
 
 const mapStateToProps = (state) => {
     return {

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { hideExportProjectDialog } from './action';
 import { ExportProjectDialog } from "./component";
-import ProjectData from "../project-data";
+import ProjectData from "../project-data/project-data";
 
 const mapStateToProps = (state) => {
     return {

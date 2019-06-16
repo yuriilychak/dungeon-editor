@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-
-
 import theme from "./Theme";
+
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
-import { TopMenu } from "./top-menu";
 import Grid from "@material-ui/core/Grid";
+
 import WorkingArea from "./working-area/component";
 import uiConst from "./constant/uiConst";
-import BottomMenu from "./bottom-menu/component";
-import Panel from "./common-ui/titled-panel/titled-panel";
-import ConLibrary from "./library/container";
+import BottomMenu from "./bottom-menu/component/bottom-menu";
+
+import { TopMenu } from "./top-menu";
+import { Library } from "./library";
+import { Properties } from "./properties/component";
 import { NewProjectDialog } from "./new-project-dialog";
 import { ExportProjectDialog } from "./export-project-dialog";
 import { RenameFileDialog } from "./rename-file-dialog";
@@ -72,10 +73,8 @@ class App extends Component {
                               </div>
                           </Grid>
                           <Grid item xs={2} className={classes.rightColumn}>
-                              <Panel title={"Properties"}>
-                                  Test
-                              </Panel>
-                              <ConLibrary/>
+                              <Properties/>
+                              <Library/>
                           </Grid>
                       </Grid>
                   </div>

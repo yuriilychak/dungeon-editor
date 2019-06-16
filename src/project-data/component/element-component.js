@@ -1,7 +1,7 @@
-import FileComponent from "./FileComponent";
-import FileUtil from "../FileUtil";
-import FILE_TYPE from "../enum/FileType";
-import FILE_FORMAT from "../enum/FileFormat";
+import FileComponent from "./file-component";
+import FileUtil from "../file-util";
+import FILE_TYPE from "../enum/file-type";
+import FILE_FORMAT from "../enum/file-format";
 
 export default class ElementComponent extends FileComponent {
     /**

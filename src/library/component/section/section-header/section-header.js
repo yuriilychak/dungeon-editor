@@ -1,7 +1,7 @@
 import React, {Fragment, memo} from "react";
 import Add from "@material-ui/icons/Add";
 import CreateNewFolder from "@material-ui/icons/CreateNewFolder";
-import { number, string, func } from "prop-types";
+import {number, string, func} from "prop-types";
 
 import {ToolButton} from "../../../../common-ui/tool-button";
 import {Icon} from "../../../../common-ui/icon";
@@ -14,6 +14,7 @@ const SectionHeader = ({
                            titleText,
                            addElementText,
                            addDirectoryText,
+                           onAddNewFile,
                            onAddDirectory
                        }) => (
     <Fragment>
@@ -24,8 +25,7 @@ const SectionHeader = ({
         <ToolButton
             title={addElementText}
             Icon={Add}
-            onClick={() => {
-            }}
+            onClick={() => onAddNewFile(id)}
         />
         <ToolButton
             title={addDirectoryText}
@@ -41,6 +41,7 @@ SectionHeader.propTypes = {
     titleText: string.isRequired,
     addElementText: string.isRequired,
     addDirectoryText: string.isRequired,
+    onAddNewFile: func.isRequired,
     onAddDirectory: func.isRequired
 };
 

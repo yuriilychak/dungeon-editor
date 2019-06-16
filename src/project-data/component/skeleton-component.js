@@ -1,7 +1,7 @@
-import FileComponent from "./FileComponent";
-import FILE_TYPE from "../enum/FileType";
-import FILE_FORMAT from "../enum/FileFormat";
-import FileUtil from "../FileUtil";
+import FileComponent from "./file-component";
+import FILE_TYPE from "../enum/file-type";
+import FILE_FORMAT from "../enum/file-format";
+import FileUtil from "../file-util";
 
 export default class SkeletonComponent extends FileComponent {
     /**

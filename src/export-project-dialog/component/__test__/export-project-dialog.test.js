@@ -1,8 +1,9 @@
-import { initialState } from '../reducer';
 import React from "react";
 import { createMount } from "@material-ui/core/test-utils";
-import ExportPopupDialog from "../component/export-project-dialog";
-import "../../Locale";
+
+import { initialState } from '../../reducer';
+import ExportPopupDialog from "../export-project-dialog";
+import "../../../Locale";
 
 describe("new-project-dialog index test",()=> {
     const props = {

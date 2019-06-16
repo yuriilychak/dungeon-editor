@@ -35,6 +35,7 @@ const Section = ({
                     titleText={titleText}
                     addDirectoryText={addDirectoryText}
                     addElementText={addElementText}
+                    onAddNewFile={() => {}}
                     onAddDirectory={onAddDirectory}
                 />
             </ExpansionPanelSummary>

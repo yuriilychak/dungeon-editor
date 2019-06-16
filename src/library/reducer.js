@@ -1,5 +1,5 @@
-import StaticData from "../data/index";
-import STATE from "../state";
+import StaticData from "./data";
+import STATE from "./state";
 
 /**
  * @typedef {Object}

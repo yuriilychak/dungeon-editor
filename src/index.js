@@ -6,7 +6,7 @@ import App from './app';
 import * as serviceWorker from './serviceWorker';
 import store from "./store";
 import "./Locale";
-import ProjectData from "./project-data";
+import ProjectData from "./project-data/project-data";
 
 ProjectData.init();
 

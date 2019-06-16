@@ -1,4 +1,4 @@
-import FILE_TYPE from "./enum/FileType";
+import FILE_TYPE from "./enum/file-type";
 
 /**
  * @desc Namespace that convert file from archive to raw and vice versa.

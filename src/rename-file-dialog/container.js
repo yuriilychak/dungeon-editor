@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { hideRenameFileDialog } from './action';
-import ProjectData from '../project-data';
+import ProjectData from '../project-data/project-data';
 import { RenameFileDialog } from "./component";
 
 const mapStateToProps = (state) => {
