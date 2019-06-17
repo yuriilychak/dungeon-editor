@@ -98,7 +98,7 @@ function addElementToTree(action, isDirectory, state) {
         title: data.name,
         id: data.id,
         parentId: data.parentId,
-        hasPreview: false,
+        preview: data.preview,
         isDirectory: isDirectory
     };
     const parentId = file.parentId;

@@ -9,6 +9,7 @@
     width: 100%;
     max-width: 100%;
     padding: 0 10px;
+    position: relative;
 }
 
 .rstcustom__row {

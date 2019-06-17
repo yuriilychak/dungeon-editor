@@ -33,6 +33,7 @@ const Properties = ({
                     fileType={fileType}
                     iconName={data.icon}
                     iconSize={iconSize}
+                    preview={file.preview}
                     onRenameFile={() => onRenameFile(file.id, file.sectionId)}
                 />
             </Fragment>
@@ -59,7 +60,8 @@ Properties.propTypes = {
         name: string.isRequired,
         isDirectory: bool.isRequired,
         sectionId: number.isRequired,
-        sections: arrayOf(object).isRequired
+        sections: arrayOf(object).isRequired,
+        preview: string
     }),
     directoryData: shape({
         locale: string.isRequired,

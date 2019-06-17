@@ -256,6 +256,7 @@ export default class FileComponent {
             id: fileId,
             name: element.name,
             isDirectory,
+            preview: element.preview,
             sectionId: this._sectionId,
             sections: this.generateFileSections(fileId, element)
         };
@@ -344,17 +345,16 @@ export default class FileComponent {
      * @protected
      * @param {string} name
      * @param {string} format
-     * @param {boolean} [hasPreview = false]
      * @returns {FileData}
      */
 
-    generateFileData(name, format, hasPreview = false) {
+    generateFileData(name, format) {
         return {
             name: name,
             format: format,
             parentId: ROOT_DIR_ID,
             id: ++this._guid,
-            hasPreview: hasPreview
+            preview: null
         };
     }
 

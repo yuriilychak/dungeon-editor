@@ -50,7 +50,8 @@ export default class TextureComponent extends FileComponent {
 
         textures.forEach(texture => {
             fileData = {
-                ...this.generateFileData(texture.name, texture.format, true),
+                ...this.generateFileData(texture.name, texture.format),
+                preview: texture.data,
                 atlas: EMPTY_ATLAS_ID
             };
             this.addFileInfo(fileData);

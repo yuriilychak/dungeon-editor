@@ -9,6 +9,7 @@ import FolderAdd from '@material-ui/icons/CreateNewFolder';
 import {ToolButton} from "../../../../common-ui/tool-button";
 import { Icon } from "../../../../common-ui/icon";
 import { FileTree } from "../../../../common-ui/file-tree";
+import { ImagePreview } from "../../../../common-ui/image-preview";
 
 import "./section-body.css";
 
@@ -64,6 +65,16 @@ const SectionBody = ({
             icons.push(
                 <Icon name={`${icon}_element`}/>
             );
+            if (rowInfo.node.preview) {
+                buttons.push(
+                    <ImagePreview
+                        preview={rowInfo.node.preview}
+                        height={150}
+                    >
+                        <div className="section-body-preview"/>
+                    </ImagePreview>
+                );
+            }
         }
 
         return {
