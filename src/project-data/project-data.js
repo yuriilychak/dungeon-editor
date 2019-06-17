@@ -51,28 +51,7 @@ const ProjectData = {
     _components: null,
 
     /**
-     * @type {Function[]}
-     * @private
-     */
-
-    _addHandlers: null,
-
-    /**
-     * @type {Function[]}
-     * @private
-     */
-
-    _dirHandlers: null,
-
-    /**
-     * @type {Function}
-     * @private
-     */
-
-    _errorHandler: null,
-
-    /**
-     * @type {?{ id: number, sectionId: number} | null}
+     * @type {?RenameData}
      * @private
      */
 
@@ -85,24 +64,12 @@ const ProjectData = {
 
     init() {
         this._components = [
-            new ElementComponent("elements"),
-            new FontComponent("fonts"),
-            new ParticleComponent("particles"),
-            new SkeletonComponent("skeletons"),
-            new TextureComponent("textures"),
+            new ElementComponent("elements", 0),
+            new FontComponent("fonts", 1),
+            new ParticleComponent("particles", 2),
+            new SkeletonComponent("skeletons", 3),
+            new TextureComponent("textures", 4),
         ];
-
-        this._addHandlers = this._components.map((component, index) => (
-            data => store.dispatch(LibraryActions.addFile(data, index))
-        ));
-
-        this._dirHandlers = this._components.map((component, index) => (
-            dirData => store.dispatch(LibraryActions.addDirectory(index, dirData))
-        ));
-
-        this._errorHandler = error => {
-            console.warn(`error when import: ${error}`);
-        }
     },
 
     /**
@@ -163,6 +130,18 @@ const ProjectData = {
         this._zipData = null;
     },
 
+    _addHandler(data, sectionId) {
+        store.dispatch(LibraryActions.addFile(data, sectionId));
+    },
+
+    _dirHandler(dirData, sectionId) {
+        store.dispatch(LibraryActions.addDirectory(sectionId, dirData));
+    },
+
+    _errorHandler(error) {
+        console.warn(`error when import: ${error}`);
+    },
+
     /**
      * @function
      * @public
@@ -201,8 +180,8 @@ const ProjectData = {
                             await component.import(
                                 content,
                                 projectData[component.rootName],
-                                this._addHandlers[i],
-                                this._dirHandlers[i],
+                                this._addHandler,
+                                this._dirHandler,
                                 this._errorHandler
                             );
                         }
@@ -226,9 +205,7 @@ const ProjectData = {
     async importFiles(files) {
         const fileElements = await FileUtil.readUploadedFiles(files);
 
-        this._components.forEach((component, index) => {
-            component.add(fileElements, this._addHandlers[index]);
-        });
+        this._components.forEach(component => component.add(fileElements, this._addHandler));
     },
 
     /**
@@ -237,18 +214,18 @@ const ProjectData = {
      * @param {number} id
      * @param {number} sectionIndex
      * @param {boolean} isDirectory
+     * @param {Function} callback
      * @returns {boolean}
      */
 
-    removeFile(id, sectionIndex, isDirectory) {
+    removeFile(id, sectionIndex, isDirectory, callback) {
         const removedFiles = this._components[sectionIndex].remove(id, isDirectory);
 
         if (removedFiles.length === 0) {
             return false;
         }
 
-        store.dispatch(LibraryActions.removeFile(id, sectionIndex));
-
+        callback();
         return true;
     },
 
@@ -283,7 +260,14 @@ const ProjectData = {
         this._renameData = null;
     },
 
-    renameFile(newName) {
+    /**
+     * @function
+     * @public
+     * @param {string | null} newName
+     * @param {Function} callback
+     */
+
+    renameFile(newName, callback) {
         if (this._renameData === null) {
             return;
         }
@@ -292,7 +276,21 @@ const ProjectData = {
 
         this._components[sectionId].renameFile(id, newName);
 
-        store.dispatch(LibraryActions.renameFile(id, sectionId, newName));
+        callback(id, sectionId, newName);
+    },
+
+    /**
+     * @function
+     * @public
+     * @param {number} sectionId
+     * @param {number} fileId
+     * @param {boolean} isDirectory
+     * @param {Function} callback
+     */
+
+    getFileInfo(sectionId, fileId, isDirectory, callback) {
+        const result = this._components[sectionId].getFileInfo(fileId, isDirectory);
+        callback(result);
     }
 };
 

@@ -67,7 +67,7 @@ const SectionBody = ({
         }
 
         return {
-            onClick: () => onSelectFile(id, rowInfo.node),
+            onClick: () => onSelectFile(id, rowInfo.node.id, rowInfo.node.isDirectory),
             icons,
             buttons,
             className: "section-body-text"

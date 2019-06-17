@@ -5,9 +5,17 @@ export default class FileComponent {
     /**
      * @constructor
      * @param {string} rootName
+     * @param {number} sectionId
      */
 
-    constructor(rootName) {
+    constructor(rootName, sectionId) {
+        /**
+         * @type {number}
+         * @private
+         */
+
+        this._sectionId = sectionId;
+
         /**
          * @type {FileData[]}
          * @private
@@ -233,6 +241,27 @@ export default class FileComponent {
     }
 
     /**
+     * @desc Returns information about file for description area.
+     * @public
+     * @method
+     * @param {number} fileId
+     * @param {boolean} isDirectory
+     * @returns {Object}
+     */
+
+    getFileInfo(fileId, isDirectory) {
+        const searchArray = isDirectory ? this._directories : this._files;
+        const element = searchArray.find(element => element.id === fileId);
+        return {
+            id: fileId,
+            name: element.name,
+            isDirectory,
+            sectionId: this._sectionId,
+            sections: this.generateFileSections(fileId, element)
+        };
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -351,7 +380,7 @@ export default class FileComponent {
 
     updateSource(data, source, progressCallback) {
         this._sources[data.id] = source;
-        progressCallback(data);
+        progressCallback(data, this._sectionId);
     }
 
     /**
@@ -363,6 +392,18 @@ export default class FileComponent {
 
     getSources(id) {
         return this._sources[id] || null;
+    }
+
+    /**
+     * @method
+     * @protected
+     * @param {number} fileId
+     * @param {FileData | DirectoryData} file
+     * @return {Object[]}
+     */
+
+    generateFileSections(fileId, file) {
+        return [];
     }
 
     /**
@@ -381,7 +422,7 @@ export default class FileComponent {
         const dirsToCreate = this._directories.filter(dir => dir.parentId === parentId);
 
         dirsToCreate.forEach(dir => {
-            onGenerateDir(dir);
+            onGenerateDir(dir, this._sectionId);
             this._generateDirs(onGenerateDir, dir.id);
         });
     }
@@ -420,6 +461,15 @@ export default class FileComponent {
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @public
+     * @return {number}
+     */
+
+    get sectionId() {
+        return this._sectionId;
+    }
 
     /**
      * @public

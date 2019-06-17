@@ -1,1 +1,1 @@
-export { default as projectData } from "./project-data";
+export { default as ProjectData } from "./project-data";

@@ -11,7 +11,7 @@ import BottomMenu from "./bottom-menu/component/bottom-menu";
 
 import { TopMenu } from "./top-menu";
 import { Library } from "./library";
-import { Properties } from "./properties/component";
+import { Properties } from "./properties";
 import { NewProjectDialog } from "./new-project-dialog";
 import { ExportProjectDialog } from "./export-project-dialog";
 import { RenameFileDialog } from "./rename-file-dialog";

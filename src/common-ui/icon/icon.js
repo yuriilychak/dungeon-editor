@@ -1,14 +1,28 @@
 import React from "react";
-import { string } from "prop-types";
+import { string, number } from "prop-types";
 
 import "./icon.css";
 
-const Icon = ({name}) => (
-    <img src={`${process.env.PUBLIC_URL}/icon/${name}.svg`} className="icon-root" alt="empty Icon" draggable={false}/>
+const Icon = ({name, size}) => (
+    <img
+        src={`${process.env.PUBLIC_URL}/icon/${name}.svg`}
+        style={{
+            width: size,
+            height: size
+        }}
+        className="icon-root"
+        alt="empty Icon"
+        draggable={false}
+    />
 );
 
+Icon.defaultProps = {
+    size: 16
+};
+
 Icon.propTypes = {
-    name: string.isRequired
+    name: string.isRequired,
+    size: number
 };
 
 export default Icon;

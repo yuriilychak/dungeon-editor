@@ -86,3 +86,11 @@
  * @callback ProgressCallback
  * @param {string} path
  */
+
+
+/**
+ * @name RenameData
+ * @typedef {Object}
+ * @property {number} id
+ * @property {sectionId} sectionId
+ */

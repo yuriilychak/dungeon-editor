@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
 import { Library } from "./component";
-import ProjectData from "../project-data/project-data";
+import {ProjectData} from "../project-data";
 import {showExportProjectDialog} from "../export-project-dialog/action";
 import {showRenameFileDialog} from "../rename-file-dialog/action";
+import {selectLibraryElement, deleteLibraryElement} from "../properties/action";
+import {removeFile} from "./action";
 
 const mapStateToProps = (state) => {
     return {
@@ -13,7 +15,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
     return {
         onRemoveFile: (id, sectionId, isDirectory) => {
-            ProjectData.removeFile(id, sectionId, isDirectory);
+            ProjectData.removeFile(id, sectionId, isDirectory, () => {
+                dispatch(removeFile(id, sectionId));
+                dispatch(deleteLibraryElement(id, sectionId));
+            });
         },
         onAddFiles: files => {
             ProjectData.addFiles(files);
@@ -36,8 +41,14 @@ const mapDispatchToProps = dispatch => {
             ProjectData.export();
         },
         onPublishProject: () => {},
-        onSelectFile: (id, data) => {
-            console.log(id, data);
+        onSelectFile: (sectionId, fileId, isDirectory) => {
+            ProjectData.getFileInfo(
+                sectionId,
+                fileId,
+                isDirectory,
+                data => {
+                    dispatch(selectLibraryElement(data));
+                });
         }
     }
 };

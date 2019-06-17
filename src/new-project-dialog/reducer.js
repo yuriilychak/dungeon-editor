@@ -1,4 +1,4 @@
-import NEW_PROJECT_DIALOG from "./state";
+import STATE from "./state";
 import StaticData from "./data/index.json";
 
 export const initialState = {
@@ -7,7 +7,7 @@ export const initialState = {
 };
 
 const actionHandlers = {
-    [NEW_PROJECT_DIALOG.CHANGE_ACTIVITY]: (state, action) => {
+    [STATE.CHANGE_ACTIVITY]: (state, action) => {
         return {
             ...state,
             isPopupOpen: action.payload

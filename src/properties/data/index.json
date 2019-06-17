@@ -1,0 +1,35 @@
+{
+  "iconSize": 20,
+  "locales": {
+    "emptyDescription": "Properties_EmptyDescription",
+    "idTitle": "Properties_IdTitle",
+    "nameTitle": "Properties_NameTitle",
+    "sectionTitle": "Properties_Title"
+  },
+  "directoryData": {
+    "locale": "Properties_DirectoryTitle",
+    "icon": "directory"
+  },
+  "sectionData": [
+    {
+      "locale": "Properties_ElementTitle",
+      "icon": "element_element"
+    },
+    {
+      "locale": "Properties_FontTitle",
+      "icon": "font_element"
+    },
+    {
+      "locale": "Properties_ParticleTitle",
+      "icon": "particle_element"
+    },
+    {
+      "locale": "Properties_SkeletonTitle",
+      "icon": "skeleton_element"
+    },
+    {
+      "locale": "Properties_TextureTitle",
+      "icon": "texture_element"
+    }
+  ]
+}
