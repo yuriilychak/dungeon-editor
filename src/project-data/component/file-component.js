@@ -96,7 +96,10 @@ export default class FileComponent {
 
     export(projectData, zip, progressCallback) {
         projectData[this._rootName] = {
-            files: this._files,
+            files: this._files.map(file => ({
+                ...file,
+                preview: undefined
+            })),
             guid: this._guid,
             directories: this._directories
         };

@@ -32,6 +32,7 @@ export default class TextureComponent extends FileComponent {
 
     async importElement(zip, file, path, progressCallback, errorCallback) {
         const  source = await FileUtil.extractImage(zip, file, this.joinPath(path, file));
+        file.preview = source;
         this.updateSource(file, source, progressCallback);
     }
 
