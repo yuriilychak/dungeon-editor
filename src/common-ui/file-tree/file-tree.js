@@ -20,8 +20,8 @@ const FileTree = ({
         const customProps = generateNodeProps(rowInfo);
 
         if (isDirectory) {
-            if (!customProps.icon) {
-                customProps.icon = [];
+            if (!customProps.icons) {
+                customProps.icons = [];
             }
 
             customProps.icons.push(

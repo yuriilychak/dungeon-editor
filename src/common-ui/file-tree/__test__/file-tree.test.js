@@ -1,35 +1,35 @@
 import React from "react";
-import { createMount } from "@material-ui/core/test-utils";
+import {createMount} from "@material-ui/core/test-utils";
 import FileTree from "../file-tree";
 
-describe("FileTree test",()=> {
+describe("FileTree test", () => {
     const treeData = [
-        { title: '.gitignore' },
-        { title: 'package.json' },
+        {title: '.gitignore'},
+        {title: 'package.json'},
         {
             title: 'src',
             isDirectory: true,
             expanded: true,
             children: [
-                { title: 'styles.css' },
-                { title: 'index.js' },
-                { title: 'reducers.js' },
-                { title: 'actions.js' },
-                { title: 'utils.js' },
+                {title: 'styles.css'},
+                {title: 'index.js'},
+                {title: 'reducers.js'},
+                {title: 'actions.js'},
+                {title: 'utils.js'},
             ],
         },
         {
             title: 'tmp',
             isDirectory: true,
             children: [
-                { title: '12214124-log' },
-                { title: 'drag-disabled-file', dragDisabled: true },
+                {title: '12214124-log'},
+                {title: 'drag-disabled-file', dragDisabled: true},
             ],
         },
         {
             title: 'build',
             isDirectory: true,
-            children: [{ title: 'react-sortable-tree.js' }],
+            children: [{title: 'react-sortable-tree.js'}],
         },
         {
             title: 'public',
@@ -56,7 +56,7 @@ describe("FileTree test",()=> {
     });
 
     it('existing icons', () => {
-        const generateNodeProps = () => ({ icon: []});
+        const generateNodeProps = () => ({icons: []});
 
         const wrapper = createMount()(
             <FileTree
