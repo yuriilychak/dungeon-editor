@@ -114,6 +114,7 @@ Library.propTypes = {
         )
     ),
     onAddDirectory: func.isRequired,
+    onAddFile: func.isRequired,
     onAddFiles: func.isRequired,
     onDropFiles: func.isRequired,
     onRemoveFile: func.isRequired,

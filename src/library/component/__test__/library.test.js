@@ -12,6 +12,7 @@ describe('Library test',() => {
         files: [[], [], [], [], []],
         onAddDirectory: jest.fn(),
         onAddFiles: jest.fn(),
+        onAddFile: jest.fn(),
         onDropFiles: jest.fn(),
         onRemoveFile: jest.fn(),
         onExportProject: jest.fn(),
