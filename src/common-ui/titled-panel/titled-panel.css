@@ -1,0 +1,27 @@
+.titled-panel-root {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-flow: column;
+}
+
+.titled-panel-container {
+    width: calc(100% - 20px);
+    padding: 0 10px;
+    display: flex;
+    flex-flow: row;
+    background-color: #3f4045;
+}
+
+.titled-panel-body {
+    flex-grow : 1;
+    font-size: .8rem;
+    color: #ffffff;
+    background-color: #2a2b2f;
+}
+
+.titled-panel-text {
+    text-align: left;
+    flex-grow: 1;
+    color: #ffffff !important;
+}

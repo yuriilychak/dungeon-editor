@@ -3,9 +3,9 @@ import { createMount } from "@material-ui/core/test-utils";
 
 import SectionHeader from "../section-header";
 
-describe("Icon test",()=> {
+describe("SectionHeader test",() => {
     const onAddDirectory = jest.fn();
-    const onAddNewFile = jest.fn();
+    const onAddFile = jest.fn();
     const wrapper = createMount()(
         <SectionHeader
             id={5}
@@ -13,7 +13,7 @@ describe("Icon test",()=> {
             titleText="test"
             addElementText="test"
             addDirectoryText="test"
-            onAddNewFile={onAddNewFile}
+            onAddFile={onAddFile}
             onAddDirectory={onAddDirectory}
         />
     );
@@ -24,7 +24,7 @@ describe("Icon test",()=> {
 
     it("Add file", () => {
         wrapper.find("button").at(0).simulate("click");
-        expect(onAddNewFile).toHaveBeenCalled();
+        expect(onAddFile).toHaveBeenCalled();
     });
 
     it("Add directory", () => {

@@ -16,6 +16,7 @@ const Library = props => {
         locales,
         tabs,
         files,
+        onAddFile,
         onAddFiles,
         onDropFiles,
         onRemoveFile,
@@ -46,6 +47,7 @@ const Library = props => {
                 renameText={renameItemLocale}
                 titleText={t(tab.locale)}
                 files={files[tab.id]}
+                onAddFile={onAddFile}
                 onAddDirectory={onAddDirectory}
                 onUpdateTree={onUpdateTree}
                 onRemoveFile={onRemoveFile}

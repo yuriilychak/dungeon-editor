@@ -14,7 +14,7 @@ const SectionHeader = ({
                            titleText,
                            addElementText,
                            addDirectoryText,
-                           onAddNewFile,
+                           onAddFile,
                            onAddDirectory
                        }) => (
     <Fragment>
@@ -25,7 +25,7 @@ const SectionHeader = ({
         <ToolButton
             title={addElementText}
             Icon={Add}
-            onClick={() => onAddNewFile(id)}
+            onClick={() => onAddFile(id)}
         />
         <ToolButton
             title={addDirectoryText}
@@ -41,7 +41,7 @@ SectionHeader.propTypes = {
     titleText: string.isRequired,
     addElementText: string.isRequired,
     addDirectoryText: string.isRequired,
-    onAddNewFile: func.isRequired,
+    onAddFile: func.isRequired,
     onAddDirectory: func.isRequired
 };
 

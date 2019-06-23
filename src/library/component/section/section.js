@@ -9,57 +9,18 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {SectionHeader} from "./section-header";
 import {SectionBody} from "./section-body";
 
-const Section = ({
-                     id,
-                     icon,
-                     files,
-                     addDirectoryText,
-                     addElementText,
-                     emptyText,
-                     deleteText,
-                     renameText,
-                     titleText,
-                     onAddDirectory,
-                     onUpdateTree,
-                     onRemoveFile,
-                     onRenameFile,
-                     onSelectFile
-                 }) => {
-    return (
-        <ExpansionPanel>
-            <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon/>}
-            >
-                <SectionHeader
-                    id={id}
-                    icon={icon}
-                    titleText={titleText}
-                    addDirectoryText={addDirectoryText}
-                    addElementText={addElementText}
-                    onAddNewFile={() => {
-                    }}
-                    onAddDirectory={onAddDirectory}
-                />
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-                <SectionBody
-                    id={id}
-                    icon={icon}
-                    files={files}
-                    addDirectoryText={addDirectoryText}
-                    deleteText={deleteText}
-                    emptyText={emptyText}
-                    renameText={renameText}
-                    onAddDirectory={onAddDirectory}
-                    onRemoveFile={onRemoveFile}
-                    onRenameFile={onRenameFile}
-                    onSelectFile={onSelectFile}
-                    onUpdateTree={onUpdateTree}
-                />
-            </ExpansionPanelDetails>
-        </ExpansionPanel>
-    );
-};
+const Section = (props) => (
+    <ExpansionPanel>
+        <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon/>}
+        >
+            <SectionHeader {...props} />
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+            <SectionBody {...props} />
+        </ExpansionPanelDetails>
+    </ExpansionPanel>
+);
 
 Section.propTypes = {
     id: number.isRequired,
@@ -71,11 +32,12 @@ Section.propTypes = {
     deleteText: string.isRequired,
     renameText: string.isRequired,
     titleText: string.isRequired,
+    onAddFile: func.isRequired,
     onAddDirectory: func.isRequired,
     onUpdateTree: func.isRequired,
     onRemoveFile: func.isRequired,
     onRenameFile: func.isRequired,
-    onSelectFile: func.isRequired,
+    onSelectFile: func.isRequired
 };
 
 export default memo(Section);

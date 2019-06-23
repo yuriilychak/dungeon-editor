@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImagePreview test default snapshot 1`] = `"<div class=\\"\\">Test</div>"`;
+
+exports[`ImagePreview test snapshot with fixed height 1`] = `"<div class=\\"\\">Test</div>"`;
+
+exports[`ImagePreview test snapshot with fixed width 1`] = `"<div class=\\"\\">Test</div>"`;

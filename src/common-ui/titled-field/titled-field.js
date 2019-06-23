@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { string, element, arrayOf, number, oneOfType } from "prop-types";
+import {string, element, arrayOf, number, oneOfType} from "prop-types";
 
 import "./titled-field.css";
 
@@ -9,27 +9,21 @@ const TitledField = ({
                          children,
                          titleWidth,
                          className,
-                     }) => {
-    const classes = classNames(
-        "titled-field-root",
-        {[className]: !!className}
-    );
-    return (
-        <div className={classes}>
-            <div
-                className="titled-field-title"
-                style={{
-                    width: titleWidth
-                }}
-            >
-                {`${title}:`}
-            </div>
-            <div className="titled-field-body">
-                {children}
-            </div>
+                     }) => (
+    <div className={classNames("titled-field-root", className)}>
+        <div
+            className="titled-field-title"
+            style={{
+                width: titleWidth
+            }}
+        >
+            {`${title}:`}
         </div>
-    )
-};
+        <div className="titled-field-body">
+            {children}
+        </div>
+    </div>
+);
 
 TitledField.defaultProps = {
     titleWidth: "auto"

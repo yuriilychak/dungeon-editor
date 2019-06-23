@@ -14,10 +14,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onRemoveFile: (id, sectionId, isDirectory) => {
-            ProjectData.removeFile(id, sectionId, isDirectory, () => {
-                dispatch(removeFile(id, sectionId));
-                dispatch(deleteLibraryElement(id, sectionId));
+        onRemoveFile: (sectionId, fileId, isDirectory) => {
+            ProjectData.removeFile(fileId, sectionId, isDirectory, () => {
+                dispatch(removeFile(fileId, sectionId));
+                dispatch(deleteLibraryElement(fileId, sectionId));
             });
         },
         onAddFiles: files => {
@@ -29,16 +29,18 @@ const mapDispatchToProps = dispatch => {
         onUpdateTree: (files, sectionId) => {
             ProjectData.refreshHierarchy(files, sectionId);
         },
-        onAddDirectory: (sectionId, parent = null) => {
-            ProjectData.adDirectory(sectionId, parent);
+        onAddDirectory: (sectionId, fileId = -1) => {
+            ProjectData.addDirectory(sectionId, fileId);
         },
-        onRenameFile:(id, sectionId) => {
-            ProjectData.bindFileRename(id, sectionId);
+        onRenameFile:(sectionId, fileId) => {
+            ProjectData.bindFileRename(fileId, sectionId);
             dispatch(showRenameFileDialog());
         },
         onExportProject: () => {
             dispatch(showExportProjectDialog());
             ProjectData.export();
+        },
+        onAddFile: sectionId => {
         },
         onPublishProject: () => {},
         onSelectFile: (sectionId, fileId, isDirectory) => {

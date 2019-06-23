@@ -1,7 +1,7 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import {string, func, bool} from "prop-types";
+import {string, func} from "prop-types";
 
 const ToolButton = ({
                         title,
@@ -48,7 +48,6 @@ ToolButton.defultProps = {
 
 ToolButton.propTypes = {
     title: string,
-    hasPopup: bool,
     Icon: func.isRequired,
     owner: string,
     onClick: func.isRequired

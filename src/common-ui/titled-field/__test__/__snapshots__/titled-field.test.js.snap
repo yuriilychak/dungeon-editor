@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TitledField test default snapshot 1`] = `"<div class=\\"titled-field-root\\"><div class=\\"titled-field-title\\" style=\\"width: 100px;\\">test:</div><div class=\\"titled-field-body\\">Test</div></div>"`;

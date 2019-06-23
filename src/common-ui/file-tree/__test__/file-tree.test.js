@@ -3,7 +3,6 @@ import { createMount } from "@material-ui/core/test-utils";
 import FileTree from "../file-tree";
 
 describe("FileTree test",()=> {
-
     const treeData = [
         { title: '.gitignore' },
         { title: 'package.json' },
@@ -41,7 +40,6 @@ describe("FileTree test",()=> {
             isDirectory: true,
         },
     ];
-
 
     const onChange = jest.fn();
 

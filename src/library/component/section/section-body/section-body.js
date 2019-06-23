@@ -1,15 +1,14 @@
 import React from "react";
 import { number, string, func, arrayOf, object } from "prop-types";
 
-
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import FolderAdd from '@material-ui/icons/CreateNewFolder';
 
-import {ToolButton} from "../../../../common-ui/tool-button";
 import { Icon } from "../../../../common-ui/icon";
 import { FileTree } from "../../../../common-ui/file-tree";
 import { ImagePreview } from "../../../../common-ui/image-preview";
+import { SectionButton }  from "./section-button";
 
 import "./section-body.css";
 
@@ -22,10 +21,10 @@ const SectionBody = ({
                          deleteText,
                          addDirectoryText,
                          onAddDirectory,
+                         onUpdateTree,
                          onRemoveFile,
                          onRenameFile,
-                         onSelectFile,
-                         onUpdateTree
+                         onSelectFile
                      }) => {
 
     if (files.length === 0) {
@@ -38,38 +37,53 @@ const SectionBody = ({
 
     const generateNodeProps = rowInfo => {
         const { node } = rowInfo;
-        const isDirectory = node.isDirectory;
+        const {
+            isDirectory,
+            id: nodeId,
+            title: nodeTitle,
+            preview
+        } = node;
         const icons = [];
+        const previewHeight = 150;
+        const onSelect = () => onSelectFile(id, nodeId, isDirectory);
         const buttons = [
-            <ToolButton
+            <SectionButton
                 title={renameText}
                 Icon={EditIcon}
-                onClick={() => onRenameFile(node.id, id, node.title)}
+                onClick={onRenameFile}
+                fileId={nodeId}
+                sectionId={id}
+                userData={nodeTitle}
             />,
-            <ToolButton
+            <SectionButton
                 title={deleteText}
                 Icon={DeleteIcon}
-                onClick={() => onRemoveFile(node.id, id, isDirectory)}
+                onClick={onRemoveFile}
+                fileId={nodeId}
+                sectionId={id}
+                userData={isDirectory}
             />
         ];
 
         if (isDirectory) {
             buttons.unshift(
-                <ToolButton
+                <SectionButton
                     title={addDirectoryText}
                     Icon={FolderAdd}
-                    onClick={() => onAddDirectory(id, rowInfo)}
+                    onClick={onAddDirectory}
+                    fileId={nodeId}
+                    sectionId={id}
                 />
             );
         } else {
             icons.push(
                 <Icon name={`${icon}_element`}/>
             );
-            if (rowInfo.node.preview) {
+            if (preview) {
                 buttons.push(
                     <ImagePreview
-                        preview={rowInfo.node.preview}
-                        height={150}
+                        preview={preview}
+                        height={previewHeight}
                     >
                         <div className="section-body-preview"/>
                     </ImagePreview>
@@ -78,17 +92,19 @@ const SectionBody = ({
         }
 
         return {
-            onClick: () => onSelectFile(id, rowInfo.node.id, rowInfo.node.isDirectory),
+            onClick: onSelect,
             icons,
             buttons,
             className: "section-body-text"
         };
     };
 
+    const onChange = fileTree => onUpdateTree(fileTree, id);
+
     return (
         <FileTree
             treeData={files}
-            onChange={fileTree => onUpdateTree(fileTree, id)}
+            onChange={onChange}
             generateNodeProps={generateNodeProps}
         />
     );
@@ -103,10 +119,10 @@ SectionBody.propTypes = {
     deleteText: string.isRequired,
     addDirectoryText: string.isRequired,
     onAddDirectory: func.isRequired,
+    onUpdateTree: func.isRequired,
     onRemoveFile: func.isRequired,
     onRenameFile: func.isRequired,
-    onSelectFile: func.isRequired,
-    onUpdateTree: func.isRequired
+    onSelectFile: func.isRequired
 };
 
 export default SectionBody;

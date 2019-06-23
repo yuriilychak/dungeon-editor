@@ -238,16 +238,10 @@ const ProjectData = {
      * @function
      * @public
      * @param {number} sectionIndex
-     * @param {Object} [parent = null]
+     * @param {number} [parentId = -1]
      */
 
-    adDirectory(sectionIndex, parent = null) {
-        let parentId = -1;
-
-        if (parent !== null) {
-            parentId = parent.node.id;
-        }
-
+    addDirectory(sectionIndex, parentId = -1) {
         const dirData = this._components[sectionIndex].addDirectory(parentId);
         store.dispatch(LibraryActions.addDirectory(sectionIndex, dirData));
     },

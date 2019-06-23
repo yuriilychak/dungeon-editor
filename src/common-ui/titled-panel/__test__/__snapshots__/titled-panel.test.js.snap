@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TitledPanel test default snapshot 1`] = `"<div class=\\"TitledPanel-root-1\\"><div class=\\"TitledPanel-titleContainer-2\\"><span class=\\"MuiTypography-root-5 MuiTypography-button-16 TitledPanel-titleText-4\\">test</span></div><div class=\\"TitledPanel-body-3\\" style=\\"padding: 0px;\\">Test text</div></div>"`;
+exports[`TitledPanel test default snapshot 1`] = `"<div class=\\"titled-panel-root\\"><div class=\\"titled-panel-container\\"><span class=\\"MuiTypography-root-1 MuiTypography-button-12 titled-panel-text\\">test</span></div><div class=\\"titled-panel-body\\" style=\\"padding: 0px;\\">Test text</div></div>"`;
 
-exports[`TitledPanel test with title children snapshot 1`] = `"<div class=\\"TitledPanel-root-1\\"><div class=\\"TitledPanel-titleContainer-2\\"><span class=\\"MuiTypography-root-5 MuiTypography-button-16 TitledPanel-titleText-4\\">test</span>Title children</div><div class=\\"TitledPanel-body-3\\" style=\\"padding: 0px;\\">Test text</div></div>"`;
+exports[`TitledPanel test with title children snapshot 1`] = `"<div class=\\"titled-panel-root\\"><div class=\\"titled-panel-container\\"><span class=\\"MuiTypography-root-1 MuiTypography-button-12 titled-panel-text\\">test</span>Title children</div><div class=\\"titled-panel-body\\" style=\\"padding: 0px;\\">Test text</div></div>"`;
