@@ -402,11 +402,11 @@ export default class FileComponent {
      * @protected
      * @param {number} fileId
      * @param {FileData | DirectoryData} file
-     * @return {Object[]}
+     * @return {Object}
      */
 
     generateFileSections(fileId, file) {
-        return [];
+        return {};
     }
 
     /**

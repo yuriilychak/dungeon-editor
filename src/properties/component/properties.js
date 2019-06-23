@@ -4,6 +4,7 @@ import {useTranslation} from "react-i18next";
 
 import {TitledPanel} from "../../common-ui/titled-panel";
 import {FileHeader} from "./file-header";
+import AtlasBody from "./file-body/atlas-body/atlas-body";
 
 import "./properties.css";
 
@@ -36,6 +37,7 @@ const Properties = ({
                     preview={file.preview}
                     onRenameFile={() => onRenameFile(file.id, file.sectionId)}
                 />
+               <AtlasBody/>
             </Fragment>
         );
     }
@@ -60,7 +62,7 @@ Properties.propTypes = {
         name: string.isRequired,
         isDirectory: bool.isRequired,
         sectionId: number.isRequired,
-        sections: arrayOf(object).isRequired,
+        sections: object.isRequired,
         preview: string
     }),
     directoryData: shape({

@@ -60,4 +60,18 @@ export default class TextureComponent extends FileComponent {
             this.removeElement(elements, texture);
         });
     }
+
+    /**
+     * @method
+     * @protected
+     * @param {number} fileId
+     * @param {FileData | DirectoryData} file
+     * @return {Object}
+     */
+
+    generateFileSections(fileId, file) {
+        return {
+            atlas: file.atlas
+        };
+    }
 }
