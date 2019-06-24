@@ -1,13 +1,11 @@
 import React from "react";
-import { string, func, bool, arrayOf, shape } from "prop-types";
-import deburr from "lodash/deburr";
+import {string, func, bool, arrayOf, shape} from "prop-types";
 import Downshift from "downshift";
 
 import {makeStyles} from "@material-ui/styles";
-import Paper from "@material-ui/core/Paper";
 
-import { InputField } from "./input-field";
-import { SuggestionItem } from "./suggestion-item";
+import {InputField} from "./input-field";
+import {Select} from "./select";
 
 const useStyles = makeStyles({
     root: {
@@ -15,19 +13,6 @@ const useStyles = makeStyles({
         width: "calc(100% - 20px)",
         flexGrow: 1,
         height: 250
-    },
-    autocompleteRoot: {
-        position: "absolute",
-        zIndex: 1,
-        marginTop: 2,
-        left: 0,
-        right: 0,
-        color: "#ffffff",
-        backgroundColor: "#2a2b2f",
-        height: 250,
-        width: "100%",
-        overflowX: "hidden",
-        overflowY: "scroll"
     },
     container: {
         width: "100%",
@@ -64,36 +49,7 @@ const AutoComplete = ({
                       isOpen,
                       openMenu,
                       selectedItem
-                  }) => {
-                    let popup = null;
-
-                    if (isOpen) {
-                        const targetValue = deburr(inputValue.trim()).toLowerCase();
-                        const inputLength = targetValue.length;
-
-                        const usedSuggestions = inputLength === 0 && !showEmpty ? [] : suggestions;
-                        const selectedLabel = selectedItem || "";
-
-                        const suggestionList = usedSuggestions.map((suggestion, index) => (
-                            <SuggestionItem
-                                key={index}
-                                isHighlighted={highlightedIndex === index}
-                                isSelected={selectedLabel.indexOf(suggestion.item) !== -1}
-                                suggestion={suggestion}
-                                getItemProps={getItemProps}
-                            />
-                        ));
-
-                        popup = (
-                            <Paper className={classes.autocompleteRoot} square>
-                                {suggestionList}
-                            </Paper>
-                        );
-                    }
-
-                    const {value} = getInputProps();
-
-                    return (
+                  }) => (
                         <div className={classes.container}>
                             <InputField
                                 label={label}
@@ -103,7 +59,7 @@ const AutoComplete = ({
                                 getLabelProps={getLabelProps}
                                 openMenu={openMenu}
                                 selectedItem={selectedItem}
-                                value={value}
+                                inputValue={inputValue}
                                 clearDisabled={clearDisabled}
                                 addDisabled={addDisabled}
                                 onAddItem={onAddItem}
@@ -111,12 +67,18 @@ const AutoComplete = ({
                                 onSelectItem={onSelectItem}
                                 onClearItem={onClearItem}
                             />
-                            <div {...getMenuProps()}>
-                                {popup}
-                            </div>
+                            <Select
+                                showEmpty={showEmpty}
+                                isOpen={isOpen}
+                                inputValue={inputValue}
+                                highlightedIndex={highlightedIndex}
+                                selectedItem={selectedItem}
+                                getItemProps={getItemProps}
+                                getMenuProps={getMenuProps}
+                                suggestions={suggestions}
+                            />
                         </div>
-                    );
-                }}
+                    )}
             </Downshift>
         </div>
     );
@@ -133,7 +95,7 @@ AutoComplete.propTypes = {
     label: string.isRequired,
     placeholder: string.isRequired,
     showEmpty: bool,
-    suggestions: arrayOf(shape({ item: string })).isRequired,
+    suggestions: arrayOf(shape({item: string})).isRequired,
     clearDisabled: bool,
     addDisabled: bool,
     defaultItem: string,
