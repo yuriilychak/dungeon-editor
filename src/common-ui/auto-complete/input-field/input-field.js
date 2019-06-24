@@ -6,7 +6,7 @@ import {makeStyles} from "@material-ui/styles";
 import Close from "@material-ui/icons/Close";
 import Add from "@material-ui/icons/Add";
 
-import {ToolButton} from "../tool-button";
+import {ToolButton} from "../../tool-button";
 
 const useStyles = makeStyles({
     root: {

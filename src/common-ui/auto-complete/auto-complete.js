@@ -5,8 +5,8 @@ import Downshift from "downshift";
 import {makeStyles} from "@material-ui/styles";
 import Paper from "@material-ui/core/Paper";
 
-import InputField from "./input-field";
-import SuggestionItem from "./suggestion-item";
+import { InputField } from "./input-field";
+import { SuggestionItem } from "./suggestion-item";
 
 const useStyles = makeStyles({
     root: {

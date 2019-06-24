@@ -46,7 +46,7 @@ SuggestionItem.propTypes = {
     isHighlighted: bool.isRequired,
     getItemProps: func.isRequired,
     isSelected: bool.isRequired,
-    suggestion: shape({ label: string }).isRequired,
+    suggestion: shape({ item: string }).isRequired,
 };
 
 export default SuggestionItem;
