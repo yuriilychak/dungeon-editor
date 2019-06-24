@@ -24,10 +24,12 @@ const useStyles = makeStyles({
         color: "#ffffff",
         backgroundColor: "#2a2b2f",
         height: 250,
+        width: "100%",
         overflowX: "hidden",
         overflowY: "scroll"
     },
     container: {
+        width: "100%",
         flexGrow: 1,
         position: "relative"
     }

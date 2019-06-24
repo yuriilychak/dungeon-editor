@@ -11,11 +11,11 @@ import {ToolButton} from "../tool-button";
 const useStyles = makeStyles({
     root: {
         display: "flex",
-        justifyContent: "bottom",
         alignItems: "center"
     },
     inputRoot: {
         flexWrap: "wrap",
+        width: "100%"
     },
     inputInput: {
         fontSize: 14,

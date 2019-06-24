@@ -217,6 +217,11 @@ const theme = createMuiTheme({
                 color: contrastText,
                 fontSize: 14
             }
+        },
+        MuiFormControl: {
+            root: {
+                width: "100%"
+            }
         }
     }
 });
