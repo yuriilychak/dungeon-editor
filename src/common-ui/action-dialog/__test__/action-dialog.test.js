@@ -23,8 +23,6 @@ describe('ActionDialog test',()=>{
         />
     );
 
-    const projectInput = wrapper.find('input');
-
     it('Open snapshot', () => {
         expect(wrapper.html()).toMatchSnapshot();
     });

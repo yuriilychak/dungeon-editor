@@ -32,37 +32,37 @@ const Select = ({
                     getItemProps,
                     getMenuProps,
                     suggestions
-}) => {
-    let popup = null;
+                }) => {
+    const menuProps = getMenuProps();
 
-    if (isOpen) {
-        const targetValue = deburr(inputValue.trim()).toLowerCase();
-        const inputLength = targetValue.length;
-        const usedSuggestions = inputLength === 0 && !showEmpty ? [] : suggestions;
-        const selectedLabel = selectedItem || "";
+    if (!isOpen) {
+        return (
+            <div {...menuProps}/>
+        )
+    }
 
-        const suggestionList = usedSuggestions.map((suggestion, index) => (
-            <SuggestionItem
-                key={index}
-                isHighlighted={highlightedIndex === index}
-                isSelected={selectedLabel.indexOf(suggestion.item) !== -1}
-                suggestion={suggestion}
-                getItemProps={getItemProps}
-            />
-        ));
+    const targetValue = deburr(inputValue.trim()).toLowerCase();
+    const inputLength = targetValue.length;
+    const usedSuggestions = inputLength === 0 && !showEmpty ? [] : suggestions;
+    const selectedLabel = selectedItem || "";
 
-        const classes = useStyles();
+    const suggestionList = usedSuggestions.map((suggestion, index) => (
+        <SuggestionItem
+            key={index}
+            isHighlighted={highlightedIndex === index}
+            isSelected={selectedLabel.indexOf(suggestion.item) !== -1}
+            suggestion={suggestion}
+            getItemProps={getItemProps}
+        />
+    ));
 
-        popup = (
+    const classes = useStyles();
+
+    return (
+        <div {...menuProps}>
             <Paper className={classes.root} square>
                 {suggestionList}
             </Paper>
-        );
-    }
-
-    return (
-        <div {...getMenuProps()}>
-            {popup}
         </div>
     );
 };
@@ -71,8 +71,8 @@ Select.propTypes = {
     isOpen: bool.isRequired,
     showEmpty: bool.isRequired,
     suggestions: arrayOf(shape({item: string})).isRequired,
-    inputValue: string,
-    highlightedIndex: number,
+    inputValue: string.isRequired,
+    highlightedIndex: number.isRequired,
     selectedItem: string,
     getItemProps: func.isRequired,
     getMenuProps: func.isRequired
