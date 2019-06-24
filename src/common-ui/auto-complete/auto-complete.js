@@ -1,7 +1,8 @@
 import React from "react";
-
+import { string, func, bool, arrayOf, shape } from "prop-types";
 import deburr from "lodash/deburr";
 import Downshift from "downshift";
+
 import {makeStyles} from "@material-ui/styles";
 import Paper from "@material-ui/core/Paper";
 
@@ -122,9 +123,23 @@ const AutoComplete = ({
 };
 
 AutoComplete.defaultProps = {
+    showEmpty: true,
     clearDisabled: false,
     addDisabled: false,
     defaultItem: ""
+};
+
+AutoComplete.propTypes = {
+    label: string.isRequired,
+    placeholder: string.isRequired,
+    showEmpty: bool,
+    suggestions: arrayOf(shape({ item: string })).isRequired,
+    clearDisabled: bool,
+    addDisabled: bool,
+    defaultItem: string,
+    onAddItem: func,
+    onSelectItem: func.isRequired,
+    onClearItem: func.isRequired
 };
 
 export default AutoComplete;
