@@ -39,6 +39,8 @@
         "Properties_NameTitle": "Name",
         "Properties_ParticleTitle": "particle",
         "Properties_SkeletonTitle": "skeleton",
+        "Properties_SelectAtlasLabel": "Atlas name",
+        "Properties_SelectAtlasPlaceholder": "Select atlas",
         "Properties_TextureTitle": "texture",
         "Properties_Title":  "Properties",
         "RenameFileDialog_Cancel":  "Cancel",

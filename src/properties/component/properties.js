@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 
 import {TitledPanel} from "../../common-ui/titled-panel";
 import {FileHeader} from "./file-header";
-import AtlasBody from "./file-body/atlas-body/atlas-body";
+import { AtlasBody } from "./file-body";
 
 import "./properties.css";
 
@@ -14,15 +14,39 @@ const Properties = ({
                         iconSize,
                         directoryData,
                         sectionData,
-                        onRenameFile
+                        onRenameFile,
+                        onSwitchAtlas,
+                        onClearAtlas
                     }) => {
     const {t} = useTranslation();
 
     let content;
 
     if (file !== null) {
+        const { atlas } = file;
         const data = file.isDirectory ? directoryData : sectionData[file.sectionId];
         const fileType = t(data.locale);
+        let fileBody = null;
+
+        if ( Number.isInteger(atlas)) {
+            const { atlases } = file;
+            const defaultItem = atlases.find(elemant => elemant.id === atlas).name;
+            const suggestions = atlases.map(elemant => ({
+                item: elemant.name,
+                id: elemant.id
+            }));
+            fileBody = (
+                <AtlasBody
+                    suggestions={suggestions}
+                    defaultItem={defaultItem}
+                    label={t(locales.selectAtlasLabel)}
+                    placeholder={t(locales.selectAtlasPlaceholder)}
+                    onAddItem={onSwitchAtlas}
+                    onClearItem={onClearAtlas}
+                    onSelectItem={onSwitchAtlas}
+                />
+            );
+        }
 
         content = (
             <Fragment>
@@ -37,7 +61,7 @@ const Properties = ({
                     preview={file.preview}
                     onRenameFile={() => onRenameFile(file.id, file.sectionId)}
                 />
-               <AtlasBody/>
+                {fileBody}
             </Fragment>
         );
     }
@@ -62,7 +86,7 @@ Properties.propTypes = {
         name: string.isRequired,
         isDirectory: bool.isRequired,
         sectionId: number.isRequired,
-        sections: object.isRequired,
+        data: object.isRequired,
         preview: string
     }),
     directoryData: shape({
@@ -77,9 +101,13 @@ Properties.propTypes = {
         emptyDescription: string.isRequired,
         idTitle: string.isRequired,
         nameTitle: string.isRequired,
-        sectionTitle: string.isRequired
+        sectionTitle: string.isRequired,
+        selectAtlasLabel: string.isRequired,
+        selectAtlasPlaceholder: string.isRequired
     }).isRequired,
-    onRenameFile: func.isRequired
+    onRenameFile: func.isRequired,
+    onSwitchAtlas: func.isRequired,
+    onClearAtlas: func.isRequired
 };
 
 export default Properties;

@@ -3,8 +3,6 @@ import FileUtil from "../file-util";
 import FILE_TYPE from "../enum/file-type";
 import FILE_FORMAT from "../enum/file-format";
 
-const EMPTY_ATLAS_ID = 0;
-
 export default class TextureComponent extends FileComponent {
     /**
      * @method
@@ -52,8 +50,7 @@ export default class TextureComponent extends FileComponent {
         textures.forEach(texture => {
             fileData = {
                 ...this.generateFileData(texture.name, texture.format),
-                preview: texture.data,
-                atlas: EMPTY_ATLAS_ID
+                preview: texture.data
             };
             this.addFileInfo(fileData);
             this.updateSource(fileData, texture.data, progressCallback);

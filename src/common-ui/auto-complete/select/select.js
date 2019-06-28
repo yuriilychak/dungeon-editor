@@ -72,7 +72,7 @@ Select.propTypes = {
     showEmpty: bool.isRequired,
     suggestions: arrayOf(shape({item: string})).isRequired,
     inputValue: string.isRequired,
-    highlightedIndex: number.isRequired,
+    highlightedIndex: number,
     selectedItem: string,
     getItemProps: func.isRequired,
     getMenuProps: func.isRequired

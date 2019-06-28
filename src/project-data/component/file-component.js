@@ -1,4 +1,4 @@
-const ROOT_DIR_ID = -1;
+import CONST from "../const";
 
 export default class FileComponent {
 
@@ -6,9 +6,10 @@ export default class FileComponent {
      * @constructor
      * @param {string} rootName
      * @param {number} sectionId
+     * @param {boolean} isUseAtlas
      */
 
-    constructor(rootName, sectionId) {
+    constructor(rootName, sectionId, isUseAtlas) {
         /**
          * @type {number}
          * @private
@@ -49,6 +50,13 @@ export default class FileComponent {
          */
 
         this._sources = {};
+
+        /**
+         * @type {boolean}
+         * @private
+         */
+
+        this._isUseAtlas = isUseAtlas;
     }
 
     /**
@@ -139,7 +147,7 @@ export default class FileComponent {
      * @returns {DirectoryData}
      */
 
-    addDirectory(parentId = ROOT_DIR_ID) {
+    addDirectory(parentId = CONST.ROOT_DIR_ID) {
         const id = ++this._guid;
         const dirData = {
             parentId,
@@ -192,7 +200,7 @@ export default class FileComponent {
         return result;
     }
 
-    refreshHierarchy(files, parentId = ROOT_DIR_ID) {
+    refreshHierarchy(files, parentId = CONST.ROOT_DIR_ID) {
         let searchArray, id, element, isDirectory;
 
         files.forEach(file => {
@@ -255,14 +263,39 @@ export default class FileComponent {
     getFileInfo(fileId, isDirectory) {
         const searchArray = isDirectory ? this._directories : this._files;
         const element = searchArray.find(element => element.id === fileId);
-        return {
+        const fileInfo = {
             id: fileId,
             name: element.name,
             isDirectory,
             preview: element.preview,
             sectionId: this._sectionId,
-            sections: this.generateFileSections(fileId, element)
+            data: this.generateFileSections(fileId, element)
         };
+
+        if (this._isUseAtlas && !isDirectory) {
+            fileInfo.atlas = element.atlas;
+        }
+
+        return fileInfo;
+    }
+
+    /**
+     * @public
+     * @param {number} fileId
+     * @param {number} atlasId
+     * @return {boolean}
+     */
+
+    updateAtlas(fileId, atlasId) {
+        const file = this._files.find(element => element.id === fileId);
+
+        if (!file || file.atlas === atlasId) {
+            return false;
+        }
+
+        file.atlas = atlasId;
+
+        return true;
     }
 
     /**
@@ -352,13 +385,19 @@ export default class FileComponent {
      */
 
     generateFileData(name, format) {
-        return {
+        const fileData = {
             name: name,
             format: format,
-            parentId: ROOT_DIR_ID,
+            parentId: CONST.ROOT_DIR_ID,
             id: ++this._guid,
             preview: null
         };
+
+        if (this._isUseAtlas) {
+            fileData.atlas = CONST.DEFAULT_ATLAS_ID;
+        }
+
+        return fileData;
     }
 
     /**
@@ -421,7 +460,7 @@ export default class FileComponent {
      * @private
      */
 
-    _generateDirs(onGenerateDir, parentId = ROOT_DIR_ID) {
+    _generateDirs(onGenerateDir, parentId = CONST.ROOT_DIR_ID) {
         const dirsToCreate = this._directories.filter(dir => dir.parentId === parentId);
 
         dirsToCreate.forEach(dir => {
@@ -451,7 +490,7 @@ export default class FileComponent {
 
         path.unshift(element.name);
 
-        if (element.parentId === ROOT_DIR_ID) {
+        if (element.parentId === CONST.ROOT_DIR_ID) {
             return path;
         }
 
@@ -464,6 +503,15 @@ export default class FileComponent {
      * PROPERTIES
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @public
+     * @return {boolean}
+     */
+
+    get isUseAtlases() {
+        return this._isUseAtlas;
+    }
 
     /**
      * @public

@@ -1,15 +1,19 @@
 import JSZip from "jszip";
 import fileDialog from "file-dialog";
 import { saveAs } from "file-saver";
+
 import store from "../store";
 import {changeProgress} from "../export-project-dialog/action";
 import * as LibraryActions from "../library/action";
 import FileUtil from "./file-util";
-import FontComponent from "./component/font-component";
-import ParticleComponent from "./component/particle-component";
-import TextureComponent from "./component/texture-component";
-import ElementComponent from "./component/element-component";
-import SkeletonComponent from "./component/skeleton-component";
+import {
+    FontComponent,
+    ElementComponent,
+    ParticleComponent,
+    TextureComponent,
+    SkeletonComponent
+} from "./component";
+import CONST from "./const";
 
 const ProjectData = {
     /**
@@ -31,7 +35,7 @@ const ProjectData = {
      * @private
      */
 
-    _projectName: "emptyProject",
+    _projectName: CONST.DEFAULT_PROJECT_NAME,
 
     /**
      * @type {{name: string, format: string}}
@@ -58,18 +62,45 @@ const ProjectData = {
     _renameData: null,
 
     /**
+     * @type {?{id: number, name: string}[]}
+     */
+
+    _atlases: null,
+
+    _defaultAtlas: {
+        id: CONST.DEFAULT_ATLAS_ID,
+        name: CONST.DEFAULT_ATLAS_NAME
+    },
+
+    /**
+     * @type {?{fileId: number, sectionId: number}}
+     * @private
+     */
+
+    _selectData: null,
+
+    /**
+     * @type {number}
+     * @private
+     */
+
+    _atlasId: 0,
+
+    /**
      * @method
      * @public
      */
 
     init() {
         this._components = [
-            new ElementComponent("elements", 0),
-            new FontComponent("fonts", 1),
-            new ParticleComponent("particles", 2),
-            new SkeletonComponent("skeletons", 3),
-            new TextureComponent("textures", 4),
+            new ElementComponent("elements", 0, false),
+            new FontComponent("fonts", 1, true),
+            new ParticleComponent("particles", 2, true),
+            new SkeletonComponent("skeletons", 3, true),
+            new TextureComponent("textures", 4, true),
         ];
+
+        this._atlases = [ this._defaultAtlas ];
     },
 
     /**
@@ -104,7 +135,9 @@ const ProjectData = {
             store.dispatch(changeProgress(progress, path));
         };
         const projectData = {
-            name: this._projectName
+            name: this._projectName,
+            atlases: this._atlases,
+            atlasId: this._atlasId
         };
 
         this._components.forEach(component => component.export(projectData, zip, progressCallback));
@@ -118,16 +151,6 @@ const ProjectData = {
                 this._zipData = content;
                 store.dispatch(changeProgress(maxPercent, null, true));
             });
-    },
-
-    /**
-     * @desc Clear zip
-     * @function
-     * @public
-     */
-
-    clearZipData() {
-        this._zipData = null;
     },
 
     _addHandler(data, sectionId) {
@@ -171,6 +194,10 @@ const ProjectData = {
                         const projectData = JSON.parse(metaData);
 
                         this._projectName = projectData.name;
+
+                        this._atlases = projectData.atlases;
+
+                        this._atlasId = projectData.atlasId;
 
                         const componentCount = this._components.length;
                         let i, component;
@@ -229,9 +256,9 @@ const ProjectData = {
         return true;
     },
 
-    refreshHierarchy(files, sectionIndex) {
+    refreshHierarchy(files, sectionIndex, callback) {
         this._components[sectionIndex].refreshHierarchy(files);
-        store.dispatch(LibraryActions.updateTree(files, sectionIndex));
+        callback();
     },
 
     /**
@@ -279,12 +306,54 @@ const ProjectData = {
      * @param {number} sectionId
      * @param {number} fileId
      * @param {boolean} isDirectory
-     * @param {Function} callback
+     * @returns {Object}
      */
 
-    getFileInfo(sectionId, fileId, isDirectory, callback) {
-        const result = this._components[sectionId].getFileInfo(fileId, isDirectory);
-        callback(result);
+    selectFile(sectionId, fileId, isDirectory) {
+        const component = this._components[sectionId];
+        const result = component.getFileInfo(fileId, isDirectory);
+
+        if (component.isUseAtlases) {
+            result.atlases = this._atlases;
+        }
+
+        this._selectData = { fileId, sectionId };
+
+        return result;
+    },
+
+    /**
+     * @public
+     * @param {string} atlasName
+     * @returns {boolean}
+     */
+
+    updateAtlas(atlasName) {
+        let atlas = this._atlases.find(element => element.name === atlasName);
+
+        if (!atlas) {
+            atlas = {
+                name: atlasName,
+                id: ++this._atlasId
+            };
+
+            this._atlases.push(atlas)
+        }
+
+        if (this._selectData === null) {
+            return false;
+        }
+
+        const { sectionId, fileId } = this._selectData;
+
+
+        return this._components[sectionId].updateAtlas(fileId, atlas.id);
+    },
+
+    getSelectedFile() {
+        const { sectionId, fileId } = this._selectData;
+
+        return this.selectFile(sectionId, fileId, false);
     }
 };
 

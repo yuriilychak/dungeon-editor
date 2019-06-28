@@ -23,10 +23,12 @@
  * @typedef {Object}
  * @property {string} name
  * @property {number} guid
- * @property {Array.<Object>} elements
- * @property {Array.<FontData>} fonts
- * @property {Array.<Object>} particles
- * @property {Array.<Object>} skeletons
+ * @property {Object[]} atlases
+ * @property {number} atlasId
+ * @property {Object[]} elements
+ * @property {Object[]} fonts
+ * @property {Object[]} particles
+ * @property {Object[]} skeletons
  * @property {Array.<TextureData>} textures
  */
 
@@ -37,7 +39,7 @@
  * @property {string} format
  * @property {number} id
  * @property {number} parentId
- * @property {string} preview
+ * @property {?string} preview
  */
 
 /**

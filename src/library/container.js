@@ -5,6 +5,7 @@ import {showExportProjectDialog} from "../export-project-dialog/action";
 import {showRenameFileDialog} from "../rename-file-dialog/action";
 import {selectLibraryElement, deleteLibraryElement} from "../properties/action";
 import {removeFile} from "./action";
+import * as LibraryActions from "./action";
 
 const mapStateToProps = (state) => {
     return {
@@ -27,7 +28,9 @@ const mapDispatchToProps = dispatch => {
             ProjectData.importFiles(files);
         },
         onUpdateTree: (files, sectionId) => {
-            ProjectData.refreshHierarchy(files, sectionId);
+            ProjectData.refreshHierarchy(files, sectionId, () => {
+                dispatch(LibraryActions.updateTree(files, sectionId));
+            });
         },
         onAddDirectory: (sectionId, fileId = -1) => {
             ProjectData.addDirectory(sectionId, fileId);
@@ -44,13 +47,7 @@ const mapDispatchToProps = dispatch => {
         },
         onPublishProject: () => {},
         onSelectFile: (sectionId, fileId, isDirectory) => {
-            ProjectData.getFileInfo(
-                sectionId,
-                fileId,
-                isDirectory,
-                data => {
-                    dispatch(selectLibraryElement(data));
-                });
+            dispatch(selectLibraryElement(ProjectData.selectFile(sectionId, fileId, isDirectory)));
         }
     }
 };

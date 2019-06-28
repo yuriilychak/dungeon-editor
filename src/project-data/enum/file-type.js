@@ -3,10 +3,8 @@
  * @enum {number}
  */
 
-const FILE_TYPE = {
+export default {
     NONE: 0,
     BINARY: 1,
     TEXT: 2
 };
-
-export default FILE_TYPE;

@@ -4,7 +4,9 @@
     "emptyDescription": "Properties_EmptyDescription",
     "idTitle": "Properties_IdTitle",
     "nameTitle": "Properties_NameTitle",
-    "sectionTitle": "Properties_Title"
+    "sectionTitle": "Properties_Title",
+    "selectAtlasLabel": "Properties_SelectAtlasLabel",
+    "selectAtlasPlaceholder": "Properties_SelectAtlasPlaceholder"
   },
   "directoryData": {
     "locale": "Properties_DirectoryTitle",
