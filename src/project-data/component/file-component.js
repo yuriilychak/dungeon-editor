@@ -269,6 +269,7 @@ export default class FileComponent {
             isDirectory,
             preview: element.preview,
             sectionId: this._sectionId,
+            compressName: element.compressName,
             data: this.generateFileSections(fileId, element)
         };
 
@@ -294,6 +295,25 @@ export default class FileComponent {
         }
 
         file.atlas = atlasId;
+
+        return true;
+    }
+
+    /**
+     * @method
+     * @public
+     * @param {number} fileId
+     * @returns {boolean}
+     */
+
+    toggleCompressName(fileId) {
+        const file = this._files.find(element => element.id === fileId);
+
+        if (!file) {
+            return false;
+        }
+
+        file.compressName = !file.compressName;
 
         return true;
     }
@@ -390,7 +410,8 @@ export default class FileComponent {
             format: format,
             parentId: CONST.ROOT_DIR_ID,
             id: ++this._guid,
-            preview: null
+            preview: null,
+            compressName: false
         };
 
         if (this._isUseAtlas) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import {string, func, bool, arrayOf, shape} from "prop-types";
 import Downshift from "downshift";
 
@@ -11,13 +11,13 @@ const useStyles = makeStyles({
     root: {
         margin: "5px 10px",
         width: "calc(100% - 20px)",
-        flexGrow: 1,
-        height: 250
+        flexGrow: 1
     },
     container: {
         width: "100%",
         flexGrow: 1,
-        position: "relative"
+        position: "relative",
+        maxHeight: 250
     }
 });
 
@@ -104,4 +104,4 @@ AutoComplete.propTypes = {
     onClearItem: func.isRequired
 };
 
-export default AutoComplete;
+export default memo(AutoComplete);

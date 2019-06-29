@@ -40,6 +40,7 @@
  * @property {number} id
  * @property {number} parentId
  * @property {?string} preview
+ * @property {boolean} compressName
  */
 
 /**

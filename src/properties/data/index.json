@@ -1,6 +1,7 @@
 {
   "iconSize": 20,
   "locales": {
+    "compressName": "Properties_CompressName",
     "emptyDescription": "Properties_EmptyDescription",
     "idTitle": "Properties_IdTitle",
     "nameTitle": "Properties_NameTitle",

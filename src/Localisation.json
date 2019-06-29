@@ -31,6 +31,7 @@
         "NewProjectDialog_ContentTitle": "New project",
         "NewProjectDialog_InputError": "Name empty",
         "NewProjectDialog_InputTitle": "Project name",
+        "Properties_CompressName": "Compress name",
         "Properties_DirectoryTitle": "directory",
         "Properties_FontTitle": "font",
         "Properties_ElementTitle": "element",

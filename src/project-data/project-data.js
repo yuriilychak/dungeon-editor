@@ -95,7 +95,7 @@ const ProjectData = {
         this._components = [
             new ElementComponent("elements", 0, false),
             new FontComponent("fonts", 1, true),
-            new ParticleComponent("particles", 2, true),
+            new ParticleComponent("particles", 2, false),
             new SkeletonComponent("skeletons", 3, true),
             new TextureComponent("textures", 4, true),
         ];
@@ -340,7 +340,7 @@ const ProjectData = {
             this._atlases.push(atlas)
         }
 
-        if (this._selectData === null) {
+        if (!this._isDataSelected()) {
             return false;
         }
 
@@ -351,9 +351,28 @@ const ProjectData = {
     },
 
     getSelectedFile() {
+        if (!this._isDataSelected()) {
+            return false;
+        }
+
         const { sectionId, fileId } = this._selectData;
 
         return this.selectFile(sectionId, fileId, false);
+    },
+
+    toggleCompressName() {
+        if (!this._isDataSelected()) {
+            return false;
+        }
+
+        const { sectionId, fileId } = this._selectData;
+        const component = this._components[sectionId];
+
+        return component.toggleCompressName(fileId);
+    },
+
+    _isDataSelected() {
+        return this._selectData !== null;
     }
 };
 

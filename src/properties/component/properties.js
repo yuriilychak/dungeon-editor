@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 
 import {TitledPanel} from "../../common-ui/titled-panel";
 import {FileHeader} from "./file-header";
-import { AtlasBody } from "./file-body";
+import { LibraryElementBody } from "./file-body";
 
 import "./properties.css";
 
@@ -16,37 +16,33 @@ const Properties = ({
                         sectionData,
                         onRenameFile,
                         onSwitchAtlas,
-                        onClearAtlas
+                        onClearAtlas,
+                        onSwitchCompressName
                     }) => {
     const {t} = useTranslation();
 
     let content;
 
     if (file !== null) {
-        const { atlas } = file;
         const data = file.isDirectory ? directoryData : sectionData[file.sectionId];
         const fileType = t(data.locale);
         let fileBody = null;
 
-        if ( Number.isInteger(atlas)) {
-            const { atlases } = file;
-            const defaultItem = atlases.find(elemant => elemant.id === atlas).name;
-            const suggestions = atlases.map(elemant => ({
-                item: elemant.name,
-                id: elemant.id
-            }));
+        if (!file.isDirectory) {
             fileBody = (
-                <AtlasBody
-                    suggestions={suggestions}
-                    defaultItem={defaultItem}
-                    label={t(locales.selectAtlasLabel)}
-                    placeholder={t(locales.selectAtlasPlaceholder)}
-                    onAddItem={onSwitchAtlas}
-                    onClearItem={onClearAtlas}
-                    onSelectItem={onSwitchAtlas}
+                <LibraryElementBody
+                    file={file}
+                    compressNameLabel={t(locales.compressName)}
+                    atlasAutocompleteLabel={t(locales.selectAtlasLabel)}
+                    atlasAutocompletePlaceholder={t(locales.selectAtlasPlaceholder)}
+                    onSwitchAtlas={onSwitchAtlas}
+                    onSwitchCompressName={onSwitchCompressName}
+                    onClearAtlas={onClearAtlas}
                 />
             );
         }
+
+        const handleRenameFile = () => onRenameFile(file.id, file.sectionId);
 
         content = (
             <Fragment>
@@ -59,7 +55,7 @@ const Properties = ({
                     iconName={data.icon}
                     iconSize={iconSize}
                     preview={file.preview}
-                    onRenameFile={() => onRenameFile(file.id, file.sectionId)}
+                    onRenameFile={handleRenameFile}
                 />
                 {fileBody}
             </Fragment>
@@ -98,6 +94,7 @@ Properties.propTypes = {
         icon: string.isRequired
     })).isRequired,
     locales: shape({
+        compressName: string.isRequired,
         emptyDescription: string.isRequired,
         idTitle: string.isRequired,
         nameTitle: string.isRequired,
@@ -105,6 +102,7 @@ Properties.propTypes = {
         selectAtlasLabel: string.isRequired,
         selectAtlasPlaceholder: string.isRequired
     }).isRequired,
+    onSwitchCompressName: func.isRequired,
     onRenameFile: func.isRequired,
     onSwitchAtlas: func.isRequired,
     onClearAtlas: func.isRequired

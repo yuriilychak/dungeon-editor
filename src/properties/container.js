@@ -21,6 +21,11 @@ const mapDispatchToProps = dispatch => {
                 dispatch(selectLibraryElement(ProjectData.getSelectedFile()));
             }
         },
+        onSwitchCompressName() {
+            if (ProjectData.toggleCompressName()) {
+                dispatch(selectLibraryElement(ProjectData.getSelectedFile()));
+            }
+        },
         onClearAtlas() {}
     }
 };

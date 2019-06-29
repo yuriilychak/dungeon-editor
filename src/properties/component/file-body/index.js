@@ -1,1 +1,1 @@
-export { AtlasBody }  from "./atlas-body";
+export { LibraryElementBody }  from "./library-element-body";

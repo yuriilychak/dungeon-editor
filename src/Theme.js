@@ -222,6 +222,12 @@ const theme = createMuiTheme({
             root: {
                 width: "100%"
             }
+        },
+        MuiFormControlLabel: {
+            label: {
+                color: contrastText,
+                fontSize: 14
+            }
         }
     }
 });
