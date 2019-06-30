@@ -17,6 +17,7 @@ const Properties = ({
                         onRenameFile,
                         onSwitchAtlas,
                         onClearAtlas,
+                        onSwitchCompressSkeleton,
                         onSwitchCompressName
                     }) => {
     const {t} = useTranslation();
@@ -33,9 +34,11 @@ const Properties = ({
                 <LibraryElementBody
                     file={file}
                     compressNameLabel={t(locales.compressName)}
+                    compressSkeletonLabel={t(locales.compressSkeleton)}
                     atlasAutocompleteLabel={t(locales.selectAtlasLabel)}
                     atlasAutocompletePlaceholder={t(locales.selectAtlasPlaceholder)}
                     onSwitchAtlas={onSwitchAtlas}
+                    onSwitchCompressSkeleton={onSwitchCompressSkeleton}
                     onSwitchCompressName={onSwitchCompressName}
                     onClearAtlas={onClearAtlas}
                 />
@@ -95,6 +98,7 @@ Properties.propTypes = {
     })).isRequired,
     locales: shape({
         compressName: string.isRequired,
+        compressSkeleton: string.isRequired,
         emptyDescription: string.isRequired,
         idTitle: string.isRequired,
         nameTitle: string.isRequired,

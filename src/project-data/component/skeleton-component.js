@@ -90,17 +90,31 @@ export default class SkeletonComponent extends FileComponent {
 
             data = {
                 ...this.generateFileData(json.name, json.format),
+                compressSkeleton: false,
                 hasAtlas: hasAtlas,
                 textureFormat: hasAtlas ? texture.format : ""
             };
 
             this.addFileInfo(data);
             this.removeElement(elements, json);
-
             this.removeElement(elements, atlas);
             this.removeElement(elements, texture);
 
             this.updateSource(data, {data: json.data, atlas, texture}, progressCallback);
         });
+    }
+
+    /**
+     * @method
+     * @protected
+     * @param {number} fileId
+     * @param {SkeletonData | FileData} file
+     * @return {Object}
+     */
+
+    generateFileSections(fileId, file) {
+        return {
+            compressSkeleton: file.compressSkeleton
+        };
     }
 }

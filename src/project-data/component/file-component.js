@@ -288,9 +288,9 @@ export default class FileComponent {
      */
 
     updateAtlas(fileId, atlasId) {
-        const file = this._files.find(element => element.id === fileId);
+        const file = this.getFile(fileId);
 
-        if (!file || file.atlas === atlasId) {
+        if (file === null || file.atlas === atlasId) {
             return false;
         }
 
@@ -307,13 +307,25 @@ export default class FileComponent {
      */
 
     toggleCompressName(fileId) {
-        const file = this._files.find(element => element.id === fileId);
+        const file = this.getFile(fileId);
 
-        if (!file) {
+        if (file === null) {
             return false;
         }
 
         file.compressName = !file.compressName;
+
+        return true;
+    }
+
+    switchFileValue(fileId, key) {
+        const file = this.getFile(fileId);
+
+        if (file === null || !file.hasOwnProperty(key)) {
+            return false;
+        }
+
+        file[key] = !file[key];
 
         return true;
     }
@@ -467,6 +479,15 @@ export default class FileComponent {
 
     generateFileSections(fileId, file) {
         return {};
+    }
+
+    /**
+     * @param {number} id
+     * @returns {FileData | null}
+     */
+
+    getFile(id) {
+        return this._files.find(element => element.id === id) || null;
     }
 
     /**

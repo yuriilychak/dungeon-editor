@@ -26,6 +26,11 @@ const mapDispatchToProps = dispatch => {
                 dispatch(selectLibraryElement(ProjectData.getSelectedFile()));
             }
         },
+        onSwitchCompressSkeleton() {
+            if (ProjectData.switchFileValue("compressSkeleton")) {
+                dispatch(selectLibraryElement(ProjectData.getSelectedFile()));
+            }
+        },
         onClearAtlas() {}
     }
 };

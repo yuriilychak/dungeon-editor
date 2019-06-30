@@ -97,7 +97,7 @@ const ProjectData = {
             new FontComponent("fonts", 1, true),
             new ParticleComponent("particles", 2, false),
             new SkeletonComponent("skeletons", 3, true),
-            new TextureComponent("textures", 4, true),
+            new TextureComponent("textures", 4, true)
         ];
 
         this._atlases = [ this._defaultAtlas ];
@@ -369,6 +369,17 @@ const ProjectData = {
         const component = this._components[sectionId];
 
         return component.toggleCompressName(fileId);
+    },
+
+    switchFileValue(key) {
+        if (!this._isDataSelected()) {
+            return false;
+        }
+
+        const { sectionId, fileId } = this._selectData;
+        const component = this._components[sectionId];
+
+        return component.switchFileValue(fileId, key);
     },
 
     _isDataSelected() {

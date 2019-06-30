@@ -1,26 +1,38 @@
-import React, { Fragment } from "react";
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import React, {Fragment} from "react";
 
 import {AutoComplete} from "../../../../common-ui/auto-complete";
+import {CheckBox} from "./check-box";
 
-import "./library-element-body.css";
+import "./check-box/check-box.css";
 
 export default ({
                     file,
                     compressNameLabel,
+                    compressSkeletonLabel,
                     atlasAutocompleteLabel,
                     atlasAutocompletePlaceholder,
                     onSwitchCompressName,
+                    onSwitchCompressSkeleton,
                     onSwitchAtlas,
                     onClearAtlas
-}) => {
-    const { compressName, atlas } = file;
+                }) => {
+    const {compressName, atlas, data} = file;
 
     let atlasAutocomplete = null;
+    let skeletonCheckbox = null;
+
+    if (data.hasOwnProperty("compressSkeleton")) {
+        skeletonCheckbox = (
+            <CheckBox
+                checked={data.compressSkeleton}
+                onChange={onSwitchCompressSkeleton}
+                label={compressSkeletonLabel}
+            />
+        );
+    }
 
     if (Number.isInteger(atlas)) {
-        const { atlases } = file;
+        const {atlases} = file;
         const defaultItem = atlases.find(element => element.id === atlas).name;
         const suggestions = atlases.map(element => ({
             item: element.name,
@@ -44,18 +56,12 @@ export default ({
     return (
         <Fragment>
             {atlasAutocomplete}
-            <div className="library-element-checkbox-wrapper">
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={compressName}
-                            onChange={onSwitchCompressName}
-                            value="checkedF"
-                            color="primary"
-                        />}
-                    label={compressNameLabel}
-                />
-            </div>
+            <CheckBox
+                checked={compressName}
+                onChange={onSwitchCompressName}
+                label={compressNameLabel}
+            />
+            {skeletonCheckbox}
         </Fragment>
     )
 };

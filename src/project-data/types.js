@@ -43,6 +43,19 @@
  * @property {boolean} compressName
  */
 
+
+/**
+ * @name SkeletonData
+ * @typedef {Object}
+ * @property {string} name
+ * @property {string} format
+ * @property {number} id
+ * @property {number} parentId
+ * @property {?string} preview
+ * @property {boolean} compressName
+ * @property {boolean} compressSkeleton
+ */
+
 /**
  * @name DirectoryData
  * @typedef {Object}
