@@ -1,0 +1,35 @@
+.working-area-root {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #181818;
+}
+
+.working-area-header {
+    width: 100%;
+    background-color: #2a2b2f;
+}
+
+.working-area-body {
+    position: relative;
+    width: 100%;
+    flex: 1;
+}
+
+.working-area-empty-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.working-area-empty-message {
+    width: 500px;
+    color: white;
+    user-select: none;
+}

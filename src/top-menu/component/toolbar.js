@@ -10,6 +10,7 @@ export default withStyles({
         paddingRight: padding + "px",
         height: uiConst.TOP_MENU_HEIGHT + "px",
         minHeight: uiConst.TOP_MENU_HEIGHT + "px",
+        zIndex: 1,
         "@media (min-width: 600px)": {
             minHeight: uiConst.TOP_MENU_HEIGHT + "px"
         }

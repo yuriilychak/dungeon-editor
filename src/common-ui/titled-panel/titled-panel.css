@@ -10,12 +10,13 @@
     padding: 0 10px;
     display: flex;
     flex-flow: row;
+    min-height: 24px;
     background-color: #3f4045;
 }
 
 .titled-panel-body {
     flex-grow : 1;
-    font-size: .8rem;
+    font-size: 13px;
     color: #ffffff;
     background-color: #2a2b2f;
 }

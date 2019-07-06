@@ -1,0 +1,12 @@
+.tab-content-root {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.tab-content-title {
+    font-size: 10px;
+    font-weight: 500;
+    color: #fff;
+    padding: 0 4px;
+}

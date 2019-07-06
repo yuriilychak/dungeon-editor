@@ -72,7 +72,9 @@
         "TopMenu_NewGuides": "New guides",
         "TopMenu_ClearGuides": "Clear guides",
         "TopMenu_About": "About",
-        "TopMenu_Publish": "Publish project"
+        "TopMenu_Publish": "Publish project",
+        "WorkingArea_EmptyMessage": "For open some item from library make double click on it.",
+        "WorkingArea_EmptyTitle": "Default"
       }
     }
   },

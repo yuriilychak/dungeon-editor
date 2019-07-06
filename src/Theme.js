@@ -1,12 +1,12 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from "@material-ui/core/styles";
 import uiConst from "./constant/uiConst";
 
 const contrastText = "#ffffff";
 const disabledText = "#bbbbbb";
 const hoverText = "#1d9cf9";
-const backLight = '#595a5f';
-const backMain = '#3f4045';
-const backDark = '#2a2b2f';
+const backLight = "#595a5f";
+const backMain = "#3f4045";
+const backDark = "#2a2b2f";
 
 const theme = createMuiTheme({
     palette: {
@@ -26,6 +26,11 @@ const theme = createMuiTheme({
         MuiTypography: {
             root: {
                 userSelect: "none"
+            }
+        },
+        MuiToolbar: {
+            root: {
+                minHeight: 24
             }
         },
         MuiAppBar: {
@@ -49,7 +54,7 @@ const theme = createMuiTheme({
         },
         MuiDialogTitle: {
             root: {
-                '& h6': {
+                "& h6": {
                     color: contrastText
                 }
             }
@@ -105,13 +110,13 @@ const theme = createMuiTheme({
                 backgroundColor: "#1d9cf9",
                 borderBottom: "4px solid #004995",
                 boxShadow: "none",
-                '&:active': {
+                "&:active": {
                     borderBottom: "none",
                 },
-                '&:hover': {
+                "&:hover": {
                     backgroundColor: "#0575c6",
                 },
-                '&$disabled': {
+                "&$disabled": {
                     backgroundColor: "#1c8ab1",
                     color: disabledText,
                     borderBottom: "4px solid #1C5375",
@@ -122,13 +127,13 @@ const theme = createMuiTheme({
                 backgroundColor: "#f4385b",
                 borderBottom: "4px solid #801227",
                 boxShadow: "none",
-                '&:active': {
+                "&:active": {
                     borderBottom: "none",
                 },
-                '&:hover': {
+                "&:hover": {
                     backgroundColor: "#a52941",
                 },
-                '&$disabled': {
+                "&$disabled": {
                     backgroundColor: "#a53c4c",
                     color: disabledText,
                     borderBottom: "4px solid #79273A",
@@ -169,14 +174,14 @@ const theme = createMuiTheme({
             root: {
                 padding: "0 12px",
                 minHeight: 32,
-                '&$expanded': {
+                "&$expanded": {
                     borderBottom: "2px dashed #595a5f",
                     minHeight: 32,
                 }
             },
             content: {
                 margin: "4px 0px",
-                '&$expanded': {
+                "&$expanded": {
                     margin: "4px 0px"
                 },
                 "& > :last-child": {

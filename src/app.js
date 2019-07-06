@@ -5,7 +5,6 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
-import WorkingArea from "./working-area/component";
 import uiConst from "./constant/uiConst";
 import BottomMenu from "./bottom-menu/component/bottom-menu";
 
@@ -15,6 +14,7 @@ import { Properties } from "./properties";
 import { NewProjectDialog } from "./new-project-dialog";
 import { ExportProjectDialog } from "./export-project-dialog";
 import { RenameFileDialog } from "./rename-file-dialog";
+import { WorkingArea } from "./working-area";
 
 const styles = theme => ({
     root: {

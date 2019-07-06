@@ -4,6 +4,7 @@ import renameFileDialogReducer from "./rename-file-dialog/reducer";
 import exportProjectDialogReducer from "./export-project-dialog/reducer";
 import libraryReducer from "./library/reducer";
 import propertiesReducer from "./properties/reducer";
+import workingAreaReducer from "./working-area/reducer";
 import { createStore, combineReducers } from 'redux';
 
 /**
@@ -19,7 +20,8 @@ const store = createStore(combineReducers({
     properties: propertiesReducer,
     renameFileDialog: renameFileDialogReducer,
     exportProjectDialog: exportProjectDialogReducer,
-    newProjectDialog: newProjectDialogReducer
+    newProjectDialog: newProjectDialogReducer,
+    workingArea: workingAreaReducer
 }));
 
 export default store;
