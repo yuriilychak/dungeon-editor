@@ -1,17 +1,17 @@
 import { hideNewProjectDialog, showNewProjectDialog } from '../action';
-import types from '../state';
+import STATE from '../state';
 
 describe('new-project-dialog actions', () => {
     it('changeDialogVisible', () => {
         const expectedAction1 = {
-            type: types.CHANGE_ACTIVITY,
+            type: STATE.CHANGE_ACTIVITY,
             payload: false
         };
         const expectedAction2 = {
-            type: types.CHANGE_ACTIVITY,
+            type: STATE.CHANGE_ACTIVITY,
             payload: true
         };
         expect(hideNewProjectDialog()).toEqual(expectedAction1);
         expect(showNewProjectDialog()).toEqual(expectedAction2);
-    })
+    });
 });

@@ -10,6 +10,8 @@ const mapDispatchToProps = dispatch => ({
         },
         onCloseTab(index) {
             dispatch(closeTab(index));
+        },
+        onGetCanvasRef(ref) {
         }
 });
 

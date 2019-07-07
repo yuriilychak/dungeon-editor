@@ -37,14 +37,20 @@ const actionHandlers = {
     },
     [STATE.TAB_CLOSE]: (state, action) => {
         const { payload } = action;
+        let { tabs, selectedTab } = state;
 
-        if (payload >= state.tabs.length) {
+        if (payload >= tabs.length) {
             return state;
+        }
+
+        if (selectedTab >= payload && selectedTab !== 0) {
+            --selectedTab;
         }
 
         return {
             ...state,
-            tabs: state.tabs.filter((tab, index) => index !== payload)
+            tabs: tabs.filter((tab, index) => index !== payload),
+            selectedTab
         };
     }
 };

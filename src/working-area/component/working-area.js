@@ -45,6 +45,7 @@ const WorkingArea = ({
                          icons,
                          selectedTab,
                          onSelectTab,
+                         onGetCanvasRef,
                          onCloseTab
                      }) => {
     const classes = useTabStyles();
@@ -90,7 +91,7 @@ const WorkingArea = ({
                         </div>
                     </div>
                 )}
-                <WorkingCanvas/>
+                <WorkingCanvas onGetCanvasRef={onGetCanvasRef}/>
             </div>
         </div>
     );
