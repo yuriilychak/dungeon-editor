@@ -3,33 +3,35 @@ import StaticData from "./data/index.json";
 
 export const initialState = {
     ...StaticData,
-    tabs: [
-        {
-            title: "skeleton",
-            fileId: 35,
-            sectionId: 3
-        },
-        {
-            title: "particle",
-            fileId: 35,
-            sectionId: 2
-        },
-        {
-            title: "font",
-            fileId: 35,
-            sectionId: 1
-        }
-    ],
+    tabs: [],
     selectedTab: 0
 };
 
 const actionHandlers = {
+    [STATE.TAB_ADD]: (state, action) => {
+        const { payload } = action;
+        let { tabs } = state;
+
+        if (tabs.findIndex(tab => (
+            tab.sectionId === payload.sectionId &&
+                tab.fileId === payload.fileId
+        )) !== -1) {
+            return state;
+        }
+
+        return {
+            ...state,
+            tabs: [...tabs, payload],
+            selectedTab: tabs.length
+        }
+    },
     [STATE.TAB_SELECT]: (state, action) => {
         const { payload } = action;
 
         if (payload === state.selectedTab) {
             return state;
         }
+
         return {
             ...state,
             selectedTab: payload

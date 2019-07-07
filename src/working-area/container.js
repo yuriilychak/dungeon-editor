@@ -12,6 +12,13 @@ const mapDispatchToProps = dispatch => ({
             dispatch(closeTab(index));
         },
         onGetCanvasRef(ref) {
+            const app = new window.PIXI.Application({
+                view: ref,
+                width: ref.width,
+                height: ref.height,
+                backgroundColor: 0x1099bb,
+                resolution: window.devicePixelRatio || 1
+            });
         }
 });
 

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Select test Default snapshot 1`] = `"<div><div class=\\"MuiPaper-root-1 MuiPaper-elevation2-5 Hook-root-1iuzup1\\"><div class=\\"MuiButtonBase-root-43 MuiListItem-root-31 MuiListItem-default-34 MuiListItem-gutters-39 MuiListItem-button-40 MuiListItem-selected-42 MuiMenuItem-root-28 MuiMenuItem-selected-30 MuiMenuItem-gutters-29 Hook-menuItem-1oxu9dl Hook-menuItemDefault-1xtn5wn\\" tabindex=\\"-1\\" role=\\"menuitem\\">test<span class=\\"MuiTouchRipple-root-46\\"></span></div></div></div>"`;
+
+exports[`Select test Snapshot closed 1`] = `"<div></div>"`;
+
+exports[`Select test Snapshot with empty input 1`] = `"<div><div class=\\"MuiPaper-root-1 MuiPaper-elevation2-5 Hook-root-1iuzup1\\"><div class=\\"MuiButtonBase-root-43 MuiListItem-root-31 MuiListItem-default-34 MuiListItem-gutters-39 MuiListItem-button-40 MuiListItem-selected-42 MuiMenuItem-root-28 MuiMenuItem-selected-30 MuiMenuItem-gutters-29 Hook-menuItem-1oxu9dl Hook-menuItemDefault-1xtn5wn\\" tabindex=\\"-1\\" role=\\"menuitem\\">test<span class=\\"MuiTouchRipple-root-46\\"></span></div></div></div>"`;
+
+exports[`Select test Snapshot with empty input and without show empty 1`] = `"<div><div class=\\"MuiPaper-root-1 MuiPaper-elevation2-5 Hook-root-1iuzup1\\"></div></div>"`;
+
+exports[`Select test Snapshot without show empty 1`] = `"<div><div class=\\"MuiPaper-root-1 MuiPaper-elevation2-5 Hook-root-1iuzup1\\"><div class=\\"MuiButtonBase-root-43 MuiListItem-root-31 MuiListItem-default-34 MuiListItem-gutters-39 MuiListItem-button-40 MuiListItem-selected-42 MuiMenuItem-root-28 MuiMenuItem-selected-30 MuiMenuItem-gutters-29 Hook-menuItem-1oxu9dl Hook-menuItemDefault-1xtn5wn\\" tabindex=\\"-1\\" role=\\"menuitem\\">test<span class=\\"MuiTouchRipple-root-46\\"></span></div></div></div>"`;

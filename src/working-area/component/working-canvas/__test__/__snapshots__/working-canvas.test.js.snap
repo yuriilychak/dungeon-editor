@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`working-canvas test working-canvas snapshot 1`] = `"<canvas class=\\"working-canvas-root\\"></canvas>"`;

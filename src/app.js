@@ -1,20 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 import theme from "./Theme";
 
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import { withStyles } from "@material-ui/core/styles";
+import {MuiThemeProvider} from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
 import uiConst from "./constant/uiConst";
 import BottomMenu from "./bottom-menu/component/bottom-menu";
 
-import { TopMenu } from "./top-menu";
-import { Library } from "./library";
-import { Properties } from "./properties";
-import { NewProjectDialog } from "./new-project-dialog";
-import { ExportProjectDialog } from "./export-project-dialog";
-import { RenameFileDialog } from "./rename-file-dialog";
-import { WorkingArea } from "./working-area";
+import {TopMenu} from "./top-menu";
+import {Library} from "./library";
+import {Properties} from "./properties";
+import {NewProjectDialog} from "./new-project-dialog";
+import {ExportProjectDialog} from "./export-project-dialog";
+import {RenameFileDialog} from "./rename-file-dialog";
+import {WorkingArea} from "./working-area";
 
 const styles = theme => ({
     root: {
@@ -50,38 +50,31 @@ const styles = theme => ({
     }
 });
 
-class App extends Component {
-
-  render() {
-      const { classes } = this.props;
-
-      return (
-          <MuiThemeProvider theme={theme}>
-              <div className={classes.root}>
-                  <NewProjectDialog/>
-                  <ExportProjectDialog/>
-                  <RenameFileDialog/>
-                  <TopMenu/>
-                  <div className={classes.grid}>
-                      <Grid container className={classes.fullHeight}>
-                          <Grid item xs={10} className={classes.leftColumn}>
-                              <div className={classes.workingArea}>
-                                  <WorkingArea/>
-                              </div>
-                              <div className={classes.bottomMenu}>
-                                  <BottomMenu/>
-                              </div>
-                          </Grid>
-                          <Grid item xs={2} className={classes.rightColumn}>
-                              <Properties/>
-                              <Library/>
-                          </Grid>
-                      </Grid>
-                  </div>
-              </div>
-          </MuiThemeProvider>
-      );
-  }
-}
+const App = ({classes}) => (
+    <MuiThemeProvider theme={theme}>
+        <div className={classes.root}>
+            <NewProjectDialog/>
+            <ExportProjectDialog/>
+            <RenameFileDialog/>
+            <TopMenu/>
+            <div className={classes.grid}>
+                <Grid container className={classes.fullHeight}>
+                    <Grid item xs={10} className={classes.leftColumn}>
+                        <div className={classes.workingArea}>
+                            <WorkingArea/>
+                        </div>
+                        <div className={classes.bottomMenu}>
+                            <BottomMenu/>
+                        </div>
+                    </Grid>
+                    <Grid item xs={2} className={classes.rightColumn}>
+                        <Properties/>
+                        <Library/>
+                    </Grid>
+                </Grid>
+            </div>
+        </div>
+    </MuiThemeProvider>
+);
 
 export default withStyles(styles)(App);
