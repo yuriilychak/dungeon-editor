@@ -84,6 +84,7 @@ const WorkingArea = ({
                 </Tabs>
             </div>
             <div className="working-area-body">
+                <WorkingCanvas onGetCanvasRef={onGetCanvasRef}/>
                 { !tabsExist && (
                     <div className="working-area-empty-container">
                         <div className="working-area-empty-message">
@@ -91,7 +92,6 @@ const WorkingArea = ({
                         </div>
                     </div>
                 )}
-                <WorkingCanvas onGetCanvasRef={onGetCanvasRef}/>
             </div>
         </div>
     );

@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 import { WorkingArea } from "./component";
 import {selectTab, closeTab} from "./action";
 
+import { WorkingStage } from "../working-stage";
+
 const mapStateToProps = state => state.workingArea;
 
 const mapDispatchToProps = dispatch => ({
@@ -12,13 +14,7 @@ const mapDispatchToProps = dispatch => ({
             dispatch(closeTab(index));
         },
         onGetCanvasRef(ref) {
-            const app = new window.PIXI.Application({
-                view: ref,
-                width: ref.width,
-                height: ref.height,
-                backgroundColor: 0x1099bb,
-                resolution: window.devicePixelRatio || 1
-            });
+            WorkingStage.init(ref);
         }
 });
 
