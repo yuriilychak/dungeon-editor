@@ -22,7 +22,7 @@ export default class NameInput extends Component {
         this.setState({
             projectName: result
         });
-    };
+    }
 
     render() {
         const isError = this.props.isError && this.state.projectName === emptyString;
