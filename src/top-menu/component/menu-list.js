@@ -5,7 +5,8 @@ const styles = theme => ({
     root: {
         backgroundColor: theme.palette.primary.main,
         borderRadius: 0,
-        padding: 0
+        padding: 0,
+        paddingBottom: 8
     }
 });
 

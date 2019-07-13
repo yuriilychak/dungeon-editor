@@ -16,6 +16,7 @@
 }
 
 .app-right-column {
+    background-color: #2a2b2f;
     height: 100%;
     display: inline-block;
 }

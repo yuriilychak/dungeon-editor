@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { useTranslation } from "react-i18next";
 
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
@@ -13,7 +13,18 @@ import MenuBackground from "./menu-background";
 const MenuSection = props => {
     const { t } = useTranslation();
     const {locale, onOpen, onClose, onSelectSection, isOpen, sections, id, toggledSections} = props;
-    let anchorElement = null;
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    function handleClick(event) {
+        setAnchorEl(event.currentTarget);
+        onOpen(id);
+    }
+
+    function handleClose() {
+        setAnchorEl(null);
+        onClose();
+    }
+
     const sectionComponents = sections.map(section =>
         (<MenuItem
             onClick={ onSelectSection }
@@ -27,20 +38,18 @@ const MenuSection = props => {
     return (
         <div>
             <Button
-                buttonRef={node => {
-                    anchorElement = node;
-                }}
                 aria-owns={isOpen ? growId : undefined}
                 aria-haspopup="true"
-                onClick={() => { onOpen(id) }}
+                onClick={handleClick}
             >
                {t(locale)}
             </Button>
             <Popper
                 placement="bottom-start"
                 open={isOpen}
-                anchorEl={anchorElement}
-                transition disablePortal
+                anchorEl={anchorEl}
+                transition
+                disablePortal
             >
                 {({ TransitionProps }) => (
                     <Grow
@@ -49,7 +58,7 @@ const MenuSection = props => {
                         style={{ transformOrigin: 'left bottom' }}
                     >
                         <MenuBackground>
-                            <ClickAwayListener onClickAway={onClose}>
+                            <ClickAwayListener onClickAway={handleClose}>
                                 <MenuList>
                                     {sectionComponents}
                                 </MenuList>

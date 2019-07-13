@@ -54,9 +54,20 @@ const theme = createMuiTheme({
         },
         MuiDialogTitle: {
             root: {
+                padding: "8px 16px",
                 "& h6": {
                     color: contrastText
                 }
+            }
+        },
+        MuiDialogActions: {
+            root: {
+                padding: "8px 16px"
+            }
+        },
+        MuiDialogContent: {
+            root: {
+                padding: "8px 16px 16px 16px"
             }
         },
         MuiInputLabel: {
@@ -163,12 +174,11 @@ const theme = createMuiTheme({
                 minHeight: 32,
                 backgroundColor: backDark,
                 borderBottom: "2px solid #595a5f",
-                borderRadius: 0
-            },
-            expanded: {
-                margin: 0
-            },
-
+                borderRadius: 0,
+                "&$expanded": {
+                    margin: 0
+                }
+            }
         },
         MuiExpansionPanelSummary: {
             root: {
@@ -183,10 +193,6 @@ const theme = createMuiTheme({
                 margin: "4px 0px",
                 "&$expanded": {
                     margin: "4px 0px"
-                },
-                "& > :last-child": {
-                    paddingRight: 0,
-                    marginRight: 16
                 }
             },
             expandIcon: {

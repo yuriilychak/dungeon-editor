@@ -10,14 +10,7 @@ const styles = theme => (
             height: (constant.TITLE_HEIGHT - padding),
             minHeight: (constant.TITLE_HEIGHT - padding),
             padding: 5,
-            minWidth: "100px"
-        },
-        labelContainer: {
-            height: "100%",
-            padding: 0,
-            color: theme.palette.primary.contrastText
-        },
-        label: {
+            minWidth: "100px",
             color: theme.palette.primary.contrastText
         }
     }

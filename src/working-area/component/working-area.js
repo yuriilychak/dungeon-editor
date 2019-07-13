@@ -19,14 +19,10 @@ const useTabStyles = makeStyles({
         minHeight: 24,
         marginRight: 2,
         backgroundColor: "#3f4045",
-        "@media (min-width: 960px)": {
-            minWidth: 60
-        }
-    },
-    labelContainer: {
         padding: "0 8px",
         "@media (min-width: 960px)": {
-            padding: "0 8px"
+            padding: "0 8px",
+            minWidth: 60
         }
     }
 });
@@ -92,6 +88,13 @@ const WorkingArea = ({
                         </div>
                     </div>
                 )}
+                {
+                    !tabsExist && (
+                        <div className="working-area-control-panel">
+                            <input type="range" className="slider" min="0" max="11"/>
+                        </div>
+                    )
+                }
             </div>
         </div>
     );
