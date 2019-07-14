@@ -5,5 +5,33 @@
   "locales": {
     "emptyTitle": "WorkingArea_EmptyTitle",
     "emptyMessage": "WorkingArea_EmptyMessage"
+  },
+  "zoom": {
+    "step": 0.25,
+    "min": 0.25,
+    "max": 4,
+    "marks": [
+      {
+        "value": 0.25,
+        "label": "25%"
+      },
+      {
+        "value": 1,
+        "label": "100%"
+      },
+      {
+        "value": 2,
+        "label": "200%"
+      },
+      {
+        "value": 3,
+        "label": "300%"
+      },
+      {
+        "value": 4,
+        "label": "400%"
+      }
+    ]
   }
+
 }

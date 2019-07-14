@@ -239,6 +239,40 @@ const theme = createMuiTheme({
                 color: contrastText,
                 fontSize: 14
             }
+        },
+        MuiSlider: {
+            root: {
+                margin: "0 12px"
+            },
+            marked: {
+                marginBottom: 8
+            },
+            track: {
+                backgroundColor: "#f4385b"
+            },
+            rail: {
+                backgroundColor: "#a52941"
+            },
+            markLabel: {
+                top: 18,
+                fontSize: 10,
+                color: disabledText
+            },
+            markLabelActive: {
+                color: contrastText
+            },
+            mark: {
+                backgroundColor: backDark
+            },
+            markActive: {
+                backgroundColor: backDark
+            },
+            thumb: {
+                backgroundColor: backLight
+            },
+            valueLabel: {
+                fontSize: 10
+            }
         }
     }
 });

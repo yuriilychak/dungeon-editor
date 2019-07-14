@@ -3,6 +3,20 @@ import { EditScene } from "./edit-scene";
 export default {
 
     /**
+     * @type {EditScene}
+     * @private
+     */
+
+    _editScene: null,
+
+    /**
+     * @type {?Function}
+     * @private
+     */
+
+    _zoomCallback: null,
+
+    /**
      * @function
      * @public
      * @param {HTMLCanvasElement} view
@@ -21,7 +35,9 @@ export default {
                 window.mCore.launcher.app.loader
                     .add('static/assets/defaultAssets.json')
                     .load(() => {
-                        window.mCore.launcher.runScene(EditScene.create());
+                        this._editScene = EditScene.create();
+                        this._editScene.zoomCallback = this._zoomCallback;
+                        window.mCore.launcher.runScene(this._editScene);
 
                         this._onWindowResize();
                         window.addEventListener("resize", this._onWindowResize.bind(this));
@@ -35,5 +51,20 @@ export default {
         const { view } = window.mCore.launcher.app;
         const { offsetWidth, offsetHeight } = view.parentNode;
         window.mCore.launcher.resize(offsetWidth, offsetHeight, true);
+    },
+
+    setZoom(value = 1) {
+        if (this._editScene === null) {
+            return;
+        }
+        this._editScene.zoom = value;
+    },
+
+    setZoomCallback(callback) {
+        this._zoomCallback = callback;
+        if (this._editScene === null) {
+            return;
+        }
+        this._editScene.zoomCallback = this._zoomCallback;
     }
 }

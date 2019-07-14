@@ -1,10 +1,13 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useTranslation} from "react-i18next";
 
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import Slider from '@material-ui/core/Slider';
 import {makeStyles} from "@material-ui/styles";
+import Cached from "@material-ui/icons/Cached";
 
+import {ToolButton} from "../../common-ui/tool-button";
 import {WorkingCanvas} from "./working-canvas";
 import {TabContent} from "./tab-content";
 
@@ -34,6 +37,8 @@ const useTabsStyles = makeStyles({
 });
 
 const WorkingArea = ({
+                         zoom,
+                         zoomValue,
                          emptyIndex,
                          locales,
                          emptyIcon,
@@ -42,10 +47,15 @@ const WorkingArea = ({
                          selectedTab,
                          onSelectTab,
                          onGetCanvasRef,
-                         onCloseTab
+                         onCloseTab,
+                         onZoomChange,
+                         onTransformReset,
+                         onComponentMount
                      }) => {
     const classes = useTabStyles();
     const {t} = useTranslation();
+
+    useEffect(onComponentMount, []);
 
     const createTab = (index, title, icon) => (
         <Tab
@@ -65,8 +75,11 @@ const WorkingArea = ({
     const tabsExist = tabs.length !== 0;
 
     const tabElements = tabsExist ?
-        tabs.map(({ title, sectionId }, index) => createTab(index, title, `${icons[sectionId]}_element`)) :
+        tabs.map(({title, sectionId}, index) => createTab(index, title, `${icons[sectionId]}_element`)) :
         createTab(emptyIndex, t(locales.emptyTitle), emptyIcon);
+
+    const getAriaValueText = value => `${value * 100}%`;
+    const valueLabelFormat = value => `${value * 100}%`;
 
     return (
         <div className="working-area-root">
@@ -81,7 +94,7 @@ const WorkingArea = ({
             </div>
             <div className="working-area-body">
                 <WorkingCanvas onGetCanvasRef={onGetCanvasRef}/>
-                { !tabsExist && (
+                {!tabsExist && (
                     <div className="working-area-empty-container">
                         <div className="working-area-empty-message">
                             {t(locales.emptyMessage)}
@@ -89,9 +102,21 @@ const WorkingArea = ({
                     </div>
                 )}
                 {
-                    !tabsExist && (
+                    tabsExist && (
                         <div className="working-area-control-panel">
-                            <input type="range" className="slider" min="0" max="11"/>
+                            <ToolButton
+                                Icon={Cached}
+                                onClick={onTransformReset}
+                            />
+                            <Slider
+                                {...zoom}
+                                value={zoomValue}
+                                valueLabelFormat={valueLabelFormat}
+                                getAriaValueText={getAriaValueText}
+                                onChange={onZoomChange}
+                                aria-labelledby="discrete-slider"
+                                valueLabelDisplay="auto"
+                            />
                         </div>
                     )
                 }

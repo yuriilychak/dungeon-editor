@@ -61,6 +61,13 @@ export default class StageGrid extends mCore.view.ComponentContainer {
 
         this._background = new PIXI.TilingSprite(backgroundTexture, width, height);
 
+        /**
+         * @type {?Function}
+         * @private
+         */
+
+        this._zoomCallback = null;
+
 
         this.addChild(this._background);
 
@@ -78,9 +85,21 @@ export default class StageGrid extends mCore.view.ComponentContainer {
 
         this._cordY = this._createCord(this._cordSize, height);
 
+        this.interactionManager.interactive = true;
+        this.interactive = true;
+        this.interactionManager.eventDragStart = "STAGE_GRID.DRAG";
+        this.interactionManager.eventDrag = "STAGE_GRID.DRAG";
+
+        this.listenerManager.addEventListener("STAGE_GRID.DRAG", this._onDrag);
+        this.listenerManager.addEventListener("STAGE_GRID.DRAG", this._onDrag);
         this.listenerManager.addEventListener(SYSTEM_EVENT.RESIZE, this._onResize);
         this.listenerManager.addEventListener(SYSTEM_EVENT.WHEEL, this._onWheel);
     }
+
+    /**
+     * PRIVATE METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @method
@@ -104,20 +123,12 @@ export default class StageGrid extends mCore.view.ComponentContainer {
     }
 
     _onWheel(event) {
-
         const offset = this._zoom - event.data.deltaY / this._wheelThreshold;
+        this.zoom = event.data.deltaY < 0 ? Math.min(offset, 4) : Math.max(offset, 0.25);
 
-
-        if (event.data.deltaY < 0) {
-            this._zoom = Math.min(offset, 4);
+        if (this._zoomCallback !== null) {
+            this._zoomCallback(this.zoom);
         }
-        else {
-            this._zoom = Math.max(offset, 0.25);
-        }
-
-        this._refreshBackPos();
-
-        this._background.tileScale.set(this._zoom, this._zoom);
     }
 
     _onResize() {
@@ -157,5 +168,51 @@ export default class StageGrid extends mCore.view.ComponentContainer {
             calculateOffset(this._screenOffset.x, cellSize),
             calculateOffset(this._screenOffset.y, cellSize)
         );
+    }
+
+    _onDrag(event) {
+        console.log("DRAG");
+    }
+
+    /**
+     * PROPERTIES
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+
+
+    /**
+     * @public
+     * @returns {number}
+     */
+
+    get zoom() {
+        return this._zoom;
+    }
+
+    set zoom(value) {
+        if (this._zoom === value) {
+            return;
+        }
+
+        this._zoom = value;
+        this._refreshBackPos();
+        this._background.tileScale.set(this._zoom, this._zoom);
+    }
+
+    /**
+     * @public
+     * @returns {?Function}
+     */
+
+    get zoomCallback() {
+        return this._zoomCallback;
+    }
+
+    set zoomCallback(value) {
+        if (this._zoomCallback === value) {
+            return;
+        }
+        this._zoomCallback = value;
     }
 }

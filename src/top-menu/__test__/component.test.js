@@ -8,11 +8,19 @@ import MenuSection from "../component/menu-section";
 import Toolbar from "../component/toolbar";
 import TopMenu from "../component/top-menu";
 import React from "react";
-import { initialState } from '../reducer';
-import { createMount } from '@material-ui/core/test-utils';
+import { initialState } from "../reducer";
+import { createMount } from "@material-ui/core/test-utils";
 
-describe('top-menu test',()=> {
-    it ( 'top-menu snapshot', () => {
+document.createRange = jest.fn();
+
+jest.mock("@material-ui/core/Popper", () => ({children}) => (
+    <div>
+        {children}
+    </div>
+));
+
+describe("top-menu test",()=> {
+    it ( "top-menu snapshot", () => {
         const wrapper = createMount()(
             <TopMenu {...initialState} />
         );
@@ -20,7 +28,7 @@ describe('top-menu test',()=> {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it ( 'Button snapshot', () => {
+    it ( "Button snapshot", () => {
         const wrapper = createMount()(
             <Button>test</Button>
         );
@@ -28,7 +36,7 @@ describe('top-menu test',()=> {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it ( 'AppBar snapshot', () => {
+    it ( "AppBar snapshot", () => {
         const wrapper = createMount()(
             <AppBar>
                 <Button>test1</Button>
@@ -40,7 +48,7 @@ describe('top-menu test',()=> {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it ( 'ToolBar snapshot', () => {
+    it ( "ToolBar snapshot", () => {
         const wrapper = createMount()(
             <Toolbar>
                 <Button>test1</Button>
@@ -52,7 +60,7 @@ describe('top-menu test',()=> {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it ( 'MenuBackground snapshot', () => {
+    it ( "MenuBackground snapshot", () => {
         const wrapper = createMount()(
             <MenuBackground>
                 <Button>test1</Button>
@@ -63,7 +71,7 @@ describe('top-menu test',()=> {
 
         expect(wrapper.html()).toMatchSnapshot();
     });
-    it ( 'MenuList snapshot', () => {
+    it ( "MenuList snapshot", () => {
         const wrapper = createMount()(
             <MenuList>
                 <Button>test1</Button>
@@ -75,7 +83,7 @@ describe('top-menu test',()=> {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    describe('MenuItem test',() => {
+    describe("MenuItem test",() => {
         const props = {
             onClick: jest.fn(),
             id: 0,
@@ -90,11 +98,11 @@ describe('top-menu test',()=> {
             />
         );
 
-        it ( 'snapshot default', () => {
+        it ( "snapshot default", () => {
             expect(wrapper.html()).toMatchSnapshot();
         });
 
-        it ( 'snapshot selected', () => {
+        it ( "snapshot selected", () => {
             const selectedProps = {
                 ...props,
                 isSelected: true
@@ -107,7 +115,7 @@ describe('top-menu test',()=> {
             expect(selectedWrapper.html()).toMatchSnapshot();
         });
 
-        it ( 'click', () => {
+        it ( "click", () => {
             jest.spyOn(wrapper.props(), "onClick");
 
             wrapper.find("li").first().simulate("click");
@@ -119,7 +127,8 @@ describe('top-menu test',()=> {
         });
     });
 
-    describe('MenuSection test', () => {
+    describe("MenuSection test", () => {
+        const onOpen = jest.fn();
         const props = {
             "id": 1,
             "locale": "TopMenu_File",
@@ -162,7 +171,7 @@ describe('top-menu test',()=> {
                     "isToggle": false
                 }
             ],
-            onOpen: jest.fn(),
+            onOpen,
             onClose: jest.fn(),
             toggledSections: [3],
             isOpen: true
@@ -174,11 +183,11 @@ describe('top-menu test',()=> {
             />
         );
 
-        it ('snapshot open', () => {
+        it ("snapshot open", () => {
             expect(wrapper.html()).toMatchSnapshot();
         });
 
-        it ('snapshot closed', () => {
+        it ("snapshot closed", () => {
             const closedProps = {
                 ...props,
                 isOpen: false
@@ -191,13 +200,11 @@ describe('top-menu test',()=> {
             expect(closedWrapper.html()).toMatchSnapshot();
         });
 
-        it ('click', () => {
-            jest.spyOn(wrapper.props(), "onOpen");
+        it ("click", () => {
+            wrapper.find("button").at(0).simulate("click");
 
-            wrapper.find("button").first().simulate("click");
-
-            expect(wrapper.props().onOpen).toHaveBeenCalled();
-            expect(wrapper.props().onOpen).toHaveBeenCalledWith(1);
+            expect(onOpen).toHaveBeenCalled();
+            expect(onOpen).toHaveBeenCalledWith(1);
         });
     });
 });

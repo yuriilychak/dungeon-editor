@@ -1,13 +1,13 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Popper from '@material-ui/core/Popper';
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
+import Popper from "@material-ui/core/Popper";
 
 import Button from "./button";
-import MenuItem from './menu-item';
-import MenuList from './menu-list';
+import MenuItem from "./menu-item";
+import MenuList from "./menu-list";
 import MenuBackground from "./menu-background";
 
 const MenuSection = props => {
@@ -55,7 +55,7 @@ const MenuSection = props => {
                     <Grow
                         {...TransitionProps}
                         id={growId}
-                        style={{ transformOrigin: 'left bottom' }}
+                        style={{ transformOrigin: "left bottom" }}
                     >
                         <MenuBackground>
                             <ClickAwayListener onClickAway={handleClose}>

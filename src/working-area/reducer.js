@@ -4,7 +4,8 @@ import StaticData from "./data/index.json";
 export const initialState = {
     ...StaticData,
     tabs: [],
-    selectedTab: 0
+    selectedTab: 0,
+    zoomValue: 1
 };
 
 const actionHandlers = {
@@ -54,7 +55,15 @@ const actionHandlers = {
             tabs: tabs.filter((tab, index) => index !== payload),
             selectedTab
         };
-    }
+    },
+    [STATE.ZOOM_CHANGE]: (state, action) => ({
+        ...state,
+        zoomValue: action.payload
+    }),
+    [STATE.TRANSFORM_RESET]: state => ({
+        ...state,
+        zoomValue: 1
+    })
 };
 
 export default function workingAreaReducer(state = initialState, action) {
