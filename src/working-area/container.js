@@ -26,6 +26,7 @@ const mapDispatchToProps = dispatch => ({
     onTransformReset() {
         dispatch(transformReset());
         WorkingStage.setZoom();
+        WorkingStage.resetPosition();
     }
 });
 
