@@ -66,7 +66,7 @@ export default {
     },
 
     setZoom(value = 1) {
-        mCore.eventDispatcher.dispatch(EVENT.ZOOM_CHANGE, this, value);
+        mCore.eventDispatcher.dispatch(EVENT.ZOOM_SET, this, value);
     },
 
     resetPosition() {

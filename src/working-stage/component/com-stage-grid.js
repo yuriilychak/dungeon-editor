@@ -1,7 +1,7 @@
 import { EVENT } from "../enumerator";
 
 const { mCore, PIXI } = window;
-const { math } = mCore.util;
+const { math, geometry } = mCore.util;
 const { NUMBER_TYPE } =  mCore.enumerator;
 
 function calculateOffset(size, cellSize) {
@@ -9,6 +9,9 @@ function calculateOffset(size, cellSize) {
 }
 
 export default class ComStageGrid extends mCore.component.ui.ComUI {
+    /**
+     * @constructor
+     */
     constructor() {
         super("ComStageGrid");
 
@@ -25,13 +28,6 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
          */
 
         this._cordSize = 2;
-
-        /**
-         * @type {number}
-         * @private
-         */
-
-        this._wheelThreshold = 2000;
 
         /**
          * @type {number}
@@ -73,48 +69,40 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
          * @private
          */
 
-        this._dragPosition = mCore.geometry.Point.create(0, 0, NUMBER_TYPE.INT_32);
+        this._offset = mCore.geometry.Point.create(0, 0);
 
         /**
-         * @type {mCore.geometry.Point}
+         * @type {?mCore.ui.Widget}
          * @private
          */
 
-        this._offset = mCore.geometry.Point.create(0, 0, NUMBER_TYPE.INT_32);
-
-        this.listenInteractions = true;
+        this._workingLayer = null;
     }
 
     onAdd(owner) {
         super.onAdd(owner);
 
-        const { INTERACTIVE_EVENT } = mCore.enumerator.ui;
         const { width, height } = mCore.launcher.app.screen;
         const { SYSTEM_EVENT } = mCore.enumerator.event;
+
+
+        this._workingLayer = this.getChildView("grid");
 
         const backgroundTexture = PIXI.Texture.from("default_background");
         backgroundTexture.baseTexture.mipmap = false;
 
-        owner.interactive = true;
-        owner.interactionManager.interactive = true;
-
         this._background = new PIXI.TilingSprite(backgroundTexture, width, height);
 
-        owner.addChild(this._background);
+        this._workingLayer.addChild(this._background);
 
         this._backSize = backgroundTexture.width;
         this._screenOffset.set(math.divPowTwo(width), math.divPowTwo(height));
         this._cordX = this._createCord(width, this._cordSize);
         this._cordY = this._createCord(this._cordSize, height);
 
-        this._addInteractiveEvent(INTERACTIVE_EVENT.DRAG_START, this._onDragStart);
-        this._addInteractiveEvent(INTERACTIVE_EVENT.DRAG, this._onDrag);
-        this._addInteractiveEvent(INTERACTIVE_EVENT.DRAG_FINIS, this._onDragFinish);
-
         this.listenerManager.addEventListener(SYSTEM_EVENT.RESIZE, this._onResize);
-        this.listenerManager.addEventListener(SYSTEM_EVENT.WHEEL, this._onWheel);
         this.listenerManager.addEventListener(EVENT.ZOOM_CHANGE, this._onZoomChange);
-        this.listenerManager.addEventListener(EVENT.RESET_POSITION, this._onResetPosition);
+        this.listenerManager.addEventListener(EVENT.OFFSET_CHANGE, this._onOffsetChane);
     }
 
     /**
@@ -136,43 +124,19 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
          */
         const result = mCore.view.ComponentSprite.create("default_simpleRect");
         result.tint = 0x000000;
-        result.anchor.set(0.5, 0.5);
-        this._refreshCordTransform(result, width, height);
-        this.owner.addChild(result);
+        result.anchor.set(0.5);
+        result.width = width;
+        result.height = height;
+        result.position.copyFrom(this._screenOffset);
+        this.owner.addChildAt(result, 2);
 
         return result;
     }
 
-    _addInteractiveEvent(eventId, callback) {
-        const event = `${this.name}.INTERACTIVE_EVENT_${eventId}`;
-        this.owner.interactionManager.updateInteractiveEvent(eventId, event);
-        this.listenerManager.addEventListener(event, callback);
-    }
-
-    _onDragStart({ data }) {
-        this._dragPosition.set(data.data.global.x, data.data.global.y);
-    }
-
-    _onDrag({ data }) {
-        this._offset.x += Math.round(-(this._dragPosition.x - data.data.global.x));
-        this._offset.y += Math.round(-(this._dragPosition.y - data.data.global.y));
-        this._dragPosition.set(data.data.global.x, data.data.global.y);
-
-        this._recalculatePosition();
-    }
-
-    _onDragFinish(event) {
-        this._dragPosition.set(0, 0);
-    }
-
-    _onWheel(event) {
-        const offset = mCore.util.math.round((this._zoom - event.data.deltaY / this._wheelThreshold) * 100) / 100;
-
-        this.listenerManager.dispatchEvent(
-            EVENT.ZOOM_CHANGE,
-            event.data.deltaY < 0 ? Math.min(offset, 4) : Math.max(offset, 0.25)
-        );
-    }
+    /**
+     * @method
+     * @private
+     */
 
     _onResize() {
         const { width, height } = mCore.launcher.app.view;
@@ -180,13 +144,12 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         this._background.width = width;
         this._background.height = height;
 
-        this.width = width;
-        this.height = height;
-
         this._screenOffset.set(
             math.divPowTwo(width),
             math.divPowTwo(height)
         );
+
+        this._background.position.copyFrom(geometry.pNeg(this._screenOffset));
 
         this._cordX.width = width;
         this._cordY.height = height;
@@ -194,53 +157,44 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         this._recalculatePosition();
     }
 
-    _onResetPosition() {
-        this._offset.set(0, 0);
-
-        this._recalculatePosition();
-    }
+    /**
+     * @method
+     * @param {mCore.eventDispatcher.EventModel} data
+     * @private
+     */
 
     _onZoomChange({ data }) {
-
-        if (this._zoom === data) {
-            return;
-        }
-
         this._zoom = data;
+        this._background.tileScale.set(this._zoom);
 
         this._recalculatePosition();
-
-        this._background.tileScale.set(this._zoom, this._zoom);
-    }
-
-    _recalculatePosition() {
-        this._refreshBackPos();
-        this._cordX.x = this._screenOffset.x;
-        this._cordX.y = this._offset.y + this._screenOffset.y;
-        this._cordY.y = this._screenOffset.y;
-        this._cordY.x = this._offset.x + this._screenOffset.x;
     }
 
     /**
      * @method
-     * @param {mCore.view.ComponentSprite} cord
-     * @param {number} width
-     * @param {number} height
+     * @param {mCore.eventDispatcher.EventModel} data
      * @private
      */
 
-    _refreshCordTransform(cord, width, height) {
-        cord.width = width;
-        cord.height = height;
-        cord.x = this._screenOffset.x;
-        cord.y = this._screenOffset.y;
+    _onOffsetChane({ data }) {
+        this._offset.copyFrom(data);
+        this._recalculatePosition();
     }
 
-    _refreshBackPos() {
+    /**
+     * @method
+     * @private
+     */
+
+    _recalculatePosition() {
         const cellSize = this._backSize * this._zoom;
         this._background.tilePosition.set(
             calculateOffset(this._screenOffset.x + this._offset.x, cellSize),
             calculateOffset(this._screenOffset.y + this._offset.y, cellSize)
         );
+        this._cordX.x = 0;
+        this._cordX.y = this._offset.y;
+        this._cordY.y = 0;
+        this._cordY.x = this._offset.x;
     }
 }
