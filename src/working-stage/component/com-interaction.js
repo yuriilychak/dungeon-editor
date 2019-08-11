@@ -1,11 +1,18 @@
-import { EVENT } from "../enumerator";
+import { EVENT, MOUSE_BUTTON } from "../enumerator";
 
 const { mCore } = window;
 const { math, geometry } = mCore.util;
 const { NUMBER_TYPE } =  mCore.enumerator;
 
+function isRightButton(data) {
+    return data.data.originalEvent.buttons === MOUSE_BUTTON.RIGHT;
+}
+
 
 export default class ComInteraction extends mCore.component.ui.ComUI {
+    /**
+     * @constructor
+     */
     constructor() {
         super('ComInteraction');
 
@@ -137,18 +144,23 @@ export default class ComInteraction extends mCore.component.ui.ComUI {
     }
 
     _onDragStart({ data }) {
-        this._dragPosition.copyFrom(data.data.global);
+        if (isRightButton(data)) {
+            this._dragPosition.copyFrom(data.data.global);
+        }
     }
 
     _onDragMove({ data }) {
-
-        geometry.pAdd(this._offset, geometry.pSub(data.data.global, this._dragPosition), true);
-        this._dragPosition.copyFrom(data.data.global);
+        if (isRightButton(data)) {
+            geometry.pAdd(this._offset, geometry.pSub(data.data.global, this._dragPosition), true);
+            this._dragPosition.copyFrom(data.data.global);
+        }
     }
 
-    _onDragFinish() {
-        this._dragPosition.set(0, 0);
-        geometry.pRound(this._offset, true);
+    _onDragFinish({ data }) {
+        if (isRightButton(data)) {
+            this._dragPosition.set(0, 0);
+            geometry.pRound(this._offset, true);
+        }
     }
 
     _onOffsetChange() {

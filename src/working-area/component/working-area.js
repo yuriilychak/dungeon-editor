@@ -93,8 +93,11 @@ const WorkingArea = ({
                 </Tabs>
             </div>
             <div className="working-area-body">
-                <WorkingCanvas onGetCanvasRef={onGetCanvasRef}/>
-                {tabsExist && (
+                <WorkingCanvas
+                    onGetCanvasRef={onGetCanvasRef}
+                    hidden={!tabsExist}
+                />
+                {!tabsExist && (
                     <div className="working-area-empty-container">
                         <div className="working-area-empty-message">
                             {t(locales.emptyMessage)}
@@ -102,7 +105,7 @@ const WorkingArea = ({
                     </div>
                 )}
                 {
-                    !tabsExist && (
+                    tabsExist && (
                         <div className="working-area-control-panel">
                             <ToolButton
                                 Icon={Cached}

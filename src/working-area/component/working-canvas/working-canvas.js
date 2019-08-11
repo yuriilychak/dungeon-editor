@@ -1,14 +1,22 @@
-import React, { memo } from "react";
-import { func } from "prop-types";
+import React, {memo} from "react";
+import {func, bool} from "prop-types";
+import classNames from "classnames";
 
 import "./working-canvas.css"
 
-const WorkingCanvas  = ({onGetCanvasRef}) => (
-    <canvas className="working-canvas-root" ref={onGetCanvasRef}/>
+const WorkingCanvas = ({onGetCanvasRef, hidden}) => (
+    <canvas
+        className={classNames(
+            "working-canvas-root",
+            {"working-canvas-hidden": hidden}
+        )}
+        ref={onGetCanvasRef}
+    />
 );
 
 WorkingCanvas.propTypes = {
-    onGetCanvasRef: func.isRequired
+    onGetCanvasRef: func.isRequired,
+    hidden: bool
 };
 
 export default memo(WorkingCanvas);
