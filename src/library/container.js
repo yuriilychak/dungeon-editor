@@ -39,6 +39,7 @@ const mapDispatchToProps = dispatch => ({
         ProjectData.export();
     },
     onAddFile: sectionId => {
+        console.log(sectionId);
     },
     onPublishProject: () => {
     },

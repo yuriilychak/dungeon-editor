@@ -21,7 +21,7 @@ import STATE from "./state";
 
 export const initialState = {
     ...StaticData,
-    files: [[], [], [], [], []]
+    files: [[], [], [], [], [], [], []]
 };
 
 /**
@@ -79,7 +79,7 @@ const actionHandlers = {
 
         return {...state, files};
     },
-    [STATE.CLEAR]: state => ({...state, files: [[], [], [], [], []]})
+    [STATE.CLEAR]: state => ({...state, files: [[], [], [], [], [], [], []]})
 };
 
 function refreshParentIds(files, parentId = -1) {

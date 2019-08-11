@@ -10,10 +10,13 @@ import {
     FontComponent,
     ElementComponent,
     ParticleComponent,
+    SoundComponent,
+    SkeletonComponent,
     TextureComponent,
-    SkeletonComponent
+    TileMapComponent
 } from "./component";
 import CONST from "./const";
+import { SECTION_ID } from "../enum";
 
 const ProjectData = {
     /**
@@ -93,11 +96,13 @@ const ProjectData = {
 
     init() {
         this._components = [
-            new ElementComponent("elements", 0, false),
-            new FontComponent("fonts", 1, true),
-            new ParticleComponent("particles", 2, false),
-            new SkeletonComponent("skeletons", 3, true),
-            new TextureComponent("textures", 4, true)
+            new ElementComponent("elements", SECTION_ID.ELEMENT, false),
+            new FontComponent("fonts", SECTION_ID.FONT, true),
+            new ParticleComponent("particles", SECTION_ID.PARTICLE, false),
+            new SkeletonComponent("skeletons", SECTION_ID.SKELETON, true),
+            new SoundComponent("sound", SECTION_ID.SOUND, false),
+            new TextureComponent("textures", SECTION_ID.TEXTURE, true),
+            new TileMapComponent("tile_map", SECTION_ID.TILE_MAP, false)
         ];
 
         this._atlases = [ this._defaultAtlas ];

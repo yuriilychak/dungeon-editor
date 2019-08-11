@@ -22,8 +22,18 @@
     },
     {
       "id": 4,
+      "locale": "Library_Sound",
+      "icon":"sound"
+    },
+    {
+      "id": 5,
       "locale": "Library_Textures",
       "icon": "texture"
+    },
+    {
+      "id": 6,
+      "locale": "Library_TileMap",
+      "icon": "tile_map"
     }
   ],
   "locales": {
