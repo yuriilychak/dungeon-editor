@@ -1,0 +1,17 @@
+{
+  "sectionLocale": {
+    "-1": "",
+    "0": "NewFileDialog_Element",
+    "2": "NewFileDialog_Particle",
+    "6": "NewFileDialog_TileMap"
+  },
+  "locale": {
+    "buttonCancel": "NewFileDialog_Cancel",
+    "buttonSubmit": "NewFileDialog_Submit",
+    "contentText": "NewFileDialog_ContentText",
+    "contentTitle": "NewFileDialog_ContentTitle",
+    "inputError": "NewFileDialog_InputError",
+    "inputTitle": "NewFileDialog_InputTitle"
+  },
+  "maxNameLength": 20
+}

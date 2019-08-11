@@ -10,6 +10,7 @@ import {TopMenu} from "./top-menu";
 import {Library} from "./library";
 import {Properties} from "./properties";
 import {NewProjectDialog} from "./new-project-dialog";
+import {NewFileDialog} from "./new-file-dialog";
 import {ExportProjectDialog} from "./export-project-dialog";
 import {RenameFileDialog} from "./rename-file-dialog";
 import {WorkingArea} from "./working-area";
@@ -20,6 +21,7 @@ const App = () => (
     <MuiThemeProvider theme={theme}>
         <div className="app-root">
             <NewProjectDialog/>
+            <NewFileDialog/>
             <ExportProjectDialog/>
             <RenameFileDialog/>
             <TopMenu/>

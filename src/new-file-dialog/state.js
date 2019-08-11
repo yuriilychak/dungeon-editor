@@ -1,0 +1,4 @@
+export default {
+    CLOSE_POPUP: "NEW_FILE.CLOSE_POPUP",
+    OPEN_POPUP: "NEW_FILE.OPEN_POPUP"
+};

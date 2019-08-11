@@ -3,9 +3,11 @@ import {Library} from "./component";
 import {ProjectData} from "../project-data";
 import {showExportProjectDialog} from "../export-project-dialog/action";
 import {showRenameFileDialog} from "../rename-file-dialog/action";
+import {showNewFileDialog} from "../new-file-dialog/action";
 import {selectLibraryElement, deleteLibraryElement} from "../properties/action";
 import {removeFile} from "./action";
 import * as LibraryActions from "./action";
+import { SECTION_ID } from "../enum";
 
 const mapStateToProps = state => state.library;
 
@@ -16,8 +18,8 @@ const mapDispatchToProps = dispatch => ({
             dispatch(deleteLibraryElement(fileId, sectionId));
         });
     },
-    onAddFiles: files => {
-        ProjectData.addFiles(files);
+    onAddFiles: () => {
+        ProjectData.addFiles();
     },
     onDropFiles: files => {
         ProjectData.importFiles(files);
@@ -39,7 +41,15 @@ const mapDispatchToProps = dispatch => ({
         ProjectData.export();
     },
     onAddFile: sectionId => {
-        console.log(sectionId);
+        if (
+            sectionId === SECTION_ID.ELEMENT ||
+            sectionId === SECTION_ID.PARTICLE ||
+            sectionId === SECTION_ID.TILE_MAP
+        ) {
+            dispatch(showNewFileDialog(sectionId));
+        } else {
+            ProjectData.addFiles();
+        }
     },
     onPublishProject: () => {
     },

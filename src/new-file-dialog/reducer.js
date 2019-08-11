@@ -2,14 +2,21 @@ import STATE from "./state";
 import StaticData from "./data/index.json";
 
 export const initialState = {
+    sectionId: -1,
     staticData: StaticData,
     isPopupOpen: false
 };
 
 const actionHandlers = {
-    [STATE.CHANGE_ACTIVITY]: (state, action) => ({
-            ...state,
-            isPopupOpen: action.payload
+    [STATE.OPEN_POPUP]: (state, action) => ({
+        ...state,
+        sectionId: action.payload,
+        isPopupOpen: true
+    }),
+    [STATE.CLOSE_POPUP]: state => ({
+        ...state,
+        sectionId: -1,
+        isPopupOpen: false
     })
 };
 
