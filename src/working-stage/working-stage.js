@@ -1,5 +1,5 @@
 import { EditScene } from "./edit-scene";
-import { EVENT } from "./enumerator";
+import { EVENT } from "./enum";
 
 const { mCore } = window;
 

@@ -23,6 +23,11 @@ const theme = createMuiTheme({
         fontFamily: "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
     },
     overrides: {
+        MuiPaper: {
+            rounded: {
+                borderRadius: 0
+            }
+        },
         MuiTypography: {
             root: {
                 userSelect: "none"
@@ -272,6 +277,13 @@ const theme = createMuiTheme({
             },
             valueLabel: {
                 fontSize: 10
+            }
+        },
+        MuiList: {
+            root: {
+                borderRadius: 0,
+                backgroundColor: backLight,
+                color: contrastText
             }
         }
     }

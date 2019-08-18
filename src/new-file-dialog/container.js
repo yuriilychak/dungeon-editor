@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { hideNewFileDialog } from './action';
+import { hideNewFileDialog, changeElementType } from './action';
 import ProjectData from '../project-data/project-data';
 import { NewFileDialog } from "./component";
 
@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(hideNewFileDialog());
         },
         onSubmitPopup: projectName => {
+        },
+        onChangeType: typeId => {
+            dispatch(changeElementType((typeId)));
         }
     }
 };

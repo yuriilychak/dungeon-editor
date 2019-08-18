@@ -1,4 +1,4 @@
-import { EVENT } from "../enumerator";
+import { EVENT } from "../enum";
 
 const { mCore, PIXI } = window;
 const { math, geometry } = mCore.util;

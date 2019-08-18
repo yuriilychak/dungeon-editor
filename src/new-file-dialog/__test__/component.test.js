@@ -1,16 +1,17 @@
-import NewFileDialog from "../component/new-project-dialog";
+import NewFileDialog from "../component/new-file-dialog";
 import { initialState } from '../reducer';
 import React from "react";
 import { createMount } from '@material-ui/core/test-utils';
 import "../../Locale";
 
 
-describe('new-project-dialog index test',()=>{
+describe('new-file-dialog index test',()=>{
     const props = {
         ...initialState,
         isPopupOpen: true,
+        sectionId: 1,
         onClosePopup: jest.fn(),
-        onSubmitProject: jest.fn()
+        onSubmitPopup: jest.fn()
     };
 
     const wrapper = createMount()(
@@ -38,29 +39,29 @@ describe('new-project-dialog index test',()=>{
     });
 
     it('Click submit with empty project name', () => {
-        jest.spyOn(wrapper.props(), "onSubmitProject");
+        jest.spyOn(wrapper.props(), "onSubmitPopup");
 
-        const button = wrapper.find('#new-project-submit').first();
+        const button = wrapper.find('#new-file-submit').first();
 
         projectInput.simulate('change', { target: { value: '' } });
         button.simulate('click');
-        expect(wrapper.props().onSubmitProject).not.toHaveBeenCalled();
+        expect(wrapper.props().onSubmitPopup).not.toHaveBeenCalled();
     });
 
     it('Click submit with "test" project name', () => {
-        jest.spyOn(wrapper.props(), "onSubmitProject");
+        jest.spyOn(wrapper.props(), "onSubmitPopup");
 
-        const button = wrapper.find('#new-project-submit').first();
+        const button = wrapper.find('#new-file-submit').first();
 
         projectInput.simulate('change', { target: { value: 'test' } });
         button.simulate('click');
-        expect(wrapper.props().onSubmitProject).toHaveBeenCalled();
+        expect(wrapper.props().onSubmitPopup).toHaveBeenCalled();
     });
 
     it('Click cancel', () => {
         jest.spyOn(wrapper.props(), "onClosePopup");
 
-        const button = wrapper.find('#new-project-reject').first();
+        const button = wrapper.find('#new-file-reject').first();
         button.simulate('click');
         expect(wrapper.props().onClosePopup).toHaveBeenCalled();
     });

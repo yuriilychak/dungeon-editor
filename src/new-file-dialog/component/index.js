@@ -1,1 +1,1 @@
-export { default as NewFileDialog } from "./new-project-dialog";
+export { default as NewFileDialog } from "./new-file-dialog";

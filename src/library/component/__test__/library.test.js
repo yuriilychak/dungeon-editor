@@ -9,7 +9,7 @@ import Library from "../library";
 describe('Library test',() => {
     const defaultProps = {
         ...initialState,
-        files: [[], [], [], [], []],
+        files: [[], [], [], [], [], [], []],
         onAddDirectory: jest.fn(),
         onAddFiles: jest.fn(),
         onAddFile: jest.fn(),

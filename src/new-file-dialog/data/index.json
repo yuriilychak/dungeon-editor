@@ -1,17 +1,128 @@
 {
-  "sectionLocale": {
-    "-1": "",
-    "0": "NewFileDialog_Element",
-    "2": "NewFileDialog_Particle",
-    "6": "NewFileDialog_TileMap"
-  },
+  "sections": [
+    {
+      "id": 0,
+      "locale": "NewFileDialog_Element",
+      "types": [
+        {
+          "id": 2,
+          "locale": "NewFileDialog_Element_Widget"
+        },
+        {
+          "id": 3,
+          "locale": "NewFileDialog_Element_Panel"
+        },
+        {
+          "id": 4,
+          "locale": "NewFileDialog_Element_ImageView"
+        },
+        {
+          "id": 5,
+          "locale": "NewFileDialog_Element_Button"
+        },
+        {
+          "id": 6,
+          "locale": "NewFileDialog_Element_Label"
+        },
+        {
+          "id": 7,
+          "locale": "NewFileDialog_Element_Slider"
+        },
+        {
+          "id": 8,
+          "locale": "NewFileDialog_Element_ToggleButton"
+        },
+        {
+          "id": 9,
+          "locale": "NewFileDialog_Element_Sprite"
+        },
+        {
+          "id": 10,
+          "locale": "NewFileDialog_Element_Container"
+        },
+        {
+          "id": 11,
+          "locale": "NewFileDialog_Element_ProgressBar"
+        },
+        {
+          "id": 12,
+          "locale": "NewFileDialog_Element_CheckBox"
+        },
+        {
+          "id": 14,
+          "locale": "NewFileDialog_Element_TextField"
+        },
+        {
+          "id": 15,
+          "locale": "NewFileDialog_Element_ScrollView"
+        },
+        {
+          "id": 16,
+          "locale": "NewFileDialog_Element_ListView"
+        },
+        {
+          "id": 17,
+          "locale": "NewFileDialog_Element_PageView"
+        },
+        {
+          "id": 18,
+          "locale": "NewFileDialog_Element_Spine"
+        },
+        {
+          "id": 19,
+          "locale": "NewFileDialog_Element_Particle"
+        },
+        {
+          "id": 20,
+          "locale": "NewFileDialog_Element_TileMap"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "locale": "NewFileDialog_Particle",
+      "types": [
+        {
+          "id": 0,
+          "locale": "NewFileDialog_Particle_Emitter"
+        },
+        {
+          "id": 1,
+          "locale": "NewFileDialog_Particle_Sequence"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "locale": "NewFileDialog_TileMap",
+      "types": [
+        {
+          "id": 0,
+          "locale": "NewFileDialog_TileMap_Orthogonal"
+        },
+        {
+          "id": 1,
+          "locale": "NewFileDialog_TileMap_Isometric"
+        },
+        {
+          "id": 2,
+          "locale": "NewFileDialog_TileMap_IsometricStaggered"
+        },
+        {
+          "id": 3,
+          "locale": "NewFileDialog_TileMap_HexagonalStaggered"
+        }
+      ]
+    }
+  ],
   "locale": {
     "buttonCancel": "NewFileDialog_Cancel",
     "buttonSubmit": "NewFileDialog_Submit",
     "contentText": "NewFileDialog_ContentText",
     "contentTitle": "NewFileDialog_ContentTitle",
     "inputError": "NewFileDialog_InputError",
-    "inputTitle": "NewFileDialog_InputTitle"
+    "inputTitle": "NewFileDialog_InputTitle",
+    "selectTitle": "NewFileDialog_SelectTitle"
   },
   "maxNameLength": 20
 }

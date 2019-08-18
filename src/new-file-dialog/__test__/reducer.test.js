@@ -1,4 +1,4 @@
-import { default as reducer, initialState } from '../reducer';
+import {default as reducer, initialState} from '../reducer';
 import types from '../state';
 
 describe('new-project-dialog reducer', () => {
@@ -6,19 +6,23 @@ describe('new-project-dialog reducer', () => {
         expect(reducer(undefined, {})).toEqual(initialState);
     });
 
-    it('handle CHANGE_ACTIVITY', () => {
+    it('handle OPEN_POPUP', () => {
         expect(
             reducer(undefined, {
-                type: types.CHANGE_ACTIVITY,
-                payload: true
+                type: types.OPEN_POPUP,
+                payload: 1
             })
         ).toEqual({
-                ...initialState,
-                isPopupOpen: true
+            ...initialState,
+            isPopupOpen: true,
+            sectionId: 1
         });
+    });
+
+    it('handle CLOSE_POPUP', () => {
         expect(
             reducer(undefined, {
-                type: types.CHANGE_ACTIVITY,
+                type: types.CLOSE_POPUP,
                 payload: false
             })
         ).toEqual({

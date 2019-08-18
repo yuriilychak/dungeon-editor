@@ -1,4 +1,4 @@
-import { EVENT, MOUSE_BUTTON } from "../enumerator";
+import { EVENT, MOUSE_BUTTON } from "../enum";
 
 const { mCore } = window;
 const { math, geometry } = mCore.util;
