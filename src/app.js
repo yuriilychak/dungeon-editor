@@ -1,5 +1,5 @@
 import React from "react";
-import theme from "./Theme";
+import theme from "./theme";
 
 import {MuiThemeProvider} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -15,7 +15,7 @@ import {ExportProjectDialog} from "./export-project-dialog";
 import {RenameFileDialog} from "./rename-file-dialog";
 import {WorkingArea} from "./working-area";
 
-import "./app.css";
+import "./app.scss";
 
 const App = () => (
     <MuiThemeProvider theme={theme}>

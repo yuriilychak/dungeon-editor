@@ -307,6 +307,17 @@ const ProjectData = {
 
     /**
      * @function
+     * @param {number} sectionId
+     * @param {string} fileName
+     * @param {number} fileType
+     */
+
+    createFile(sectionId, fileName, fileType) {
+        return this._components[sectionId].createFile(fileName, fileType);
+    },
+
+    /**
+     * @function
      * @public
      * @param {number} sectionId
      * @param {number} fileId

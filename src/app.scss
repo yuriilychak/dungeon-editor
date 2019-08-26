@@ -1,0 +1,40 @@
+@import "colors";
+
+.app {
+
+  $fullSize: 100%;
+
+  &-root {
+    height: $fullSize;
+  }
+
+  &-grid {
+    flex-grow: 1;
+    height: calc(100% - 24px);
+  }
+
+  &-full-height {
+    height: $fullSize;
+  }
+
+  &-left-column {
+    height: $fullSize;
+    display: inline-block;
+  }
+
+  &-right-column {
+    background-color: $back-dark;
+    height: $fullSize;
+    display: inline-block;
+  }
+
+  &-working-area {
+    width: $fullSize;
+    height: 75%
+  }
+
+  &-bottom-menu {
+    width: $fullSize;
+    height: 25%;
+  }
+}

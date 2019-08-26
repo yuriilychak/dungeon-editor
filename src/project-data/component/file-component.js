@@ -159,6 +159,32 @@ export default class FileComponent {
     }
 
     /**
+     * @desc Create file
+     * @method
+     * @public
+     * @param {string} name
+     * @param {number} type
+     * @returns {FileData}
+     */
+
+    createFile(name, type) {
+        const id = ++this._guid;
+
+        const file = {
+            name,
+            id,
+            parentId: CONST.ROOT_DIR_ID,
+            preview: null,
+            compressName: false
+        };
+
+        this._sources[id] = this.createSources(type);
+        this._files.push(file);
+
+        return file;
+    }
+
+    /**
      * @public
      * @param {number} id
      * @param {boolean} isDirectory
@@ -457,6 +483,15 @@ export default class FileComponent {
         this._sources[data.id] = source;
         progressCallback(data, this._sectionId);
     }
+
+    /**
+     * @desc Generate default sources when create project
+     * @method
+     * @protected
+     * @param {number} type
+     */
+
+    createSources(type) { return null; }
 
     /**
      * @method

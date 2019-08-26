@@ -2,7 +2,7 @@ import NewProjectDialog from "../component/new-project-dialog";
 import { initialState } from '../reducer';
 import React from "react";
 import { createMount } from '@material-ui/core/test-utils';
-import "../../Locale";
+import "../../locale";
 
 
 describe('new-project-dialog index test',()=>{

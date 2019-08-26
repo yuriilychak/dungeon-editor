@@ -2,7 +2,7 @@ import NewFileDialog from "../component/new-file-dialog";
 import { initialState } from '../reducer';
 import React from "react";
 import { createMount } from '@material-ui/core/test-utils';
-import "../../Locale";
+import "../../locale";
 
 
 describe('new-file-dialog index test',()=>{

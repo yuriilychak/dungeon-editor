@@ -73,7 +73,7 @@ const NewFileDialog = ({
         }
 
         setError(false);
-        onSubmitPopup(projectName);
+        onSubmitPopup(sectionId, projectName, elementType);
     };
 
     return (

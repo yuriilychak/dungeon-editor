@@ -2,7 +2,7 @@ import { RenameFileDialog } from "../component";
 import { initialState } from '../reducer';
 import React from "react";
 import { createMount } from '@material-ui/core/test-utils';
-import "../../Locale";
+import "../../locale";
 
 describe('rename-file-dialog index test',() => {
     const props = {

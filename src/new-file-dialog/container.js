@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { hideNewFileDialog, changeElementType } from './action';
 import ProjectData from '../project-data/project-data';
 import { NewFileDialog } from "./component";
+import {addFile} from "../library/action";
 
 const mapStateToProps = (state) => {
     return {
@@ -14,7 +15,10 @@ const mapDispatchToProps = (dispatch) => {
         onClosePopup: () => {
             dispatch(hideNewFileDialog());
         },
-        onSubmitPopup: projectName => {
+        onSubmitPopup: (sectionId, fileName, fileType) => {
+            const file = ProjectData.createFile(sectionId, fileName, fileType);
+            dispatch(addFile(file, sectionId));
+            dispatch(hideNewFileDialog());
         },
         onChangeType: typeId => {
             dispatch(changeElementType((typeId)));

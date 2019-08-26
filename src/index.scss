@@ -1,8 +1,10 @@
+@import "colors";
+
 body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  background-color: #181818;
+  background-color: $back-deep-dark;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -15,27 +17,24 @@ div {
 html, #root {
   height: 100vh;
   overflow: hidden;
+  background-color: $back-deep-dark;
 }
 
-/* width */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+  $scrollbarSize: 8px;
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #595a5f;
-}
+  width: $scrollbarSize;
+  height: $scrollbarSize;
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #f50057;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #ae0045;
+  &-track {
+    background: $back-light;
+  }
+  &-thumb {
+    background: $secondary-main;
+    &:hover {
+      background: $secondary-hover;
+    }
+  }
 }
 
 code {

@@ -4,7 +4,7 @@ import { createShallow } from "@material-ui/core/test-utils";
 
 import {initialState} from "../../reducer";
 import WorkingArea from "../working-area";
-import "../../../Locale";
+import "../../../locale";
 
 describe("working-area test", () => {
     it ( 'working-area default snapshot', () => {

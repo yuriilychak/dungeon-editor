@@ -1,7 +1,7 @@
 import React from "react";
 import { createMount } from '@material-ui/core/test-utils';
 
-import "../../../Locale";
+import "../../../locale";
 
 import { initialState } from '../../reducer';
 import Library from "../library";

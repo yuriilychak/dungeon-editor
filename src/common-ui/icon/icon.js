@@ -5,7 +5,7 @@ import "./icon.css";
 
 const Icon = ({name, size}) => (
     <img
-        src={`${process.env.PUBLIC_URL}/icon/${name}.svg`}
+        src={`${process.env.PUBLIC_URL}/static/icon/${name}.svg`}
         style={{
             width: size,
             height: size

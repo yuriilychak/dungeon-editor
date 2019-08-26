@@ -3,7 +3,7 @@ import { createMount } from "@material-ui/core/test-utils";
 
 import { initialState } from '../../reducer';
 import ExportPopupDialog from "../export-project-dialog";
-import "../../../Locale";
+import "../../../locale";
 
 describe("new-project-dialog index test",()=> {
     const props = {

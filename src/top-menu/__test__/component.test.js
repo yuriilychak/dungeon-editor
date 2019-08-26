@@ -1,4 +1,4 @@
-import "../../Locale";
+import "../../locale";
 import AppBar from "../component/app-bar";
 import Button from "../component/button";
 import MenuBackground from "../component/menu-background";
