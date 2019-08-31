@@ -2,8 +2,16 @@ import FileComponent from "./file-component";
 import FileUtil from "../file-util";
 import FILE_TYPE from "../enum/file-type";
 import FILE_FORMAT from "../enum/file-format";
+import ELEMENT_WIDTH from "../enum/element-width";
+import ELEMENT_HEIGHT from "../enum/element-height";
+import CONSTANT from "../const";
 
 export default class ElementComponent extends FileComponent {
+    /**
+     * PUBLIC METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
     /**
      * @method
      * @protected
@@ -58,7 +66,153 @@ export default class ElementComponent extends FileComponent {
         });
     }
 
+    /**
+     * PROTECTED METHODS
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @method
+     * @protected
+     * @param {FileData} data
+     * @param {*} source
+     * @param {Function} progressCallback
+     */
+
     updateSource(data, source, progressCallback) {
         super.updateSource(data, JSON.parse(source), progressCallback);
+    }
+
+    /**
+     * @desc Generate default sources when create element
+     * @method
+     * @protected
+     * @param {number} type
+     */
+
+    createSources(type) {
+        const { UI_ELEMENT } = window.mCore.enumerator.ui;
+        const commonProps = {
+            name: "Root",
+            children: [],
+            animations: [],
+            anchor: [0, 0]
+        };
+
+        switch (type) {
+            case UI_ELEMENT.ATLAS_LABEL:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.SMALL,
+                    height: ELEMENT_HEIGHT.MEDIUM,
+                    fontSize: CONSTANT.DEFAULT_FONT_SIZE
+                };
+            case UI_ELEMENT.BUTTON:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.SMALL,
+                    height: ELEMENT_HEIGHT.MEDIUM
+                };
+            case UI_ELEMENT.CHECK_BOX:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.MICRO,
+                    height: ELEMENT_HEIGHT.SMALL
+                };
+            case UI_ELEMENT.CONTAINER:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.NONE,
+                    height: ELEMENT_HEIGHT.NONE
+                };
+            case UI_ELEMENT.IMAGE_VIEW:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.MICRO,
+                    height: ELEMENT_HEIGHT.SMALL
+                };
+            case UI_ELEMENT.LABEL:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.SMALL,
+                    height: ELEMENT_HEIGHT.MEDIUM,
+                    fontSize: CONSTANT.DEFAULT_FONT_SIZE
+                };
+            case UI_ELEMENT.LIST_VIEW:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.MEDIUM,
+                    height: ELEMENT_HEIGHT.MEDIUM
+                };
+            case UI_ELEMENT.PAGE_VIEW:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.MEDIUM,
+                    height: ELEMENT_HEIGHT.MEDIUM
+                };
+            case UI_ELEMENT.PANEL:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.HUGE,
+                    height: ELEMENT_HEIGHT.HUGE
+                };
+            case UI_ELEMENT.PARTICLE:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.NONE,
+                    height: ELEMENT_HEIGHT.NONE
+                };
+            case UI_ELEMENT.PROGRESS_BAR:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.MEDIUM,
+                    height: ELEMENT_HEIGHT.SMALL
+                };
+            case UI_ELEMENT.SCROLL_VIEW:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.MEDIUM,
+                    height: ELEMENT_HEIGHT.MEDIUM
+                };
+            case UI_ELEMENT.SLIDER:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.MEDIUM,
+                    height: ELEMENT_HEIGHT.SMALL
+                };
+            case UI_ELEMENT.SPINE:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.NONE,
+                    height: ELEMENT_HEIGHT.NONE
+                };
+            case UI_ELEMENT.SPRITE:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.MICRO,
+                    height: ELEMENT_HEIGHT.SMALL
+                };
+            case UI_ELEMENT.TEXT_FIELD:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.SMALL,
+                    height: ELEMENT_HEIGHT.MEDIUM,
+                    fontSize: CONSTANT.DEFAULT_FONT_SIZE
+                };
+            case UI_ELEMENT.TOGGLE_BUTTON:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.SMALL,
+                    height: ELEMENT_HEIGHT.MEDIUM
+                };
+            case UI_ELEMENT.WIDGET:
+                return {
+                    ...commonProps,
+                    width: ELEMENT_WIDTH.HUGE,
+                    height: ELEMENT_HEIGHT.HUGE
+                };
+            default:
+                return null;
+        }
     }
 }

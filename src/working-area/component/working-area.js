@@ -11,28 +11,38 @@ import {ToolButton} from "../../common-ui/tool-button";
 import {WorkingCanvas} from "./working-canvas";
 import {TabContent} from "./tab-content";
 
+import {
+    ITEM_SIZE,
+    INDENT_SIZE,
+    FONT_SIZE,
+    BACKGROUND_COLOR,
+    TEXT_COLOR
+} from "../../constant";
+
+import { getIndent } from "../../helpers";
+
 import "./working-area.css";
 
 const useTabStyles = makeStyles({
     root: {
-        fontSize: 10,
+        fontSize: FONT_SIZE.SMALL,
         fontWeight: 500,
-        color: "#ffffff",
-        height: 24,
-        minHeight: 24,
-        marginRight: 2,
-        backgroundColor: "#3f4045",
-        padding: "0 8px",
+        color: TEXT_COLOR.CONTRAST,
+        height: ITEM_SIZE.SMALL,
+        minHeight: ITEM_SIZE.SMALL,
+        marginRight: INDENT_SIZE.XS,
+        backgroundColor: BACKGROUND_COLOR.MAIN,
+        padding: getIndent(INDENT_SIZE.NONE, INDENT_SIZE.L),
         "@media (min-width: 960px)": {
-            padding: "0 8px",
-            minWidth: 60
+            padding: getIndent(INDENT_SIZE.NONE, INDENT_SIZE.L),
+            minWidth: ITEM_SIZE.BIG
         }
     }
 });
 
 const useTabsStyles = makeStyles({
     root: {
-        minHeight: 24
+        minHeight: ITEM_SIZE.SMALL
     }
 });
 
@@ -57,7 +67,7 @@ const WorkingArea = ({
 
     useEffect(onComponentMount, []);
 
-    const createTab = (index, title, icon) => (
+    const createTab = (index, title, icon, isDefault) => (
         <Tab
             key={index}
             label={
@@ -66,6 +76,7 @@ const WorkingArea = ({
                     title={title}
                     icon={icon}
                     onClose={onCloseTab}
+                    isDefault={isDefault}
                 />
             }
             classes={classes}
@@ -75,8 +86,8 @@ const WorkingArea = ({
     const tabsExist = tabs.length !== 0;
 
     const tabElements = tabsExist ?
-        tabs.map(({title, sectionId}, index) => createTab(index, title, `${icons[sectionId]}_element`)) :
-        createTab(emptyIndex, t(locales.emptyTitle), emptyIcon);
+        tabs.map(({title, sectionId}, index) => createTab(index, title, `${icons[sectionId]}_element`), false) :
+        createTab(emptyIndex, t(locales.emptyTitle), emptyIcon, true);
 
     const getAriaValueText = value => `${value * 100}%`;
     const valueLabelFormat = value => `${value * 100}%`;

@@ -3,6 +3,7 @@ import { hideNewFileDialog, changeElementType } from './action';
 import ProjectData from '../project-data/project-data';
 import { NewFileDialog } from "./component";
 import {addFile} from "../library/action";
+import {addTab} from "../working-area/action";
 
 const mapStateToProps = (state) => {
     return {
@@ -18,6 +19,7 @@ const mapDispatchToProps = (dispatch) => {
         onSubmitPopup: (sectionId, fileName, fileType) => {
             const file = ProjectData.createFile(sectionId, fileName, fileType);
             dispatch(addFile(file, sectionId));
+            dispatch(addTab(fileName, file.id, sectionId));
             dispatch(hideNewFileDialog());
         },
         onChangeType: typeId => {

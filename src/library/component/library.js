@@ -22,6 +22,7 @@ const Library = props => {
         onRemoveFile,
         onRenameFile,
         onAddDirectory,
+        onOpenFile,
         onExportProject,
         onPublishProject,
         onSelectFile,
@@ -48,6 +49,7 @@ const Library = props => {
                 titleText={t(tab.locale)}
                 files={files[tab.id]}
                 onAddFile={onAddFile}
+                onOpenFile={onOpenFile}
                 onAddDirectory={onAddDirectory}
                 onUpdateTree={onUpdateTree}
                 onRemoveFile={onRemoveFile}
@@ -120,6 +122,7 @@ Library.propTypes = {
     onRemoveFile: func.isRequired,
     onExportProject: func.isRequired,
     onPublishProject: func.isRequired,
+    onOpenFile: func.isRequired,
     onRenameFile: func.isRequired,
     onSelectFile: func.isRequired,
     onUpdateTree: func.isRequired

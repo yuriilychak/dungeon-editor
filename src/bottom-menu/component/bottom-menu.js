@@ -3,24 +3,25 @@ import Paper from '@material-ui/core/Paper';
 import {withStyles} from "@material-ui/core";
 import Tabs from './tabs';
 import Tab from './tab';
-import constant from "../constant";
 
-const styles = theme => ({
+import { BACKGROUND_COLOR, ITEM_SIZE } from "../../constant";
+
+const styles = {
     root: {
         textAlign: 'center',
         height: "100%",
         width: "100%",
         boxShadow: "none",
-        backgroundColor: theme.palette.primary.dark,
+        backgroundColor: BACKGROUND_COLOR.DARK,
         borderRadius: "0"
     },
     title: {
         textAlign: "left",
         width: "100%",
-        height: constant.TITLE_HEIGHT,
-        backgroundColor: theme.palette.primary.main
+        height: ITEM_SIZE.MEDIUM,
+        backgroundColor: BACKGROUND_COLOR.MAIN
     }
-});
+};
 
 class BottomMenu extends Component {
     constructor(props) {

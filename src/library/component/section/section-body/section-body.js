@@ -23,6 +23,7 @@ const SectionBody = ({
                          onAddDirectory,
                          onUpdateTree,
                          onRemoveFile,
+                         onOpenFile,
                          onRenameFile,
                          onSelectFile
                      }) => {
@@ -46,6 +47,7 @@ const SectionBody = ({
         const icons = [];
         const previewHeight = 150;
         const onSelect = () => onSelectFile(id, nodeId, isDirectory);
+        const onOpen = () => onOpenFile(id, nodeId, isDirectory);
         const buttons = [
             <SectionButton
                 title={renameText}
@@ -92,6 +94,7 @@ const SectionBody = ({
         }
 
         return {
+            onDoubleClick: onOpen,
             onClick: onSelect,
             icons,
             buttons,
@@ -120,6 +123,7 @@ SectionBody.propTypes = {
     addDirectoryText: string.isRequired,
     onAddDirectory: func.isRequired,
     onUpdateTree: func.isRequired,
+    onOpenFile: func.isRequired,
     onRemoveFile: func.isRequired,
     onRenameFile: func.isRequired,
     onSelectFile: func.isRequired

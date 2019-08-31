@@ -138,6 +138,7 @@ const theme = createMuiTheme({
                 },
                 "&:hover": {
                     backgroundColor: PRIMARY_COLOR.HOVERED,
+                    borderBottom: getBorderStyle(PRIMARY_COLOR.HOVERED_SHADOW, INDENT_SIZE.S)
                 },
                 "&$disabled": {
                     backgroundColor: PRIMARY_COLOR.DISABLED,
@@ -155,6 +156,7 @@ const theme = createMuiTheme({
                 },
                 "&:hover": {
                     backgroundColor: SECONDARY_COLOR.HOVERED,
+                    borderBottom: getBorderStyle(SECONDARY_COLOR.HOVERED_SHADOW, INDENT_SIZE.S)
                 },
                 "&$disabled": {
                     backgroundColor: SECONDARY_COLOR.DISABLED,
@@ -229,6 +231,12 @@ const theme = createMuiTheme({
             root: {
                 fontSize: FONT_SIZE.MEDIUM,
                 fill: TEXT_COLOR.CONTRAST
+            }
+        },
+        MuiSelect: {
+            icon: {
+                width: ITEM_SIZE.SMALL,
+                height: ITEM_SIZE.SMALL
             }
         },
         MuiIconButton: {

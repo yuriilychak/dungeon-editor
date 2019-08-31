@@ -1,19 +1,16 @@
 import Tab from '@material-ui/core/Tab';
 import {withStyles} from "@material-ui/core";
-import constant from "../constant";
 
-const padding = 2;
+import { INDENT_SIZE, ITEM_SIZE, TEXT_COLOR } from "../../constant";
 
-const styles = theme => (
-    {
+const styles = {
         root: {
-            height: (constant.TITLE_HEIGHT - padding),
-            minHeight: (constant.TITLE_HEIGHT - padding),
-            padding: 5,
-            minWidth: "100px",
-            color: theme.palette.primary.contrastText
+            height: (ITEM_SIZE.MEDIUM - INDENT_SIZE.XS),
+            minHeight: (ITEM_SIZE.MEDIUM - INDENT_SIZE.XS),
+            padding: INDENT_SIZE.M,
+            minWidth: ITEM_SIZE.HUGE,
+            color: TEXT_COLOR.CONTRAST
         }
-    }
-);
+};
 
 export default withStyles(styles)(Tab);

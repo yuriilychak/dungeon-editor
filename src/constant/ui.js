@@ -1,6 +1,8 @@
 export const ITEM_SIZE = {
     SMALL: 24,
-    MEDIUM: 32
+    MEDIUM: 32,
+    BIG: 64,
+    HUGE: 128
 };
 
 export const INDENT_SIZE = {
@@ -32,6 +34,7 @@ export const PRIMARY_COLOR = {
     HOVERED: "#0575c6",
     DISABLED: "#1c8ab1",
     MAIN_SHADOW: "#004995",
+    HOVERED_SHADOW: "#004487",
     DISABLED_SHADOW: "#1C5375"
 };
 
@@ -40,6 +43,7 @@ export const SECONDARY_COLOR = {
     HOVERED: "#a52941",
     DISABLED: "#a53c4c",
     MAIN_SHADOW: "#a53c4c",
+    HOVERED_SHADOW: "#912535",
     DISABLED_SHADOW: "#79273A"
 };
 

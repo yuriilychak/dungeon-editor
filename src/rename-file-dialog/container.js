@@ -4,6 +4,7 @@ import ProjectData from '../project-data/project-data';
 import { RenameFileDialog } from "./component";
 import {renameFile} from "../library/action";
 import {renameLibraryElement} from "../properties/action";
+import {checkRename} from "../working-area/action";
 
 const mapStateToProps = (state) => {
     return {
@@ -21,6 +22,7 @@ const mapDispatchToProps = dispatch => {
             ProjectData.renameFile(projectName, (id, sectionId, newName) => {
                 dispatch(renameFile(id, sectionId, newName));
                 dispatch(renameLibraryElement(id, sectionId, newName));
+                dispatch(checkRename(id, sectionId, newName));
             });
             dispatch(hideRenameFileDialog());
         }

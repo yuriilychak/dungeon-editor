@@ -8,6 +8,8 @@ import {selectLibraryElement, deleteLibraryElement} from "../properties/action";
 import {removeFile} from "./action";
 import * as LibraryActions from "./action";
 import { SECTION_ID } from "../enum";
+import {checkDelete} from "../working-area/action";
+import {addTab} from "../working-area/action";
 
 const mapStateToProps = state => state.library;
 
@@ -15,6 +17,7 @@ const mapDispatchToProps = dispatch => ({
     onRemoveFile: (sectionId, fileId, isDirectory) => {
         ProjectData.removeFile(fileId, sectionId, isDirectory, () => {
             dispatch(removeFile(fileId, sectionId));
+            dispatch(checkDelete(fileId, sectionId));
             dispatch(deleteLibraryElement(fileId, sectionId));
         });
     },
@@ -55,6 +58,15 @@ const mapDispatchToProps = dispatch => ({
     },
     onSelectFile: (sectionId, fileId, isDirectory) => {
         dispatch(selectLibraryElement(ProjectData.selectFile(sectionId, fileId, isDirectory)));
+    },
+    onOpenFile: (sectionId, fileId, isDirectory) => {
+        if (isDirectory) {
+            return;
+        }
+
+        const element = ProjectData.selectFile(sectionId, fileId, isDirectory);
+
+        dispatch(addTab(element.name, fileId, sectionId));
     }
 });
 

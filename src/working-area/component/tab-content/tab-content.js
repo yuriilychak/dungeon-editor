@@ -6,19 +6,22 @@ import {Icon} from "../../../common-ui/icon";
 
 import "./tab-content.css"
 
-const TabContent = ({title, icon, index, onClose}) => {
+const TabContent = ({title, icon, index, onClose, isDefault}) => {
     return (
         <div className="tab-content-root">
             <Icon name={icon} size={10}/>
             <span className="tab-content-title">
                 {title}
             </span>
-            <Close
-                onClick={event => {
-                    event.stopPropagation();
-                    onClose(index);
-                }}
-            />
+            {!isDefault && (
+                <Close
+                    onClick={event => {
+                        event.stopPropagation();
+                        onClose(index);
+                    }}
+                />
+            )}
+
         </div>
     );
 };

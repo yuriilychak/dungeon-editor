@@ -33,6 +33,7 @@ Section.propTypes = {
     renameText: string.isRequired,
     titleText: string.isRequired,
     onAddFile: func.isRequired,
+    onOpenFile: func.isRequired,
     onAddDirectory: func.isRequired,
     onUpdateTree: func.isRequired,
     onRemoveFile: func.isRequired,
