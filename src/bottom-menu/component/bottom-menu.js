@@ -1,58 +1,44 @@
-import React, { Component } from 'react';
-import Paper from '@material-ui/core/Paper';
-import {withStyles} from "@material-ui/core";
+import React from 'react';
+import {useTranslation} from "react-i18next";
+
 import Tabs from './tabs';
 import Tab from './tab';
 
-import { BACKGROUND_COLOR, ITEM_SIZE } from "../../constant";
+import "./bottom-menu.scss";
 
-const styles = {
-    root: {
-        textAlign: 'center',
-        height: "100%",
-        width: "100%",
-        boxShadow: "none",
-        backgroundColor: BACKGROUND_COLOR.DARK,
-        borderRadius: "0"
-    },
-    title: {
-        textAlign: "left",
-        width: "100%",
-        height: ITEM_SIZE.MEDIUM,
-        backgroundColor: BACKGROUND_COLOR.MAIN
-    }
-};
+const BottomMenu = ({
+                        sectionConfig,
+                        sectionId,
+                        tabIndex,
+                        onChangeTab
+                    }) => {
+    let tabElement = null;
+    const { t } = useTranslation();
 
-class BottomMenu extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: 0,
-        };
+    if (sectionId !== -1) {
+        const tabData = sectionConfig[sectionId];
 
-        this.handleChange = this.handleChange.bind(this);
-    }
+        const tabs = tabData.map((tab, index) => (
+            <Tab label={t(tab.locale)} key={index} />
+        ));
 
-    handleChange(event, value) {
-        this.setState({ value });
-    }
-
-    render() {
-        const {classes} = this.props;
-        const { value } = this.state;
-        return (
-            <Paper className={classes.root}>
-                <div className={classes.title}>
-                    <Tabs value={value} className={classes.tabGroup} onChange={this.handleChange}>
-                        <Tab label="Item One" />
-                        <Tab label="Item Two" />
-                        <Tab label="Item Three" />
-                    </Tabs>
-                </div>
-                Bottom menu
-            </Paper>
+        tabElement = (
+            <Tabs value={Math.min(tabIndex, tabs.length - 1)} onChange={onChangeTab}>
+                { tabs }
+            </Tabs>
         );
     }
-}
 
-export default withStyles(styles)(BottomMenu);
+    return (
+        <div className="bottom-menu-root">
+            <div className="bottom-menu-title">
+                {tabElement}
+            </div>
+            <div className="bottom-menu-content">
+                {sectionId !== -1 && "Bottom menu"}
+            </div>
+        </div>
+    );
+};
+
+export default BottomMenu;

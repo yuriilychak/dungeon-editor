@@ -4,8 +4,7 @@ import theme from "./theme";
 import {MuiThemeProvider} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
-import BottomMenu from "./bottom-menu/component/bottom-menu";
-
+import {BottomMenu} from "./bottom-menu";
 import {TopMenu} from "./top-menu";
 import {Library} from "./library";
 import {Properties} from "./properties";

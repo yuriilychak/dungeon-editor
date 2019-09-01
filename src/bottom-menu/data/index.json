@@ -1,0 +1,55 @@
+{
+  "sectionConfig": [
+    [
+      {
+        "locale": "BottomMenu_Element_Components",
+        "content": {
+        }
+      },
+      {
+        "locale": "BottomMenu_Element_Hierarchy",
+        "content": {}
+      },
+      {
+        "locale": "BottomMenu_Element_Animation",
+        "content": {}
+      }
+    ],
+    [
+      {
+        "locale": "BottomMenu_Font_CharInfo",
+        "content": {}
+      }
+    ],
+    [
+      {
+        "locale": "BottomMenu_Particle_Settings",
+        "content": {}
+      }
+    ],
+    [
+      {
+        "locale": "BottomMenu_Skeleton_Animation",
+        "content": {}
+      }
+    ],
+    [
+      {
+        "locale": "BottomMenu_Sound_Player",
+        "content": {}
+      }
+    ],
+    [
+      {
+        "locale": "BottomMenu_Texture_SubTexture",
+        "content": {}
+      }
+    ],
+    [
+      {
+        "locale": "BottomMenu_TileMap_Terrain",
+        "content": {}
+      }
+    ]
+  ]
+}

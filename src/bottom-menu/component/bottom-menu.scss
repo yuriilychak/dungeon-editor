@@ -1,0 +1,22 @@
+@import "../../colors";
+@import "../../sizes";
+
+.bottom-menu {
+  &-root {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: $full-size;
+    width: $full-size;
+    background-color: $back-dark;
+  }
+  &-title {
+    text-align: left;
+    width: $full-size;
+    height: $item-size_medium;
+    background-color: $back-main;
+  }
+  &-content {
+    flex: 1;
+  }
+}

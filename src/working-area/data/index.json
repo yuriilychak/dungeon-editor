@@ -1,7 +1,7 @@
 {
   "emptyIndex": 0,
   "emptyIcon": "directory",
-  "icons": ["element", "font", "particle", "skeleton", "texture"],
+  "icons": ["element", "font", "particle", "skeleton", "sound", "texture", "tile_map"],
   "locales": {
     "emptyTitle": "WorkingArea_EmptyTitle",
     "emptyMessage": "WorkingArea_EmptyMessage"

@@ -2,6 +2,15 @@
   "resources": {
     "en": {
       "translation": {
+        "BottomMenu_Element_Components": "Components",
+        "BottomMenu_Element_Hierarchy": "Hierarchy",
+        "BottomMenu_Element_Animation": "Animation",
+        "BottomMenu_Font_CharInfo": "Char information",
+        "BottomMenu_Particle_Settings": "Settings",
+        "BottomMenu_Skeleton_Animation": "Animation",
+        "BottomMenu_Sound_Player": "Player",
+        "BottomMenu_Texture_SubTexture": "Sub-texture",
+        "BottomMenu_TileMap_Terrain": "Terrain",
         "ExportProjectDialog_Cancel": "Cancel",
         "ExportProjectDialog_ContentText": "Wait until generate zip.",
         "ExportProjectDialog_ContentTitle": "Export project",

@@ -10,6 +10,7 @@ import * as LibraryActions from "./action";
 import { SECTION_ID } from "../enum";
 import {checkDelete} from "../working-area/action";
 import {addTab} from "../working-area/action";
+import {openElement} from "../bottom-menu/action";
 
 const mapStateToProps = state => state.library;
 
@@ -67,6 +68,7 @@ const mapDispatchToProps = dispatch => ({
         const element = ProjectData.selectFile(sectionId, fileId, isDirectory);
 
         dispatch(addTab(element.name, fileId, sectionId));
+        dispatch(openElement(fileId, sectionId));
     }
 });
 

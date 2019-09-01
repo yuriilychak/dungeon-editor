@@ -3,6 +3,7 @@ import {WorkingArea} from "./component";
 import {selectTab, closeTab, zoomChange, transformReset} from "./action";
 
 import {WorkingStage} from "../working-stage";
+import {openElement} from "../bottom-menu/action";
 
 const mapStateToProps = state => state.workingArea;
 
@@ -10,8 +11,9 @@ const mapDispatchToProps = dispatch => ({
     onComponentMount() {
         WorkingStage.setZoomCallback(zoom => dispatch(zoomChange(zoom)));
     },
-    onSelectTab(event, index) {
+    onSelectTab(index, sectionId, fileId) {
         dispatch(selectTab(index));
+        dispatch(openElement(fileId, sectionId));
     },
     onCloseTab(index) {
         dispatch(closeTab(index));

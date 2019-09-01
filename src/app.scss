@@ -1,40 +1,38 @@
 @import "colors";
+@import "sizes";
 
 .app {
-
-  $fullSize: 100%;
-
   &-root {
-    height: $fullSize;
+    height: $full-size;
   }
 
   &-grid {
     flex-grow: 1;
-    height: calc(100% - 24px);
+    height: calc(#{$full-size} - #{$item-size_small});
   }
 
   &-full-height {
-    height: $fullSize;
+    height: $full-size;
   }
 
   &-left-column {
-    height: $fullSize;
+    height: $full-size;
     display: inline-block;
   }
 
   &-right-column {
     background-color: $back-dark;
-    height: $fullSize;
+    height: $full-size;
     display: inline-block;
   }
 
   &-working-area {
-    width: $fullSize;
+    width: $full-size;
     height: 75%
   }
 
   &-bottom-menu {
-    width: $fullSize;
+    width: $full-size;
     height: 25%;
   }
 }

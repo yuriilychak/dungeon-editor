@@ -92,12 +92,17 @@ const WorkingArea = ({
     const getAriaValueText = value => `${value * 100}%`;
     const valueLabelFormat = value => `${value * 100}%`;
 
+    const handleTabSelect = (evemy, index) => {
+        const { sectionId, fileId } = tabs[index];
+        onSelectTab(index, sectionId, fileId);
+    };
+
     return (
         <div className="working-area-root">
             <div className="working-area-header">
                 <Tabs
                     value={selectedTab}
-                    onChange={onSelectTab}
+                    onChange={handleTabSelect}
                     classes={useTabsStyles()}
                 >
                     {tabElements}
