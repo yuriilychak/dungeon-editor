@@ -3,6 +3,7 @@
 
 .bottom-menu {
   &-root {
+    color: $text-contrast;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -17,6 +18,6 @@
     background-color: $back-main;
   }
   &-content {
-    flex: 1;
+    height: calc(#{$full-size} - #{$item-size_medium});
   }
 }

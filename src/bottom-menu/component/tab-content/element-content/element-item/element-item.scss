@@ -1,0 +1,28 @@
+@import "../../../../../sizes";
+@import "../../../../../colors";
+
+.element-item {
+  &-root {
+    font-size: $font-size_small;
+    width: $item-size_big;
+    height: $item-size_big;
+    display: flex;
+    flex-direction: column;
+    margin: $indent_m;
+  }
+  &-content {
+    flex: 1;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &-title {
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $full-size;
+    height: $item-size_micro;
+  }
+}

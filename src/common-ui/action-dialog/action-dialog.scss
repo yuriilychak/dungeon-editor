@@ -1,0 +1,11 @@
+@import "../../sizes";
+
+.action-dialog {
+  &-button {
+    min-width: $item-size_huge;
+  }
+
+  &-container {
+    min-width: $item-size_mega;
+  }
+}

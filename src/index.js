@@ -8,7 +8,6 @@ import store from "./store";
 import ProjectData from "./project-data/project-data";
 
 import "./locale";
-
 import "./index.scss";
 
 ProjectData.init();
