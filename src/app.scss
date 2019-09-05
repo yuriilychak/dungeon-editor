@@ -2,6 +2,8 @@
 @import "sizes";
 
 .app {
+  $bottom-panel-height: 190px;
+
   &-root {
     height: $full-size;
   }
@@ -28,11 +30,11 @@
 
   &-working-area {
     width: $full-size;
-    height: 75%
+    height: calc(#{$full-size} - #{$bottom-panel-height});
   }
 
   &-bottom-menu {
     width: $full-size;
-    height: 25%;
+    height: $bottom-panel-height;
   }
 }

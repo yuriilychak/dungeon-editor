@@ -3,19 +3,21 @@
 
 .element-item {
   &-root {
+    cursor: pointer;
     font-size: $font-size_small;
     width: $item-size_big;
     height: $item-size_big;
     display: flex;
     flex-direction: column;
-    margin: $indent_m;
+    margin: $indent_s;
+    user-select: auto;
   }
   &-content {
     flex: 1;
-    user-select: none;
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none;
   }
   &-title {
     user-select: none;

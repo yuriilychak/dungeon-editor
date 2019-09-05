@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import {useTranslation} from "react-i18next";
 
-import Tabs from './tabs';
-import Tab from './tab';
+import Tabs from "./tabs";
+import Tab from "./tab";
 import {ElementContent} from "./tab-content";
 
 import "./bottom-menu.scss";
@@ -14,9 +14,11 @@ const BottomMenu = ({
                         onChangeTab
                     }) => {
     let tabElement = null;
+    let elementContent = null;
     const {t} = useTranslation();
+    const isSectionSelected = sectionId !== -1;
 
-    if (sectionId !== -1) {
+    if (isSectionSelected) {
         const tabData = sectionConfig[sectionId];
 
         const tabs = tabData.map((tab, index) => (
@@ -28,6 +30,12 @@ const BottomMenu = ({
                 {tabs}
             </Tabs>
         );
+
+        elementContent = sectionId === 0 && tabIndex === 0 ? (
+            <ElementContent {...tabData[tabIndex].content} />
+            ) : (
+            <div />
+        )
     }
 
     return (
@@ -36,9 +44,7 @@ const BottomMenu = ({
                 {tabElement}
             </div>
             <div className="bottom-menu-content">
-                {sectionId !== -1 && (
-                    <ElementContent/>
-                )}
+                {elementContent}
             </div>
         </div>
     );

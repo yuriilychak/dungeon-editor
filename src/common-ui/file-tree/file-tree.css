@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+.rstcustom__rowWrapper {
+    cursor: pointer;
+}
+
 .rstcustom__rowContents {
     display: flex;
     align-items: center;

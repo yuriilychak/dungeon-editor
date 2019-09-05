@@ -4,6 +4,108 @@
       {
         "locale": "BottomMenu_Element_Components",
         "content": {
+          "elements": [
+            {
+              "id": 1,
+              "icon": "ui_element",
+              "title": "BottomMenu_Element_TitleUIElement"
+            },
+            {
+              "id": 2,
+              "icon": "widget",
+              "title": "BottomMenu_Element_TitleWidget"
+            },
+            {
+              "id": 3,
+              "icon": "panel",
+              "title": "BottomMenu_Element_TitlePanel"
+            },
+            {
+              "id": 4,
+              "icon": "image_view",
+              "title": "BottomMenu_Element_TitleImageView"
+            },
+            {
+              "id": 5,
+              "icon": "button",
+              "title": "BottomMenu_Element_TitleButton"
+            },
+            {
+              "id": 6,
+              "icon": "label",
+              "title": "BottomMenu_Element_TitleLabel"
+            },
+            {
+              "id": 7,
+              "icon": "slider",
+              "title": "BottomMenu_Element_TitleSlider"
+            },
+            {
+              "id": 8,
+              "icon": "toggle_button",
+              "title": "BottomMenu_Element_TitleToggleButton"
+            },
+            {
+              "id": 9,
+              "icon": "sprite",
+              "title": "BottomMenu_Element_TitleSprite"
+            },
+            {
+              "id": 10,
+              "icon": "container",
+              "title": "BottomMenu_Element_TitleContainer"
+            },
+            {
+              "id": 11,
+              "icon": "progress_bar",
+              "title": "BottomMenu_Element_TitleProgressBar"
+            },
+            {
+              "id": 12,
+              "icon": "checkbox",
+              "title": "BottomMenu_Element_TitleCheckBox"
+            },
+            {
+              "id": 14,
+              "icon": "text_field",
+              "title": "BottomMenu_Element_TitleTextField"
+            },
+            {
+              "id": 15,
+              "icon": "scroll_view",
+              "title": "BottomMenu_Element_TitleScrollView"
+            },
+            {
+              "id": 16,
+              "icon": "list_view",
+              "title": "BottomMenu_Element_TitleListView"
+            },
+            {
+              "id": 17,
+              "icon": "page_view",
+              "title": "BottomMenu_Element_TitlePageView"
+            },
+            {
+              "id": 18,
+              "icon": "skeleton",
+              "title": "BottomMenu_Element_TitleSkeleton"
+            },
+            {
+              "id": 19,
+              "icon": "particle",
+              "title": "BottomMenu_Element_TitleParticle"
+            },
+            {
+              "id": 20,
+              "icon": "tile_map",
+              "title": "BottomMenu_Element_TitleTileMap"
+            },
+            {
+              "id": 21,
+              "icon": "sound",
+              "title": "BottomMenu_Element_TitleSound"
+            }
+          ]
         }
       },
       {
