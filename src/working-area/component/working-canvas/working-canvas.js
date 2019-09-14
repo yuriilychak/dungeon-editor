@@ -6,13 +6,14 @@ import { ELEMENT_DROP_ID } from "../../../constant";
 
 import "./working-canvas.css"
 
-const WorkingCanvas = ({onGetCanvasRef, hidden}) => {
+const WorkingCanvas = ({onGetCanvasRef, hidden, onCreateElement}) => {
     const onDrop = event => {
-        const data = event.dataTransfer.getData(ELEMENT_DROP_ID);
-        console.log(event.clientX);
-        console.log(event.clientY);
-        console.log(data);
         event.preventDefault();
+        onCreateElement(
+            parseInt(event.dataTransfer.getData(ELEMENT_DROP_ID), 10),
+            event.clientX,
+            event.clientY - 48
+        );
     };
 
     return (
@@ -28,6 +29,7 @@ const WorkingCanvas = ({onGetCanvasRef, hidden}) => {
 };
 
 WorkingCanvas.propTypes = {
+    onCreateElement: func.isRequired,
     onGetCanvasRef: func.isRequired,
     hidden: bool
 };

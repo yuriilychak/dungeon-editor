@@ -5,7 +5,7 @@ const { math, geometry } = mCore.util;
 const { NUMBER_TYPE } =  mCore.enumerator;
 
 function isRightButton(data) {
-    return data.data.originalEvent.buttons === MOUSE_BUTTON.RIGHT;
+    return data.buttons === MOUSE_BUTTON.RIGHT;
 }
 
 
@@ -45,18 +45,18 @@ export default class ComInteraction extends mCore.component.ui.ComUI {
         this._zoomItencity = 0.05;
 
         /**
-         * @type {?mCore.ui.Widget}
+         * @type {mCore.geometry.Point}
          * @private
          */
 
-        this._workingLayer = null;
+        this._dragPosition = mCore.geometry.Point.create();
 
         /**
          * @type {mCore.geometry.Point}
          * @private
          */
 
-        this._dragPosition = mCore.geometry.Point.create();
+        this._nextPosition = mCore.geometry.Point.create();
 
         /**
          * @type {mCore.geometry.Point}
@@ -79,23 +79,15 @@ export default class ComInteraction extends mCore.component.ui.ComUI {
     onAdd(owner) {
         super.onAdd(owner);
 
-        const { INTERACTIVE_EVENT } = mCore.enumerator.ui;
         const { SYSTEM_EVENT } = mCore.enumerator.event;
-
-        this._workingLayer = this.getChildView("interaction");
-        this._workingLayer.interactive = true;
-        this._workingLayer.anchor.set(0.5);
-        this._workingLayer.interactionManager.interactive = true;
-        this._workingLayer.position.set(0, 0);
 
         this.listenerManager.addEventListener(SYSTEM_EVENT.RESIZE, this._onResize);
         this.listenerManager.addEventListener(SYSTEM_EVENT.WHEEL, this._onWheel);
         this.listenerManager.addEventListener(EVENT.ZOOM_SET, this._onZoomSet);
+        this.listenerManager.addEventListener(EVENT.DRAG_START, this._onDragStart);
+        this.listenerManager.addEventListener(EVENT.DRAG_MOVE, this._onDragMove);
+        this.listenerManager.addEventListener(EVENT.DRAG_END, this._onDragFinish);
         this.listenerManager.addEventListener(EVENT.RESET_POSITION, this._onResetPosition);
-
-        this.addChildListener(this._onDragStart, INTERACTIVE_EVENT.DRAG_START, "interaction");
-        this.addChildListener(this._onDragMove, INTERACTIVE_EVENT.DRAG, "interaction");
-        this.addChildListener(this._onDragFinish, INTERACTIVE_EVENT.DRAG_FINIS, "interaction");
 
         this._refreshInteractionArea();
     }
@@ -114,8 +106,6 @@ export default class ComInteraction extends mCore.component.ui.ComUI {
     _refreshInteractionArea() {
         const size = geometry.pFromSize(mCore.launcher.app.view);
 
-        this._workingLayer.width = size.x;
-        this._workingLayer.height = size.y;
 
         this._screenOffset.copyFrom(geometry.pMult(size, 0.5, true));
         this.owner.position.copyFrom(this._screenOffset);
@@ -145,14 +135,15 @@ export default class ComInteraction extends mCore.component.ui.ComUI {
 
     _onDragStart({ data }) {
         if (isRightButton(data)) {
-            this._dragPosition.copyFrom(data.data.global);
+            this._dragPosition.set(data.pageX, data.pageY - 48);
         }
     }
 
     _onDragMove({ data }) {
         if (isRightButton(data)) {
-            geometry.pAdd(this._offset, geometry.pSub(data.data.global, this._dragPosition), true);
-            this._dragPosition.copyFrom(data.data.global);
+            this._nextPosition.set(data.pageX, data.pageY - 48);
+            geometry.pAdd(this._offset, geometry.pSub(this._nextPosition, this._dragPosition), true);
+            this._dragPosition.copyFrom(this._nextPosition);
         }
     }
 

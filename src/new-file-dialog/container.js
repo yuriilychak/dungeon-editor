@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { hideNewFileDialog, changeElementType } from './action';
 import ProjectData from '../project-data/project-data';
+import WorkingStage from "../working-stage/working-stage";
 import { NewFileDialog } from "./component";
 import {addFile} from "../library/action";
 import {addTab} from "../working-area/action";
@@ -19,6 +20,8 @@ const mapDispatchToProps = (dispatch) => {
         },
         onSubmitPopup: (sectionId, fileName, fileType) => {
             const file = ProjectData.createFile(sectionId, fileName, fileType);
+            WorkingStage.createUIElement(fileType, file.id, fileName);
+            
             dispatch(addFile(file, sectionId));
             dispatch(addTab(fileName, file.id, sectionId));
             dispatch(openElement(file.id, sectionId));

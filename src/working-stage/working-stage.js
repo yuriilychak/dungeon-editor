@@ -1,7 +1,7 @@
-import { EditScene } from "./edit-scene";
-import { EVENT } from "./enum";
+import {EditScene} from "./edit-scene";
+import {EVENT} from "./enum";
 
-const { mCore } = window;
+const {mCore} = window;
 
 export default {
 
@@ -18,6 +18,8 @@ export default {
      */
 
     _zoomCallback: null,
+
+    _isDrag: false,
 
     /**
      * @function
@@ -51,29 +53,55 @@ export default {
         }, 500);
     },
 
-    _addListener(event, callback) {
-        mCore.eventDispatcher.addListener(event, callback, this);
-    },
-
-    _onWindowResize() {
-        const { view } = window.mCore.launcher.app;
-        const { offsetWidth, offsetHeight } = view.parentNode;
-        mCore.launcher.resize(offsetWidth, offsetHeight, true);
-    },
-
-    _onZoomChange({ data }) {
-        this._zoomCallback(data);
+    createUIElement(type, id, name) {
+        this._dispatch(EVENT.CREATE_UI_ELEMENT, {type, id, name});
     },
 
     setZoom(value = 1) {
-        mCore.eventDispatcher.dispatch(EVENT.ZOOM_SET, this, value);
+        this._dispatch(EVENT.ZOOM_SET, value);
     },
 
     resetPosition() {
-        mCore.eventDispatcher.dispatch(EVENT.RESET_POSITION, this);
+        this._dispatch(EVENT.RESET_POSITION);
     },
 
     setZoomCallback(callback) {
         this._zoomCallback = callback;
+    },
+
+    dispatchDragStart(event) {
+        this._isDrag = true;
+        this._dispatch(EVENT.DRAG_START, event);
+    },
+
+    dispatchDragMove(event) {
+        if (this._isDrag) {
+            this._dispatch(EVENT.DRAG_MOVE, event);
+        }
+    },
+
+    dispatchDragEnd(event) {
+        if (this._isDrag) {
+            this._isDrag = false;
+            this._dispatch(EVENT.DRAG_END, event);
+        }
+    },
+
+    _addListener(event, callback) {
+        mCore.eventDispatcher.addListener(event, callback, this);
+    },
+
+    _dispatch(type, data = null) {
+        mCore.eventDispatcher.dispatch(type, this, data);
+    },
+
+    _onWindowResize() {
+        const {view} = window.mCore.launcher.app;
+        const {offsetWidth, offsetHeight} = view.parentNode;
+        mCore.launcher.resize(offsetWidth, offsetHeight, true);
+    },
+
+    _onZoomChange({data}) {
+        this._zoomCallback(data);
     }
 }

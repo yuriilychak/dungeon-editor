@@ -1,4 +1,4 @@
-import {  ComInteraction, ComStageGrid } from "../component";
+import {  ComInteraction, ComStageGrid, ComStageView } from "../component";
 
 const { mCore } = window;
 
@@ -20,6 +20,7 @@ export default class EditScene extends window.mCore.view.Scene {
 
         this._stage.componentManager.addComponent(ComInteraction.create());
         this._stage.componentManager.addComponent(ComStageGrid.create());
+        this._stage.componentManager.addComponent(ComStageView.create());
     }
 
     _addLayer(template, name)  {

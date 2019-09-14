@@ -29,6 +29,18 @@ const mapDispatchToProps = dispatch => ({
         dispatch(transformReset());
         WorkingStage.setZoom();
         WorkingStage.resetPosition();
+    },
+    onScrollStart(event) {
+        WorkingStage.dispatchDragStart(event);
+    },
+    onScrollMove(event) {
+        WorkingStage.dispatchDragMove(event);
+    },
+    onScrollEnd(event) {
+        WorkingStage.dispatchDragEnd(event);
+    },
+    onCreateElement(type, posX, posY) {
+        console.log(type, posX, posY);
     }
 });
 

@@ -128,7 +128,7 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         result.width = width;
         result.height = height;
         result.position.copyFrom(this._screenOffset);
-        this.owner.addChildAt(result, 2);
+        this.owner.addChildAt(result, 1);
 
         return result;
     }

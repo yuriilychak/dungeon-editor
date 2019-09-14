@@ -60,7 +60,11 @@ const WorkingArea = ({
                          onCloseTab,
                          onZoomChange,
                          onTransformReset,
-                         onComponentMount
+                         onCreateElement,
+                         onComponentMount,
+                         onScrollStart,
+                         onScrollMove,
+                         onScrollEnd
                      }) => {
     const classes = useTabStyles();
     const {t} = useTranslation();
@@ -89,10 +93,10 @@ const WorkingArea = ({
         tabs.map(({title, sectionId}, index) => createTab(index, title, `${icons[sectionId]}_element`), false) :
         createTab(emptyIndex, t(locales.emptyTitle), emptyIcon, true);
 
-    const getAriaValueText = value => `${value * 100}%`;
-    const valueLabelFormat = value => `${value * 100}%`;
+    const getAriaValueText = value => `${Math.round(value * 100)}%`;
+    const valueLabelFormat = value => `${Math.round(value * 100)}%`;
 
-    const handleTabSelect = (evemy, index) => {
+    const handleTabSelect = (event, index) => {
         const { sectionId, fileId } = tabs[index];
         onSelectTab(index, sectionId, fileId);
     };
@@ -109,10 +113,17 @@ const WorkingArea = ({
                 </Tabs>
             </div>
             <div className="working-area-body">
-                <WorkingCanvas
-                    onGetCanvasRef={onGetCanvasRef}
-                    hidden={!tabsExist}
-                />
+                <div className="working-area-interactions"
+                     onMouseDown={onScrollStart}
+                     onMouseUp={onScrollEnd}
+                     onMouseMove={onScrollMove}
+                >
+                    <WorkingCanvas
+                        onCreateElement={onCreateElement}
+                        onGetCanvasRef={onGetCanvasRef}
+                        hidden={!tabsExist}
+                    />
+                </div>
                 {!tabsExist && (
                     <div className="working-area-empty-container">
                         <div className="working-area-empty-message">
