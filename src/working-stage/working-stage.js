@@ -57,6 +57,10 @@ export default {
         this._dispatch(EVENT.CREATE_UI_ELEMENT, {type, id, name});
     },
 
+    createElelement(type, x, y) {
+        this._dispatch(EVENT.CREATE_ELEMENT, {type, x, y});
+    },
+
     setZoom(value = 1) {
         this._dispatch(EVENT.ZOOM_SET, value);
     },
