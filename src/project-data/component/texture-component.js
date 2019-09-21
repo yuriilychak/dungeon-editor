@@ -3,6 +3,8 @@ import FileUtil from "../file-util";
 import FILE_TYPE from "../enum/file-type";
 import FILE_FORMAT from "../enum/file-format";
 
+const { PIXI } = window;
+
 export default class TextureComponent extends FileComponent {
     /**
      * @method
@@ -53,6 +55,7 @@ export default class TextureComponent extends FileComponent {
                 preview: texture.data
             };
             this.addFileInfo(fileData);
+            this._createPixiTexture(fileData.id, texture.data);
             this.updateSource(fileData, texture.data, progressCallback);
             this.removeElement(elements, texture);
         });
@@ -70,5 +73,15 @@ export default class TextureComponent extends FileComponent {
         return {
             atlas: file.atlas
         };
+    }
+
+    _createPixiTexture(id, source) {
+        const image = new Image();
+        image.src = source;
+
+        const baseTexture = new PIXI.BaseTexture(image);
+        const texture = new PIXI.Texture(baseTexture);
+
+        PIXI.Texture.addToCache(texture, `texture_${id}`);
     }
 }

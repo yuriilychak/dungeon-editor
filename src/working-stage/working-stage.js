@@ -53,6 +53,10 @@ export default {
         }, 500);
     },
 
+    showElement(type, id) {
+        this._dispatch(EVENT.SHOW_ELEMENT, { type, id });
+    },
+
     createUIElement(type, id, name) {
         this._dispatch(EVENT.CREATE_UI_ELEMENT, {type, id, name});
     },

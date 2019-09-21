@@ -32,8 +32,16 @@
       "icon": "skeleton_element"
     },
     {
+      "locale": "Properties_SoundTitle",
+      "icon": "sound_element"
+    },
+    {
       "locale": "Properties_TextureTitle",
       "icon": "texture_element"
+    },
+    {
+      "locale": "Properties_TileMapTitle",
+      "icon": "tile_map_element"
     }
   ]
 }

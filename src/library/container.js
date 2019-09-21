@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import {Library} from "./component";
 import {ProjectData} from "../project-data";
+import {WorkingStage} from "../working-stage";
 import {showExportProjectDialog} from "../export-project-dialog/action";
 import {showRenameFileDialog} from "../rename-file-dialog/action";
 import {showNewFileDialog} from "../new-file-dialog/action";
@@ -66,6 +67,8 @@ const mapDispatchToProps = dispatch => ({
         }
 
         const element = ProjectData.selectFile(sectionId, fileId, isDirectory);
+
+        WorkingStage.showElement(sectionId, fileId);
 
         dispatch(addTab(element.name, fileId, sectionId));
         dispatch(openElement(fileId, sectionId));

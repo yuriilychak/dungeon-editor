@@ -106,6 +106,8 @@
         "Properties_NameTitle": "Name",
         "Properties_ParticleTitle": "particle",
         "Properties_SkeletonTitle": "skeleton",
+        "Properties_SoundTitle": "sound",
+        "Properties_TileMapTitle": "tile map",
         "Properties_SelectAtlasLabel": "Atlas name",
         "Properties_SelectAtlasPlaceholder": "Select atlas",
         "Properties_TextureTitle": "texture",

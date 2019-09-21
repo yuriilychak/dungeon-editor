@@ -1,5 +1,6 @@
 import STATE from "./state";
 import StaticData from "./data/index.json";
+import {WorkingStage} from "../working-stage";
 
 export const initialState = {
     ...StaticData,
@@ -19,9 +20,17 @@ const closeTab = (state, tabIndex) => {
         --selectedTab;
     }
 
+    const nextTabs = tabs.filter((tab, index) => index !== tabIndex);
+
+    if (nextTabs.length) {
+        const nextTab = nextTabs[selectedTab];
+
+        WorkingStage.showElement(nextTab.sectionId, nextTab.fileId);
+    }
+
     return {
         ...state,
-        tabs: tabs.filter((tab, index) => index !== tabIndex),
+        tabs: nextTabs,
         selectedTab
     };
 };

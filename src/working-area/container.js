@@ -14,6 +14,7 @@ const mapDispatchToProps = dispatch => ({
     onSelectTab(index, sectionId, fileId) {
         dispatch(selectTab(index));
         dispatch(openElement(fileId, sectionId));
+        WorkingStage.showElement(sectionId, fileId);
     },
     onCloseTab(index) {
         dispatch(closeTab(index));

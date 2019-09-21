@@ -82,7 +82,7 @@ const SectionBody = ({
                 <Icon name={`${icon}_element`}/>
             );
             if (preview) {
-                buttons.push(
+                buttons.unshift(
                     <ImagePreview
                         preview={preview}
                         height={previewHeight}

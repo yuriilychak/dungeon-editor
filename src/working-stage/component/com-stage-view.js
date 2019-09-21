@@ -1,4 +1,5 @@
 import {EVENT} from "../enum";
+import {SECTION_ID} from "../../enum";
 
 const {mCore, PIXI} = window;
 const {view, ui} = mCore;
@@ -39,6 +40,12 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
                 height: 32
             }
         };
+
+        this._sectionPrefixes = {
+            [SECTION_ID.TEXTURE]: "texture",
+            [SECTION_ID.ELEMENT]: "ui_element",
+            [SECTION_ID.TILE_MAP]: "tile_map"
+        }
     }
 
     onAdd(owner) {
@@ -50,6 +57,7 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         this.listenerManager.addEventListener(EVENT.CREATE_ELEMENT, this._onCreateElement);
         this.listenerManager.addEventListener(EVENT.ZOOM_CHANGE, this._onZoomChange);
         this.listenerManager.addEventListener(EVENT.OFFSET_CHANGE, this._onOffsetChange);
+        this.listenerManager.addEventListener(EVENT.SHOW_ELEMENT, this._onShowElement);
     }
 
     _onCreateElement({data}) {
@@ -67,9 +75,59 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
 
         element.name = name;
 
-        this._crtElement = element;
-        this._uiElements.addElement(element, id);
+        this._addElement(element, `${this._sectionPrefixes[SECTION_ID.ELEMENT]}_${id}`);
+        this._showElement(element);
+    }
+
+    _onShowElement({ data }) {
+        const { id, type } = data;
+        const key = `${this._sectionPrefixes[type]}_${id}`;
+        let element;
+
+        switch (type) {
+            case SECTION_ID.TEXTURE: {
+                if (this._uiElements.hasElement(key)) {
+                    element = this._uiElements.getElement(key);
+                }
+                else {
+                    element = view.ComponentSprite.create(key);
+                    this._addElement(element, key);
+                }
+
+                this._showElement(element);
+                break;
+            }
+            case SECTION_ID.ELEMENT: {
+                element = this._uiElements.getElement(key);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+
+        if (element) {
+            this._showElement(element);
+        }
+    }
+
+    _addElement(element, key) {
+        element.anchor.set(0.5);
+        this._uiElements.addElement(element, key);
         this._root.addChild(element);
+    }
+
+    _showElement(element) {
+        if (this._crtElement === element) {
+            return;
+        }
+
+        if (this._crtElement !== null) {
+            this._crtElement.visible = false;
+        }
+
+        this._crtElement = element;
+        element.visible = true;
     }
 
     _createElement(type) {

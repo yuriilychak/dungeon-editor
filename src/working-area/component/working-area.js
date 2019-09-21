@@ -97,6 +97,9 @@ const WorkingArea = ({
     const valueLabelFormat = value => `${Math.round(value * 100)}%`;
 
     const handleTabSelect = (event, index) => {
+        if (!tabs.length) {
+            return;
+        }
         const { sectionId, fileId } = tabs[index];
         onSelectTab(index, sectionId, fileId);
     };
