@@ -64,6 +64,17 @@ export default class TextureComponent extends FileComponent {
     /**
      * @method
      * @protected
+     * @param {number[]} files
+     */
+
+    removeFiles(files) {
+        super.removeFiles(files);
+        files.forEach(id => PIXI.Texture.removeFromCache(`texture_${id}`));
+    }
+
+    /**
+     * @method
+     * @protected
      * @param {number} fileId
      * @param {FileData | DirectoryData} file
      * @return {Object}

@@ -37,6 +37,7 @@ const theme = createMuiTheme({
         },
         MuiToolbar: {
             root: {
+                overflow: "hidden",
                 minHeight: ITEM_SIZE.SMALL
             }
         },

@@ -86,15 +86,29 @@ const actionHandlers = {
         }
     },
     [STATE.CHECK_DELETE]: (state, fileData) => {
-        const {tabs} = state;
+        const { tabs } = state;
+        const { fileIds, sectionId } = fileData;
+        const fileInfo = fileIds.map(fileId => ({ fileId, sectionId }));
 
-        if (!isTabExist(tabs, fileData)) {
+        const isNeedCloseTabs = fileInfo.some(element => isTabExist(tabs, element));
+
+        if (!isNeedCloseTabs) {
             return state;
         }
 
-        const tabIndex = getTabIndex(tabs, fileData);
+        let nextState = state;
 
-        return closeTab(state, tabIndex);
+        fileInfo.forEach(element => {
+            const tabIndex = getTabIndex(nextState.tabs, element);
+
+            if (tabIndex === -1) {
+                return;
+            }
+
+            nextState = closeTab(nextState, tabIndex);
+        });
+
+        return nextState;
     }
 };
 

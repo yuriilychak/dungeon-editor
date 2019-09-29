@@ -184,48 +184,6 @@ export default class FileComponent {
         return file;
     }
 
-    /**
-     * @public
-     * @param {number} id
-     * @param {boolean} isDirectory
-     * @returns {number[]}
-     */
-
-    remove(id, isDirectory) {
-        const searchArray = isDirectory ? this._directories : this._files;
-        const index = searchArray.findIndex(element => element.id === id);
-        let result = [];
-
-        if (index === -1) {
-            return result;
-        }
-
-        const element = searchArray[index];
-
-        searchArray.splice(index, 1);
-
-        if (!isDirectory) {
-            delete this._sources[element.id];
-        }
-
-        result.push(id);
-
-        if (isDirectory) {
-            const filesToRemove = this._files.filter(element => element.parentId === id);
-            const dirsToRemove = this._directories.filter(element => element.parentId === id);
-
-            filesToRemove.forEach(element => {
-                result = result.concat(this.remove(element.id, false));
-            });
-
-            dirsToRemove.forEach(element => {
-                result = result.concat(this.remove(element.id, true));
-            });
-        }
-
-        return result;
-    }
-
     refreshHierarchy(files, parentId = CONST.ROOT_DIR_ID) {
         let searchArray, id, element, isDirectory;
 
@@ -357,9 +315,30 @@ export default class FileComponent {
     }
 
     /**
+     * @public
+     * @param {number} id
+     * @param {boolean} isDirectory
+     * @returns {number[]}
+     */
+
+    remove(id, isDirectory) {
+        const result = this._remove(id, isDirectory);
+        this.removeFiles(result);
+        return result;
+    }
+
+    /**
      * PROTECTED METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @method
+     * @protected
+     * @param {number[]} files
+     */
+
+    removeFiles(files) {}
 
     /**
      * @method
@@ -529,6 +508,48 @@ export default class FileComponent {
      * PRIVATE METHODS
      * -----------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * @private
+     * @param {number} id
+     * @param {boolean} isDirectory
+     * @returns {number[]}
+     */
+
+    _remove(id, isDirectory) {
+        const searchArray = isDirectory ? this._directories : this._files;
+        const index = searchArray.findIndex(element => element.id === id);
+        let result = [];
+
+        if (index === -1) {
+            return result;
+        }
+
+        const element = searchArray[index];
+
+        searchArray.splice(index, 1);
+
+        if (!isDirectory) {
+            delete this._sources[element.id];
+        }
+
+        result.push(id);
+
+        if (isDirectory) {
+            const filesToRemove = this._files.filter(element => element.parentId === id);
+            const dirsToRemove = this._directories.filter(element => element.parentId === id);
+
+            filesToRemove.forEach(element => {
+                result = result.concat(this._remove(element.id, false));
+            });
+
+            dirsToRemove.forEach(element => {
+                result = result.concat(this._remove(element.id, true));
+            });
+        }
+
+        return result;
+    }
 
     /**
      * @method

@@ -12,16 +12,14 @@ const actionHandlers = {
         file: action.payload
     }),
     [STATE.DELETE_LIBRARY_ELEMENT]: (state, action) => {
-        const {id, sectionId} = action.payload;
+        const {ids, sectionId} = action.payload;
 
-        if (!checkSelectedElement(state, id, sectionId)) {
-            return state;
-        }
+        const isSelected = ids.some(id => checkSelectedElement(state, id, sectionId));
 
-        return {
+        return isSelected ? {
             ...state,
             file: null
-        }
+        } : state;
     },
     [STATE.RENAME_LIBRARY_ELEMENT]: (state, action) => {
         const {id, sectionId, name} = action.payload;

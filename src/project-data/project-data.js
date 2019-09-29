@@ -257,7 +257,7 @@ const ProjectData = {
             return false;
         }
 
-        callback();
+        callback(removedFiles);
         return true;
     },
 

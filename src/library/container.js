@@ -17,10 +17,11 @@ const mapStateToProps = state => state.library;
 
 const mapDispatchToProps = dispatch => ({
     onRemoveFile: (sectionId, fileId, isDirectory) => {
-        ProjectData.removeFile(fileId, sectionId, isDirectory, () => {
+        ProjectData.removeFile(fileId, sectionId, isDirectory, removedIds => {
             dispatch(removeFile(fileId, sectionId));
-            dispatch(checkDelete(fileId, sectionId));
-            dispatch(deleteLibraryElement(fileId, sectionId));
+            dispatch(checkDelete(removedIds, sectionId));
+            dispatch(deleteLibraryElement(removedIds, sectionId));
+            WorkingStage.dispatchDelete(sectionId, removedIds);
         });
     },
     onAddFiles: () => {

@@ -5,9 +5,9 @@ export const selectLibraryElement = fileData => ({
     payload: fileData
 });
 
-export const deleteLibraryElement = (id, sectionId) => ({
+export const deleteLibraryElement = (ids, sectionId) => ({
     type: STATE.DELETE_LIBRARY_ELEMENT,
-    payload: {id, sectionId}
+    payload: {ids, sectionId}
 });
 
 export const renameLibraryElement = (id, sectionId, name) => ({

@@ -1,10 +1,8 @@
 import {EVENT} from "../enum";
 import {SECTION_ID} from "../../enum";
 
-const {mCore, PIXI} = window;
+const {mCore} = window;
 const {view, ui} = mCore;
-const {math, geometry} = mCore.util;
-const {NUMBER_TYPE} = mCore.enumerator;
 
 export default class ComStageGrid extends mCore.component.ui.ComUI {
     constructor() {
@@ -58,6 +56,7 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         this.listenerManager.addEventListener(EVENT.ZOOM_CHANGE, this._onZoomChange);
         this.listenerManager.addEventListener(EVENT.OFFSET_CHANGE, this._onOffsetChange);
         this.listenerManager.addEventListener(EVENT.SHOW_ELEMENT, this._onShowElement);
+        this.listenerManager.addEventListener(EVENT.DELETE_ELEMENTS, this._onDeleteElements);
     }
 
     _onCreateElement({data}) {
@@ -77,6 +76,10 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
 
         this._addElement(element, `${this._sectionPrefixes[SECTION_ID.ELEMENT]}_${id}`);
         this._showElement(element);
+    }
+
+    _onDeleteElements({ data }) {
+        console.log(data);
     }
 
     _onShowElement({ data }) {

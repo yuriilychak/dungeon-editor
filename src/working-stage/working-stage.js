@@ -95,6 +95,10 @@ export default {
         }
     },
 
+    dispatchDelete(type, fileIds) {
+        this._dispatch(EVENT.DELETE_ELEMENTS, { type, fileIds });
+    },
+
     _addListener(event, callback) {
         mCore.eventDispatcher.addListener(event, callback, this);
     },
