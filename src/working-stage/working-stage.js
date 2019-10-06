@@ -35,7 +35,7 @@ export default {
                 width: view.width,
                 height: view.height,
                 backgroundColor: 0x181818,
-                resolution: window.devicePixelRatio || 1,
+                resolution: 1,
             }, 800, 600, () => {
                 mCore.launcher.app.loader
                     .add('static/assets/defaultAssets.json')
