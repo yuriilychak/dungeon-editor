@@ -14,16 +14,20 @@ export default class EditScene extends window.mCore.view.Scene {
 
         this.addChild(this._stage);
 
-        this._addLayer(mCore.view.ComponentContainer, "grid");
-        this._addLayer(mCore.view.ComponentContainer, "view");
+        this._addLayer("grid");
+        this._addLayer("view");
 
-        this._stage.componentManager.addComponent(ComInteraction.create());
-        this._stage.componentManager.addComponent(ComStageGrid.create());
-        this._stage.componentManager.addComponent(ComStageView.create());
+        this._addComponent(ComInteraction);
+        this._addComponent(ComStageGrid);
+        this._addComponent(ComStageView);
     }
 
-    _addLayer(template, name)  {
-        const layer = template.create();
+    _addComponent(template) {
+        this._stage.componentManager.addComponent(template.create());
+    }
+
+    _addLayer(name)  {
+        const layer = mCore.view.ComponentContainer.create();
         layer.name = name;
         this._stage.addChild(layer);
     }

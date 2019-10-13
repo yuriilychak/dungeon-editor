@@ -64,6 +64,14 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 	"sourceSize": {"w":16,"h":16}
 },
+"default_select":
+{
+	"frame": {"x":245,"y":11,"w":4,"h":4},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":4,"h":4},
+	"sourceSize": {"w":4,"h":4}
+},
 "default_simpleRect":
 {
 	"frame": {"x":245,"y":1,"w":8,"h":8},
@@ -79,6 +87,6 @@
 	"format": "RGBA8888",
 	"size": {"w":256,"h":256},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:4abd1336415c52c57f84755095c0f659:665c59428e8eccf25bd966fda393e303:d1b7cb009b13cfa47eeec573250da66d$"
+	"smartupdate": "$TexturePacker:SmartUpdate:c83a2c079d4b08b0d292994cd2c695b6:6ad4217c6a9a58ca0a6108238c7b87ab:d1b7cb009b13cfa47eeec573250da66d$"
 }
 }
