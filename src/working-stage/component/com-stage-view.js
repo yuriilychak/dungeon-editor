@@ -20,6 +20,8 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
 
         this._editArea = EditArea.create();
 
+        this._viewElement = mCore.view.ComponentContainer.create();
+
         this._crtElement = null;
 
         /**
@@ -40,7 +42,9 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
 
         this._root = this.getChildView("view");
 
+        this._root.addChild(this._viewElement);
         this._root.addChild(this._editArea);
+
 
         this.listenerManager.addEventListener(EVENT.CREATE_UI_ELEMENT, this._onCreateUIElement);
         this.listenerManager.addEventListener(EVENT.CREATE_ELEMENT, this._onCreateElement);
@@ -64,6 +68,9 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         const element = createElement(type);
 
         element.name = name;
+
+        this._editArea.width = element.width;
+        this._editArea.height = element.height;
 
         this._addElement(element, `${this._sectionPrefixes[SECTION_ID.ELEMENT]}_${id}`);
         this._showElement(element);
@@ -108,7 +115,7 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
     _addElement(element, key) {
         element.anchor.set(DEFAULT_ANCHOR);
         this._uiElements.addElement(element, key);
-        this._root.addChild(element);
+        this._viewElement.addChild(element);
     }
 
     _showElement(element) {

@@ -7,8 +7,11 @@ const { view, ui } = mCore;
 export default class BorderSelect extends view.ComponentContainer {
     constructor() {
         super();
-        this._createArea('Additional', 14, 14, 0xffffff);
-        this._createArea('Main', 8, 8, 0x000000);
+
+        const additionalSize = 10;
+        const mainSize = 6;
+        this._createArea('Additional', additionalSize, additionalSize, 0xffffff);
+        this._createArea('Main', mainSize, mainSize, 0x000000);
     }
 
     _createArea(name, width, height, tint) {

@@ -15,8 +15,10 @@ export default class EditArea extends ui.Widget {
 
         this.name = "EditArea";
 
-        this.width = DEFAULT_SIZE.PANEL.width;
-        this.height = DEFAULT_SIZE.PANEL.height;
+        this._anchorElement = null;
+
+        super.width = DEFAULT_SIZE.PANEL.width;
+        super.height = DEFAULT_SIZE.PANEL.height;
 
         this._selectSprite = new PIXI.TilingSprite(PIXI.Texture.from(DEFAULT_TEXTURE.SELECT), this.width, this.height);
 
@@ -39,6 +41,7 @@ export default class EditArea extends ui.Widget {
                     element = ui.ImageView.create(DEFAULT_TEXTURE.CIRCLE);
                     updateAnchor = true;
                     name = "AnchorSelect";
+                    this._anchorElement = element;
                 }
                 else {
                     element = BorderSelect.create();
@@ -92,5 +95,47 @@ export default class EditArea extends ui.Widget {
         this._setElementParams(result, name, x, y, true);
 
         return result;
+    }
+
+    get width() {
+        return super.width;
+    }
+
+    set width(value) {
+        const halfValue = util.math.divPowTwo(value);
+        super.width = value;
+        this._selectSprite.width = value;
+        this._borders[0].width = value;
+        this._borders[0].position.x = halfValue;
+        this._borders[2].width = value;
+        this._borders[2].position.x = halfValue;
+        this._borders[3].position.x = value;
+        this._elementsForScaleUpdate[1].position.x = halfValue;
+        this._elementsForScaleUpdate[2].position.x = value;
+        this._elementsForScaleUpdate[5].position.x = value;
+        this._elementsForScaleUpdate[7].position.x = halfValue;
+        this._elementsForScaleUpdate[8].position.x = value;
+        this._anchorElement.position.x = this.anchor.x * value;
+    }
+
+    get height() {
+        return super.height;
+    }
+
+    set height(value) {
+        const halfValue = util.math.divPowTwo(value);
+        super.height = value;
+        this._selectSprite.height = value;
+        this._borders[1].height = value;
+        this._borders[1].position.y = halfValue;
+        this._borders[3].height = value;
+        this._borders[3].position.y = halfValue;
+        this._borders[2].position.y = value;
+        this._elementsForScaleUpdate[3].position.y = halfValue;
+        this._elementsForScaleUpdate[5].position.y = halfValue;
+        this._elementsForScaleUpdate[6].position.y = value;
+        this._elementsForScaleUpdate[7].position.y = value;
+        this._elementsForScaleUpdate[8].position.y = value;
+        this._anchorElement.position.y = this.anchor.y * value;
     }
 }
