@@ -4,9 +4,17 @@ import { createShallow } from "@material-ui/core/test-utils";
 
 import {initialState} from "../../reducer";
 import WorkingArea from "../working-area";
-import "../../../locale";
+import i18n from "i18next";
+import {initReactI18next} from "react-i18next";
+import locale from "../../../../public/static/locale/eng";
 
 describe("working-area test", () => {
+
+    beforeAll( () => {
+
+        i18n.use(initReactI18next).init(locale);
+    });
+
     it ( 'working-area default snapshot', () => {
         const wrapper = createShallow()(
             <WorkingArea

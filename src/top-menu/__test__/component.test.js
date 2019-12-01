@@ -1,4 +1,3 @@
-import "../../locale";
 import AppBar from "../component/app-bar";
 import Button from "../component/button";
 import MenuBackground from "../component/menu-background";
@@ -10,6 +9,9 @@ import TopMenu from "../component/top-menu";
 import React from "react";
 import { initialState } from "../reducer";
 import { createMount } from "@material-ui/core/test-utils";
+import i18n from "i18next";
+import {initReactI18next} from "react-i18next";
+import locale from "../../../public/static/locale/eng";
 
 document.createRange = jest.fn();
 
@@ -20,6 +22,11 @@ jest.mock("@material-ui/core/Popper", () => ({children}) => (
 ));
 
 describe("top-menu test",()=> {
+
+    beforeAll( () => {
+        i18n.use(initReactI18next).init(locale);
+    });
+
     it ( "top-menu snapshot", () => {
         const wrapper = createMount()(
             <TopMenu {...initialState} />

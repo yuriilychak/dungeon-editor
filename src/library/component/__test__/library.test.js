@@ -1,12 +1,19 @@
 import React from "react";
-import { createMount } from '@material-ui/core/test-utils';
+import 'babel-polyfill';
 
-import "../../../locale";
+import { createMount } from '@material-ui/core/test-utils';
 
 import { initialState } from '../../reducer';
 import Library from "../library";
+import i18n from "i18next";
+import {initReactI18next} from "react-i18next";
+import locale from "../../../../public/static/locale/eng";
 
 describe('Library test',() => {
+    beforeAll( () => {
+        i18n.use(initReactI18next).init(locale);
+    });
+
     const defaultProps = {
         ...initialState,
         files: [[], [], [], [], [], [], []],
@@ -22,13 +29,13 @@ describe('Library test',() => {
         onUpdateTree: jest.fn()
     };
 
-    const wrapper = createMount()(
-        <Library
-            {...defaultProps}
-        />
-    );
-
     it("default snapshot", () => {
+        const wrapper = createMount()(
+            <Library
+                {...defaultProps}
+            />
+        );
+
         expect(wrapper.html()).toMatchSnapshot();
     });
 });

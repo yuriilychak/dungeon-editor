@@ -2,7 +2,9 @@ import { RenameFileDialog } from "../component";
 import { initialState } from '../reducer';
 import React from "react";
 import { createMount } from '@material-ui/core/test-utils';
-import "../../locale";
+import i18n from "i18next";
+import {initReactI18next} from "react-i18next";
+import locale from "../../../public/static/locale/eng";
 
 describe('rename-file-dialog index test',() => {
     const props = {
@@ -19,6 +21,10 @@ describe('rename-file-dialog index test',() => {
     );
 
     const projectInput = wrapper.find('input');
+
+    beforeAll( () => {
+        i18n.use(initReactI18next).init(locale);
+    });
 
     it('Open snapshot', () => {
         expect(wrapper.html()).toMatchSnapshot();

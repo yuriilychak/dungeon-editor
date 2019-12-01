@@ -9,6 +9,8 @@ export default class EditArea extends ui.Widget {
     constructor ()  {
         super();
 
+        this._linkedElement = null;
+
         this._elementsForScaleUpdate = [];
 
         this._borders = [];
@@ -95,6 +97,32 @@ export default class EditArea extends ui.Widget {
         this._setElementParams(result, name, x, y, true);
 
         return result;
+    }
+
+    get linkedElement() {
+        return this._linkedElement;
+    }
+
+    set linkedElement(element) {
+        if (this._linkedElement === element) {
+            return;
+        }
+
+        this._linkedElement = element;
+
+        this.anchor.copyFrom(this._linkedElement.anchor);
+
+        this._anchorElement.position.copyFrom(util.geometry.pCompMult(this.anchor, util.geometry.pFromSize(this._linkedElement)));
+
+        this.width = this._linkedElement.width;
+        this.height = this._linkedElement.height;
+
+        const pointToCheck = this._linkedElement.uiType === mCore.enumerator.ui.UI_ELEMENT.IMAGE_VIEW ||
+            this._linkedElement.uiType === mCore.enumerator.ui.UI_ELEMENT.SPRITE
+            ? { x: 0, y : 0}
+            : this._anchorElement.position;
+
+        this.position.copyFrom(this.parent.toLocal(this._linkedElement.toGlobal(pointToCheck)));
     }
 
     get width() {

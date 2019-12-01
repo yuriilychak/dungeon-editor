@@ -59,6 +59,7 @@ export function createElement(type) {
             element = ui.Widget.create();
             element.width = DEFAULT_SIZE.PANEL.width;
             element.height = DEFAULT_SIZE.PANEL.height;
+            element.anchor.set(DEFAULT_ANCHOR);
             return element;
         }
         case UI_ELEMENT.BUTTON: {

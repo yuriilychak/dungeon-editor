@@ -61,6 +61,8 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         element.position.copyFrom(this._crtElement.toLocal(data));
 
         this._crtElement.addChild(element);
+
+        this._editArea.linkedElement = element;
     }
 
     _onCreateUIElement({data}) {
@@ -69,11 +71,10 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
 
         element.name = name;
 
-        this._editArea.width = element.width;
-        this._editArea.height = element.height;
-
         this._addElement(element, `${this._sectionPrefixes[SECTION_ID.ELEMENT]}_${id}`);
         this._showElement(element);
+
+        this._editArea.linkedElement = element;
     }
 
     _onDeleteElements({ data }) {
