@@ -4,12 +4,14 @@ import {DEFAULT_ANCHOR} from "../constants";
 const {mCore} = window;
 const { view, ui } = mCore;
 
-export default class BorderSelect extends view.ComponentContainer {
+export default class BorderSelect extends ui.Widget {
     constructor() {
         super();
 
-        const additionalSize = 10;
-        const mainSize = 6;
+        this.width = 12;
+        this.height = 12;
+        const additionalSize = 12;
+        const mainSize = 8;
         this._createArea('Additional', additionalSize, additionalSize, 0xffffff);
         this._createArea('Main', mainSize, mainSize, 0x000000);
     }

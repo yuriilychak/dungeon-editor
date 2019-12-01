@@ -1,7 +1,7 @@
 import { EVENT } from "../enum";
 import { SECTION_ID } from "../../enum";
 import { DEFAULT_ANCHOR,  } from "../constants";
-import { createElement } from "../utils";
+import { createElement, updateAnchor } from "../utils";
 import { EditArea } from "../view";
 
 const { mCore } = window;
@@ -20,7 +20,17 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
 
         this._editArea = EditArea.create();
 
+        /**
+         * @type {mCore.view.ComponentContainer}
+         * @private
+         */
+
         this._viewElement = mCore.view.ComponentContainer.create();
+
+        /**
+         * @type {mCore.view.ComponentContainer || mCore.view.ComponentSprite}
+         * @private
+         */
 
         this._crtElement = null;
 
@@ -29,6 +39,8 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
          * @private
          */
         this._uiElements = new mCore.repository.Repository();
+
+        this._clickEvent = "UI_ELEMENT.CLICK";
 
         this._sectionPrefixes = {
             [SECTION_ID.TEXTURE]: "texture",
@@ -52,11 +64,19 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         this.listenerManager.addEventListener(EVENT.OFFSET_CHANGE, this._onOffsetChange);
         this.listenerManager.addEventListener(EVENT.SHOW_ELEMENT, this._onShowElement);
         this.listenerManager.addEventListener(EVENT.DELETE_ELEMENTS, this._onDeleteElements);
+
+        this.listenerManager.addEventListener(this._clickEvent, this._onElementClick);
+        this.listenerManager.addEventListener(this._editArea.anchorChangeEvent, this._onElementAnchorChange);
+        this.listenerManager.addEventListener(this._editArea.sizeChangeEvent, this._onElementSizeChange);
+        this.listenerManager.addEventListener(this._editArea.positionChangeEvent, this._onElementPositionChange);
     }
 
     _onCreateElement({data}) {
         const {type} = data;
         const element = createElement(type);
+
+        element.interactive = true;
+        element.interactionManager.eventClick = this._clickEvent;
 
         element.position.copyFrom(this._crtElement.toLocal(data));
 
@@ -70,6 +90,8 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         const element = createElement(type);
 
         element.name = name;
+        element.interactive = true;
+        element.interactionManager.eventClick = this._clickEvent;
 
         this._addElement(element, `${this._sectionPrefixes[SECTION_ID.ELEMENT]}_${id}`);
         this._showElement(element);
@@ -139,5 +161,30 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
 
     _onOffsetChange({data}) {
         this._root.position.copyFrom(data);
+    }
+
+    _onElementClick({target}) {
+        this._editArea.linkedElement = target;
+    }
+
+    _onElementAnchorChange({data}) {
+        updateAnchor(this._editArea.linkedElement, data);
+    }
+
+    _onElementSizeChange({data}) {
+        if (this._editArea.width  + data.x > 12) {
+            this._editArea.width += data.x;
+            this._editArea.linkedElement.width += data.x;
+        }
+
+        if (this._editArea.height  + data.y > 12) {
+            this._editArea.height += data.y;
+            this._editArea.linkedElement.height += data.y;
+        }
+    }
+
+    _onElementPositionChange({data}) {
+        this._editArea.linkedElement.position.x += data.x;
+        this._editArea.linkedElement.position.y += data.y;
     }
 };

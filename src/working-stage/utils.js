@@ -179,3 +179,13 @@ export function createElement(type) {
             return element;
     }
 }
+
+export function updateAnchor(element, nextAnchor) {
+    const { geometry }  = mCore.util;
+    const offset = geometry.pCompMult(
+        geometry.pSub(nextAnchor, element.anchor),
+        geometry.pFromSize(element)
+    );
+    element.anchor.copyFrom(nextAnchor);
+    geometry.pAdd(element.position, offset, true);
+}
