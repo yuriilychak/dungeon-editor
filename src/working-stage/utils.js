@@ -10,6 +10,7 @@ import {
 
 const {mCore} = window;
 const { view, ui, util } = mCore;
+const { geometry }  = mCore.util;
 
 function setSizing(element, size, isSliceEnabled = false) {
     if (isSliceEnabled) {
@@ -181,11 +182,14 @@ export function createElement(type) {
 }
 
 export function updateAnchor(element, nextAnchor) {
-    const { geometry }  = mCore.util;
     const offset = geometry.pCompMult(
         geometry.pSub(nextAnchor, element.anchor),
         geometry.pFromSize(element)
     );
     element.anchor.copyFrom(nextAnchor);
     geometry.pAdd(element.position, offset, true);
+}
+
+export function getAnchorPosition(element) {
+    return geometry.pCompMult(geometry.pFromSize(element), element.anchor, true);
 }

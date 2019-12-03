@@ -18,6 +18,7 @@ const WorkingCanvas = ({onGetCanvasRef, hidden, onCreateElement}) => {
 
     return (
         <canvas
+            id="WorkingCanvas"
             onDrop={onDrop}
             className={classNames(
                 "working-canvas-root",
