@@ -141,7 +141,10 @@
         "TopMenu_About": "About",
         "TopMenu_Publish": "Publish project",
         "WorkingArea_EmptyMessage": "For open some item from library make double click on it.",
-        "WorkingArea_EmptyTitle": "Default"
+        "WorkingArea_EmptyTitle": "Default",
+        "WorkingArea_Mode_Scale": "Scale",
+        "WorkingArea_Mode_Size": "Size",
+        "WorkingArea_Mode_Skew": "Skew"
       }
     }
   },

@@ -1,12 +1,14 @@
 import STATE from "./state";
 import StaticData from "./data/index.json";
 import {WorkingStage} from "../working-stage";
+import {EDIT_MODE} from "../enum";
 
 export const initialState = {
     ...StaticData,
     tabs: [],
     selectedTab: 0,
-    zoomValue: 1
+    zoomValue: 1,
+    mode: EDIT_MODE.SIZE
 };
 
 const closeTab = (state, tabIndex) => {
@@ -84,6 +86,29 @@ const actionHandlers = {
                 }
             )
         }
+    },
+    [STATE.CHANGE_MODE]: (state) => {
+        let mode;
+
+        switch (state.mode) {
+            case EDIT_MODE.SIZE: {
+                mode = EDIT_MODE.SKEW;
+                break;
+            }
+            case EDIT_MODE.SKEW: {
+                mode = EDIT_MODE.SCALE;
+                break;
+            }
+            case EDIT_MODE.SCALE: {
+                mode = EDIT_MODE.SIZE;
+                break;
+            }
+        }
+
+        return {
+            ...state,
+            mode
+        };
     },
     [STATE.CHECK_DELETE]: (state, fileData) => {
         const { tabs } = state;

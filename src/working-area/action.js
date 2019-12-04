@@ -7,5 +7,6 @@ export const zoomChange = zoom => tabAction(STATE.ZOOM_CHANGE, zoom);
 export const checkRename = (fileId, sectionId, title) => tabAction(STATE.CHECK_RENAME, { fileId, sectionId, title });
 export const checkDelete = (fileIds, sectionId) => tabAction(STATE.CHECK_DELETE, { fileIds, sectionId });
 export const transformReset = () => tabAction(STATE.TRANSFORM_RESET);
+export const changeMode = () => tabAction(STATE.CHANGE_MODE);
 
 const tabAction = (type, payload = null) => ({ type, payload });

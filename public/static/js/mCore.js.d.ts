@@ -5,12 +5,12 @@ declare namespace mCore {
                 constructor ();
 
                 readonly isDone: boolean;
-                target: PIXI.DisplayObject;
-                originalTarget: PIXI.DisplayObject;
+                target: mCore.view.ComponentContainer;
+                originalTarget: mCore.view.ComponentContainer;
 
                 clone(): mCore.animation.action.Action;
                 hasTarget(): boolean;
-                startWithTarget(target: PIXI.DisplayObject): void;
+                startWithTarget(target: mCore.view.ComponentContainer): void;
                 stop(): void;
                 step(dt: number): void;
                 update (dt: number):void;
@@ -210,14 +210,14 @@ declare namespace mCore {
             }
 
             export class Follow extends mCore.animation.action.Action {
-                constructor(followedDisplayObject: PIXI.DisplayObject, rect: PIXI.Rectangle);
+                constructor(followedDisplayObject: mCore.view.ComponentContainer, rect: mCore.geometry.Rectangle);
 
                 boundarySet: boolean;
 
                 clone(): mCore.animation.action.Follow;
 
                 // noinspection JSAnnotator
-                static create<T extends mCore.animation.action.Follow>(followedDisplayObject: PIXI.DisplayObject, rect: PIXI.Rectangle): T;
+                static create<T extends mCore.animation.action.Follow>(followedDisplayObject: mCore.view.ComponentContainer, rect: mCore.geometry.Rectangle): T;
             }
 
             export class FrameChange extends mCore.animation.action.ActionInstant {
@@ -439,14 +439,14 @@ declare namespace mCore {
             }
 
             export class TargetedAction extends mCore.animation.action.ActionInterval {
-                constructor(target: PIXI.DisplayObject, action: mCore.animation.action.FiniteTimeAction);
+                constructor(target: mCore.view.ComponentContainer, action: mCore.animation.action.FiniteTimeAction);
 
-                forcedTarget: PIXI.DisplayObject;
+                forcedTarget: mCore.view.ComponentContainer;
 
                 clone(): mCore.animation.action.TargetedAction;
 
                 // noinspection JSAnnotator
-                static create<T extends mCore.animation.action.TargetedAction>(target: PIXI.DisplayObject, action: mCore.animation.action.FiniteTimeAction): T;
+                static create<T extends mCore.animation.action.TargetedAction>(target: mCore.view.ComponentContainer, action: mCore.animation.action.FiniteTimeAction): T;
             }
 
             export class TintBy extends mCore.animation.action.ActionInterval{
@@ -486,7 +486,7 @@ declare namespace mCore {
             }
         }
         export namespace callback {
-            export type CallFuncExecute = (target: PIXI.DisplayObject, data?: any)=>void;
+            export type CallFuncExecute = (target: mCore.view.ComponentContainer, data?: any)=>void;
         }
         export namespace easing {
             export class EaseBackIn extends mCore.animation.easing.EaseBase {
@@ -772,7 +772,7 @@ declare namespace mCore {
 
         export namespace timeLine {
             export class ActionTimeLine extends mCore.animation.timeLine.BaseTimeLine{
-                constructor(target: PIXI.DisplayObject, name);
+                constructor(target: mCore.view.ComponentContainer, name);
 
                 public inherit: boolean;
                 public isResetParameters: boolean;
@@ -792,7 +792,7 @@ declare namespace mCore {
             }
 
             export class BaseTimeLine extends mCore.memory.ReusableObject{
-                constructor(target: PIXI.DisplayObject, name);
+                constructor(target: mCore.view.ComponentContainer, name);
 
                 name: string;
                 fps: number;
@@ -800,7 +800,7 @@ declare namespace mCore {
                 type: mCore.enumerator.animation.TIME_LINE_TYPE;
                 protected readonly fpsCoef;
                 protected runningName;
-                protected target: PIXI.DisplayObject;
+                protected target: mCore.view.ComponentContainer;
                 readonly animations: string;
                 readonly isEmpty: boolean;
                 readonly isPlaying: boolean;
@@ -823,7 +823,7 @@ declare namespace mCore {
             }
 
             export class SpineTimeLine extends mCore.animation.timeLine.BaseTimeLine{
-                constructor(target: PIXI.DisplayObject, name);
+                constructor(target: mCore.view.ComponentContainer, name);
             }
         }
 
@@ -840,7 +840,7 @@ declare namespace mCore {
             readonly isDone: boolean;
             readonly duration: number;
 
-            play(target: PIXI.DisplayObject): void;
+            play(target: mCore.view.ComponentContainer): void;
             stop(): void;
             update(dt: number): void;
             clone(): mCore.animation.ActionAnimation;
@@ -1086,12 +1086,12 @@ declare namespace mCore {
                 emitInteractiveEvent(eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, event: mCore.eventDispatcher.EventModel): void;
                 logHierarchy(widget?: mCore.view.ComponentContainer | mCore.view.ComponentSprite, maxLevel?: number): void;
                 logUnlocalizedFields(widget?: mCore.view.ComponentContainer | mCore.view.ComponentSprite): void;
-                setChildText<T extends PIXI.Container>(text: any, path: string, widget?: T): boolean;
-                localize<T extends PIXI.Container>(key: string, path: string, widget?: T): boolean;
-                getChildView<T extends PIXI.Container>(path: string, widget?: T): T | null;
-                addComponentToChild<P extends PIXI.Container, T extends mCore.component.Component>(component: T, path?: string, widget?: P): T;
-                addChildListener<T extends PIXI.Container>(listener: mCore.eventDispatcher.InteractiveCallback, eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, path: string, widget?: T): boolean;
-                removeChildListener<T extends PIXI.Container>(eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, path: string,  widget?: T): boolean;
+                setChildText<T extends mCore.view.ComponentContainer>(text: any, path: string, widget?: T): boolean;
+                localize<T extends mCore.view.ComponentContainer>(key: string, path: string, widget?: T): boolean;
+                getChildView<T extends mCore.view.ComponentContainer>(path: string, widget?: T): T | null;
+                addComponentToChild<P extends mCore.view.ComponentContainer, T extends mCore.component.Component>(component: T, path?: string, widget?: P): T;
+                addChildListener<T extends mCore.view.ComponentContainer>(listener: mCore.eventDispatcher.InteractiveCallback, eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, path: string, widget?: T): boolean;
+                removeChildListener<T extends mCore.view.ComponentContainer>(eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, path: string,  widget?: T): boolean;
                 removeAllChildListeners() : void;
                 clone(): mCore.component.ui.ComUI;
             }
@@ -1164,8 +1164,8 @@ declare namespace mCore {
             onAdd(owner: mCore.view.ComponentContainer): void;
             onRemove(): void;
             onUpdate(dt: number): void;
-            onAddChild(child: PIXI.DisplayObject): void;
-            onRemoveChild(child: PIXI.DisplayObject): void;
+            onAddChild(child: mCore.view.ComponentContainer): void;
+            onRemoveChild(child: mCore.view.ComponentContainer): void;
             onVisibleChange(visible: boolean): void;
             clone(): mCore.component.Component;
         }
@@ -1556,7 +1556,7 @@ declare namespace mCore {
     }
 
     export namespace geometry {
-        export class Point extends PIXI.Point implements mCore.memory.ReusableObject {
+        export class Point implements mCore.memory.ReusableObject {
             constructor(x?: number, y?: number, type?: mCore.enumerator.NUMBER_TYPE);
 
             public x: number;
@@ -1574,7 +1574,7 @@ declare namespace mCore {
             public static create<T extends mCore.geometry.Point>(x?: number, y?: number, type?: mCore.enumerator.NUMBER_TYPE): T;
         }
 
-        export class Rectangle extends PIXI.Point implements mCore.memory.ReusableObject {
+        export class Rectangle extends mCore.geometry.Point implements mCore.memory.ReusableObject {
             constructor(x?: number, y?: number, width?: number, height?: number, type?: mCore.enumerator.NUMBER_TYPE);
 
             public static EMPTY: mCore.geometry.Rectangle;
@@ -1728,8 +1728,8 @@ declare namespace mCore {
             constructor(owner: mCore.view.ComponentContainer | mCore.view.ComponentSprite);
 
             iterateUIComponents(callback: mCore.view.callback.IterateComponent);
-            addChildrenAction(children: PIXI.DisplayObject[]): void;
-            removeChildrenAction(children: PIXI.DisplayObject[]): void;
+            addChildrenAction(children: mCore.view.ComponentContainer[]): void;
+            removeChildrenAction(children: mCore.view.ComponentContainer[]): void;
             visibleAction(visible: boolean): void;
             addComponent(component: mCore.component.Component): boolean;
             addComponents(components: any[]): void;
@@ -2026,7 +2026,7 @@ declare namespace mCore {
 
             }
 
-            export class OutlineBitmapText extends PIXI.Container {
+            export class OutlineBitmapText extends mCore.view.ComponentContainer {
                 constructor(fontName: string, size: number);
                 anchor: mCore.geometry.Point;
                 maxWidth: number;
@@ -2172,7 +2172,7 @@ declare namespace mCore {
             public emitInteractiveEvent(eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, event: mCore.eventDispatcher.EventModel): void;
             public doLayout(): void;
 
-            protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
+            protected updateChildTint<T extends mCore.view.ComponentContainer>(child: T): void;
             protected onUpdate(dt: number): void;
             // noinspection JSAnnotator
             static create(frameName: string): mCore.ui.ImageView;
@@ -2336,7 +2336,7 @@ declare namespace mCore {
 
         // @ts-ignore
         export class Widget extends mCore.view.ComponentContainer {
-            constructor(collider?: PIXI.Sprite | mCore.view.Slice9Sprite);
+            constructor(collider?: mCore.view.ComponentSprite | mCore.view.Slice9Sprite);
 
             clipping: boolean;
             clippingType: mCore.enumerator.ui.CLIPPING_TYPE;
@@ -2346,10 +2346,10 @@ declare namespace mCore {
             flipY: boolean;
 
             // noinspection JSAnnotator
-            static create(collider?: PIXI.Sprite | mCore.view.Slice9Sprite): mCore.ui.Widget;
+            static create(collider?: mCore.view.ComponentSprite | mCore.view.Slice9Sprite): mCore.ui.Widget;
             public setSlice(leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): void;
 
-            protected collider: PIXI.Sprite | mCore.view.Slice9Sprite | mCore.ui.ancillary.StateSlice9Sprite;
+            protected collider: mCore.view.ComponentSprite | mCore.view.Slice9Sprite | mCore.ui.ancillary.StateSlice9Sprite;
         }
     }
 
@@ -2357,7 +2357,7 @@ declare namespace mCore {
     export namespace util {
         export namespace asset {
             export function getSpriteFrame(link: string): PIXI.Texture | null;
-            export function createWhiteSprite(): PIXI.Sprite;
+            export function createWhiteSprite(): mCore.view.ComponentSprite;
         }
         export namespace color {
             export enum COLORS {
@@ -2402,9 +2402,9 @@ declare namespace mCore {
 
         }
         export namespace geometry {
-            export function pFromSize(size: PIXI.Container | PIXI.Rectangle, inPoint?: mCore.geometry.Point): mCore.geometry.Point;
-            export function pHalfSize(size: PIXI.Container | PIXI.Rectangle, inPoint?: mCore.geometry.Point): mCore.geometry.Point;
-            export function sSub(size1: PIXI.Container | PIXI.Rectangle, size2: PIXI.Container | PIXI.Rectangle, inPoint?: mCore.geometry.Point): mCore.geometry.Point;
+            export function pFromSize(size: mCore.view.ComponentContainer | mCore.geometry.Rectangle, inPoint?: mCore.geometry.Point): mCore.geometry.Point;
+            export function pHalfSize(size: mCore.view.ComponentContainer | mCore.geometry.Rectangle, inPoint?: mCore.geometry.Point): mCore.geometry.Point;
+            export function sSub(size1: mCore.view.ComponentContainer | mCore.geometry.Rectangle, size2: mCore.view.ComponentContainer | mCore.geometry.Rectangle, inPoint?: mCore.geometry.Point): mCore.geometry.Point;
             export function pSub(p1: mCore.geometry.Point, p2: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
             export function pAdd(p1: mCore.geometry.Point, p2: mCore.geometry.Point, isIn?: boolean): mCore.geometry.Point;
             export function pMult(p: mCore.geometry.Point, multiplier: number, isIn?: boolean): mCore.geometry.Point;
@@ -2474,24 +2474,29 @@ declare namespace mCore {
         }
 
         export namespace ui {
-            export function fullPath<T extends PIXI.DisplayObject>(node: T): string;
+            export function fullPath<T extends mCore.view.ComponentContainer>(node: T): string;
             export function logHierarchy(widget: mCore.view.ComponentContainer | mCore.view.ComponentSprite, maxLevel?: number): void;
             export function logUnlocalizedFields(widget: mCore.view.ComponentContainer | mCore.view.ComponentSprite): void;
-            export function getChildView<T extends PIXI.Container>(path: string, firstElement: T): T| null;
-            export function localize<T extends PIXI.DisplayObject>(root: T): void;
+            export function getChildView<T extends mCore.view.ComponentContainer>(path: string, firstElement: T): T| null;
+            export function localize<T extends mCore.view.ComponentContainer>(root: T): void;
         }
     }
 
     export namespace view {
         namespace callback {
-            type ChildAction = (component: mCore.component.Component, child: PIXI.DisplayObject) => void;
+            type ChildAction = (component: mCore.component.Component, child: mCore.view.ComponentContainer) => void;
             type IterateComponent = (component: mCore.component.Component, index?: number) => void;
         }
 
-        export class ComponentContainer extends PIXI.Container {
+        export class ComponentContainer {
             constructor();
 
-
+            rotation: number;
+            parent: mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.view.ComponentSpine;
+            height: number;
+            width: number;
+            position: mCore.geometry.Point;
+            anchor: mCore.geometry.Point;
             reusable: boolean;
             blockEvents: boolean;
             inPool: boolean;
@@ -2521,16 +2526,20 @@ declare namespace mCore {
 
             public destroy(): void;
 
+            public toLocal(point: mCore.geometry.Point): mCore.geometry.Point;
+
+            public toGlobal(point: mCore.geometry.Point): mCore.geometry.Point;
+
             public emitInteractiveEvent(eventType: mCore.enumerator.ui.INTERACTIVE_EVENT, event: mCore.eventDispatcher.EventModel): void;
 
             public doLayout(): void;
 
-            protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
+            protected updateChildTint<T extends mCore.view.ComponentContainer>(child: T): void;
 
             protected onUpdate(dt: number): void;
         }
 
-        export class ComponentSpine extends PIXI.spine.Spine {
+        export class ComponentSpine extends mCore.view.ComponentContainer {
             constructor(skeletonName: string);
 
             reusable: boolean;
@@ -2565,13 +2574,13 @@ declare namespace mCore {
 
             public doLayout(): void;
 
-            protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
+            protected updateChildTint<T extends mCore.view.ComponentContainer>(child: T): void;
 
             protected onUpdate(dt: number): void;
 
         }
 
-        export class ComponentSprite extends PIXI.Sprite {
+        export class ComponentSprite extends mCore.view.ComponentSprite {
             constructor(frameName: string);
 
             reusable: boolean;
@@ -2606,13 +2615,13 @@ declare namespace mCore {
 
             public doLayout(): void;
 
-            protected updateChildTint<T extends PIXI.DisplayObject>(child: T): void;
+            protected updateChildTint<T extends mCore.view.ComponentContainer>(child: T): void;
 
             protected onUpdate(dt: number): void;
 
         }
 
-        export class Scene extends PIXI.Container {
+        export class Scene extends mCore.view.ComponentContainer {
             constructor(comTransitionShow?: mCore.component.Component, comTransitionHide?: mCore.component.Component);
 
             static create<T extends mCore.view.Scene>(comTransitionShow?: mCore.component.Component, comTransitionHide?: mCore.component.Component): T;
@@ -2631,7 +2640,7 @@ declare namespace mCore {
 
         }
 
-        export class Slice9Sprite extends PIXI.Container {
+        export class Slice9Sprite extends mCore.view.ComponentContainer {
             constructor(frameName: string, leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number);
 
             tint: number;

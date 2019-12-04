@@ -19,6 +19,11 @@ export default {
 
     _zoomCallback: null,
 
+    /**
+     * @type {boolean}
+     * @private
+     */
+
     _isDrag: false,
 
     /**
@@ -77,6 +82,10 @@ export default {
         this._zoomCallback = callback;
     },
 
+    setChangeModeCallback(callback) {
+        this._addListener(EVENT.EDIT_MODE_CHANGE_INSIDE, callback);
+    },
+
     dispatchDragStart(event) {
         this._isDrag = true;
         this._dispatch(EVENT.DRAG_START, event);
@@ -97,6 +106,10 @@ export default {
 
     dispatchDelete(type, fileIds) {
         this._dispatch(EVENT.DELETE_ELEMENTS, { type, fileIds });
+    },
+
+    dispatchEditModeChange() {
+        this._dispatch(EVENT.EDIT_MODE_CHANGE_OUTSIDE);
     },
 
     _addListener(event, callback) {

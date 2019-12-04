@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {WorkingArea} from "./component";
-import {selectTab, closeTab, zoomChange, transformReset} from "./action";
+import {selectTab, closeTab, zoomChange, transformReset, changeMode} from "./action";
 
 import {WorkingStage} from "../working-stage";
 import {openElement} from "../bottom-menu/action";
@@ -10,6 +10,7 @@ const mapStateToProps = state => state.workingArea;
 const mapDispatchToProps = dispatch => ({
     onComponentMount() {
         WorkingStage.setZoomCallback(zoom => dispatch(zoomChange(zoom)));
+        WorkingStage.setChangeModeCallback(() => dispatch(changeMode()));
     },
     onSelectTab(index, sectionId, fileId) {
         dispatch(selectTab(index));
@@ -42,6 +43,10 @@ const mapDispatchToProps = dispatch => ({
     },
     onCreateElement(type, posX, posY) {
         WorkingStage.createElelement(type, posX, posY);
+    },
+    onChangeMode() {
+        WorkingStage.dispatchEditModeChange();
+        dispatch(changeMode());
     }
 });
 

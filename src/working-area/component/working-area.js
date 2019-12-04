@@ -21,7 +21,7 @@ import {
 
 import { getIndent } from "../../helpers";
 
-import "./working-area.css";
+import "./working-area.scss";
 
 const useTabStyles = makeStyles({
     root: {
@@ -54,6 +54,7 @@ const WorkingArea = ({
                          emptyIcon,
                          tabs,
                          icons,
+    mode,
                          selectedTab,
                          onSelectTab,
                          onGetCanvasRef,
@@ -64,7 +65,8 @@ const WorkingArea = ({
                          onComponentMount,
                          onScrollStart,
                          onScrollMove,
-                         onScrollEnd
+                         onScrollEnd,
+                         onChangeMode
                      }) => {
     const classes = useTabStyles();
     const {t} = useTranslation();
@@ -150,6 +152,12 @@ const WorkingArea = ({
                                 aria-labelledby="discrete-slider"
                                 valueLabelDisplay="auto"
                             />
+                            <div
+                                className="working-area-control-panel-mode"
+                                onClick={onChangeMode}
+                            >
+                                {t(`${locales.editMode}${mode}`)}
+                            </div>
                         </div>
                     )
                 }

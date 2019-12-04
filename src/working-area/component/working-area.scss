@@ -1,14 +1,17 @@
+@import "../../colors";
+@import "../../sizes";
+
 .working-area-root {
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #181818;
+    background-color: $back-deep-dark;
 }
 
 .working-area-header {
     width: 100%;
-    background-color: #2a2b2f;
+    background-color: $back-dark;
 }
 
 .working-area-body {
@@ -35,12 +38,24 @@
     padding: 0 8px;
     box-sizing: border-box;
     position: absolute;
-    width: 200px;
+    width: 256px;
     bottom: 0;
     right: 0;
-    color: white;
+    color: $text-contrast;
     user-select: none;
-    background-color: #2a2b2f;
+    background-color: $back-dark;
+}
+
+.working-area-control-panel-mode {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: $item-size_small;
+    margin-left: $indent_l;
+    background-color: $back-main;
+    font-size: $font-size_small;
 }
 
 .working-area-interactions {
@@ -52,7 +67,7 @@
 }
 
 .working-area-empty-message {
-    width: 512px;
-    color: white;
+    width: $item-size_mega;
+    color: $text-contrast;
     user-select: none;
 }

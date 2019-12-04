@@ -4,7 +4,8 @@
   "icons": ["element", "font", "particle", "skeleton", "sound", "texture", "tile_map"],
   "locales": {
     "emptyTitle": "WorkingArea_EmptyTitle",
-    "emptyMessage": "WorkingArea_EmptyMessage"
+    "emptyMessage": "WorkingArea_EmptyMessage",
+    "editMode": "WorkingArea_Mode_"
   },
   "zoom": {
     "step": 0.25,
