@@ -181,10 +181,39 @@ export function createElement(type) {
     }
 }
 
+/**
+ * @param {mCore.view.ComponentContainer} element
+ * @param {mCore.geometry.Point} prevGlobal
+ * @param {mCore.geometry.Point} nextGlobal
+ */
+
+export function updatePosition(element, prevGlobal, nextGlobal) {
+    const prevLocal = element.parent.toLocal(prevGlobal);
+    const nextLocal = element.parent.toLocal(nextGlobal);
+    const offset = geometry.pSub(nextLocal, prevLocal);
+    geometry.pAdd(element.position, offset, true);
+}
+
+/**
+ * @param {mCore.view.ComponentContainer} element
+ * @param {mCore.view.ComponentContainer} root
+ * @returns {mCore.geometry.Point}
+ */
+
+export function getWorldScale(element, root) {
+    return mCore.geometry.Point.create(
+        element.worldTransform.a / root.scale.x,
+        element.worldTransform.d / root.scale.y,
+    )
+}
+
 export function updateAnchor(element, nextAnchor) {
     const offset = geometry.pCompMult(
         geometry.pSub(nextAnchor, element.anchor),
-        geometry.pFromSize(element)
+        geometry.pCompMult(
+            geometry.pFromSize(element),
+            element.scale
+        )
     );
     element.anchor.copyFrom(nextAnchor);
     geometry.pAdd(element.position, offset, true);

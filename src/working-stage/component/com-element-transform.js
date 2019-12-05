@@ -1,5 +1,5 @@
-import {EVENT, CURSOR, MOUSE_BUTTON} from "../enum";
-import { updateAnchor, getAnchorPosition } from "../utils";
+import {EVENT, CURSOR} from "../enum";
+import { updateAnchor, getAnchorPosition, getWorldScale, updatePosition } from "../utils";
 import {EDIT_MODE} from "../../enum";
 
 const { mCore } = window;
@@ -92,15 +92,26 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             `BorderSelect_${rowIndex}_${columnIndex}`,
             this._onBorderDrag,
             this._onBorderOver,
-            this._onBorderOut
+            this._onBorderOut,
+            this._onBorderDragStart,
+            this._onBorderDragFinish
         );
     }
 
-    _addSelectListeners(path, onDrag, onOver, onOut) {
+    _addSelectListeners(path, onDrag, onOver, onOut, onDragStart, onDragFinish) {
         const { INTERACTIVE_EVENT } = mCore.enumerator.ui;
+
         this.addChildListener(onDrag, INTERACTIVE_EVENT.DRAG, path);
         this.addChildListener(onOver, INTERACTIVE_EVENT.OVER, path);
         this.addChildListener(onOut, INTERACTIVE_EVENT.OUT, path);
+
+        if (onDragStart) {
+            this.addChildListener(onDragStart, INTERACTIVE_EVENT.DRAG_START, path);
+        }
+
+        if (onDragFinish) {
+            this.addChildListener(onDragFinish, INTERACTIVE_EVENT.DRAG_FINIS, path);
+        }
     }
 
     _onBorderOver({target}) {
@@ -176,10 +187,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
     }
 
     _isLeftButton(data) {
-        /*
-         * TODO FIx in manticore. Drag event don't return button id.
-         */
-        return true;
+        return data.data.button === mCore.enumerator.MOUSE_BUTTON.LEFT;
     }
 
     _extractBorderIndex(name) {
@@ -189,6 +197,14 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             parseInt(indices[1], radix),
             parseInt(indices[2], radix)
         );
+    }
+
+    _onBorderDragStart({ data, target}) {
+
+    }
+
+    _onBorderDragFinish() {
+
     }
 
     _onBorderDrag({data, target}) {
@@ -204,33 +220,43 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             case EDIT_MODE.SIZE: {
                 const localPos = this._toLocal(data.data.global);
 
-                this._updateDimension(localPos, minSize, index.x, "y", "height", 'a');
-                this._updateDimension(localPos, minSize, index.y, "x", "width", 'd');
+                this._updateDimension(localPos, minSize, index.x, "y", "height", 'd');
+                this._updateDimension(localPos, minSize, index.y, "x", "width", 'a');
 
                 this.listenerManager.dispatchEvent(EVENT.ELEMENT_SIZE_CHANGE, geometry.pFromSize(this._selectedElement));
                 break;
             }
             case EDIT_MODE.SKEW: {
                 if (index.x === index.y || math.abs(index.x - index.y) === 2) {
-                    const ownerPos = this._toParentCoords(this.owner.toGlobal(getAnchorPosition(this.owner)));
-                    const pointerPos = this._toParentCoords(data.data.global);
-                    const offset = geometry.pSub(pointerPos, ownerPos, true);
+                    const ownerPos = this.owner.parent.toGlobal(this.owner.position);
+                    const offset = geometry.pSub(data.data.global, ownerPos, true);
+                    console.log(Math.atan2(offset.y, offset.x) * 180 / Math.PI);
                     const rotation = Math.atan2(offset.y, offset.x);
+                    //console.log(rotation,  index.x, index.y);
                     this.owner.rotation = rotation;
                     this._selectedElement.rotation = rotation;
+                }
+                else {
+
                 }
                 break;
             }
             case EDIT_MODE.SCALE: {
                 const localPos = this._toLocal(data.data.global);
-                const nextWidth = this._calculateDimension(localPos, index.y, 'x', 'width', 'a');
-                const nextHeight = this._calculateDimension(localPos, index.x, 'y', 'height', 'd');
-                this._selectedElement.scale.set(
-                    nextWidth / this._selectedElement.width,
-                    nextHeight / this._selectedElement.height
+                const nextSize = mCore.geometry.Point.create(
+                    this._calculateDimension(localPos, index.y, 'x', 'width', 'a'),
+                    this._calculateDimension(localPos, index.x, 'y', 'height', 'd')
                 );
-                this.owner.width = nextWidth;
-                this.owner.height = nextHeight;
+                const elementSize = geometry.pFromSize(this._selectedElement);
+                const parentScale = getWorldScale(this._selectedElement.parent, this.owner.parent);
+
+                this._selectedElement.scale.copyFrom(geometry.pCompDiv(nextSize, geometry.pCompMult(elementSize, parentScale)));
+                this.owner.width = nextSize.x;
+                this.owner.height = nextSize.y;
+
+                elementSize.destroy();
+                parentScale.destroy();
+                nextSize.destroy();
                 break;
             }
         }
@@ -241,8 +267,9 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         const nextDimension = this._calculateDimension(localPos, index, cord, dimension);
 
         if (nextDimension > minSize) {
-            this.owner[dimension] = nextDimension;
-            this._selectedElement[dimension] = nextDimension / this._selectedElement.worldTransform[transform];
+            this.owner[dimension] = math.round(nextDimension);
+            console.log(this._selectedElement.worldTransform.b, this._selectedElement.worldTransform.c);
+            this._selectedElement[dimension] = math.round(nextDimension * this.owner.parent.scale[cord] / this._selectedElement.worldTransform[transform]);
         }
     }
 
@@ -265,20 +292,19 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             return;
         }
         this._canvas.style.cursor = CURSOR.MOVE;
-        this._dragPosition.copyFrom(this._toParentCoords(data.data.global));
+        this._dragPosition.copyFrom(data.data.global);
     }
 
     _onPositionDragMove({data}) {
         if (!this._isLeftButton(data)) {
             return;
         }
-        const nextPos = this._toParentCoords(data.data.global);
-        const offset = geometry.pSub(nextPos, this._dragPosition);
+        const nextPos = data.data.global;
+
+        updatePosition(this.owner, this._dragPosition, nextPos);
+        updatePosition(this._selectedElement, this._dragPosition, nextPos);
 
         this._dragPosition.copyFrom(nextPos);
-
-        geometry.pAdd(this.owner.position, offset, true);
-        geometry.pAdd(this._selectedElement.position, offset, true);
 
         this.listenerManager.dispatchEvent(EVENT.ELEMENT_POSITION_CHANGE, this._selectedElement.position);
     }
@@ -330,10 +356,16 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             this._positionDragFinishEvent
         );
 
+        this._selectedElement.updateTransform();
+
         this.owner.rotation = this._selectedElement.rotation;
 
-        this.owner.width = this._selectedElement.width * this._selectedElement.worldTransform.a;
-        this.owner.height = this._selectedElement.height * this._selectedElement.worldTransform.d;
+        const elementWorldTransform = getWorldScale(this._selectedElement, this.owner.parent);
+
+        this.owner.width = math.round(this._selectedElement.width * elementWorldTransform.x);
+        this.owner.height = math.round(this._selectedElement.height * elementWorldTransform.y);
+
+        elementWorldTransform.destroy();
 
         updateAnchor(this.owner, this._selectedElement.anchor);
 

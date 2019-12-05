@@ -1,6 +1,251 @@
 declare namespace mCore {
+    class TransformBase {
+        static IDENTITY: TransformBase;
+
+        worldTransform: Matrix;
+        localTransform: Matrix;
+
+        protected _worldID: number;
+        protected _parentID: number;
+
+        updateLocalTransform(): void;
+        updateTransform(parentTransform: TransformBase): void;
+        updateWorldTransform(parentTransform: TransformBase): void;
+    }
+
+    class Matrix {
+        constructor(a?: number, b?: number, c?: number, d?: number, tx?: number, ty?: number);
+
+        a: number;
+        b: number;
+        c: number;
+        d: number;
+        tx: number;
+        ty: number;
+        fromArray(array: number[]): void;
+        set(a: number, b: number, c: number, d: number, tx: number, ty: number): Matrix;
+        toArray(transpose?: boolean, out?: number[]): number[];
+        apply(pos: mCore.geometry.Point, newPos?: mCore.geometry.Point): mCore.geometry.Point;
+        applyInverse(pos: mCore.geometry.Point, newPos?: mCore.geometry.Point): mCore.geometry.Point;
+        translate(x: number, y: number): Matrix;
+        scale(x: number, y: number): Matrix;
+        rotate(angle: number): Matrix;
+        append(matrix: Matrix): Matrix;
+        setTransform(
+            x: number,
+            y: number,
+            pivotX: number,
+            pivotY: number,
+            scaleX: number,
+            scaleY: number,
+            rotation: number,
+            skewX: number,
+            skewY: number
+        ): Matrix;
+        prepend(matrix: Matrix): Matrix;
+        invert(): Matrix;
+        identity(): Matrix;
+        decompose(transform: TransformBase): TransformBase;
+        clone(): Matrix;
+        copy(matrix: Matrix): Matrix;
+
+        static IDENTITY: Matrix;
+        static TEMP_MATRIX: Matrix;
+    }
+
+    class BaseTexture {
+        static from(
+            source: string | HTMLImageElement | HTMLCanvasElement,
+            scaleMode?: number,
+            sourceScale?: number
+        ): BaseTexture;
+
+        constructor(
+            source?: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement,
+            scaleMode?: number,
+            resolution?: number
+        );
+
+        protected uuid?: number;
+        protected touched: number;
+        resolution: number;
+        width: number;
+        height: number;
+        realWidth: number;
+        realHeight: number;
+        scaleMode: number;
+        hasLoaded: boolean;
+        isLoading: boolean;
+        wrapMode: number;
+        source: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement | null;
+        origSource: HTMLImageElement | null;
+        imageType: string | null;
+        sourceScale: number;
+        premultipliedAlpha: boolean;
+        imageUrl: string | null;
+        protected isPowerOfTwo: boolean;
+        mipmap: boolean;
+        wrap?: boolean;
+        protected _glTextures: any;
+        protected _enabled: number;
+        protected _id?: number;
+        protected _virtualBoundId: number;
+        protected readonly _destroyed: boolean;
+        textureCacheIds: string[];
+
+        update(): void;
+        protected _updateDimensions(): void;
+        protected _updateImageType(): void;
+        protected _loadSvgSource(): void;
+        protected _loadSvgSourceUsingDataUri(dataUri: string): void;
+        protected _loadSvgSourceUsingXhr(): void;
+        protected _loadSvgSourceUsingString(svgString: string): void;
+        protected loadSource(source: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement): void;
+        protected _sourceLoaded(): void;
+        destroy(): void;
+        dispose(): void;
+        updateSourceImage(newSrc: string): void;
+
+        static fromImage(
+            imageUrl: string,
+            crossorigin?: boolean,
+            scaleMode?: number,
+            sourceScale?: number
+        ): BaseTexture;
+        static fromCanvas(canvas: HTMLCanvasElement, scaleMode?: number, origin?: string): BaseTexture;
+        static addToCache(baseTexture: BaseTexture, id: string): void;
+        static removeFromCache(baseTexture: string | BaseTexture): BaseTexture;
+
+        on(
+            event: "update" | "loaded" | "error" | "dispose",
+            fn: (baseTexture: BaseTexture) => void,
+            context?: any
+        ): this;
+        once(
+            event: "update" | "loaded" | "error" | "dispose",
+            fn: (baseTexture: BaseTexture) => void,
+            context?: any
+        ): this;
+        removeListener(
+            event: "update" | "loaded" | "error" | "dispose",
+            fn?: (baseTexture: BaseTexture) => void,
+            context?: any
+        ): this;
+        removeAllListeners(event?: "update" | "loaded" | "error" | "dispose"): this;
+        off(
+            event: "update" | "loaded" | "error" | "dispose",
+            fn?: (baseTexture: BaseTexture) => void,
+            context?: any
+        ): this;
+        addListener(
+            event: "update" | "loaded" | "error" | "dispose",
+            fn: (baseTexture: BaseTexture) => void,
+            context?: any
+        ): this;
+    }
+
+    class Texture {
+        constructor(
+            baseTexture: BaseTexture,
+            frame?: mCore.geometry.Rectangle,
+            orig?: mCore.geometry.Rectangle,
+            trim?: mCore.geometry.Rectangle,
+            rotate?: number,
+            anchor?: mCore.geometry.Point
+        );
+
+        noFrame: boolean;
+        baseTexture: BaseTexture;
+        protected _frame: mCore.geometry.Rectangle;
+        trim?: mCore.geometry.Rectangle;
+        valid: boolean;
+        requiresUpdate: boolean;
+        protected _uvs: TextureUvs;
+        orig: mCore.geometry.Rectangle;
+        defaultAnchor: mCore.geometry.Point;
+        protected _updateID: number;
+        transform: TextureMatrix;
+        textureCacheIds: string[];
+
+        update(): void;
+        protected onBaseTextureLoaded(baseTexture: BaseTexture): void;
+        protected onBaseTextureUpdated(baseTexture: BaseTexture): void;
+        destroy(destroyBase?: boolean): void;
+        clone(): Texture;
+        _updateUvs(): void;
+
+        static fromImage(imageUrl: string, crossOrigin?: boolean, scaleMode?: number, sourceScale?: number): Texture;
+        static fromFrame(frameId: string): Texture;
+        static fromCanvas(canvas: HTMLCanvasElement, scaleMode?: number, origin?: string): Texture;
+        static fromVideo(
+            video: HTMLVideoElement | string,
+            scaleMode?: number,
+            crossorigin?: boolean,
+            autoPlay?: boolean
+        ): Texture;
+        static fromVideoUrl(videoUrl: string, scaleMode?: number, crossorigin?: boolean, autoPlay?: boolean): Texture;
+        static from(
+            source: number | string | HTMLImageElement | HTMLCanvasElement | HTMLVideoElement | BaseTexture
+        ): Texture;
+        static fromLoader(source: HTMLImageElement | HTMLCanvasElement, imageUrl: string, name?: string): Texture;
+        static addToCache(texture: Texture, id: string): void;
+        static removeFromCache(texture: string | Texture): Texture;
+
+        // depreciation
+        static addTextureToCache(texture: Texture, id: string): void;
+        static removeTextureFromCache(id: string): Texture;
+
+        frame: mCore.geometry.Rectangle;
+        protected _rotate: boolean | 0;
+        rotate: number;
+        width: number;
+        height: number;
+
+        static EMPTY: Texture;
+        static WHITE: Texture;
+
+        on(event: "update", fn: (texture: Texture) => void, context?: any): this;
+        once(event: "update", fn: (texture: Texture) => void, context?: any): this;
+        removeListener(event: "update", fn?: (texture: Texture) => void, context?: any): this;
+        removeAllListeners(event?: "update"): this;
+        off(event: "update", fn?: (texture: Texture) => void, context?: any): this;
+        addListener(event: "update", fn: (texture: Texture) => void, context?: any): this;
+    }
+    class TextureMatrix {
+        constructor(texture: Texture, clampMargin?: number);
+
+        protected _texture: Texture;
+        mapCoord: Matrix;
+        uClampFrame: Float32Array;
+        uClampOffset: Float32Array;
+        protected _lastTextureID: number;
+
+        clampOffset: number;
+        clampMargin: number;
+
+        texture: Texture;
+
+        update(forceUpdate?: boolean): boolean;
+        multiplyUvs(uvs: Float32Array, out?: Float32Array): Float32Array;
+    }
+    class TextureUvs {
+        x0: number;
+        y0: number;
+        x1: number;
+        y1: number;
+        x2: number;
+        y2: number;
+        x3: number;
+        y3: number;
+
+        uvsUint32: Uint32Array;
+
+        protected set(frame: mCore.geometry.Rectangle, baseFrame: mCore.geometry.Rectangle, rotate: number): void;
+    }
+
     export namespace animation {
         export namespace action {
+            // @ts-ignore
             export class Action extends mCore.memory.ReusableObject{
                 constructor ();
 
@@ -26,6 +271,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.ActionInstant>(): T;
             }
 
+            // @ts-ignore
             export class ActionInterval extends mCore.animation.action.FiniteTimeAction {
                 constructor(duration?: number);
 
@@ -49,6 +295,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.ActionInterval>(duration?: number): T;
             }
 
+            // @ts-ignore
             export class BezierBy extends mCore.animation.action.ActionInterval{
                 constructor(duration: number, controlPoints: mCore.geometry.Point[]);
 
@@ -69,6 +316,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.BezierTo>(duration: number, controlPoints: mCore.geometry.Point[]): T;
             }
 
+            // @ts-ignore
             export class Blink extends ActionInterval {
                 constructor(duration: number, blinks: number);
 
@@ -79,6 +327,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.Blink>(duration: number, blinks: number): T;
             }
 
+            // @ts-ignore
             export class CallFunc extends mCore.animation.action.ActionInstant {
                 constructor(callback: mCore.animation.callback.CallFuncExecute, context?: Object, data?: any);
 
@@ -112,6 +361,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.CardinalSplineBy>(duration: number): T;
             }
 
+            // @ts-ignore
             export class CardinalSplineTo extends mCore.animation.action.CardinalSpline {
                 constructor(duration: number, points: mCore.geometry.Point[], tension?: number);
 
@@ -127,6 +377,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.CardinalSplineTo>(duration: number): T;
             }
 
+            // @ts-ignore
             export class CatmullRomBy extends mCore.animation.action.CardinalSplineBy {
                 constructor(duration: number, points: mCore.geometry.Point[]);
 
@@ -136,6 +387,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.CatmullRomBy>(duration: number, points: mCore.geometry.Point[]): T;
             }
 
+            // @ts-ignore
             export class CatmullRomTo extends mCore.animation.action.CardinalSplineTo {
                 constructor(duration: number, points: mCore.geometry.Point[]);
 
@@ -145,6 +397,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.CatmullRomTo>(duration: number, points: mCore.geometry.Point[]): T;
             }
 
+            // @ts-ignore
             export class DelayTime extends mCore.animation.action.ActionInterval{
                 reverse(): mCore.animation.action.DelayTime;
                 clone(): mCore.animation.action.DelayTime;
@@ -153,6 +406,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.DelayTime>(duration: number): T;
             }
 
+            // @ts-ignore
             export class FadeIn extends mCore.animation.action.FadeTo {
                 constructor(duration: number);
                 reverse(): mCore.animation.action.FadeTo;
@@ -162,6 +416,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.FadeIn>(duration: number): T;
             }
 
+            // @ts-ignore
             export class FadeOut extends mCore.animation.action.FadeTo {
                 constructor(duration: number);
 
@@ -172,6 +427,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.FadeOut>(duration: number): T;
             }
 
+            // @ts-ignore
             export class FadeTo extends mCore.animation.action.ActionInterval{
                 constructor(duration: number, alpha: number);
 
@@ -181,6 +437,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.FadeTo>(duration: number, alpha: number): T;
             }
 
+            // @ts-ignore
             export class FiniteTimeAction extends mCore.animation.action.Action {
                 duration: number;
                 repeatCount: number;
@@ -209,6 +466,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.FlipY>(): T;
             }
 
+            // @ts-ignore
             export class Follow extends mCore.animation.action.Action {
                 constructor(followedDisplayObject: mCore.view.ComponentContainer, rect: mCore.geometry.Rectangle);
 
@@ -220,6 +478,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.Follow>(followedDisplayObject: mCore.view.ComponentContainer, rect: mCore.geometry.Rectangle): T;
             }
 
+            // @ts-ignore
             export class FrameChange extends mCore.animation.action.ActionInstant {
                 constructor(frame: string);
                 clone(): mCore.animation.action.FrameChange;
@@ -237,6 +496,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.Hide>(): T;
             }
 
+            // @ts-ignore
             export class JumpBy extends mCore.animation.action.ActionInterval {
                 constructor(duration: number, position: mCore.geometry.Point | number, y: number, height: number, jumps?: number);
 
@@ -261,6 +521,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.JumpTo>(duration: number, position: mCore.geometry.Point | number, y: number, height: number, jumps?: number): T;
             }
 
+            // @ts-ignore
             export class MoveBy extends mCore.animation.action.ActionInterval {
                 constructor(duration: number, deltaPos: mCore.geometry.Point | number, deltaY?: number);
 
@@ -282,6 +543,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.MoveTo>(duration: number, position: mCore.geometry.Point | number, y: number): T;
             }
 
+            // @ts-ignore
             export class Place extends mCore.animation.action.ActionInstant {
                 constructor(x: mCore.geometry.Point | number, y?: number);
 
@@ -292,6 +554,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.Place>(x: mCore.geometry.Point | number, y?: number): T;
             }
 
+            // @ts-ignore
             export class PointAction extends mCore.animation.action.ActionInterval{
                 constructor(duration: number, x: number, y?:number);
 
@@ -309,6 +572,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.RemoveSelf>(isKill?: boolean): T;
             }
 
+            // @ts-ignore
             export class Repeat extends ActionInterval {
                 constructor(action: mCore.animation.action.FiniteTimeAction, times?: number);
 
@@ -320,6 +584,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.Repeat>(action: mCore.animation.action.FiniteTimeAction, times?: number): T;
             }
 
+            // @ts-ignore
             export class RepeatForever extends mCore.animation.action.ActionInterval{
                 constructor(action: mCore.animation.action.ActionInterval);
 
@@ -331,6 +596,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.RepeatForever>(action: mCore.animation.action.ActionInterval): T;
             }
 
+            // @ts-ignore
             export class ReverseTime extends mCore.animation.action.ActionInterval {
                 constructor(action: mCore.animation.action.FiniteTimeAction);
 
@@ -340,6 +606,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.ReverseTime>(action: mCore.animation.action.FiniteTimeAction): T;
             }
 
+            // @ts-ignore
             export class RotateBy extends mCore.animation.action.ActionInterval {
                 constructor(duration: number, deltaAngle: number);
 
@@ -349,6 +616,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.RotateBy>(duration: number, deltaAngle: number): T;
             }
 
+            // @ts-ignore
             export class RotateTo extends mCore.animation.action.ActionInterval{
                 constructor(duration: number, deltaAngle: number);
 
@@ -359,6 +627,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.RotateTo>(duration: number, deltaAngle: number): T;
             }
 
+            // @ts-ignore
             export class ScaleBy extends mCore.animation.action.ScaleTo {
                 reverse(): mCore.animation.action.ScaleBy;
                 clone(): mCore.animation.action.ScaleBy;
@@ -367,6 +636,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.ScaleBy>(duration: number, sx: number, sy?:number): T;
             }
 
+            // @ts-ignore
             export class ScaleTo extends mCore.animation.action.PointAction{
                 constructor(duration: number, sx: number, sy?:number);
 
@@ -376,6 +646,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.ScaleTo>(duration: number, sx: number, sy?:number): T;
             }
 
+            // @ts-ignore
             export class Sequence extends mCore.animation.action.ActionInterval {
                 constructor(...var_args: mCore.animation.action.FiniteTimeAction[]);
 
@@ -396,6 +667,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.Show>(): T;
             }
 
+            // @ts-ignore
             export class SkewBy extends mCore.animation.action.SkewTo{
                 constructor(t: number, sx: number, sy: number);
 
@@ -406,6 +678,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.SkewBy>(t: number, sx: number, sy: number): T;
             }
 
+            // @ts-ignore
             export class SkewTo extends mCore.animation.action.PointAction{
                 constructor(t: number, sx: number, sy: number);
 
@@ -415,6 +688,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.SkewTo>(t: number, sx: number, sy: number): T;
             }
 
+            // @ts-ignore
             export class Spawn extends ActionInterval {
                 constructor(...var_args: mCore.animation.action.FiniteTimeAction[]);
 
@@ -425,6 +699,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.Spawn>(...var_args: mCore.animation.action.FiniteTimeAction[]): T;
             }
 
+            // @ts-ignore
             export class Speed extends Action{
                 constructor (action: mCore.animation.action.ActionInterval, speed: number);
 
@@ -438,6 +713,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.Speed>(action: mCore.animation.action.ActionInterval, speed: number): T;
             }
 
+            // @ts-ignore
             export class TargetedAction extends mCore.animation.action.ActionInterval {
                 constructor(target: mCore.view.ComponentContainer, action: mCore.animation.action.FiniteTimeAction);
 
@@ -449,6 +725,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.TargetedAction>(target: mCore.view.ComponentContainer, action: mCore.animation.action.FiniteTimeAction): T;
             }
 
+            // @ts-ignore
             export class TintBy extends mCore.animation.action.ActionInterval{
                 constructor(duration: number, deltaRed: number, deltaGreen: number, deltaBlue: number);
 
@@ -459,6 +736,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.TintBy>(duration: number, deltaRed: number, deltaGreen: number, deltaBlue: number): T;
             }
 
+            // @ts-ignore
             export class TintTo extends mCore.animation.action.ActionInterval {
                 constructor(duration: number, red: number, green: number, blue: number);
 
@@ -476,6 +754,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.action.ToggleVisibility>(): T;
             }
 
+            // @ts-ignore
             export class Tween extends mCore.animation.action.ActionInterval {
                 constructor(duration: number, key: string, from:  number, to: number);
                 reverse(): mCore.animation.action.Tween;
@@ -510,6 +789,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseBackOut>(): T;
             }
+            // @ts-ignore
             export class EaseBase extends mCore.memory.ReusableObject {
                 constructor();
                 easing(time: number): void;
@@ -548,6 +828,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseBounceOut>(): T;
             }
+            // @ts-ignore
             export class EaseBounceTime  extends EaseBase {
                 protected bounceTime (time: number): number;
                 reverse(): EaseBounceTime;
@@ -640,6 +921,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseExponentialOut>(): T;
             }
+            // @ts-ignore
             export class EaseIn extends mCore.animation.easing.EaseRate {
                 reverse(): EaseIn;
                 clone(): EaseIn;
@@ -647,6 +929,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseIn>(rate?: number): T;
             }
+            // @ts-ignore
             export class EaseInOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseInOut;
                 clone(): EaseInOut
@@ -654,6 +937,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseInOut>(rate?: number): T;
             }
+            // @ts-ignore
             export class EaseOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseOut;
                 clone(): EaseOut;
@@ -661,6 +945,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseOut>(rate?: number): T;
             }
+            // @ts-ignore
             export class EasePeriod extends mCore.animation.easing.EaseBase {
                 constructor(period?: number);
 
@@ -677,6 +962,7 @@ declare namespace mCore {
                 static create<T extends mCore.animation.easing.EasePeriod>(period?: number): T;
             }
 
+            // @ts-ignore
             export class EaseQuadraticIn extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuadraticIn;
                 clone(): EaseQuadraticIn;
@@ -684,6 +970,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseQuadraticIn>(): T;
             }
+            // @ts-ignore
             export class EaseQuadraticInOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuadraticInOut;
                 clone(): EaseQuadraticInOut;
@@ -691,6 +978,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseQuadraticInOut>(): T;
             }
+            // @ts-ignore
             export class EaseQuadraticOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuadraticOut;
                 clone(): EaseQuadraticOut;
@@ -698,6 +986,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseQuadraticOut>(): T;
             }
+            // @ts-ignore
             export class EaseQuarticIn extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuarticIn;
                 clone(): EaseQuarticIn;
@@ -705,6 +994,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseQuarticIn>(): T;
             }
+            // @ts-ignore
             export class EaseQuarticInOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuarticInOut;
                 clone(): EaseQuarticInOut;
@@ -712,6 +1002,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseQuarticInOut>(): T;
             }
+            // @ts-ignore
             export class EaseQuarticOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuarticOut;
                 clone(): EaseQuarticOut;
@@ -719,6 +1010,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseQuarticOut>(): T;
             }
+            // @ts-ignore
             export class EaseQuinticIn extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuinticIn;
                 clone(): EaseQuinticIn;
@@ -726,6 +1018,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseQuinticIn>(): T;
             }
+            // @ts-ignore
             export class EaseQuinticInOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuinticInOut;
                 clone(): EaseQuinticInOut;
@@ -733,6 +1026,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseQuinticInOut>(): T;
             }
+            // @ts-ignore
             export class EaseQuinticOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseQuinticOut;
                 clone(): EaseQuinticOut;
@@ -740,6 +1034,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseQuinticOut>(): T;
             }
+            // @ts-ignore
             export class EaseRate extends mCore.animation.easing.EaseBase {
                 constructor(rate?: number);
                 public rate;
@@ -747,6 +1042,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseRate>(rate?: number): T;
             }
+            // @ts-ignore
             export class EaseSineIn extends mCore.animation.easing.EaseRate {
                 reverse(): EaseSineIn;
                 clone(): EaseSineIn;
@@ -754,6 +1050,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseSineIn>(): T;
             }
+            // @ts-ignore
             export class EaseSineInOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseSineInOut;
                 clone(): EaseSineInOut;
@@ -761,6 +1058,7 @@ declare namespace mCore {
                 // noinspection JSAnnotator
                 static create<T extends mCore.animation.easing.EaseSineInOut>(): T;
             }
+            // @ts-ignore
             export class EaseSineOut extends mCore.animation.easing.EaseRate {
                 reverse(): EaseSineOut;
                 clone(): EaseSineOut;
@@ -879,7 +1177,7 @@ declare namespace mCore {
     export namespace bundle {
         export namespace ancillary {
             export class TextureAtlas {
-                constructor(baseTexture: PIXI.BaseTexture, atlas: mCore.type.AtlasInfo, bundle: mCore.type.AssetBundle);
+                constructor(baseTexture: mCore.BaseTexture, atlas: mCore.type.AtlasInfo, bundle: mCore.type.AssetBundle);
             }
         }
         export namespace bundle {
@@ -889,7 +1187,7 @@ declare namespace mCore {
 
                 readonly linkedTextures: mCore.bundle.bundle.LinkedTexture[];
 
-                generateTextureAtlas(baseTexture: PIXI.BaseTexture, atlas: mCore.type.AtlasInfo): void;
+                generateTextureAtlas(baseTexture: mCore.BaseTexture, atlas: mCore.type.AtlasInfo): void;
                 atlasLoadComplete(): void;
 
             }
@@ -905,13 +1203,13 @@ declare namespace mCore {
             }
         }
         export namespace middleware {
-            export function bundleParser(resource: mCore.loader.LoaderResource, next: mCore.loader.LoaderCallback): void;
+            export function bundleParser(resource: mCore.loader.LoaderResource, next: Function): void;
         }
     }
 
     export namespace cache {
         export namespace atlasCache{
-            export function add(name: string, baseTexture: PIXI.BaseTexture, atlas: mCore.type.AtlasInfo, bundle: mCore.type.AssetBundle): void;
+            export function add(name: string, baseTexture: mCore.BaseTexture, atlas: mCore.type.AtlasInfo, bundle: mCore.type.AssetBundle): void;
             export function remove(fontName: string): boolean;
         }
         export namespace bundleCache {
@@ -920,7 +1218,7 @@ declare namespace mCore {
             export function removeAssetBundle(name: string): boolean;
         }
         export namespace fontCache{
-            export function add(font: mCore.type.FontData, fontName: string, baseTexture: PIXI.BaseTexture, resolution: number): void;
+            export function add(font: mCore.type.FontData, fontName: string, baseTexture: mCore.BaseTexture, resolution: number): void;
             export function remove(fontName: string): boolean;
             export function getName(fontName: string, size: number): string;
         }
@@ -951,7 +1249,7 @@ declare namespace mCore {
             export const names: string[];
             export function add(name: string, data: Object): void;
             export function remove(name: string): boolean;
-            export function getSkeleton(name: string): PIXI.spine.core.SkeletonData;
+            export function getSkeleton(name: string): any;
         }
     }
 
@@ -1008,6 +1306,7 @@ declare namespace mCore {
                 clone(): mCore.component.ui.ComLayout;
             }
 
+            // @ts-ignore
             export class ComItem extends mCore.component.ui.ComUI {
                 constructor(name?: string);
 
@@ -1037,6 +1336,7 @@ declare namespace mCore {
                 clone(): mCore.component.ui.ComItemBox;
             }
 
+            // @ts-ignore
             export class ComScroller extends mCore.component.Component {
                 constructor();
 
@@ -1076,6 +1376,7 @@ declare namespace mCore {
                 static create(): mCore.component.ui.ComScroller;
             }
 
+            // @ts-ignore
             export class ComUI extends mCore.component.Component {
                 constructor(name?: string);
 
@@ -1097,6 +1398,7 @@ declare namespace mCore {
             }
 
 
+            // @ts-ignore
             export class ComUIElement extends mCore.component.ui.ComUI {
                 constructor(elementName: string, bundleName?: string, owner?: mCore.view.ComponentContainer);
                 // noinspection JSAnnotator
@@ -1131,6 +1433,7 @@ declare namespace mCore {
             }
         }
 
+        // @ts-ignore
         export class ComChildIterator extends mCore.component.Component {
             constructor(name?: string);
 
@@ -1217,6 +1520,13 @@ declare namespace mCore {
             PNG = "png",
             WEB_P = "webp",
             MP3 = "mp3"
+        }
+
+        export enum MOUSE_BUTTON {
+            NONE = -1,
+            LEFT = 0,
+            RIGHT = 2,
+            WHEEL = 4
         }
 
         export enum NUMBER_TYPE {
@@ -1556,6 +1866,8 @@ declare namespace mCore {
     }
 
     export namespace geometry {
+
+        // @ts-ignore
         export class Point implements mCore.memory.ReusableObject {
             constructor(x?: number, y?: number, type?: mCore.enumerator.NUMBER_TYPE);
 
@@ -1574,6 +1886,7 @@ declare namespace mCore {
             public static create<T extends mCore.geometry.Point>(x?: number, y?: number, type?: mCore.enumerator.NUMBER_TYPE): T;
         }
 
+        // @ts-ignore
         export class Rectangle extends mCore.geometry.Point implements mCore.memory.ReusableObject {
             constructor(x?: number, y?: number, width?: number, height?: number, type?: mCore.enumerator.NUMBER_TYPE);
 
@@ -1602,7 +1915,7 @@ declare namespace mCore {
     }
 
     export namespace launcher {
-        export const app: PIXI.Application;
+        export const app: any;
         export let orientation: mCore.enumerator.system.ORIENTATION;
         export const designResolution: mCore.geometry.Point;
         export const appResolution: mCore.geometry.Point;
@@ -2122,6 +2435,7 @@ declare namespace mCore {
             protected onActionClickHandler(event: Object): void;
         }
 
+        // @ts-ignore
         export class ParticleEmitter extends mCore.view.ComponentContainer {
             constructor(particleName:string, containerType?: mCore.enumerator.ui.CONTAINER_TYPE);
 
@@ -2356,7 +2670,7 @@ declare namespace mCore {
 
     export namespace util {
         export namespace asset {
-            export function getSpriteFrame(link: string): PIXI.Texture | null;
+            export function getSpriteFrame(link: string): Texture | null;
             export function createWhiteSprite(): mCore.view.ComponentSprite;
         }
         export namespace color {
@@ -2492,11 +2806,14 @@ declare namespace mCore {
             constructor();
 
             rotation: number;
+            worldTransform: Matrix;
+            localTransform: Matrix;
             parent: mCore.view.ComponentContainer | mCore.view.ComponentSprite | mCore.view.ComponentSpine;
             height: number;
             width: number;
             position: mCore.geometry.Point;
             anchor: mCore.geometry.Point;
+            scale: mCore.geometry.Point;
             reusable: boolean;
             blockEvents: boolean;
             inPool: boolean;
@@ -2516,6 +2833,7 @@ declare namespace mCore {
             readonly hasListenerManager: boolean;
             readonly hasInteractionManager: boolean;
 
+            // noinspection JSAnnotator
             static create<T extends mCore.view.ComponentContainer>(...var_args: any[]): T;
 
             public reuse(...var_args: any[]): void;
@@ -2534,11 +2852,15 @@ declare namespace mCore {
 
             public doLayout(): void;
 
+            public updateTransform(): void;
+
             protected updateChildTint<T extends mCore.view.ComponentContainer>(child: T): void;
 
             protected onUpdate(dt: number): void;
         }
 
+
+        // @ts-ignore
         export class ComponentSpine extends mCore.view.ComponentContainer {
             constructor(skeletonName: string);
 
@@ -2580,7 +2902,8 @@ declare namespace mCore {
 
         }
 
-        export class ComponentSprite extends mCore.view.ComponentSprite {
+        // @ts-ignore
+        export class ComponentSprite extends mCore.view.ComponentContainer {
             constructor(frameName: string);
 
             reusable: boolean;
@@ -2601,6 +2924,7 @@ declare namespace mCore {
             readonly hasListenerManager: boolean;
             readonly hasInteractionManager: boolean;
 
+            // noinspection JSAnnotator
             static create<T extends mCore.view.ComponentSprite>(frameName: string): T;
 
             public reuse(...var_args: any[]): void;
@@ -2621,9 +2945,11 @@ declare namespace mCore {
 
         }
 
+        // @ts-ignore
         export class Scene extends mCore.view.ComponentContainer {
             constructor(comTransitionShow?: mCore.component.Component, comTransitionHide?: mCore.component.Component);
 
+            // noinspection JSAnnotator
             static create<T extends mCore.view.Scene>(comTransitionShow?: mCore.component.Component, comTransitionHide?: mCore.component.Component): T;
 
             public show(): void;
@@ -2640,6 +2966,7 @@ declare namespace mCore {
 
         }
 
+        // @ts-ignore
         export class Slice9Sprite extends mCore.view.ComponentContainer {
             constructor(frameName: string, leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number);
 
@@ -2654,6 +2981,7 @@ declare namespace mCore {
             slice: number[];
             protected readonly realTint: number;
 
+            // noinspection JSAnnotator
             static create<T extends mCore.view.Slice9Sprite>(frameName: string, leftSlice?: number, rightSlice?: number, topSlice?: number, bottomSlice?: number): T;
         }
     }
