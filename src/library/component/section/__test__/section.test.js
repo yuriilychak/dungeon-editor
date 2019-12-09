@@ -3,7 +3,10 @@ import {createMount} from "@material-ui/core/test-utils";
 
 import Section from "../section";
 
+jest.mock("../../../../common-ui/file-tree/file-tree");
+
 describe("Section test", () => {
+
     it("default snapshot", () => {
         const wrapper = createMount()(
             <Section
@@ -22,6 +25,7 @@ describe("Section test", () => {
                 onRemoveFile={jest.fn()}
                 onRenameFile={jest.fn()}
                 onSelectFile={jest.fn()}
+                onOpenFile={jest.fn()}
             />
         );
 

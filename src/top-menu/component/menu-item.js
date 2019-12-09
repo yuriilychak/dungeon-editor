@@ -1,5 +1,5 @@
 import { withStyles } from "@material-ui/core";
-import MenuItem from "@material-ui/core/MenuItem";
+import { default as Element } from "@material-ui/core/MenuItem";
 import React, {memo} from "react";
 import { useTranslation } from 'react-i18next';
 import Check from "@material-ui/icons/Check";
@@ -47,13 +47,13 @@ const rightRowStyle = {
 };
 
 const Icon = withStyles(iconStyle)(Check);
-const Item = withStyles(menuItemStyles)(MenuItem);
+const Item = withStyles(menuItemStyles)(Element);
 const createRow = style => withStyles(style)(props => <div className={props.classes.root}>{props.children}</div>);
 const LeftRow = createRow(leftRowStyle);
 const RightRow = createRow(rightRowStyle);
 const EmptyIcon = () => (<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>);
 
-const Element = props => {
+export const MenuItem = props => {
     const { t } = useTranslation();
     const { onClick, id, locale, hotKey, isSelected} = props;
 
@@ -69,4 +69,4 @@ const Element = props => {
 };
 
 
-export default memo(Element);
+export default memo(MenuItem);

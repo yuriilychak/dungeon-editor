@@ -2,6 +2,10 @@ import React from "react";
 import {createMount} from "@material-ui/core/test-utils";
 import FileTree from "../file-tree";
 
+jest.mock("react-sortable-tree", () => () => (
+    <div />
+));
+
 describe("FileTree test", () => {
     const treeData = [
         {title: '.gitignore'},

@@ -1,17 +1,14 @@
 import AppBar from "../component/app-bar";
 import Button from "../component/button";
 import MenuBackground from "../component/menu-background";
-import MenuItem from "../component/menu-item";
+import { MenuItem } from "../component/menu-item";
 import MenuList from "../component/menu-list";
-import MenuSection from "../component/menu-section";
+import { MenuSection } from "../component/menu-section";
 import Toolbar from "../component/toolbar";
 import TopMenu from "../component/top-menu";
 import React from "react";
 import { initialState } from "../reducer";
-import { createMount } from "@material-ui/core/test-utils";
-import i18n from "i18next";
-import {initReactI18next} from "react-i18next";
-import locale from "../../../public/static/locale/eng";
+import { createMount, createShallow } from "@material-ui/core/test-utils";
 
 document.createRange = jest.fn();
 
@@ -22,13 +19,8 @@ jest.mock("@material-ui/core/Popper", () => ({children}) => (
 ));
 
 describe("top-menu test",()=> {
-
-    beforeAll( () => {
-        i18n.use(initReactI18next).init(locale);
-    });
-
     it ( "top-menu snapshot", () => {
-        const wrapper = createMount()(
+        const wrapper = createShallow()(
             <TopMenu {...initialState} />
         );
 
@@ -36,7 +28,7 @@ describe("top-menu test",()=> {
     });
 
     it ( "Button snapshot", () => {
-        const wrapper = createMount()(
+        const wrapper = createShallow()(
             <Button>test</Button>
         );
 
@@ -44,7 +36,7 @@ describe("top-menu test",()=> {
     });
 
     it ( "AppBar snapshot", () => {
-        const wrapper = createMount()(
+        const wrapper = createShallow()(
             <AppBar>
                 <Button>test1</Button>
                 <Button>test2</Button>
@@ -56,7 +48,7 @@ describe("top-menu test",()=> {
     });
 
     it ( "ToolBar snapshot", () => {
-        const wrapper = createMount()(
+        const wrapper = createShallow()(
             <Toolbar>
                 <Button>test1</Button>
                 <Button>test2</Button>
@@ -68,7 +60,7 @@ describe("top-menu test",()=> {
     });
 
     it ( "MenuBackground snapshot", () => {
-        const wrapper = createMount()(
+        const wrapper = createShallow()(
             <MenuBackground>
                 <Button>test1</Button>
                 <Button>test2</Button>
@@ -79,7 +71,7 @@ describe("top-menu test",()=> {
         expect(wrapper.html()).toMatchSnapshot();
     });
     it ( "MenuList snapshot", () => {
-        const wrapper = createMount()(
+        const wrapper = createShallow()(
             <MenuList>
                 <Button>test1</Button>
                 <Button>test2</Button>
@@ -114,7 +106,7 @@ describe("top-menu test",()=> {
                 ...props,
                 isSelected: true
             };
-            const selectedWrapper = createMount()(
+            const selectedWrapper = createShallow()(
                 <MenuItem
                     {...selectedProps}
                 />
@@ -199,7 +191,7 @@ describe("top-menu test",()=> {
                 ...props,
                 isOpen: false
             };
-            const closedWrapper = createMount()(
+            const closedWrapper = createShallow()(
                 <MenuSection
                     {...closedProps}
                 />

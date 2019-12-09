@@ -4,24 +4,19 @@ import { createShallow } from "@material-ui/core/test-utils";
 
 import {initialState} from "../../reducer";
 import WorkingArea from "../working-area";
-import i18n from "i18next";
-import {initReactI18next} from "react-i18next";
-import locale from "../../../../public/static/locale/eng";
+
+jest.mock("../../../working-stage");
 
 describe("working-area test", () => {
-
-    beforeAll( () => {
-
-        i18n.use(initReactI18next).init(locale);
-    });
-
     it ( 'working-area default snapshot', () => {
         const wrapper = createShallow()(
             <WorkingArea
                 {...initialState}
+                onCreateElement={jest.fn()}
                 onGetCanvasRef={jest.fn()}
                 onCloseTab={jest.fn()}
                 onSelectTab={jest.fn()}
+                onTransformReset={jest.fn()}
             />
         );
 
@@ -35,6 +30,8 @@ describe("working-area test", () => {
                 onGetCanvasRef={jest.fn()}
                 onCloseTab={jest.fn()}
                 onSelectTab={jest.fn()}
+                onCreateElement={jest.fn()}
+                onTransformReset={jest.fn()}
                 tabs={[
                     {
                         title: "tab_1",

@@ -19,7 +19,7 @@ import {
     TEXT_COLOR
 } from "../../constant";
 
-import { getIndent } from "../../helpers";
+import {getIndent} from "../../helpers";
 
 import "./working-area.scss";
 
@@ -54,7 +54,7 @@ const WorkingArea = ({
                          emptyIcon,
                          tabs,
                          icons,
-    mode,
+                         mode,
                          selectedTab,
                          onSelectTab,
                          onGetCanvasRef,
@@ -102,7 +102,7 @@ const WorkingArea = ({
         if (!tabs.length) {
             return;
         }
-        const { sectionId, fileId } = tabs[index];
+        const {sectionId, fileId} = tabs[index];
         onSelectTab(index, sectionId, fileId);
     };
 

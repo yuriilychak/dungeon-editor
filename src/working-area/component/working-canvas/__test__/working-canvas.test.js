@@ -7,7 +7,10 @@ import WorkingCanvas from "../working-canvas";
 describe("working-canvas test",()=> {
     it ( "working-canvas snapshot", () => {
         const wrapper = createMount()(
-            <WorkingCanvas onGetCanvasRef={jest.fn()} />
+            <WorkingCanvas
+                onGetCanvasRef={jest.fn()}
+                onCreateElement={jest.fn()}
+            />
         );
         expect(wrapper.html()).toMatchSnapshot();
     });

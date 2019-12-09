@@ -10,12 +10,13 @@ describe('new-project-dialog reducer', () => {
         expect(
             reducer(undefined, {
                 type: types.OPEN_POPUP,
-                payload: 1
+                payload: 0
             })
         ).toEqual({
             ...initialState,
             isPopupOpen: true,
-            sectionId: 1
+            sectionId: 0,
+            elementType: 2
         });
     });
 

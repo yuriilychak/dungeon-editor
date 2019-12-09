@@ -5,14 +5,10 @@ import { createMount } from '@material-ui/core/test-utils';
 
 import { initialState } from '../../reducer';
 import Library from "../library";
-import i18n from "i18next";
-import {initReactI18next} from "react-i18next";
-import locale from "../../../../public/static/locale/eng";
+
+jest.mock("../../../common-ui/file-tree/file-tree");
 
 describe('Library test',() => {
-    beforeAll( () => {
-        i18n.use(initReactI18next).init(locale);
-    });
 
     const defaultProps = {
         ...initialState,
@@ -26,7 +22,8 @@ describe('Library test',() => {
         onPublishProject: jest.fn(),
         onRenameFile: jest.fn(),
         onSelectFile: jest.fn(),
-        onUpdateTree: jest.fn()
+        onUpdateTree: jest.fn(),
+        onOpenFile: jest.fn()
     };
 
     it("default snapshot", () => {

@@ -10,7 +10,7 @@ import MenuItem from "./menu-item";
 import MenuList from "./menu-list";
 import MenuBackground from "./menu-background";
 
-const MenuSection = props => {
+export const MenuSection = props => {
     const { t } = useTranslation();
     const {locale, onOpen, onClose, onSelectSection, isOpen, sections, id, toggledSections} = props;
     const [anchorEl, setAnchorEl] = useState(null);

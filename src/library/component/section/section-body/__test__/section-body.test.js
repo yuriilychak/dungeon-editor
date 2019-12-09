@@ -3,34 +3,9 @@ import { createMount } from "@material-ui/core/test-utils";
 
 import SectionBody from "../section-body";
 
-import FileTree from '../../../../../common-ui/file-tree/file-tree';
 jest.mock("../../../../../common-ui/file-tree/file-tree");
-FileTree.mockImplementation((props) => {
-    const { treeData, generateNodeProps, onChange } = props;
-
-    const iterateElements = elements => {
-        elements.forEach(element => {
-            const props = generateNodeProps({node: element});
-
-            props.onClick();
-
-            if (element.children) {
-                iterateElements(element.children);
-            }
-        });
-    };
-
-    iterateElements(treeData);
-
-    onChange(treeData);
-
-    return (
-        <div>Test file tree</div>
-    );
-});
 
 describe("SectionBody test",() => {
-
     const defaultProps = {
         id: 0,
         icon: "test",
@@ -42,7 +17,8 @@ describe("SectionBody test",() => {
         onRemoveFile: jest.fn(),
         onRenameFile: jest.fn(),
         onSelectFile: jest.fn(),
-        onUpdateTree: jest.fn()
+        onUpdateTree: jest.fn(),
+        onOpenFile: jest.fn()
     };
 
     it("default snapshot", () => {

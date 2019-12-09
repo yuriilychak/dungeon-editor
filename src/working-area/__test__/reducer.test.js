@@ -1,6 +1,8 @@
 import {default as reducer, initialState} from '../reducer';
 import { closeTab, selectTab, addTab } from "../action";
 
+jest.mock("../../working-stage");
+
 describe('working-area reducer', () => {
     const createState = (tabCount, selectedTab, startIndex = 1) => {
         const tabs = [];
