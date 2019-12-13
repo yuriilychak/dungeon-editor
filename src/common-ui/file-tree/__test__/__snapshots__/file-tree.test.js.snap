@@ -1,5 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FileTree test default snapshot 1`] = `"<div style=\\"height: 300px;\\" class=\\"file-tree-root\\"><div></div></div>"`;
-
-exports[`FileTree test existing icons 1`] = `"<div style=\\"height: 300px;\\" class=\\"file-tree-root\\"><div></div></div>"`;
+exports[`FileTree test default snapshot 1`] = `"<div style=\\"height:300px\\" class=\\"file-tree-root\\"><div></div></div>"`;

@@ -15,6 +15,7 @@ import {NewFileDialog} from "./new-file-dialog";
 import {ExportProjectDialog} from "./export-project-dialog";
 import {RenameFileDialog} from "./rename-file-dialog";
 import {WorkingArea} from "./working-area";
+import {Loader} from "./common-ui";
 import fetchLocale from "./locale";
 
 import "./app.scss";
@@ -52,11 +53,7 @@ const App = () => {
         </div>
     </MuiThemeProvider>
     ) : (
-        <div
-            className="loader"
-        >
-        <CircularProgress size={80} />
-    </div>
+        <Loader className="loader" size={80} isLoading={!localeFetched} />
     )
 };
 

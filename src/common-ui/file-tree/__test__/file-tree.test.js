@@ -1,9 +1,11 @@
 import React from "react";
-import {createMount} from "@material-ui/core/test-utils";
+
+import {createShallow} from "@material-ui/core/test-utils";
+
 import FileTree from "../file-tree";
 
 jest.mock("react-sortable-tree", () => () => (
-    <div />
+    <div/>
 ));
 
 describe("FileTree test", () => {
@@ -45,31 +47,13 @@ describe("FileTree test", () => {
         },
     ];
 
-    const onChange = jest.fn();
-
-    it('default snapshot', () => {
-        const generateNodeProps = () => ({});
-        const wrapper = createMount()(
+    it('default snapshot', () =>
+        expect(createShallow()(
             <FileTree
                 treeData={treeData}
-                generateNodeProps={generateNodeProps}
-                onChange={onChange}
+                generateNodeProps={jest.fn()}
+                onChange={jest.fn()}
             />
-        );
-        expect(wrapper.html()).toMatchSnapshot();
-    });
-
-    it('existing icons', () => {
-        const generateNodeProps = () => ({icons: []});
-
-        const wrapper = createMount()(
-            <FileTree
-                treeData={treeData}
-                generateNodeProps={generateNodeProps}
-                onChange={onChange}
-            />
-        );
-
-        expect(wrapper.html()).toMatchSnapshot();
-    });
+        ).html()).toMatchSnapshot()
+    );
 });

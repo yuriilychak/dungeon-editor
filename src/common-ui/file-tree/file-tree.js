@@ -3,8 +3,7 @@ import SortableTree from "react-sortable-tree";
 import FileExplorerTheme from "react-sortable-tree-theme-file-explorer";
 import {arrayOf, func, object} from "prop-types";
 
-import FolderClosedIcon from "@material-ui/icons/Folder";
-import FolderOpenIcon from "@material-ui/icons/FolderOpen";
+import { useFileTree } from "./hooks";
 
 import "./file-tree.css";
 
@@ -13,52 +12,16 @@ const FileTree = ({
                       onChange,
                       generateNodeProps
                   }) => {
-
-    const onGenerateNodeProps = rowInfo => {
-        const { node } = rowInfo;
-        const isDirectory = node.isDirectory;
-        const customProps = generateNodeProps(rowInfo);
-
-        if (isDirectory) {
-            if (!customProps.icons) {
-                customProps.icons = [];
-            }
-
-            customProps.icons.push(
-                node.expanded ?
-                    <FolderOpenIcon className="section-body-icon"/> :
-                    <FolderClosedIcon className="section-body-icon"/>
-            );
-        }
-
-        return customProps;
-    };
-
-    let nodeCount = 0;
-    const rowHeight = 24;
-
-    const calculateHeight = elements => {
-        let result = 0;
-        elements.forEach(element => {
-            result += rowHeight;
-            ++nodeCount;
-            if (element.expanded && element.children && element.children.length !== 0) {
-                result += calculateHeight(element.children);
-            }
-        });
-        return result;
-    };
-
-    const height = calculateHeight(treeData) + nodeCount;
+    const [treeHeight, canDrag, canDrop, onGenerateNodeProps] = useFileTree(treeData, generateNodeProps);
 
     return (
-        <div style={{height}} className="file-tree-root">
+        <div style={{height: treeHeight}} className="file-tree-root">
             <SortableTree
                 treeData={treeData}
                 onChange={onChange}
                 theme={FileExplorerTheme}
-                canDrag={({node}) => !node.dragDisabled}
-                canDrop={({nextParent}) => !nextParent || nextParent.isDirectory}
+                canDrag={canDrag}
+                canDrop={canDrop}
                 scaffoldBlockPxWidth={10}
                 generateNodeProps={onGenerateNodeProps}
             />
