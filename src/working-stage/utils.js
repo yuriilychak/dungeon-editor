@@ -215,8 +215,15 @@ export function updateAnchor(element, nextAnchor) {
             element.scale
         )
     );
+
+    const sin = Math.sin(element.rotation);
+    const cos = Math.cos(element.rotation);
+
     element.anchor.copyFrom(nextAnchor);
-    geometry.pAdd(element.position, offset, true);
+    geometry.pAdd(element.position, mCore.geometry.Point.create(
+        cos * offset.x - sin * offset.y,
+        sin * offset.x + cos * offset.y
+    ), true);
 }
 
 export function getAnchorPosition(element) {

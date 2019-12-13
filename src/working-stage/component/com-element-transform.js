@@ -2,7 +2,7 @@ import {EVENT, CURSOR} from "../enum";
 import { updateAnchor, getAnchorPosition, getWorldScale, updatePosition } from "../utils";
 import {EDIT_MODE} from "../../enum";
 
-const { mCore } = window;
+const { mCore, PIXI } = window;
 const { math, geometry } = mCore.util;
 
 export default class ComElementTransform extends mCore.component.ui.ComUI {
@@ -53,6 +53,12 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             mCore.enumerator.ui.UI_ELEMENT.IMAGE_VIEW,
             mCore.enumerator.ui.UI_ELEMENT.SPRITE
         ];
+
+        this._beginElementAngle = 0;
+
+        this._beginEditAngle = 0;
+
+        this._transform = new PIXI.Transform();
 
         this._positionDragStartEvent = "EDIT_AREA.POSITION_DRAG_START";
         this._positionDragMoveEvent = "EDIT_AREA.POSITION_DRAG_MOVE";
@@ -199,12 +205,22 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         );
     }
 
-    _onBorderDragStart({ data, target}) {
+    _onBorderDragStart({ data }) {
+        if (this._editMode !== EDIT_MODE.SKEW) {
+            return;
+        }
 
+        this._beginElementAngle = this._selectedElement.rotation;
+
+        const ownerPos = this.owner.parent.toGlobal(this.owner.position);
+        const offset = geometry.pSub(data.data.global, ownerPos, true);
+
+        this._beginEditAngle = Math.atan2(offset.y, offset.x);
     }
 
     _onBorderDragFinish() {
-
+        this._beginEditAngle = 0;
+        this._beginElementAngle = 0;
     }
 
     _onBorderDrag({data, target}) {
@@ -230,11 +246,10 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
                 if (index.x === index.y || math.abs(index.x - index.y) === 2) {
                     const ownerPos = this.owner.parent.toGlobal(this.owner.position);
                     const offset = geometry.pSub(data.data.global, ownerPos, true);
-                    console.log(Math.atan2(offset.y, offset.x) * 180 / Math.PI);
-                    const rotation = Math.atan2(offset.y, offset.x);
-                    //console.log(rotation,  index.x, index.y);
+                    const rotation = this._beginElementAngle + Math.atan2(offset.y, offset.x) - this._beginEditAngle;
+
                     this.owner.rotation = rotation;
-                    this._selectedElement.rotation = rotation;
+                    this._selectedElement.rotation = this._selectedElement.parent.worldTransform.c + rotation;
                 }
                 else {
 
@@ -268,8 +283,9 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
         if (nextDimension > minSize) {
             this.owner[dimension] = math.round(nextDimension);
-            console.log(this._selectedElement.worldTransform.b, this._selectedElement.worldTransform.c);
-            this._selectedElement[dimension] = math.round(nextDimension * this.owner.parent.scale[cord] / this._selectedElement.worldTransform[transform]);
+            this._selectedElement[dimension] = math.round(nextDimension * this.owner.parent.scale[cord] / (
+                this._selectedElement.worldTransform[transform] / Math.cos(this._selectedElement.rotation)
+            ));
         }
     }
 
@@ -358,12 +374,14 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
         this._selectedElement.updateTransform();
 
-        this.owner.rotation = this._selectedElement.rotation;
+        this._selectedElement.worldTransform.decompose(this._transform);
 
-        const elementWorldTransform = getWorldScale(this._selectedElement, this.owner.parent);
+        this.owner.rotation = this._transform.rotation;
 
-        this.owner.width = math.round(this._selectedElement.width * elementWorldTransform.x);
-        this.owner.height = math.round(this._selectedElement.height * elementWorldTransform.y);
+        const elementWorldTransform = getWorldScale(this._transform, this.owner.parent);
+
+        this.owner.width = math.round(this._selectedElement.width * this._transform.scale.x / this.owner.parent.scale.x);
+        this.owner.height = math.round(this._selectedElement.height * this._transform.scale.y / this.owner.parent.scale.y);
 
         elementWorldTransform.destroy();
 
