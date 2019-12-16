@@ -1,9 +1,9 @@
 import {EVENT, CURSOR} from "../enum";
-import { updateAnchor, getAnchorPosition, getWorldScale, updatePosition } from "../utils";
+import {updateAnchor, getAnchorPosition, updatePosition} from "../utils";
 import {EDIT_MODE} from "../../enum";
 
-const { mCore, PIXI } = window;
-const { math, geometry } = mCore.util;
+const {mCore, PIXI} = window;
+const {math, geometry} = mCore.util;
 
 export default class ComElementTransform extends mCore.component.ui.ComUI {
     constructor() {
@@ -105,7 +105,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
     }
 
     _addSelectListeners(path, onDrag, onOver, onOut, onDragStart, onDragFinish) {
-        const { INTERACTIVE_EVENT } = mCore.enumerator.ui;
+        const {INTERACTIVE_EVENT} = mCore.enumerator.ui;
 
         this.addChildListener(onDrag, INTERACTIVE_EVENT.DRAG, path);
         this.addChildListener(onOver, INTERACTIVE_EVENT.OVER, path);
@@ -128,7 +128,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             ["nesw", "ns", "nwse"]
         ];
 
-        this._canvas.style.cursor = `${pointerPrefixes[index.x][index.y]}-resize`;
+        this._canvas.style.cursor = `${pointerPrefixes[index.y][index.x]}-resize`;
     }
 
     _onBorderOut() {
@@ -185,11 +185,15 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
                 this._editMode = EDIT_MODE.SCALE;
                 break;
             }
-            case EDIT_MODE.SCALE: {
+            default: {
                 this._editMode = EDIT_MODE.SIZE;
                 break;
             }
         }
+    }
+
+    _getElementWorldScale() {
+        return geometry.pCompDiv(this._transform.scale, this.owner.parent.scale);
     }
 
     _isLeftButton(data) {
@@ -200,12 +204,12 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         const radix = 10;
         const indices = name.split("_");
         return mCore.geometry.Point.create(
-            parseInt(indices[1], radix),
-            parseInt(indices[2], radix)
+            parseInt(indices[2], radix),
+            parseInt(indices[1], radix)
         );
     }
 
-    _onBorderDragStart({ data }) {
+    _onBorderDragStart({data}) {
         if (this._editMode !== EDIT_MODE.SKEW) {
             return;
         }
@@ -232,38 +236,60 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         const minSize = 12;
 
 
-        switch(this._editMode) {
+        switch (this._editMode) {
             case EDIT_MODE.SIZE: {
                 const localPos = this._toLocal(data.data.global);
 
-                this._updateDimension(localPos, minSize, index.x, "y", "height", 'd');
-                this._updateDimension(localPos, minSize, index.y, "x", "width", 'a');
+                const nextSize = mCore.geometry.Point.create(
+                    math.max(this._calculateDimension(localPos, index.x, 'x', 'width'), minSize),
+                    math.max(this._calculateDimension(localPos, index.y, 'y', 'height'), minSize)
+                );
+
+                this._refreshTransform();
+
+                this.owner.width = nextSize.x;
+                this.owner.height = nextSize.y;
+
+                const elementWorldScale = this._getElementWorldScale();
+
+                this._selectedElement.width = math.round(this.owner.width / elementWorldScale.x);
+                this._selectedElement.height = math.round(this.owner.height / elementWorldScale.y);
 
                 this.listenerManager.dispatchEvent(EVENT.ELEMENT_SIZE_CHANGE, geometry.pFromSize(this._selectedElement));
+
+                nextSize.destroy();
+                elementWorldScale.destroy();
+
                 break;
             }
             case EDIT_MODE.SKEW: {
-                if (index.x === index.y || math.abs(index.x - index.y) === 2) {
+                if (index.x === index.y || math.abs(index.y - index.x) === 2) {
                     const ownerPos = this.owner.parent.toGlobal(this.owner.position);
                     const offset = geometry.pSub(data.data.global, ownerPos, true);
                     const rotation = this._beginElementAngle + Math.atan2(offset.y, offset.x) - this._beginEditAngle;
 
                     this.owner.rotation = rotation;
                     this._selectedElement.rotation = this._selectedElement.parent.worldTransform.c + rotation;
-                }
-                else {
+                } else {
 
                 }
                 break;
             }
-            case EDIT_MODE.SCALE: {
+            default: {
                 const localPos = this._toLocal(data.data.global);
                 const nextSize = mCore.geometry.Point.create(
-                    this._calculateDimension(localPos, index.y, 'x', 'width', 'a'),
-                    this._calculateDimension(localPos, index.x, 'y', 'height', 'd')
+                    this._calculateDimension(localPos, index.x, 'x', 'width'),
+                    this._calculateDimension(localPos, index.y, 'y', 'height')
                 );
+
+                this._refreshTransform();
+
                 const elementSize = geometry.pFromSize(this._selectedElement);
-                const parentScale = getWorldScale(this._selectedElement.parent, this.owner.parent);
+                const parentScale = geometry.pCompDiv(
+                    this._getElementWorldScale(),
+                    this._selectedElement.scale,
+                    true
+                );
 
                 this._selectedElement.scale.copyFrom(geometry.pCompDiv(nextSize, geometry.pCompMult(elementSize, parentScale)));
                 this.owner.width = nextSize.x;
@@ -277,20 +303,8 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         }
     }
 
-    _updateDimension(localPos, minSize, index, cord, dimension, transform) {
-
-        const nextDimension = this._calculateDimension(localPos, index, cord, dimension);
-
-        if (nextDimension > minSize) {
-            this.owner[dimension] = math.round(nextDimension);
-            this._selectedElement[dimension] = math.round(nextDimension * this.owner.parent.scale[cord] / (
-                this._selectedElement.worldTransform[transform] / Math.cos(this._selectedElement.rotation)
-            ));
-        }
-    }
-
     _calculateDimension(localPos, index, cord, dimension) {
-        switch(index) {
+        switch (index) {
             case 0: {
                 return math.round(this.owner[dimension] - localPos[cord]);
             }
@@ -348,7 +362,12 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
     }
 
     _toLocal(point) {
-        return  this.owner.toLocal(point);
+        return this.owner.toLocal(point);
+    }
+
+    _refreshTransform() {
+        this._selectedElement.updateTransform();
+        this._selectedElement.worldTransform.decompose(this._transform);
     }
 
     get selectedElement() {
@@ -372,18 +391,25 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             this._positionDragFinishEvent
         );
 
-        this._selectedElement.updateTransform();
-
-        this._selectedElement.worldTransform.decompose(this._transform);
+        this._refreshTransform();
 
         this.owner.rotation = this._transform.rotation;
 
-        const elementWorldTransform = getWorldScale(this._transform, this.owner.parent);
+        this.owner.skew.copyFrom(this._transform.skew);
 
-        this.owner.width = math.round(this._selectedElement.width * this._transform.scale.x / this.owner.parent.scale.x);
-        this.owner.height = math.round(this._selectedElement.height * this._transform.scale.y / this.owner.parent.scale.y);
+        const ownerSize = geometry.pRound(
+            geometry.pCompMult(
+                geometry.pFromSize(this._selectedElement),
+                this._getElementWorldScale(),
+                true
+            ),
+            true
+        );
 
-        elementWorldTransform.destroy();
+        this.owner.width = ownerSize.x;
+        this.owner.height = ownerSize.y;
+
+        ownerSize.destroy();
 
         updateAnchor(this.owner, this._selectedElement.anchor);
 

@@ -14,6 +14,13 @@ export default class EditArea extends ui.Widget {
 
         this._borders = [];
 
+        /**
+         * @type {mCore.geometry.Point}
+         * @private
+         */
+
+        this._skew = mCore.geometry.Point.create();
+
         this.name = "EditArea";
 
         this._anchorElement = null;
@@ -48,7 +55,6 @@ export default class EditArea extends ui.Widget {
                     element = BorderSelect.create();
                     updateAnchor = false;
                     name = `BorderSelect_${i}_${j}`;
-
                 }
 
                 element.interactive = true;
@@ -59,6 +65,8 @@ export default class EditArea extends ui.Widget {
         }
 
         this.anchor.set(DEFAULT_ANCHOR);
+
+        this._skew.initChangeCallback(this._updateSkew, this);
     }
 
     changeScale(scale) {
@@ -104,6 +112,23 @@ export default class EditArea extends ui.Widget {
         this._setElementParams(result, name, x, y, true);
 
         return result;
+    }
+
+    _updateSkew() {
+        this._elementsForScaleUpdate.forEach(border => {
+            border.skew.x = -this._skew.x;
+            border.skew.y = -this._skew.y;
+        });
+        super.skew.copyFrom(this._skew);
+    }
+
+    get skew() {
+        return this._skew;
+    }
+
+    set skew(value) {
+        this._skew = value;
+        super.skew.copyFrom(this._skew);
     }
 
     get width() {

@@ -2,7 +2,7 @@ import React from "react";
 
 import {createShallow} from "@material-ui/core/test-utils";
 
-import FileTree from "../file-tree";
+import {FileTree} from "../file-tree";
 
 jest.mock("react-sortable-tree", () => () => (
     <div/>

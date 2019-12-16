@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import theme from "./theme";
 
-import CircularProgress from '@material-ui/core/CircularProgress';
 import {MuiThemeProvider} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
@@ -24,7 +23,6 @@ const App = () => {
     const [localeFetched, setLocaleFetched] = useState(false);
 
     fetchLocale().then(() => setLocaleFetched(true));
-
 
     return localeFetched ? (
     <MuiThemeProvider theme={theme}>

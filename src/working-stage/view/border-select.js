@@ -2,7 +2,7 @@ import {DEFAULT_TEXTURE} from "../enum";
 import {DEFAULT_ANCHOR} from "../constants";
 
 const {mCore} = window;
-const { view, ui } = mCore;
+const { ui } = mCore;
 
 export default class BorderSelect extends ui.Widget {
     constructor() {

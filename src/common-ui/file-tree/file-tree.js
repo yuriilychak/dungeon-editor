@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import SortableTree from "react-sortable-tree";
 import FileExplorerTheme from "react-sortable-tree-theme-file-explorer";
 import {arrayOf, func, object} from "prop-types";
@@ -7,7 +7,7 @@ import { useFileTree } from "./hooks";
 
 import "./file-tree.css";
 
-const FileTree = ({
+export const FileTree = ({
                       treeData,
                       onChange,
                       generateNodeProps
@@ -35,4 +35,4 @@ FileTree.propTypes = {
     generateNodeProps: func.isRequired
 };
 
-export default FileTree;
+export default memo(FileTree);

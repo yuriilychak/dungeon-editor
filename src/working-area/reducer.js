@@ -99,7 +99,7 @@ const actionHandlers = {
                 mode = EDIT_MODE.SCALE;
                 break;
             }
-            case EDIT_MODE.SCALE: {
+            default: {
                 mode = EDIT_MODE.SIZE;
                 break;
             }
