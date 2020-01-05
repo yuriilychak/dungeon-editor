@@ -1,10 +1,10 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect} from "react";
 import {string, func, number, arrayOf, shape, object, bool} from "prop-types";
 import {useTranslation} from "react-i18next";
 
 import {TitledPanel} from "../../common-ui/titled-panel";
 import {FileHeader} from "./file-header";
-import { LibraryElementBody } from "./file-body";
+import {LibraryElementBody, StageElementBody} from "./file-body";
 
 import "./properties.css";
 
@@ -14,22 +14,36 @@ const Properties = ({
                         iconSize,
                         directoryData,
                         sectionData,
+                        stageData,
+                        init,
                         onRenameFile,
                         onSwitchAtlas,
                         onClearAtlas,
+                        onStageElementChange,
                         onSwitchCompressSkeleton,
                         onSwitchCompressName
                     }) => {
     const {t} = useTranslation();
 
+    useEffect(init, []);
+
     let content;
 
     if (file !== null) {
-        const data = file.isDirectory ? directoryData : sectionData[file.sectionId];
+        const data = file.isDirectory ? directoryData :
+            file.isStageElement ? stageData[file.sectionId] : sectionData[file.sectionId];
         const fileType = t(data.locale);
         let fileBody = null;
 
-        if (!file.isDirectory) {
+        if (file.isStageElement) {
+            fileBody = (
+                <StageElementBody
+                    {...file.data}
+                    onChange={onStageElementChange}
+                />
+            );
+        }
+        else if (!file.isDirectory) {
             fileBody = (
                 <LibraryElementBody
                     file={file}
@@ -63,8 +77,7 @@ const Properties = ({
                 {fileBody}
             </Fragment>
         );
-    }
-    else {
+    } else {
         content = (
             <div className="properties-empty-text">
                 {t(locales.emptyDescription)}
@@ -72,7 +85,10 @@ const Properties = ({
         );
     }
     return (
-        <TitledPanel title={t(locales.sectionTitle)}>
+        <TitledPanel
+            title={t(locales.sectionTitle)}
+            bodyPadding="8px 12px 0 12px"
+        >
             {content}
         </TitledPanel>
     )
@@ -96,6 +112,10 @@ Properties.propTypes = {
         locale: string.isRequired,
         icon: string.isRequired
     })).isRequired,
+    stageData: arrayOf(shape({
+        locale: string.isRequired,
+        icon: string.isRequired
+    })).isRequired,
     locales: shape({
         compressName: string.isRequired,
         compressSkeleton: string.isRequired,
@@ -106,6 +126,8 @@ Properties.propTypes = {
         selectAtlasLabel: string.isRequired,
         selectAtlasPlaceholder: string.isRequired
     }).isRequired,
+    init: func.isRequired,
+    onStageElementChange: func.isRequired,
     onSwitchCompressName: func.isRequired,
     onRenameFile: func.isRequired,
     onSwitchAtlas: func.isRequired,

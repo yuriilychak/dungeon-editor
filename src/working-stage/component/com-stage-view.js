@@ -71,6 +71,7 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         this.listenerManager.addEventListener(EVENT.OFFSET_CHANGE, this._onOffsetChange);
         this.listenerManager.addEventListener(EVENT.SHOW_ELEMENT, this._onShowElement);
         this.listenerManager.addEventListener(EVENT.DELETE_ELEMENTS, this._onDeleteElements);
+        this.listenerManager.addEventListener(EVENT.ELEMENT_CLEAR_SELECTION, this._onClearSelection);
     }
 
     _onCreateElement({data}) {
@@ -80,11 +81,15 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         element.interactive = true;
         element.interactionManager.eventClick = EVENT.ELEMENT_CLICK;
 
-        element.position.copyFrom(this._crtElement.toLocal(data));
+        element.position.copyFrom(mCore.util.geometry.pRound(this._crtElement.toLocal(data), true));
 
         this._crtElement.addChild(element);
 
         this._comElementTransform.selectedElement = element;
+    }
+
+    _onClearSelection() {
+        this._comElementTransform.selectedElement = null;
     }
 
     _onCreateUIElement({data}) {
@@ -121,10 +126,13 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
                 }
 
                 this._showElement(element);
+                this._comElementTransform.selectedElement = null;
+
                 break;
             }
             case SECTION_ID.ELEMENT: {
                 element = this._uiElements.getElement(key);
+                this._comElementTransform.selectedElement = null;
                 break;
             }
             default: {

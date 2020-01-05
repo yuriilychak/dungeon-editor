@@ -30,17 +30,18 @@ export default class EditArea extends ui.Widget {
 
         this._selectSprite = new PIXI.TilingSprite(PIXI.Texture.from(DEFAULT_TEXTURE.SELECT), this.width, this.height);
 
+        this._borderTransform = new PIXI.Transform();
+
         this.addChild(this._selectSprite);
 
         let i, j, element, name, updateAnchor;
         const stepCount = 3;
-        const halfWidth = util.math.divPowTwo(this.width);
-        const halfHeight = util.math.divPowTwo(this.height);
+        const halfSize = util.geometry.pHalfSize(this);
         const borderSize = 2;
 
         for (i = 0; i < 2; ++i) {
-            this._borders.push(this._createBorder(`Border_horizontal_${i}`, this.width, borderSize, halfWidth, i * this.height));
-            this._borders.push(this._createBorder(`Border_vertical_${i}`, borderSize, this.height, i * this.width, halfHeight));
+            this._borders.push(this._createBorder(`Border_horizontal_${i}`, this.width, borderSize, halfSize.x, i * this.height));
+            this._borders.push(this._createBorder(`Border_vertical_${i}`, borderSize, this.height, i * this.width, halfSize.y));
         }
 
         for (i = 0; i < stepCount; ++i) {
@@ -59,7 +60,7 @@ export default class EditArea extends ui.Widget {
 
                 element.interactive = true;
 
-                this._setElementParams(element, name, j * halfWidth, i * halfHeight, updateAnchor);
+                this._setElementParams(element, name, j * halfSize.x, i * halfSize.y, updateAnchor);
                 this._elementsForScaleUpdate.push(element);
             }
         }
@@ -116,8 +117,15 @@ export default class EditArea extends ui.Widget {
 
     _updateSkew() {
         this._elementsForScaleUpdate.forEach(border => {
-            border.skew.x = -this._skew.x;
-            border.skew.y = -this._skew.y;
+            border.scale.set(1, 1);
+            border.skew.set(0, 0);
+            border.updateTransform();
+            border.worldTransform.decompose(this._borderTransform);
+
+            border.skew.set(-this._skew.x, -this._skew.y);
+            border.updateTransform();
+            border.worldTransform.decompose(this._borderTransform);
+            border.scale.set(1 / this._borderTransform.scale.x, 1 / this._borderTransform.scale.y);
         });
         super.skew.copyFrom(this._skew);
     }
@@ -171,5 +179,16 @@ export default class EditArea extends ui.Widget {
         this._elementsForScaleUpdate[7].position.y = value;
         this._elementsForScaleUpdate[8].position.y = value;
         this._anchorElement.position.y = this.anchor.y * value;
+    }
+
+    get rotation() {
+        return super.rotation;
+    }
+
+    set rotation(value) {
+        super.rotation = value;
+        this._elementsForScaleUpdate.forEach(border => {
+            border.rotation = -value;
+        });
     }
 }

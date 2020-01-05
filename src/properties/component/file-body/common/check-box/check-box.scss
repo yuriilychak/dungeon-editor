@@ -1,0 +1,19 @@
+@import "../../../../../sizes";
+
+.check-box-wrapper {
+    display: flex;
+    margin-right: $indent_l;
+}
+
+.check-box-icon-root {
+    padding: 0 $indent_s 0 0 !important;
+}
+
+.check-box-label-root {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.check-box-label-label {
+    font-size: $font-size_small !important;
+}

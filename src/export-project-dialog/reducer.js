@@ -1,5 +1,6 @@
 import STATE from "./state";
 import StaticData from "./data";
+import { handleAction } from "../helpers";
 
 /**
  * @typedef {Object}
@@ -32,16 +33,12 @@ export const initialState = {
  */
 
 const actionHandlers = {
-    [STATE.CHANGE_ACTIVITY]: (state, action) => ({
+    [STATE.CHANGE_ACTIVITY]: (state, isPopupOpen) => ({
         ...state,
-        isPopupOpen: action.payload,
+        isPopupOpen,
         progressData: null
     }),
-    [STATE.PROGRESS]: (state, action) => ({
-        ...state,
-        progressData: action.payload
-    })
-
+    [STATE.PROGRESS]: (state, progressData) => ({ ...state, progressData })
 };
 
 /**
@@ -51,6 +48,5 @@ const actionHandlers = {
  */
 
 export default function topMenuReducer(state = initialState, action) {
-    const actionHandler = actionHandlers[action.type];
-    return actionHandler ? actionHandler(state, action) : state;
+    return handleAction(state, actionHandlers, action);
 }

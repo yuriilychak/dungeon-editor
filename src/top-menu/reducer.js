@@ -3,6 +3,7 @@ import SUBSECTIONS from "./enum/subsection";
 
 import StaticData from "./data/index.json";
 import MENU_STATE from "./enum/menu-state";
+import { handleAction } from "../helpers";
 
 export const initialState = {
     staticData: StaticData,
@@ -29,13 +30,8 @@ tabs.forEach( tab =>
 );
 
 const actionHandlers = {
-    [TOP_MENU.CHANGE]: (state, action) => ({
-        ...state,
-        openMenu: action.payload
-    }),
-    [TOP_MENU.SECTION_TOGGLE]: (state, action) => {
-        const sectionId = action.payload;
-
+    [TOP_MENU.CHANGE]: (state, openMenu) => ({ ...state, openMenu }),
+    [TOP_MENU.SECTION_TOGGLE]: (state, sectionId) => {
         if (!toggleIds.includes(sectionId)) {
             return state;
         }
@@ -79,6 +75,5 @@ const actionHandlers = {
 };
 
 export default function(state = initialState, action) {
-    const actionHandler = actionHandlers[action.type];
-    return actionHandler ? actionHandler(state, action) : state;
+    return handleAction(state, actionHandlers, action);
 }

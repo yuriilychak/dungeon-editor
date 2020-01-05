@@ -1,0 +1,86 @@
+@import "../../../../../sizes";
+@import "../../../../../colors";
+
+.rc-color-picker-wrap {
+  height: 16px;
+  margin-right: $indent_l;
+}
+
+.rc-color-picker-trigger {
+  padding: $indent_none;
+  box-shadow: 0 0 0 2px $back-deep-dark inset;
+  border: 1px solid $back-main;
+  border-radius: $indent_none;
+  width: $item-size_micro;
+  height: $item-size_micro;
+}
+
+.rc-color-picker-panel-inner {
+  border-radius: $indent_none;
+  background-color: $back-main;
+  border-color: $back-main;
+  box-shadow: $indent_m $indent_m $indent_none $indent_none $back-deep-dark;
+}
+
+.rc-color-picker-panel-ribbon {
+  border-radius: 0;
+  border: 1px solid $back-light;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  color: $text-contrast;
+  box-shadow: 0.5px 0 0 3px $back-deep-dark inset;
+}
+
+.rc-color-picker-panel-params input {
+  border-radius: 0;
+  border: 1px solid $back-light;
+  background-color: $back-dark;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  color: $text-contrast;
+}
+
+.rc-color-picker-panel-params {
+  border-radius: 0;
+}
+
+.rc-color-picker-panel-params-lable-hex,
+.rc-color-picker-panel-params-lable-number {
+  color: $text-contrast;
+}
+
+.rc-color-picker-panel-params-lable-number:hover {
+  background-color: $back-light;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.rc-color-picker-panel-params input[type=number] {
+  background-color: $back-dark;
+  border-radius: 0;
+  border: 1px solid $back-light;
+  color: $text-contrast;
+}
+
+.rc-color-picker-panel-params-lable {
+  color: $text-contrast;
+}
+
+.rc-color-picker-panel-board-handler {
+  border-radius: 0;
+  box-shadow: 0 0 0 3px black inset;
+  border: 1px solid $back-light;
+}
+
+.rc-color-picker-panel-preview {
+  border: none;
+  border-radius: $indent_none;
+}
+
+.rc-color-picker-panel-preview span,
+.rc-color-picker-panel-preview input[type=color] {
+  box-shadow: 0 0 0 3px black inset;
+  width: 30px;
+  height: 30px;
+  border: 1px solid $back-light;
+  border-radius: 0;
+}

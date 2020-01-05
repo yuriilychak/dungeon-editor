@@ -1,5 +1,8 @@
 import {default as reducer, initialState} from '../reducer';
 import { closeTab, selectTab, addTab } from "../action";
+import {}
+
+jest.mock("../../working-stage");
 
 jest.mock("../../working-stage");
 

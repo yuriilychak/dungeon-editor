@@ -60,6 +60,7 @@ const mapDispatchToProps = dispatch => ({
     onPublishProject: () => {
     },
     onSelectFile: (sectionId, fileId, isDirectory) => {
+        WorkingStage.dispatchClearSelection();
         dispatch(selectLibraryElement(ProjectData.selectFile(sectionId, fileId, isDirectory)));
     },
     onOpenFile: (sectionId, fileId, isDirectory) => {

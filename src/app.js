@@ -34,7 +34,7 @@ const App = () => {
             <TopMenu/>
             <div className="app-grid">
                 <Grid container className="app-full-height">
-                    <Grid item xs={10} className="app-left-column">
+                    <Grid item lg={10} md={9} sm={8} className="app-left-column">
                         <div className="app-working-area">
                             <WorkingArea/>
                         </div>
@@ -42,7 +42,7 @@ const App = () => {
                             <BottomMenu/>
                         </div>
                     </Grid>
-                    <Grid item xs={2} className="app-right-column">
+                    <Grid item lg={2} md={3} sm={4} className="app-right-column">
                         <Properties/>
                         <Library/>
                     </Grid>

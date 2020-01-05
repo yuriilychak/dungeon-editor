@@ -1,0 +1,20 @@
+@import "../../../../../sizes";
+@import "../../../../../colors";
+
+.properties-slider-field-counter-root {
+  background-color: $back-deep-dark;
+  border: 1px solid $back-main;
+  height: 20px;
+  width: $item-size_big;
+  align-items: center;
+  display: flex;
+  padding: $indent_none $indent_xl $indent_none $indent_m;
+}
+
+.properties-slider-field-counter-value {
+  flex: 1;
+}
+
+.properties-slider-field-counter-format {
+  font-size: $font-size_small;
+}

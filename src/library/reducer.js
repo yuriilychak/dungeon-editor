@@ -1,5 +1,6 @@
 import StaticData from "./data";
 import STATE from "./state";
+import { handleAction } from "../helpers";
 
 /**
  * @typedef {Object}
@@ -29,11 +30,11 @@ export const initialState = {
  */
 
 const actionHandlers = {
-    [STATE.ADD_DIRECTORY]: (state, action) => addElementToTree(action, true, state),
-    [STATE.ADD_FILE]: (state, action) => addElementToTree(action, false, state),
-    [STATE.REMOVE_FILE]: (state, action) => {
+    [STATE.ADD_DIRECTORY]: (state, payload) => addElementToTree(payload, true, state),
+    [STATE.ADD_FILE]: (state, payload) => addElementToTree(payload, false, state),
+    [STATE.REMOVE_FILE]: (state, payload) => {
         const files = state.files.slice(0);
-        const { sectionId, id } = action.payload;
+        const { sectionId, id } = payload;
         const fileTree = files[sectionId];
         const element = findElement(fileTree, id);
         const parentId = element.parentId;
@@ -53,18 +54,18 @@ const actionHandlers = {
             files
         }
     },
-    [STATE.UPDATE_TREE]: (state, action) => {
+    [STATE.UPDATE_TREE]: (state, payload) => {
         const files = state.files.slice(0);
-        const {fileTree, sectionId} = action.payload;
+        const {fileTree, sectionId} = payload;
         refreshParentIds(fileTree);
 
         files[sectionId] = fileTree;
 
         return {...state, files};
     },
-    [STATE.RENAME_FILE]: (state, action) => {
+    [STATE.RENAME_FILE]: (state, payload) => {
         const files = state.files.slice(0);
-        const {id, sectionId, name} = action.payload;
+        const {id, sectionId, name} = payload;
         const fileTree = files[sectionId];
 
         const element = findElement(fileTree, id);
@@ -91,9 +92,9 @@ function refreshParentIds(files, parentId = -1) {
     })
 }
 
-function addElementToTree(action, isDirectory, state) {
+function addElementToTree(payload, isDirectory, state) {
     const files = state.files.slice(0);
-    const {sectionId, data} = action.payload;
+    const {sectionId, data} = payload;
     const file = {
         title: data.name,
         id: data.id,
@@ -131,7 +132,7 @@ function addElementToTree(action, isDirectory, state) {
 
 function findElement(data, id) {
     const dirs = data.filter(element => element.isDirectory);
-    let result = data.find( element => element.id === id);
+    let result = data.find(element => element.id === id);
 
     if (result) {
         return result;
@@ -155,6 +156,5 @@ function findElement(data, id) {
  */
 
 export default function topMenuReducer(state = initialState, action) {
-    const actionHandler = actionHandlers[action.type];
-    return actionHandler ? actionHandler(state, action) : state;
+    return handleAction(state, actionHandlers, action);
 }

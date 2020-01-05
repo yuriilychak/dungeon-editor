@@ -26,7 +26,9 @@ export default ({
     const iconSection = (
         <div className="properties-header-icon">
             <Icon name={iconName} size={iconSize}/>
-            <div>{fileType}</div>
+            <div className="properties-header-icon-title">
+                {fileType}
+            </div>
         </div>
     );
 
@@ -44,7 +46,7 @@ export default ({
             {wrapper}
             <div className="properties-header-description">
                 <TitledField
-                    className="properties-header-field"
+                    className="properties-header-name-field"
                     title={nameTitle}
                 >
                     <div className="properties-header-name">

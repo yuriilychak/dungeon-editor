@@ -1,9 +1,7 @@
 import React, {Fragment} from "react";
 
 import {AutoComplete} from "../../../../common-ui/auto-complete";
-import {CheckBox} from "./check-box";
-
-import "./check-box/check-box.css";
+import {CheckBox} from "../common";
 
 export default ({
                     file,

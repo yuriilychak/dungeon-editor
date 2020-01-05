@@ -9,6 +9,7 @@ export default withStyles({
         height: ITEM_SIZE.SMALL,
         minHeight: ITEM_SIZE.SMALL,
         zIndex: 1,
+        overflow: 'unset',
         "@media (min-width: 600px)": {
             minHeight: ITEM_SIZE.SMALL
         }

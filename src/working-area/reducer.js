@@ -2,6 +2,7 @@ import STATE from "./state";
 import StaticData from "./data/index.json";
 import {WorkingStage} from "../working-stage";
 import {EDIT_MODE} from "../enum";
+import {handleAction} from "../helpers";
 
 export const initialState = {
     ...StaticData,
@@ -137,7 +138,6 @@ const actionHandlers = {
     }
 };
 
-export default function workingAreaReducer(state = initialState, {type, payload}) {
-    const actionHandler = actionHandlers[type];
-    return actionHandler ? actionHandler(state, payload) : state;
+export default function workingAreaReducer(state = initialState, action) {
+    return handleAction(state, actionHandlers, action);
 }

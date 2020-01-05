@@ -42,7 +42,7 @@ const mapDispatchToProps = dispatch => ({
         WorkingStage.dispatchDragEnd(event);
     },
     onCreateElement(type, posX, posY) {
-        WorkingStage.createElelement(type, posX, posY);
+        WorkingStage.createElement(type, posX, posY);
     },
     onChangeMode() {
         WorkingStage.dispatchEditModeChange();

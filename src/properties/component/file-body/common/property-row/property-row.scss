@@ -1,0 +1,8 @@
+@import "../../../../../sizes";
+
+.properties-property-row {
+  margin-bottom: $indent_m;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}

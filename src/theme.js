@@ -256,14 +256,25 @@ const theme = createMuiTheme({
             }
         },
         MuiFormControlLabel: {
+            root: {
+                height: 18,
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center"
+            },
             label: {
+                height: 18,
                 color: TEXT_COLOR.CONTRAST,
-                fontSize: FONT_SIZE.MEDIUM
+                fontSize: FONT_SIZE.MEDIUM,
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center"
             }
         },
         MuiSlider: {
             root: {
-                margin: getIndent(INDENT_SIZE.NONE, INDENT_SIZE.XL)
+                margin: getIndent(INDENT_SIZE.NONE, INDENT_SIZE.XL),
+                padding: getIndent(INDENT_SIZE.L, INDENT_SIZE.NONE)
             },
             marked: {
                 marginBottom: INDENT_SIZE.L
@@ -275,7 +286,7 @@ const theme = createMuiTheme({
                 backgroundColor: SECONDARY_COLOR.HOVERED
             },
             markLabel: {
-                top: INDENT_SIZE.XXXL,
+                top: 14,
                 fontSize: FONT_SIZE.SMALL,
                 color: TEXT_COLOR.DISABLED
             },
@@ -300,6 +311,11 @@ const theme = createMuiTheme({
                 borderRadius: INDENT_SIZE.NONE,
                 backgroundColor: BACKGROUND_COLOR.LIGHT,
                 color: TEXT_COLOR.CONTRAST
+            }
+        },
+        MuiCheckbox: {
+            root: {
+                padding: "0 9px 0 0"
             }
         }
     }

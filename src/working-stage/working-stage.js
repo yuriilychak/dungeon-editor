@@ -66,7 +66,7 @@ export default {
         this._dispatch(EVENT.CREATE_UI_ELEMENT, {type, id, name});
     },
 
-    createElelement(type, x, y) {
+    createElement(type, x, y) {
         this._dispatch(EVENT.CREATE_ELEMENT, {type, x, y});
     },
 
@@ -84,6 +84,14 @@ export default {
 
     setChangeModeCallback(callback) {
         this._addListener(EVENT.EDIT_MODE_CHANGE_INSIDE, callback);
+    },
+
+    setSelectStageElementCallback(callback) {
+        this._addListener(EVENT.ELEMENT_SELECT, callback);
+    },
+
+    setChangeStageElementCallback(callback) {
+        this._addListener(EVENT.ELEMENT_CHANGE, callback);
     },
 
     dispatchDragStart(event) {
@@ -104,12 +112,20 @@ export default {
         }
     },
 
+    dispatchChangeStageElement(event) {
+        this._dispatch(EVENT.ELEMENT_CHANGE_OUTSIDE, event);
+    },
+
     dispatchDelete(type, fileIds) {
         this._dispatch(EVENT.DELETE_ELEMENTS, { type, fileIds });
     },
 
     dispatchEditModeChange() {
         this._dispatch(EVENT.EDIT_MODE_CHANGE_OUTSIDE);
+    },
+
+    dispatchClearSelection() {
+        this._dispatch(EVENT.ELEMENT_CLEAR_SELECTION);
     },
 
     _addListener(event, callback) {

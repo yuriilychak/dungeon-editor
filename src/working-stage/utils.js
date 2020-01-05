@@ -61,7 +61,7 @@ export function createElement(type) {
             element.width = DEFAULT_SIZE.PANEL.width;
             element.height = DEFAULT_SIZE.PANEL.height;
             element.anchor.set(DEFAULT_ANCHOR);
-            return element;
+            break;
         }
         case UI_ELEMENT.BUTTON: {
             element = ui.Button.create(
@@ -72,37 +72,37 @@ export function createElement(type) {
             );
             setSizing(element, DEFAULT_SIZE.FIELD, true);
             createTitle(element, "Button");
-            return element;
+            break;
         }
         case UI_ELEMENT.PANEL: {
             element = ui.Panel.create(PANEL_GRAPHIC_TYPE.SPRITE, DEFAULT_TEXTURE.ROUND_RECT_OVER);
             setSizing(element, DEFAULT_SIZE.PANEL, true);
-            return element;
+            break;
         }
         case UI_ELEMENT.LABEL: {
             element = createDefaultLabel("Label");
-            return element;
+            break;
         }
         case UI_ELEMENT.TEXT_FIELD: {
             element = ui.TextField.create(DEFAULT_FONT_NAME, DEFAULT_FONT_SIZE);
             setSizing(element, DEFAULT_SIZE.FIELD, false);
             element.text = "Text field";
             element.color = DEFAULT_TEXT_COLOR;
-            return element;
+            break;
         }
         case UI_ELEMENT.IMAGE_VIEW: {
             element = ui.ImageView.create(DEFAULT_TEXTURE.IMAGE);
             element.anchor.set(DEFAULT_ANCHOR);
-            return element;
+            break;
         }
         case UI_ELEMENT.SPRITE: {
             element = view.ComponentSprite.create(DEFAULT_TEXTURE.IMAGE);
             element.anchor.set(DEFAULT_ANCHOR);
-            return element;
+            break;
         }
         case UI_ELEMENT.CONTAINER: {
             element = view.ComponentContainer.create();
-            return element;
+            break;
         }
         case UI_ELEMENT.PROGRESS_BAR: {
             element = ui.ProgressBar.create(
@@ -112,7 +112,7 @@ export function createElement(type) {
             );
             setSizing(element, DEFAULT_SIZE.PROGRESS, true);
             element.progress = DEFAULT_PROGRESS;
-            return element;
+            break;
         }
         case UI_ELEMENT.SLIDER: {
             const ball = ui.ImageView.create(DEFAULT_TEXTURE.ROUND_RECT_OVER);
@@ -130,7 +130,7 @@ export function createElement(type) {
                 DEFAULT_SLICE,
                 DEFAULT_SLICE
             );
-            return element;
+            break;
         }
         case UI_ELEMENT.TOGGLE_BUTTON: {
             element = ui.ToggleButton.create(
@@ -145,7 +145,7 @@ export function createElement(type) {
             );
             setSizing(element, DEFAULT_SIZE.FIELD, true);
             createTitle(element, "Toggle button");
-            return element;
+            break;
         }
         case UI_ELEMENT.CHECK_BOX: {
             /**
@@ -161,24 +161,30 @@ export function createElement(type) {
             setSizing(element, DEFAULT_SIZE.CHECKBOX, true);
             element.selected = true;
             element.icon.anchor.set(DEFAULT_ANCHOR);
-            return element;
+            break;
         }
         case UI_ELEMENT.SCROLL_VIEW: {
             element = ui.ScrollView.create(PANEL_GRAPHIC_TYPE.SPRITE, DEFAULT_TEXTURE.ROUND_RECT_OVER);
             setSizing(element, DEFAULT_SIZE.PANEL, true);
             setInnerSize(element, DEFAULT_SIZE.PANEL);
-            return element;
+            break;
         }
         case UI_ELEMENT.LIST_VIEW: {
             element = ui.ListView.create(PANEL_GRAPHIC_TYPE.SPRITE, DEFAULT_TEXTURE.ROUND_RECT_OVER);
             setSizing(element, DEFAULT_SIZE.PANEL, true);
             setInnerSize(element, DEFAULT_SIZE.PANEL);
-            return element;
+            break;
         }
         default:
             element = mCore.view.ComponentContainer.create();
-            return element;
+            break;
     }
+
+    element.userData = {
+        interactive: true
+    };
+
+    return element;
 }
 
 /**

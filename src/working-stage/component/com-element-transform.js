@@ -3,7 +3,7 @@ import {updateAnchor, getAnchorPosition, updatePosition} from "../utils";
 import {EDIT_MODE} from "../../enum";
 
 const {mCore, PIXI} = window;
-const {math, geometry} = mCore.util;
+const {math, geometry, color } = mCore.util;
 
 export default class ComElementTransform extends mCore.component.ui.ComUI {
     constructor() {
@@ -60,6 +60,14 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
         this._transform = new PIXI.Transform();
 
+        this._globalStart = mCore.geometry.Point.create();
+
+        this._minSize = mCore.geometry.Point.create(12, 12);
+
+        this._changeCounter = 0;
+
+        this._changeKey = null;
+
         this._positionDragStartEvent = "EDIT_AREA.POSITION_DRAG_START";
         this._positionDragMoveEvent = "EDIT_AREA.POSITION_DRAG_MOVE";
         this._positionDragFinishEvent = "EDIT_AREA.POSITION_DRAG_FINISH";
@@ -70,6 +78,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
         this.listenerManager.addEventListener(EVENT.EDIT_MODE_CHANGE_OUTSIDE, this._refreshEditMode);
         this.listenerManager.addEventListener(EVENT.ELEMENT_CLICK, this._onElementClick);
+        this.listenerManager.addEventListener(EVENT.ELEMENT_CHANGE_OUTSIDE, this._onChangeTransform);
         this.listenerManager.addEventListener(this._positionDragStartEvent, this._onPositionDragStart);
         this.listenerManager.addEventListener(this._positionDragMoveEvent, this._onPositionDragMove);
         this.listenerManager.addEventListener(this._positionDragFinishEvent, this._onPositionDragFinish);
@@ -78,7 +87,9 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             "AnchorSelect",
             this._onAnchorDrag,
             this._onAnchorOver,
-            this._onAnchorOut
+            this._onAnchorOut,
+            this._onAnchorDragStart,
+            this._onAnchorDragFinish
         );
 
         let i, j;
@@ -148,17 +159,104 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             return;
         }
 
-        const anchor = geometry.pCompDiv(this._toLocal(data.data.global), geometry.pFromSize(this.owner));
+        const anchor = geometry.pFixed(
+            geometry.pCompDiv(
+                this._toLocal(data.data.global),
+                geometry.pFromSize(this.owner),
+                true,
+                true
+            ),
+            2,
+            true
+        );
 
-        anchor.x = math.toFixed(anchor.x);
-        anchor.y = math.toFixed(anchor.y);
-
-        updateAnchor(this.owner, anchor);
         updateAnchor(this._selectedElement, anchor);
 
         this.owner.refreshAnchorElement();
 
-        this.listenerManager.dispatchEvent(EVENT.ELEMENT_ANCHOR_CHANGE, anchor);
+        this._dispatchChangeWithCounter(anchor);
+
+        this._updateTransform();
+    }
+
+    _onChangeTransform({ data: { key, value } }) {
+        this._changeKey = key;
+        let changeValue;
+
+        switch (this._changeKey) {
+            case "rotation": {
+                changeValue = math.toRadians(-value);
+                this._selectedElement.rotation = changeValue;
+                break;
+            }
+            case "alpha": {
+                changeValue = math.percentToFloat(value);
+                this._selectedElement.alpha = changeValue;
+                break;
+            }
+            case "visible": {
+                changeValue = value;
+                this._selectedElement.visible = changeValue;
+                break;
+            }
+            case "interactive": {
+                changeValue = value;
+                this._selectedElement.userData.interactive = changeValue;
+                break;
+            }
+            case "tint": {
+                changeValue = color.hexToInt(value);
+                this._selectedElement.tint = changeValue;
+                break;
+            }
+            case "anchor": {
+                changeValue = { ...value };
+                changeValue.x = math.percentToFloat(changeValue.x);
+                changeValue.y = math.percentToFloat(changeValue.y);
+
+                this._selectedElement.anchor.copyFrom(changeValue);
+                break;
+            }
+            case "scale": {
+                changeValue = { ...value };
+                changeValue.x = math.percentToFloat(changeValue.x);
+                changeValue.y = math.percentToFloat(changeValue.y);
+
+                this._selectedElement.scale.copyFrom(changeValue);
+                break;
+            }
+            case "position": {
+                changeValue = value;
+                this._selectedElement.position.copyFrom(changeValue);
+                break;
+            }
+            case "size": {
+                changeValue = value;
+                this._selectedElement.rate.copyFrom(changeValue);
+                break;
+            }
+            case "skew": {
+                changeValue = { ...value };
+                changeValue.x = math.toRadians(changeValue.x);
+                changeValue.y = math.toRadians(changeValue.y);
+                this._selectedElement.skew.copyFrom(changeValue);
+                break;
+            }
+        }
+
+        this._updateTransform();
+
+        this._dispatchResultChange(changeValue);
+    }
+
+    _onAnchorDragStart() {
+        this._changeKey = "anchor";
+    }
+
+    _onAnchorDragFinish() {
+        geometry.pRound(this._selectedElement.position, true);
+        this._updateTransform();
+        this._dispatchResultChange(this._selectedElement.anchor);
     }
 
     _onElementClick({target, data}) {
@@ -216,6 +314,8 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
         this._beginElementAngle = this._selectedElement.rotation;
 
+        this._globalStart.copyFrom(data.data.global);
+
         const ownerPos = this.owner.parent.toGlobal(this.owner.position);
         const offset = geometry.pSub(data.data.global, ownerPos, true);
 
@@ -233,83 +333,121 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         }
 
         const index = this._extractBorderIndex(target.name);
-        const minSize = 12;
 
+        let changeValue;
 
         switch (this._editMode) {
             case EDIT_MODE.SIZE: {
-                const localPos = this._toLocal(data.data.global);
-
-                const nextSize = mCore.geometry.Point.create(
-                    math.max(this._calculateDimension(localPos, index.x, 'x', 'width'), minSize),
-                    math.max(this._calculateDimension(localPos, index.y, 'y', 'height'), minSize)
-                );
+                const nextSize = this._calculateNextSize(data.data.global, index, true);
 
                 this._refreshTransform();
 
-                this.owner.width = nextSize.x;
-                this.owner.height = nextSize.y;
-
                 const elementWorldScale = this._getElementWorldScale();
 
-                this._selectedElement.width = math.round(this.owner.width / elementWorldScale.x);
-                this._selectedElement.height = math.round(this.owner.height / elementWorldScale.y);
+                geometry.pRound(geometry.pCompDiv(nextSize, elementWorldScale, true), true);
 
-                this.listenerManager.dispatchEvent(EVENT.ELEMENT_SIZE_CHANGE, geometry.pFromSize(this._selectedElement));
+                this._selectedElement.width = nextSize.x;
+                this._selectedElement.height = nextSize.y;
 
                 nextSize.destroy();
                 elementWorldScale.destroy();
 
+                this._changeKey = "size";
+                changeValue = this._selectedElement.rate;
                 break;
             }
             case EDIT_MODE.SKEW: {
                 if (index.x === index.y || math.abs(index.y - index.x) === 2) {
+                    this._changeKey = "rotation";
                     const ownerPos = this.owner.parent.toGlobal(this.owner.position);
                     const offset = geometry.pSub(data.data.global, ownerPos, true);
                     const rotation = this._beginElementAngle + Math.atan2(offset.y, offset.x) - this._beginEditAngle;
 
-                    this.owner.rotation = rotation;
                     this._selectedElement.rotation = this._selectedElement.parent.worldTransform.c + rotation;
-                } else {
 
+                    changeValue = this._selectedElement.rotation;
+                } else {
+                    index.x = index.x - 1;
+                    index.y = 1 - index.y;
+                    const startPos = this._toLocal(this._globalStart);
+                    const endPos = this._toLocal(data.data.global);
+                    const invertedIndex = mCore.geometry.Point.create(index.y, index.x);
+                    const offset = geometry.pRound(
+                        geometry.pCompMult(
+                            geometry.pSub(
+                                endPos,
+                                startPos,
+                                true
+                            ),
+                            invertedIndex,
+                            true,
+                            true
+                        ),
+                        true
+                    );
+
+                    if (index.y === 0) {
+                        this._selectedElement.skew.y = math.toFixed(Math.atan2(offset.y, math.divPowTwo(this._selectedElement.width)));
+                    } else {
+                        this._selectedElement.skew.x = math.toFixed(Math.atan2(math.divPowTwo(this._selectedElement.height), offset.x) - Math.PI / 2);
+                    }
+
+                    this._changeKey = "skew";
+                    changeValue = this._selectedElement.skew;
                 }
                 break;
             }
             default: {
-                const localPos = this._toLocal(data.data.global);
-                const nextSize = mCore.geometry.Point.create(
-                    this._calculateDimension(localPos, index.x, 'x', 'width'),
-                    this._calculateDimension(localPos, index.y, 'y', 'height')
-                );
+                const nextSize = this._calculateNextSize(data.data.global, index, false);
 
                 this._refreshTransform();
 
-                const elementSize = geometry.pFromSize(this._selectedElement);
-                const parentScale = geometry.pCompDiv(
-                    this._getElementWorldScale(),
-                    this._selectedElement.scale,
-                    true
+                this._selectedElement.scale.copyFrom(
+                    geometry.pCompDiv(
+                        nextSize,
+                        geometry.pCompMult(
+                            geometry.pFromSize(this._selectedElement),
+                            geometry.pCompDiv(
+                                this._getElementWorldScale(),
+                                this._selectedElement.scale,
+                                true
+                            ),
+                            true,
+                            true
+                        ),
+                        true,
+                        true
+                    )
                 );
 
-                this._selectedElement.scale.copyFrom(geometry.pCompDiv(nextSize, geometry.pCompMult(elementSize, parentScale)));
-                this.owner.width = nextSize.x;
-                this.owner.height = nextSize.y;
-
-                elementSize.destroy();
-                parentScale.destroy();
                 nextSize.destroy();
+
+                this._changeKey = "scale";
+                changeValue = this._selectedElement.scale;
                 break;
             }
         }
+        this._updateTransform();
+        this._dispatchChangeWithCounter(changeValue);
     }
 
-    _calculateDimension(localPos, index, cord, dimension) {
-        switch (index) {
+    _calculateNextSize(globalPos, index, isMaximize) {
+        const localPos = this._toLocal(globalPos);
+        const result =  mCore.geometry.Point.create(
+            this._calculateDimension(localPos, index, 'x'),
+            this._calculateDimension(localPos, index, 'y')
+        );
+
+        return isMaximize ? geometry.pMax(result, this._minSize, true) : result;
+    }
+
+    _calculateDimension(localPos, index, cord) {
+        switch (index[cord]) {
             case 0: {
-                return math.round(this.owner[dimension] - localPos[cord]);
+                return math.round(this.owner.rate[cord] - localPos[cord]);
             }
             case 1: {
-                return math.round(this.owner[dimension]);
+                return math.round(this.owner.rate[cord]);
             }
             default: {
                 return math.round(localPos[cord]);
@@ -323,6 +461,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         }
         this._canvas.style.cursor = CURSOR.MOVE;
         this._dragPosition.copyFrom(data.data.global);
+        this._changeKey = "position";
     }
 
     _onPositionDragMove({data}) {
@@ -336,15 +475,34 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
         this._dragPosition.copyFrom(nextPos);
 
-        this.listenerManager.dispatchEvent(EVENT.ELEMENT_POSITION_CHANGE, this._selectedElement.position);
+        this._dispatchChangeWithCounter(this._selectedElement.position);
     }
 
     _onPositionDragFinish({data}) {
         if (!this._isLeftButton(data)) {
             return;
         }
+        geometry.pRound(this._selectedElement.position, true);
+        this._updateTransform();
         this._canvas.style.cursor = CURSOR.AUTO;
         this._dragPosition.set(0, 0);
+        this._dispatchResultChange(this._selectedElement.position);
+    }
+
+
+    _dispatchChangeWithCounter(value) {
+        ++this._changeCounter;
+
+        if (this._changeCounter > 3) {
+            this._changeCounter = 0;
+            this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, { key: this._changeKey, value});
+        }
+    }
+
+    _dispatchResultChange(value) {
+        this._changeCounter = 0;
+        this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, { key: this._changeKey, value});
+        this._changeKey = null;
     }
 
     _setSelectedElementListeners(
@@ -370,27 +528,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         this._selectedElement.worldTransform.decompose(this._transform);
     }
 
-    get selectedElement() {
-        return this._selectedElement;
-    }
-
-    set selectedElement(element) {
-        if (this._selectedElement === element) {
-            return;
-        }
-
-        if (this._selectedElement) {
-            this._setSelectedElementListeners();
-        }
-
-        this._selectedElement = element;
-
-        this._setSelectedElementListeners(
-            this._positionDragStartEvent,
-            this._positionDragMoveEvent,
-            this._positionDragFinishEvent
-        );
-
+    _updateTransform() {
         this._refreshTransform();
 
         this.owner.rotation = this._transform.rotation;
@@ -418,5 +556,38 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         const pointToCheck = this._zeroPositionTypes.includes(this._selectedElement.uiType) ? this._zeroPoint : getAnchorPosition(this._selectedElement);
 
         this.owner.position.copyFrom(this._toParentCoords(this._selectedElement.toGlobal(pointToCheck)));
+    }
+
+    get selectedElement() {
+        return this._selectedElement;
+    }
+
+    set selectedElement(element) {
+        if (this._selectedElement === element) {
+            return;
+        }
+
+        if (this._selectedElement) {
+            this._setSelectedElementListeners();
+        }
+
+        this._selectedElement = element;
+
+        if (this._selectedElement === null) {
+            this.owner.visible = false;
+            return;
+        }
+
+        this.listenerManager.dispatchEvent(EVENT.ELEMENT_SELECT, this._selectedElement);
+
+        this.owner.visible = true;
+
+        this._setSelectedElementListeners(
+            this._positionDragStartEvent,
+            this._positionDragMoveEvent,
+            this._positionDragFinishEvent
+        );
+
+        this._updateTransform();
     }
 }

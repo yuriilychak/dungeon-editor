@@ -1,5 +1,7 @@
 import StaticData from "./data";
 import STATE from "./state";
+import { handleAction } from "../helpers";
+
 export const initialState = {
     ...StaticData,
     sectionId: -1,
@@ -20,8 +22,7 @@ const actionHandlers = {
     [STATE.CHANGE_TAB]: (state, tabIndex) => ({ ...state, tabIndex })
 };
 
-export default function topMenuReducer(state = initialState, { type, payload}) {
-    const actionHandler = actionHandlers[type];
-    return actionHandler ? actionHandler(state, payload) : state;
+export default function topMenuReducer(state = initialState, action) {
+    return handleAction(state, actionHandlers, action);
 }
 

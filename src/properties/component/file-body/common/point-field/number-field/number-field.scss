@@ -1,0 +1,45 @@
+@import "../../../../../../colors";
+@import "../../../../../../sizes";
+
+.properties-number-filed-root {
+  background-color: $back-deep-dark;
+  border: 1px solid $back-main;
+  height: 20px;
+  flex: 1;
+  padding-left: $indent_m;
+  margin-left: $indent_m;
+}
+
+.properties-number-filed-wrapper {
+  flex: 1;
+}
+
+.properties-number-filed-value {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: unset;
+  font-size: $font-size_small;
+  color: $text-contrast;
+}
+
+.properties-number-filed-format {
+  background-color: $back-main;
+  cursor: pointer;
+  width: 20px;
+  margin-right: $indent_xs;
+  font-size: $font-size_small;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.properties-number-filed-format-disabled {
+  background-color: $back-deep-dark;
+  cursor: auto;
+  pointer-events: none;
+}

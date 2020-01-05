@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import {string, element, arrayOf, number, oneOfType} from "prop-types";
+import {string, number, oneOfType, node} from "prop-types";
 
 import "./titled-field.css";
 
@@ -8,17 +8,17 @@ const TitledField = ({
                          title,
                          children,
                          titleWidth,
-                         className,
+                         className
                      }) => (
     <div className={classNames("titled-field-root", className)}>
-        <div
+        <span
             className="titled-field-title"
             style={{
                 width: titleWidth
             }}
         >
             {`${title}:`}
-        </div>
+        </span>
         <div className="titled-field-body">
             {children}
         </div>
@@ -31,7 +31,7 @@ TitledField.defaultProps = {
 
 TitledField.propTypes = {
     title: string.isRequired,
-    children: oneOfType([element, arrayOf(element), string, number]).isRequired,
+    children: node.isRequired,
     titleWidth: oneOfType([string, number]),
     className: string
 };

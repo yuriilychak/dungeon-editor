@@ -1,6 +1,7 @@
 import React, { memo } from "react";
-import Typography from "@material-ui/core/Typography";
 import { string, element, arrayOf, oneOfType, number } from "prop-types";
+
+import Typography from "@material-ui/core/Typography";
 
 import './titled-panel.css';
 
@@ -29,7 +30,7 @@ TitledPanel.defaultProps = {
 
 TitledPanel.propTypes = {
     title: string.isRequired,
-    bodyPadding: number,
+    bodyPadding: oneOfType([number, string]),
     children: oneOfType([arrayOf(element), element, string]).isRequired,
     titleChildren: oneOfType([arrayOf(element), element, string])
 };

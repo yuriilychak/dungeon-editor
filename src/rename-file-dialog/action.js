@@ -1,9 +1,7 @@
 import STATE from "./state";
+import { dispatchAction } from "../helpers";
 
 export const showRenameFileDialog = () => changeDialogActivity(true);
 export const hideRenameFileDialog = () => changeDialogActivity(false);
 
-const changeDialogActivity = activity => ({
-    type: STATE.CHANGE_ACTIVITY,
-    payload: activity
-});
+const changeDialogActivity = activity => dispatchAction(STATE.CHANGE_ACTIVITY, activity);

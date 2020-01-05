@@ -43,5 +43,87 @@
       "locale": "Properties_TileMapTitle",
       "icon": "tile_map_element"
     }
+  ],
+  "stageData": [
+    {
+      "locale": "Properties_Stage_None",
+      "icon": "element/container"
+    },
+    {
+      "locale": "Properties_Stage_UIElement",
+      "icon": "element/ui_element"
+    },
+    {
+      "locale": "Properties_Stage_Widget",
+      "icon": "element/widget"
+    },
+    {
+      "locale": "Properties_Stage_Panel",
+      "icon": "element/panel"
+    },
+    {
+      "locale": "Properties_Stage_ImageView",
+      "icon": "element/image_view"
+    },
+    {
+      "locale": "Properties_Stage_Button",
+      "icon": "element/button"
+    },
+    {
+      "locale": "Properties_Stage_Label",
+      "icon": "element/label"
+    },
+    {
+      "locale": "Properties_Stage_Slider",
+      "icon": "element/slider"
+    },
+    {
+      "locale": "Properties_Stage_ToggleButton",
+      "icon": "element/toggle_button"
+    },
+    {
+      "locale": "Properties_Stage_Sprite",
+      "icon": "element/sprite"
+    },
+    {
+      "locale": "Properties_Stage_Container",
+      "icon": "element/container"
+    },
+    {
+      "locale": "Properties_Stage_ProgressBar",
+      "icon": "element/progress_bar"
+    },
+    {
+      "locale": "Properties_Stage_Checkbox",
+      "icon": "element/checkbox"
+    },
+    {
+      "locale": "Properties_Stage_AtlasLabel",
+      "icon": "element/atlas_label"
+    },
+    {
+      "locale": "Properties_Stage_TextField",
+      "icon": "element/text_field"
+    },
+    {
+      "locale": "Properties_Stage_ScrollView",
+      "icon": "element/scroll_view"
+    },
+    {
+      "locale": "Properties_Stage_ListView",
+      "icon": "element/list_view"
+    },
+    {
+      "locale": "Properties_Stage_PageView",
+      "icon": "element/page_view"
+    },
+    {
+      "locale": "Properties_Stage_Skeleton",
+      "icon": "element/skeleton"
+    },
+    {
+      "locale": "Properties_Stage_Particle",
+      "icon": "element/particle"
+    }
   ]
 }
