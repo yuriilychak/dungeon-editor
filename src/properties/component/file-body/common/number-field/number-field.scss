@@ -1,11 +1,10 @@
-@import "../../../../../../colors";
-@import "../../../../../../sizes";
+@import "../../../../../colors";
+@import "../../../../../sizes";
 
 .properties-number-filed-root {
   background-color: $back-deep-dark;
   border: 1px solid $back-main;
   height: 20px;
-  flex: 1;
   padding-left: $indent_m;
   margin-left: $indent_m;
 }

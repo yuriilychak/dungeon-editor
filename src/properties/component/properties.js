@@ -1,10 +1,11 @@
-import React, {Fragment, useEffect} from "react";
+import React, {Fragment, useEffect, useMemo } from "react";
 import {string, func, number, arrayOf, shape, object, bool} from "prop-types";
 import {useTranslation} from "react-i18next";
 
 import {TitledPanel} from "../../common-ui/titled-panel";
 import {FileHeader} from "./file-header";
 import {LibraryElementBody, StageElementBody} from "./file-body";
+import {generateLocale} from "../../helpers";
 
 import "./properties.css";
 
@@ -27,6 +28,8 @@ const Properties = ({
 
     useEffect(init, []);
 
+    const localesParsed = useMemo(() => generateLocale(locales, t), [locales, t]);
+
     let content;
 
     if (file !== null) {
@@ -39,6 +42,7 @@ const Properties = ({
             fileBody = (
                 <StageElementBody
                     {...file.data}
+                    locales={localesParsed.stage}
                     onChange={onStageElementChange}
                 />
             );
@@ -47,10 +51,7 @@ const Properties = ({
             fileBody = (
                 <LibraryElementBody
                     file={file}
-                    compressNameLabel={t(locales.compressName)}
-                    compressSkeletonLabel={t(locales.compressSkeleton)}
-                    atlasAutocompleteLabel={t(locales.selectAtlasLabel)}
-                    atlasAutocompletePlaceholder={t(locales.selectAtlasPlaceholder)}
+                    {...localesParsed.library}
                     onSwitchAtlas={onSwitchAtlas}
                     onSwitchCompressSkeleton={onSwitchCompressSkeleton}
                     onSwitchCompressName={onSwitchCompressName}
@@ -65,9 +66,9 @@ const Properties = ({
             <Fragment>
                 <FileHeader
                     fileName={file.name}
-                    nameTitle={t(locales.nameTitle)}
+                    nameTitle={localesParsed.nameTitle}
                     fileId={file.id}
-                    idTitle={t(locales.idTitle)}
+                    idTitle={localesParsed.idTitle}
                     fileType={fileType}
                     iconName={data.icon}
                     iconSize={iconSize}
@@ -80,13 +81,13 @@ const Properties = ({
     } else {
         content = (
             <div className="properties-empty-text">
-                {t(locales.emptyDescription)}
+                {localesParsed.emptyDescription}
             </div>
         );
     }
     return (
         <TitledPanel
-            title={t(locales.sectionTitle)}
+            title={localesParsed.sectionTitle}
             bodyPadding="8px 12px 0 12px"
         >
             {content}

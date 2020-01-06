@@ -1,10 +1,12 @@
 import React from "react";
 
 import {CheckBox, PointField, SliderField, ColorField} from "../common";
+import {VALUE_FORMAT, DIMENSION_FORMATS, DEGREE_FORMATS, PERCENT_FORMATS} from "../../../constants";
 
 import "./stage-element-body.scss";
 
 const StageElementBody = ({
+                              locales,
                               visible,
                               position,
                               size,
@@ -21,75 +23,70 @@ const StageElementBody = ({
         <div className="properties-stage-element-body-root">
             <PointField
                 id="position"
-                mainLabel={"Position"}
-                xLabel={"X"}
-                yLabel={"Y"}
+                {...locales["position"]}
+                formats={DIMENSION_FORMATS}
                 {...position}
                 onChange={onChange}
             />
             <PointField
                 id="size"
-                mainLabel={"Size"}
-                xLabel={"W"}
-                yLabel={"H"}
+                {...locales["size"]}
+                formats={DIMENSION_FORMATS}
                 {...size}
                 onChange={onChange}
             />
             <PointField
                 id="scale"
-                mainLabel={"Scale"}
-                xLabel={"X"}
-                yLabel={"Y"}
+                {...locales["scale"]}
+                formats={PERCENT_FORMATS}
                 {...scale}
                 onChange={onChange}
             />
             <PointField
                 id="skew"
-                mainLabel={"Skew"}
-                xLabel={"X"}
-                yLabel={"Y"}
+                {...locales["skew"]}
+                formats={DEGREE_FORMATS}
                 {...skew}
                 onChange={onChange}
             />
             <PointField
                 id="anchor"
-                mainLabel={"Anchor"}
-                xLabel={"X"}
-                yLabel={"Y"}
+                {...locales["anchor"]}
+                formats={PERCENT_FORMATS}
                 {...anchor}
                 onChange={onChange}
             />
             <SliderField
                 id="rotation"
-                label={"Rotation"}
-                format={"°"}
+                {...locales["rotation"]}
+                format={VALUE_FORMAT.DEGREE}
                 onChange={onChange}
                 value={rotation}
                 maxValue={359}
             />
             <SliderField
                 id="alpha"
-                label={"Alpha"}
+                {...locales["alpha"]}
                 onChange={onChange}
-                format={"%"}
+                format={VALUE_FORMAT.PERCENT}
                 value={alpha}
                 maxValue={100}
             />
             <ColorField
                 id="tint"
-                label="Tint"
+                {...locales["tint"]}
                 value={tint}
                 onChange={onChange}
             >
                 <CheckBox
                     id="visible"
-                    label="Visible"
+                    {...locales["visible"]}
                     checked={visible}
                     onChange={onChange}
                 />
                 <CheckBox
                     id="interactive"
-                    label="Interactive"
+                    {...locales["interactive"]}
                     checked={interactive}
                     onChange={onChange}
                 />

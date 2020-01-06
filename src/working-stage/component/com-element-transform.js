@@ -242,6 +242,9 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
                 this._selectedElement.skew.copyFrom(changeValue);
                 break;
             }
+            default: {
+                return;
+            }
         }
 
         this._updateTransform();

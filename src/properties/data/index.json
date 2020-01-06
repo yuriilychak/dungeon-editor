@@ -1,14 +1,58 @@
 {
   "iconSize": 20,
   "locales": {
-    "compressName": "Properties_CompressName",
-    "compressSkeleton": "Properties_CompressSkeleton",
     "emptyDescription": "Properties_EmptyDescription",
     "idTitle": "Properties_IdTitle",
     "nameTitle": "Properties_NameTitle",
     "sectionTitle": "Properties_Title",
-    "selectAtlasLabel": "Properties_SelectAtlasLabel",
-    "selectAtlasPlaceholder": "Properties_SelectAtlasPlaceholder"
+    "library": {
+      "compressNameLabel": "Properties_CompressName",
+      "compressSkeletonLabel": "Properties_CompressSkeleton",
+      "atlasAutocompleteLabel": "Properties_SelectAtlasLabel",
+      "atlasAutocompletePlaceholder": "Properties_SelectAtlasPlaceholder"
+    },
+    "stage": {
+      "position": {
+        "labelMain": "Properties_Edit_PositionLabel_Main",
+        "labelX": "Properties_Edit_PositionLabel_X",
+        "LabelY": "Properties_Edit_PositionLabel_Y"
+      },
+      "size": {
+        "labelMain": "Properties_Edit_SizeLabel_Main",
+        "labelX": "Properties_Edit_SizeLabel_X",
+        "LabelY": "Properties_Edit_SizeLabel_Y"
+      },
+      "anchor": {
+        "labelMain": "Properties_Edit_AnchorLabel_Main",
+        "labelX": "Properties_Edit_AnchorLabel_X",
+        "LabelY": "Properties_Edit_AnchorLabel_Y"
+      },
+      "scale": {
+        "labelMain": "Properties_Edit_ScaleLabel_Main",
+        "labelX": "Properties_Edit_ScaleLabel_X",
+        "LabelY": "Properties_Edit_ScaleLabel_Y"
+      },
+      "skew": {
+        "labelMain": "Properties_Edit_SkewLabel_Main",
+        "labelX": "Properties_Edit_SkewLabel_X",
+        "LabelY": "Properties_Edit_SkewLabel_Y"
+      },
+      "visible": {
+        "label": "Properties_Edit_VisibleLabel_Main"
+      },
+      "alpha": {
+        "label": "Properties_Edit_AlphaLabel_Main"
+      },
+      "tint": {
+        "label": "Properties_Edit_TintLabel_Main"
+      },
+      "rotation": {
+        "label": "Properties_Edit_RotationLabel_Main"
+      },
+      "interactive": {
+        "label": "Properties_Edit_InteractiveLabel_Main"
+      }
+    }
   },
   "directoryData": {
     "locale": "Properties_DirectoryTitle",

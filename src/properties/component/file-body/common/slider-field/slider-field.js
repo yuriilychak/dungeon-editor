@@ -3,6 +3,7 @@ import React, {memo} from "react";
 import Slider from '@material-ui/core/Slider';
 
 import {PropertyRow} from "../property-row";
+import {NumberField} from "../number-field";
 
 import "./slider-field.scss";
 
@@ -10,6 +11,8 @@ const SliderField = ({
                          id,
                          label,
                          value,
+                         minValue = 0,
+                         step = 1,
                          maxValue,
                          format,
                          onChange
@@ -21,18 +24,21 @@ const SliderField = ({
             value={value}
             onChange={(event, value) => onChange({key: id, value})}
             aria-labelledby="continuous-slider"
-            min={0}
-            step={1}
+            min={minValue}
+            step={step}
             max={maxValue}
         />
-        <div className="properties-slider-field-counter-root">
-            <span className="properties-slider-field-counter-value">
-            {value}
-            </span>
-            <span className="properties-slider-field-counter-format">
-            {format}
-            </span>
-        </div>
+        <NumberField
+            id={id}
+            minValue={minValue}
+            maxValue={maxValue}
+            step={step}
+            className="properties-slider-field-counter-root"
+            value={value}
+            format={format}
+            changeFormatDisabled
+            onChange={onChange}
+        />
     </PropertyRow>
 );
 

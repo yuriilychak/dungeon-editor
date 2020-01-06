@@ -1,62 +1,81 @@
-import React, {memo, useState, useCallback, useEffect} from "react";
+import React, {memo, useState, useCallback, useEffect } from "react";
+import { string, number, func, arrayOf } from "prop-types";
 
-import {NumberField} from "./number-field";
+import {NumberField} from "../number-field";
 import {PropertyRow} from "../property-row";
 
 const PointField = ({
                         id,
-                        mainLabel,
-                        xLabel,
-                        yLabel,
+                        labelMain,
+                        labelX,
+                        labelY,
+                        formats,
+                        formatX = 0,
+                        formatY = 0,
                         x,
                         y,
-                        isPercentOnly,
-                        isDegrees,
                         onChange
                     }) => {
-    const [isPercentX, setPercentX] = useState(false);
-    const [isPercentY, setPercentY] = useState(false);
-    const [data, setData] = useState({x: 0, y: 0});
+    const [data, setData] = useState({ x: 0, y: 0, formatX: 0, formatY: 0 });
 
-    useEffect(() => setData({ x, y }), [x, y]);
+    useEffect(() => setData({ x, y, formatX, formatY }), [x, y, formatX, formatY]);
 
-    const handlePercentXChange = useCallback(() => setPercentX(!isPercentX), [isPercentX]);
-    const handlePercentYChange = useCallback(() => setPercentY(!isPercentY), [isPercentY]);
-    const handleChange = useCallback(({key, value}) => {
-        const nextData = {
-            ...data,
-            [key]: value
-        };
+    const dispatchChange = useCallback((key, value) => {
+        const nextData = { ...data, [key]: value };
+
         setData(nextData);
         onChange({ key: id, value: nextData});
-    }, [data, onChange, id]);
+    }, [data, onChange]);
+
+    const handleChangeFormat = useCallback(cordId => {
+        const formatKey = `format${cordId.toUpperCase()}`;
+        let nextFormat = data[formatKey] + 1;
+
+        if (nextFormat >= formats.length) {
+            nextFormat = 0;
+        }
+
+        dispatchChange(formatKey, nextFormat);
+    }, [formats, data, dispatchChange]);
+
+    const handleChange = useCallback(({key, value}) => dispatchChange(key, value), [data, onChange, id]);
+
+    const changeFormatDisabled = formats.length < 2;
 
     return (
         <PropertyRow
-            label={mainLabel}
+            label={labelMain}
         >
             <NumberField
-                isPercentOnly={isPercentOnly}
-                label={xLabel}
-                id={"x"}
+                label={labelX}
+                id="x"
                 value={data.x}
-                isPercent={isPercentX}
-                isDegrees={isDegrees}
+                changeFormatDisabled={changeFormatDisabled}
+                format={formats[data.formatX]}
                 onChange={handleChange}
-                onPercentChange={handlePercentXChange}
+                onChangeFormat={handleChangeFormat}
             />
             <NumberField
-                isPercentOnly={isPercentOnly}
-                label={yLabel}
-                id={"y"}
+                label={labelY}
+                id="y"
                 value={data.y}
-                isPercent={isPercentY}
-                isDegrees={isDegrees}
+                changeFormatDisabled={changeFormatDisabled}
+                format={formats[data.formatY]}
                 onChange={handleChange}
-                onPercentChange={handlePercentYChange}
+                onChangeFormat={handleChangeFormat}
             />
         </PropertyRow>
     );
+};
+
+PointField.propTypes = {
+    id: string.isRequired,
+    formats: arrayOf(string).isRequired,
+    formatX: number,
+    formatY: number,
+    x: number,
+    y: number,
+    onChange: func.isRequired
 };
 
 export default memo(PointField);
