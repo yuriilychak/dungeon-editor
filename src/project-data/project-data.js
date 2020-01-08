@@ -282,6 +282,10 @@ const ProjectData = {
         this._renameData = { id, sectionId };
     },
 
+    isRenameBinded() {
+        return this._renameData !== null;
+    },
+
     resetFileRename() {
         this._renameData = null;
     },

@@ -46,3 +46,7 @@
     text-overflow: ellipsis;
     flex: 1;
 }
+
+.properties-header-name-icon-disabled {
+    opacity: 0;
+}

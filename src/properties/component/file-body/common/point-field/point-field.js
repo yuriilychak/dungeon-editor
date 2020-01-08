@@ -1,5 +1,5 @@
 import React, {memo, useState, useCallback, useEffect } from "react";
-import { string, number, func, arrayOf } from "prop-types";
+import { string, number, func, arrayOf, bool } from "prop-types";
 
 import {NumberField} from "../number-field";
 import {PropertyRow} from "../property-row";
@@ -14,6 +14,7 @@ const PointField = ({
                         formatY = 0,
                         x,
                         y,
+                        disabled,
                         onChange
                     }) => {
     const [data, setData] = useState({ x: 0, y: 0, formatX: 0, formatY: 0 });
@@ -50,6 +51,7 @@ const PointField = ({
                 label={labelX}
                 id="x"
                 value={data.x}
+                disabled={disabled}
                 changeFormatDisabled={changeFormatDisabled}
                 format={formats[data.formatX]}
                 onChange={handleChange}
@@ -59,6 +61,7 @@ const PointField = ({
                 label={labelY}
                 id="y"
                 value={data.y}
+                disabled={disabled}
                 changeFormatDisabled={changeFormatDisabled}
                 format={formats[data.formatY]}
                 onChange={handleChange}
@@ -75,6 +78,7 @@ PointField.propTypes = {
     formatY: number,
     x: number,
     y: number,
+    disabled: bool,
     onChange: func.isRequired
 };
 

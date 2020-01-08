@@ -93,10 +93,10 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
     }
 
     _onCreateUIElement({data}) {
-        const {id, type, name} = data;
-        const element = createElement(type);
+        const { id, type } = data;
+        const element = createElement(type, true);
 
-        element.name = name;
+        element.name = "root";
         element.interactive = true;
         element.interactionManager.eventClick = EVENT.ELEMENT_CLICK;
 

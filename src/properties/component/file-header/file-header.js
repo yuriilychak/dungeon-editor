@@ -1,28 +1,24 @@
 import React from "react";
+import classNames from "classnames";
 
 import EditIcon from '@material-ui/icons/Edit';
 
-import {Icon} from "../../../common-ui/icon";
-import {TitledField} from "../../../common-ui/titled-field";
-import {ToolButton} from "../../../common-ui/tool-button";
-import {ImagePreview} from "../../../common-ui/image-preview";
+import {Icon, TitledField, ToolButton, ImagePreview} from "../../../common-ui";
 
 import "./file-header.css";
 
-export default ({
-                    fileName,
-                    fileId,
-                    fileType,
-                    idTitle,
-                    iconName,
-                    iconSize,
-                    nameTitle,
-                    onRenameFile,
-                    preview
-                }) => {
-
-
-
+const FileHeader = ({
+                        isRoot,
+                        fileName,
+                        fileId,
+                        fileType,
+                        idTitle,
+                        iconName,
+                        iconSize,
+                        nameTitle,
+                        onRenameFile,
+                        preview
+                    }) => {
     const iconSection = (
         <div className="properties-header-icon">
             <Icon name={iconName} size={iconSize}/>
@@ -33,13 +29,13 @@ export default ({
     );
 
     const wrapper = preview ? (
-            <ImagePreview
-                preview={preview}
-                height={150}
-            >
-                {iconSection}
-            </ImagePreview>
-        ) : iconSection;
+        <ImagePreview
+            preview={preview}
+            height={150}
+        >
+            {iconSection}
+        </ImagePreview>
+    ) : iconSection;
 
     return (
         <div className="properties-header-root">
@@ -52,7 +48,13 @@ export default ({
                     <div className="properties-header-name">
                         {fileName}
                     </div>
-                    <ToolButton onClick={onRenameFile} Icon={EditIcon}/>
+                    <div className={classNames({ "properties-header-name-icon-disabled": isRoot })}>
+                        <ToolButton
+                            disabled={isRoot}
+                            onClick={onRenameFile}
+                            Icon={EditIcon}
+                        />
+                    </div>
                 </TitledField>
                 <TitledField
                     className="properties-header-field"
@@ -64,4 +66,6 @@ export default ({
         </div>
     )
 };
+
+export default FileHeader;
 

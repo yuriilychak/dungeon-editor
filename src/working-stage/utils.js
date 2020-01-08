@@ -50,7 +50,7 @@ function setInnerSize(element, size) {
     element.innerHeight = util.math.multPowTwo(size.height);
 }
 
-export function createElement(type) {
+export function createElement(type, isRoot = false) {
     let element;
 
     const {UI_ELEMENT, PANEL_GRAPHIC_TYPE, PROGRESS_TYPE } = mCore.enumerator.ui;
@@ -181,7 +181,8 @@ export function createElement(type) {
     }
 
     element.userData = {
-        interactive: true
+        interactive: true,
+        isRoot
     };
 
     return element;

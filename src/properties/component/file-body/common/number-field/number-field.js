@@ -27,6 +27,7 @@ const NumberField = ({
                          changeFormatDisabled,
                          className,
                          onChange,
+                         disabled,
                          onChangeFormat = noop
                      }) => {
     const [currentValue, setCurrentValue] = useState("");
@@ -125,9 +126,13 @@ const NumberField = ({
             "properties-number-filed-format-disabled": changeFormatDisabled
         }), [changeFormatDisabled]);
 
+    const rootClassName = useMemo(() => classNames("properties-number-filed-root", {
+        "properties-number-filed-root-disabled": disabled,
+    }, className), [className, disabled]);
+
     return (
         <TitledField
-            className={classNames("properties-number-filed-root", className)}
+            className={rootClassName}
             title={label}
         >
             <div className="properties-number-filed-wrapper">
@@ -152,6 +157,7 @@ const NumberField = ({
 
 
 NumberField.propTypes = {
+    disabled: bool,
     label: string,
     id: string.isRequired,
     value: number.isRequired,

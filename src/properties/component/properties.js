@@ -41,7 +41,8 @@ const Properties = ({
         if (file.isStageElement) {
             fileBody = (
                 <StageElementBody
-                    {...file.data}
+                    data={file.data}
+                    isRoot={file.isRoot}
                     locales={localesParsed.stage}
                     onChange={onStageElementChange}
                 />
@@ -60,11 +61,12 @@ const Properties = ({
             );
         }
 
-        const handleRenameFile = () => onRenameFile(file.id, file.sectionId);
+        const handleRenameFile = () => onRenameFile(file.id, file.sectionId, file.isStageElement);
 
         content = (
             <Fragment>
                 <FileHeader
+                    isRoot={file.isRoot}
                     fileName={file.name}
                     nameTitle={localesParsed.nameTitle}
                     fileId={file.id}
@@ -98,6 +100,7 @@ const Properties = ({
 Properties.propTypes = {
     iconSize: number.isRequired,
     file: shape({
+        isRoot: bool.isRequired,
         id: number.isRequired,
         name: string.isRequired,
         isDirectory: bool.isRequired,

@@ -1,56 +1,50 @@
-import React from "react";
+import React, { useCallback, memo } from "react";
+
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import {string, func} from "prop-types";
+
+import { string, func, bool } from "prop-types";
 
 const ToolButton = ({
-                        title,
+                        title = "",
                         onClick,
                         Icon,
-                        owner
+                        owner,
+                        disabled
                     }) => {
 
-    const click = event => {
+    const handleClick = useCallback(event => {
         event.stopPropagation();
         onClick();
-    };
+    }, [onClick]);
 
     const hasPopup = !!title;
 
-    if (hasPopup) {
-        return (
-            <Tooltip title={title}>
-                <IconButton
-                    onClick={click}
-                    aria-owns={owner}
-                    aria-haspopup={hasPopup}
-                >
-                    <Icon/>
-                </IconButton>
-            </Tooltip>
-        )
-    }
-
-    return (
+    const content = (
         <IconButton
-            onClick={click}
+            disabled={disabled}
+            onClick={handleClick}
             aria-owns={owner}
+            aria-haspopup={hasPopup}
         >
             <Icon/>
         </IconButton>
     );
 
-};
+    return hasPopup ? (
+        <Tooltip title={title}>
+            {content}
+        </Tooltip>
+    ) : content;
 
-ToolButton.defultProps = {
-    title: ""
 };
 
 ToolButton.propTypes = {
+    disabled: bool,
     title: string,
     Icon: func.isRequired,
     owner: string,
     onClick: func.isRequired
 };
 
-export default ToolButton;
+export default memo(ToolButton);

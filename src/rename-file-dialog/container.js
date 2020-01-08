@@ -5,6 +5,7 @@ import { RenameFileDialog } from "./component";
 import {renameFile} from "../library/action";
 import {renameLibraryElement} from "../properties/action";
 import {checkRename} from "../working-area/action";
+import {WorkingStage} from "../working-stage";
 
 const mapStateToProps = (state) => {
     return {
@@ -18,12 +19,18 @@ const mapDispatchToProps = dispatch => {
             ProjectData.resetFileRename();
             dispatch(hideRenameFileDialog());
         },
-        onSubmitRename: projectName => {
-            ProjectData.renameFile(projectName, (id, sectionId, newName) => {
-                dispatch(renameFile(id, sectionId, newName));
-                dispatch(renameLibraryElement(id, sectionId, newName));
-                dispatch(checkRename(id, sectionId, newName));
-            });
+        onSubmitRename: nextName => {
+            if (ProjectData.isRenameBinded()) {
+                ProjectData.renameFile(nextName, (id, sectionId, newName) => {
+                    dispatch(renameFile(id, sectionId, newName));
+                    dispatch(renameLibraryElement(id, sectionId, newName));
+                    dispatch(checkRename(id, sectionId, newName));
+                });
+            }
+            else {
+                WorkingStage.dispatchChangeStageElement({ key: "name", value: nextName })
+            }
+
             dispatch(hideRenameFileDialog());
         }
     }

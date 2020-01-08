@@ -51,6 +51,9 @@
       },
       "interactive": {
         "label": "Properties_Edit_InteractiveLabel_Main"
+      },
+      "fontColor": {
+        "label": "Properties_Edit_FontLabel_Main"
       }
     }
   },

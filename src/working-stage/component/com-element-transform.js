@@ -1,6 +1,6 @@
 import {EVENT, CURSOR} from "../enum";
 import {updateAnchor, getAnchorPosition, updatePosition} from "../utils";
-import {EDIT_MODE} from "../../enum";
+import {EDIT_MODE, STAGE_ELEMENT_PROP} from "../../enum";
 
 const {mCore, PIXI} = window;
 const {math, geometry, color } = mCore.util;
@@ -170,7 +170,11 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             true
         );
 
-        updateAnchor(this._selectedElement, anchor);
+        if (!this._selectedElement.userData.isRoot) {
+            updateAnchor(this._selectedElement, anchor);
+        } else {
+            this._selectedElement.anchor.copyFrom(anchor);
+        }
 
         this.owner.refreshAnchorElement();
 
@@ -184,32 +188,32 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         let changeValue;
 
         switch (this._changeKey) {
-            case "rotation": {
+            case STAGE_ELEMENT_PROP.ROTATION: {
                 changeValue = math.toRadians(-value);
                 this._selectedElement.rotation = changeValue;
                 break;
             }
-            case "alpha": {
+            case STAGE_ELEMENT_PROP.ALPHA: {
                 changeValue = math.percentToFloat(value);
                 this._selectedElement.alpha = changeValue;
                 break;
             }
-            case "visible": {
+            case STAGE_ELEMENT_PROP.VISIBLE: {
                 changeValue = value;
                 this._selectedElement.visible = changeValue;
                 break;
             }
-            case "interactive": {
+            case STAGE_ELEMENT_PROP.INTERACTIVE: {
                 changeValue = value;
                 this._selectedElement.userData.interactive = changeValue;
                 break;
             }
-            case "tint": {
+            case STAGE_ELEMENT_PROP.TINT: {
                 changeValue = color.hexToInt(value);
                 this._selectedElement.tint = changeValue;
                 break;
             }
-            case "anchor": {
+            case STAGE_ELEMENT_PROP.ANCHOR: {
                 changeValue = { ...value };
                 changeValue.x = math.percentToFloat(changeValue.x);
                 changeValue.y = math.percentToFloat(changeValue.y);
@@ -217,7 +221,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
                 this._selectedElement.anchor.copyFrom(changeValue);
                 break;
             }
-            case "scale": {
+            case STAGE_ELEMENT_PROP.SCALE: {
                 changeValue = { ...value };
                 changeValue.x = math.percentToFloat(changeValue.x);
                 changeValue.y = math.percentToFloat(changeValue.y);
@@ -225,21 +229,36 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
                 this._selectedElement.scale.copyFrom(changeValue);
                 break;
             }
-            case "position": {
+            case STAGE_ELEMENT_PROP.POSITION: {
                 changeValue = value;
                 this._selectedElement.position.copyFrom(changeValue);
                 break;
             }
-            case "size": {
+            case STAGE_ELEMENT_PROP.SIZE: {
                 changeValue = value;
                 this._selectedElement.rate.copyFrom(changeValue);
                 break;
             }
-            case "skew": {
+            case STAGE_ELEMENT_PROP.SKEW: {
                 changeValue = { ...value };
                 changeValue.x = math.toRadians(changeValue.x);
                 changeValue.y = math.toRadians(changeValue.y);
                 this._selectedElement.skew.copyFrom(changeValue);
+                break;
+            }
+            case STAGE_ELEMENT_PROP.NAME: {
+                changeValue = value;
+                this._selectedElement.name = changeValue;
+                break;
+            }
+            case STAGE_ELEMENT_PROP.FONT_COLOR: {
+                changeValue = color.hexToInt(value);
+                this._selectedElement.color = changeValue;
+                break;
+            }
+            case STAGE_ELEMENT_PROP.FONT_SIZE: {
+                changeValue = value;
+                this._selectedElement.fontSize = changeValue;
                 break;
             }
             default: {
@@ -253,7 +272,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
     }
 
     _onAnchorDragStart() {
-        this._changeKey = "anchor";
+        this._changeKey = STAGE_ELEMENT_PROP.ANCHOR;
     }
 
     _onAnchorDragFinish() {
@@ -355,13 +374,13 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
                 nextSize.destroy();
                 elementWorldScale.destroy();
 
-                this._changeKey = "size";
+                this._changeKey = STAGE_ELEMENT_PROP.SIZE;
                 changeValue = this._selectedElement.rate;
                 break;
             }
             case EDIT_MODE.SKEW: {
                 if (index.x === index.y || math.abs(index.y - index.x) === 2) {
-                    this._changeKey = "rotation";
+                    this._changeKey = STAGE_ELEMENT_PROP.ROTATION;
                     const ownerPos = this.owner.parent.toGlobal(this.owner.position);
                     const offset = geometry.pSub(data.data.global, ownerPos, true);
                     const rotation = this._beginElementAngle + Math.atan2(offset.y, offset.x) - this._beginEditAngle;
@@ -395,7 +414,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
                         this._selectedElement.skew.x = math.toFixed(Math.atan2(math.divPowTwo(this._selectedElement.height), offset.x) - Math.PI / 2);
                     }
 
-                    this._changeKey = "skew";
+                    this._changeKey = STAGE_ELEMENT_PROP.SKEW;
                     changeValue = this._selectedElement.skew;
                 }
                 break;
@@ -425,7 +444,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
                 nextSize.destroy();
 
-                this._changeKey = "scale";
+                this._changeKey = STAGE_ELEMENT_PROP.SCALE;
                 changeValue = this._selectedElement.scale;
                 break;
             }
@@ -458,17 +477,21 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         }
     }
 
+    _canDrag(data) {
+        return this._isLeftButton(data) && !this._selectedElement.userData.isRoot;
+    }
+
     _onPositionDragStart({data}) {
-        if (!this._isLeftButton(data)) {
+        if (!this._canDrag(data)) {
             return;
         }
         this._canvas.style.cursor = CURSOR.MOVE;
         this._dragPosition.copyFrom(data.data.global);
-        this._changeKey = "position";
+        this._changeKey = STAGE_ELEMENT_PROP.POSITION;
     }
 
     _onPositionDragMove({data}) {
-        if (!this._isLeftButton(data)) {
+        if (!this._canDrag(data)) {
             return;
         }
         const nextPos = data.data.global;
@@ -482,7 +505,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
     }
 
     _onPositionDragFinish({data}) {
-        if (!this._isLeftButton(data)) {
+        if (!this._canDrag(data)) {
             return;
         }
         geometry.pRound(this._selectedElement.position, true);

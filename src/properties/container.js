@@ -13,8 +13,11 @@ const mapDispatchToProps = dispatch => {
             WorkingStage.setChangeStageElementCallback(({data}) => dispatch(changeStageElement(data)));
             WorkingStage.setSelectStageElementCallback(({data}) => dispatch(selectStageElement(data)));
         },
-        onRenameFile(fileId, sectionId) {
-            ProjectData.bindFileRename(fileId, sectionId);
+        onRenameFile(fileId, sectionId, isStageElement) {
+            if (!isStageElement) {
+                ProjectData.bindFileRename(fileId, sectionId);
+            }
+
             dispatch(showRenameFileDialog());
         },
         onSwitchAtlas(atlasName) {

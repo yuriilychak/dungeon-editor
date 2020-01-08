@@ -9,6 +9,11 @@
   margin-left: $indent_m;
 }
 
+.properties-number-filed-root-disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
 .properties-number-filed-wrapper {
   flex: 1;
 }
