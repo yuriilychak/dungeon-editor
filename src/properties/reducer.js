@@ -81,13 +81,13 @@ const actionHandlers = {
                 DEGREE_FORMATS
             ),
             scale: generatePoint(
-                Math.floor(math.floatToPercent(stageElement.scale.x)),
-                Math.floor(math.floatToPercent(stageElement.scale.y)),
+                math.floatToPercent(stageElement.scale.x, true),
+                math.floatToPercent(stageElement.scale.y, true),
                 PERCENT_FORMATS
             ),
             anchor: generatePoint(
-                Math.floor(math.floatToPercent(stageElement.anchor.x)),
-                Math.floor(math.floatToPercent(stageElement.anchor.y)),
+                math.floatToPercent(stageElement.anchor.x, true),
+                math.floatToPercent(stageElement.anchor.y, true),
                 PERCENT_FORMATS,
                 isContainer
             ),
@@ -108,7 +108,7 @@ const actionHandlers = {
 
         const textProps = isText ? {
             fontColor: generateColor(stageElement.color),
-            fontSize: generateProperty(stageElement.fontSize, "number", { minValue: 0, maxValue: 255, format: VALUE_FORMAT.PIXEL})
+            fontSize: generateProperty(stageElement.fontSize, "number", { minValue: 0, maxValue: 255, format: VALUE_FORMAT.PIXEL, changeFormatDisabled: true})
         } : {};
 
         return {
@@ -185,7 +185,7 @@ const actionHandlers = {
                 break;
             }
             case STAGE_ELEMENT_PROP.FONT_SIZE: {
-                nextFileData[key] = generateProperty(value, "number", { minValue: 0, maxValue: 255, format: VALUE_FORMAT.PIXEL });
+                nextFileData[key] = generateProperty(value, "number", { minValue: 0, maxValue: 255, format: VALUE_FORMAT.PIXEL, changeFormatDisabled: true });
                 break;
             }
             case STAGE_ELEMENT_PROP.NAME: {
