@@ -12,7 +12,7 @@ const PropertyRow = ({
     <TitledField
         className="properties-property-row"
         title={label}
-        titleWidth={36}
+        titleWidth={42}
     >
         {children}
     </TitledField>

@@ -6,6 +6,8 @@
 
   &-root {
     height: $full-size;
+    display: flex;
+    flex-direction: column-reverse;
   }
 
   &-grid {

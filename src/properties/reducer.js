@@ -3,42 +3,23 @@ import STATE from "./state";
 import { handleAction } from "../helpers";
 import {STAGE_ELEMENT_PROP} from "../enum";
 import {DEGREE_FORMATS, DIMENSION_FORMATS, PERCENT_FORMATS, VALUE_FORMAT} from "./constants";
+import {
+    generateSlider,
+    generateCheckbox,
+    generatePoint,
+    generateColor,
+    generateNumber,
+    generateTextAlign,
+    updatePoint
+} from "./helpers";
 
 const { mCore } = window;
 
-const { color, math } = mCore.util;
+const { math } = mCore.util;
 
 export const initialState = {
     ...StaticData,
     file: null
-};
-
-const generatePoint = (x, y, formats = [], disabled = false) => ({
-    type: "point",
-    x: Math.round(x),
-    y: Math.round(y),
-    formats,
-    disabled
-});
-
-const generateProperty = (value, type = null, otherProps = {}) => ({ value, type, ...otherProps });
-
-const generateSlider = (value, format, maxValue, minValue = 0) => generateProperty(value, "slider", { format, maxValue, minValue });
-
-const generateCheckbox = checked => ({ checked, type: "checkbox" });
-
-const generateColor = intColor => generateProperty(color.intToHex(intColor), "color");
-
-const updatePoint = (state, key, x, y) => {
-    const nextX = Math.round(x);
-    const nextY = Math.round(y);
-    const point = state.file.data[key];
-
-    return point.x !== nextX || point.y !== nextY ? {
-        ...point,
-        x: nextX,
-        y: nextY
-    } : point;
 };
 
 const actionHandlers = {
@@ -108,7 +89,8 @@ const actionHandlers = {
 
         const textProps = isText ? {
             fontColor: generateColor(stageElement.color),
-            fontSize: generateProperty(stageElement.fontSize, "number", { minValue: 0, maxValue: 255, format: VALUE_FORMAT.PIXEL, changeFormatDisabled: true})
+            fontSize: generateNumber(stageElement.fontSize, VALUE_FORMAT.PIXEL),
+            textAlign: generateTextAlign(stageElement.horizontalAlign - 1, stageElement.verticalAlign - 1)
         } : {};
 
         return {
@@ -185,7 +167,11 @@ const actionHandlers = {
                 break;
             }
             case STAGE_ELEMENT_PROP.FONT_SIZE: {
-                nextFileData[key] = generateProperty(value, "number", { minValue: 0, maxValue: 255, format: VALUE_FORMAT.PIXEL, changeFormatDisabled: true });
+                nextFileData[key] = generateNumber(value, VALUE_FORMAT.PIXEL);
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_ALIGN: {
+                nextFileData[key] = generateTextAlign(value.x, value.y);
                 break;
             }
             case STAGE_ELEMENT_PROP.NAME: {

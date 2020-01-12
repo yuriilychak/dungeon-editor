@@ -11,7 +11,8 @@ const STAGE_ELEMENT_PROP = {
     TINT: "tint",
     NAME: "name",
     FONT_SIZE: "fontSize",
-    FONT_COLOR: "fontColor"
+    FONT_COLOR: "fontColor",
+    TEXT_ALIGN: "textAlign"
 };
 
 export default STAGE_ELEMENT_PROP;

@@ -26,7 +26,8 @@ export const TEXT_COLOR = {
 export const BACKGROUND_COLOR = {
     LIGHT: "#595a5f",
     MAIN: "#3f4045",
-    DARK: "#2a2b2f"
+    DARK: "#2a2b2f",
+    DEEP_DARK: "#181818"
 };
 
 export const PRIMARY_COLOR = {

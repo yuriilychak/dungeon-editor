@@ -1,8 +1,10 @@
 import React, {memo, useState, useCallback, useEffect } from "react";
-import { string, number, func, arrayOf, bool } from "prop-types";
+import { string, number, func, arrayOf, bool, shape } from "prop-types";
 
 import {NumberField} from "../number-field";
 import {PropertyRow} from "../property-row";
+
+import "./point-field.scss";
 
 const PointField = ({
                         id,
@@ -10,16 +12,13 @@ const PointField = ({
                         labelX,
                         labelY,
                         formats,
-                        formatX = 0,
-                        formatY = 0,
-                        x,
-                        y,
+                        value,
                         disabled,
                         onChange
                     }) => {
     const [data, setData] = useState({ x: 0, y: 0, formatX: 0, formatY: 0 });
 
-    useEffect(() => setData({ x, y, formatX, formatY }), [x, y, formatX, formatY]);
+    useEffect(() => setData({ ...value }), [value]);
 
     const dispatchChange = useCallback((key, value) => {
         const nextData = { ...data, [key]: value };
@@ -57,6 +56,7 @@ const PointField = ({
                 onChange={handleChange}
                 onChangeFormat={handleChangeFormat}
             />
+            <div className="properties-point-field-padding" />
             <NumberField
                 label={labelY}
                 id="y"
@@ -74,10 +74,12 @@ const PointField = ({
 PointField.propTypes = {
     id: string.isRequired,
     formats: arrayOf(string).isRequired,
-    formatX: number,
-    formatY: number,
-    x: number,
-    y: number,
+    value: shape({
+        x: number,
+        y: number,
+        formatX: number,
+        formatY: number
+    }).isRequired,
     disabled: bool,
     onChange: func.isRequired
 };

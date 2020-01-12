@@ -31,7 +31,6 @@ const App = () => {
             <NewFileDialog/>
             <ExportProjectDialog/>
             <RenameFileDialog/>
-            <TopMenu/>
             <div className="app-grid">
                 <Grid container className="app-full-height">
                     <Grid item lg={10} md={9} sm={8} className="app-left-column">
@@ -48,6 +47,7 @@ const App = () => {
                     </Grid>
                 </Grid>
             </div>
+            <TopMenu/>
         </div>
     </MuiThemeProvider>
     ) : (

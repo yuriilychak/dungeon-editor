@@ -153,6 +153,7 @@
         "Properties_Edit_SkewLabel_X": "X",
         "Properties_Edit_SkewLabel_Y": "Y",
         "Properties_Edit_FontLabel_Main": "Font",
+        "Properties_Edit_TextAlignLabel_Main": "Align",
         "RenameFileDialog_Cancel":  "Cancel",
         "RenameFileDialog_Submit": "Submit",
         "RenameFileDialog_ContentText": "For rename file, please enter new name here.",

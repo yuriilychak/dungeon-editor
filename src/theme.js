@@ -317,6 +317,42 @@ const theme = createMuiTheme({
             root: {
                 padding: "0 9px 0 0"
             }
+        },
+        MuiToggleButton: {
+            root: {
+                borderRadius: INDENT_SIZE.NONE,
+                height: 20,
+                boxSizing: "border-box",
+                border: getBorderStyle(BACKGROUND_COLOR.DEEP_DARK, INDENT_SIZE.XS),
+                "&$selected": {
+                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                    "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.25)"
+                    },
+                    "& + &": {
+                        borderLeft: 0,
+                        marginLeft: 0
+                    }
+                }
+            },
+            selected: {
+                backgroundColor: "red"
+            }
+        },
+        MuiToggleButtonGroup: {
+            root: {
+                borderRadius: INDENT_SIZE.NONE,
+                backgroundColor: BACKGROUND_COLOR.MAIN,
+                border: getBorderStyle(BACKGROUND_COLOR.LIGHT, INDENT_SIZE.XXS)
+            },
+            grouped: {
+                padding: getIndent(INDENT_SIZE.NONE, INDENT_SIZE.XS)
+            }
+        },
+        Mui: {
+            selected: {
+                backgroundColor: "(rgba(0, 0, 0, 0.25))"
+            }
         }
     }
 });

@@ -15,27 +15,27 @@
       "position": {
         "labelMain": "Properties_Edit_PositionLabel_Main",
         "labelX": "Properties_Edit_PositionLabel_X",
-        "LabelY": "Properties_Edit_PositionLabel_Y"
+        "labelY": "Properties_Edit_PositionLabel_Y"
       },
       "size": {
         "labelMain": "Properties_Edit_SizeLabel_Main",
         "labelX": "Properties_Edit_SizeLabel_X",
-        "LabelY": "Properties_Edit_SizeLabel_Y"
+        "labelY": "Properties_Edit_SizeLabel_Y"
       },
       "anchor": {
         "labelMain": "Properties_Edit_AnchorLabel_Main",
         "labelX": "Properties_Edit_AnchorLabel_X",
-        "LabelY": "Properties_Edit_AnchorLabel_Y"
+        "labelY": "Properties_Edit_AnchorLabel_Y"
       },
       "scale": {
         "labelMain": "Properties_Edit_ScaleLabel_Main",
         "labelX": "Properties_Edit_ScaleLabel_X",
-        "LabelY": "Properties_Edit_ScaleLabel_Y"
+        "labelY": "Properties_Edit_ScaleLabel_Y"
       },
       "skew": {
         "labelMain": "Properties_Edit_SkewLabel_Main",
         "labelX": "Properties_Edit_SkewLabel_X",
-        "LabelY": "Properties_Edit_SkewLabel_Y"
+        "labelY": "Properties_Edit_SkewLabel_Y"
       },
       "visible": {
         "label": "Properties_Edit_VisibleLabel_Main"
@@ -54,6 +54,9 @@
       },
       "fontColor": {
         "label": "Properties_Edit_FontLabel_Main"
+      },
+      "textAlign": {
+        "label": "Properties_Edit_TextAlignLabel_Main"
       }
     }
   },

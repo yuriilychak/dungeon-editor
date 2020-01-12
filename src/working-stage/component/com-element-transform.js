@@ -258,7 +258,18 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             }
             case STAGE_ELEMENT_PROP.FONT_SIZE: {
                 changeValue = value;
+
+                if (changeValue === this._selectedElement.fontSize) {
+                    return;
+                }
+
                 this._selectedElement.fontSize = changeValue;
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_ALIGN: {
+                changeValue = {...value};
+                this._selectedElement.horizontalAlign = changeValue.x + 1;
+                this._selectedElement.verticalAlign = changeValue.y + 1;
                 break;
             }
             default: {
