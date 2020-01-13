@@ -12,7 +12,7 @@ const ElementItem = ({ title, id, icon }) => {
     return (
         <div className="element-item-root" draggable onDragStart={onDragStart}>
             <div className="element-item-content">
-                <Icon name={`element/${icon}`} size={42}/>
+                <Icon name={`element/${icon}`} size={24}/>
             </div>
             <div className="element-item-title">
                 {t(title)}

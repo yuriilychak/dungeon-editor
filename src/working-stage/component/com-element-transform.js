@@ -272,6 +272,21 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
                 this._selectedElement.verticalAlign = changeValue.y + 1;
                 break;
             }
+            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED: {
+                changeValue = value;
+                this._selectedElement.outlineEnabled = changeValue;
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE: {
+                changeValue = value;
+                this._selectedElement.outlineSize = changeValue;
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR: {
+                changeValue = color.hexToInt(value);
+                this._selectedElement.outlineColor = changeValue;
+                break;
+            }
             default: {
                 return;
             }

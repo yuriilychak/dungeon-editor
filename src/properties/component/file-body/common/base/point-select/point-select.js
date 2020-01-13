@@ -1,7 +1,7 @@
 import React, {memo, useState, useCallback, useEffect } from "react";
 import { string, number, func, arrayOf, bool, shape } from "prop-types";
 
-import {NumberField} from "../number-field";
+import {NumberField} from "../../number-field";
 
 import "./point-select.scss";
 
@@ -43,6 +43,7 @@ const PointSelect = ({
     return (
         <div className="properties-point-select-root">
             <NumberField
+                className="properties-point-select-number"
                 label={labelX}
                 id="x"
                 value={data.x}
@@ -54,6 +55,7 @@ const PointSelect = ({
             />
             <div className="properties-point-select-padding" />
             <NumberField
+                className="properties-point-select-number"
                 label={labelY}
                 id="y"
                 value={data.y}

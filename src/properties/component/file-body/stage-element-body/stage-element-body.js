@@ -4,6 +4,7 @@ import {PropertyField} from "../common";
 import {STAGE_ELEMENT_PROP} from "../../../../enum";
 
 import "./stage-element-body.scss";
+import PropertyRow from "../common/base/property-row/property-row";
 
 const StageElementBody = ({
                               isRoot,
@@ -25,13 +26,27 @@ const StageElementBody = ({
     let resultStructure = [];
 
     const transformStructure = [
-        {id: STAGE_ELEMENT_PROP.POSITION},
-        {id: STAGE_ELEMENT_PROP.SIZE},
-        {id: STAGE_ELEMENT_PROP.SCALE},
-        {id: STAGE_ELEMENT_PROP.SKEW},
-        {id: STAGE_ELEMENT_PROP.ANCHOR},
-        {id: STAGE_ELEMENT_PROP.ROTATION},
-        {id: STAGE_ELEMENT_PROP.ALPHA},
+        {
+            id: STAGE_ELEMENT_PROP.POSITION
+        },
+        {
+            id: STAGE_ELEMENT_PROP.SIZE
+        },
+        {
+            id: STAGE_ELEMENT_PROP.SCALE
+        },
+        {
+            id: STAGE_ELEMENT_PROP.SKEW
+        },
+        {
+            id: STAGE_ELEMENT_PROP.ANCHOR
+        },
+        {
+            id: STAGE_ELEMENT_PROP.ROTATION
+        },
+        {
+            id: STAGE_ELEMENT_PROP.ALPHA
+        },
         {
             id: STAGE_ELEMENT_PROP.TINT,
             children: [
@@ -50,7 +65,16 @@ const StageElementBody = ({
                 {id: STAGE_ELEMENT_PROP.FONT_SIZE}
             ]
         },
-        {id: STAGE_ELEMENT_PROP.TEXT_ALIGN}
+        {
+            id: STAGE_ELEMENT_PROP.TEXT_ALIGN
+        },
+        {
+            id: STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED,
+            children: [
+                {id: STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR},
+                {id: STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE}
+            ]
+        }
     ];
 
     if (data.isText) {
@@ -61,7 +85,11 @@ const StageElementBody = ({
         <div className="properties-stage-element-body-root">
             {resultStructure.map(element => {
                 const children = element.children ? element.children.map(childElement => generateElement(childElement.id)) : null;
-                return generateElement(element.id, children);
+                return (
+                    <PropertyRow key={element.id} label={locales[element.id].label}>
+                        {generateElement(element.id, children)}
+                    </PropertyRow>
+                );
             })}
         </div>
     )

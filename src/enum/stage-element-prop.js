@@ -12,7 +12,10 @@ const STAGE_ELEMENT_PROP = {
     NAME: "name",
     FONT_SIZE: "fontSize",
     FONT_COLOR: "fontColor",
-    TEXT_ALIGN: "textAlign"
+    TEXT_ALIGN: "textAlign",
+    TEXT_OUTLINE_ENABLED: "textOutlineEnabled",
+    TEXT_OUTLINE_SIZE: "textOutlineSize",
+    TEXT_OUTLINE_COLOR: "textOutlineColor"
 };
 
 export default STAGE_ELEMENT_PROP;

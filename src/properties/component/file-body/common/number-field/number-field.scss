@@ -5,6 +5,8 @@
   background-color: $back-deep-dark;
   border: 1px solid $back-main;
   height: 20px;
+  min-width: 48px;
+  width: 48px;
   padding-left: $indent_m;
   box-sizing: border-box;
 }

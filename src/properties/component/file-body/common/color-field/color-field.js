@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
-import {PropertyRow} from "../property-row";
-import {ColorSelect} from "../color-select";
+import {PropertyRow} from "../base/property-row";
+import {ColorSelect} from "../base/color-select";
 
 const ColorField = ({
     id,

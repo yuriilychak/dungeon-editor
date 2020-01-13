@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 import { string, number, func, arrayOf, bool, shape } from "prop-types";
 
-import {PropertyRow} from "../property-row";
-import {PointSelect} from "../point-select";
+import {PropertyRow} from "../base/property-row";
+import {PointSelect} from "../base/point-select";
 
 import "./point-field.scss";
 

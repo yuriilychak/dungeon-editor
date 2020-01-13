@@ -1,3 +1,5 @@
+import {FIELD_TYPE} from "./constants";
+
 const { mCore } = window;
 
 const { color, math } = mCore.util;
@@ -16,6 +18,8 @@ export const generateCheckbox = checked => ({ checked, type: "checkbox" });
 
 export const generateColor = intColor => generateProperty(color.intToHex(intColor), "color");
 
+export const generateEnabled = enabled => generateProperty(enabled, FIELD_TYPE.ENABLED);
+
 export const generateNumber = (value, format, maxValue = 255, minValue = 0) => generateProperty(
     value,
     "number",
@@ -24,14 +28,11 @@ export const generateNumber = (value, format, maxValue = 255, minValue = 0) => g
 
 export const generateTextAlign = (horizontalAlign, verticalAlign) => generateProperty({ x: horizontalAlign, y: verticalAlign }, "textAlign");
 
-export const updatePoint = (state, key, x, y) => {
-    const nextX = math.round(x);
-    const nextY = math.round(y);
-    const point = state.file.data[key];
-
-    return point.x !== nextX || point.y !== nextY ? {
-        ...point,
-        x: nextX,
-        y: nextY
-    } : point;
-};
+export const updatePoint = (state, key, x, y) => ({
+        ...state.file.data[key],
+        value: {
+            ...state.file.data[key].value,
+            x: math.round(x),
+            y: math.round(y)
+        }
+    });

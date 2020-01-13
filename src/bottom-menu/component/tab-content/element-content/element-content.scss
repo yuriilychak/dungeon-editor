@@ -1,11 +1,29 @@
 @import "../../../../sizes";
+@import "../../../../colors";
 
 .element-content {
+  &-title {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 26px;
+    font-size: 13px;
+    border-bottom: 2px solid $back-light;
+    margin-bottom: $indent_m;
+  }
   &-root {
+    display: flex;
+    flex-direction: column;
+    width: 330px;
+    margin: $indent_l;
+    height: 100%;
+  }
+  &-elements-root {
     display: flex;
     flex-flow: column wrap;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
     box-sizing: border-box;
     width: $full-size;
     max-height: $full-size;

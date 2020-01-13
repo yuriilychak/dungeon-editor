@@ -1,6 +1,11 @@
 @import "../../../../../sizes";
 @import "../../../../../colors";
 
+.properties-slider-field-root {
+  display: flex;
+  width: 100%;
+}
+
 .properties-slider-field-counter-root {
   width: $item-size_big;
   min-width: 48px;

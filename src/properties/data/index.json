@@ -13,27 +13,27 @@
     },
     "stage": {
       "position": {
-        "labelMain": "Properties_Edit_PositionLabel_Main",
+        "label": "Properties_Edit_PositionLabel_Main",
         "labelX": "Properties_Edit_PositionLabel_X",
         "labelY": "Properties_Edit_PositionLabel_Y"
       },
       "size": {
-        "labelMain": "Properties_Edit_SizeLabel_Main",
+        "label": "Properties_Edit_SizeLabel_Main",
         "labelX": "Properties_Edit_SizeLabel_X",
         "labelY": "Properties_Edit_SizeLabel_Y"
       },
       "anchor": {
-        "labelMain": "Properties_Edit_AnchorLabel_Main",
+        "label": "Properties_Edit_AnchorLabel_Main",
         "labelX": "Properties_Edit_AnchorLabel_X",
         "labelY": "Properties_Edit_AnchorLabel_Y"
       },
       "scale": {
-        "labelMain": "Properties_Edit_ScaleLabel_Main",
+        "label": "Properties_Edit_ScaleLabel_Main",
         "labelX": "Properties_Edit_ScaleLabel_X",
         "labelY": "Properties_Edit_ScaleLabel_Y"
       },
       "skew": {
-        "labelMain": "Properties_Edit_SkewLabel_Main",
+        "label": "Properties_Edit_SkewLabel_Main",
         "labelX": "Properties_Edit_SkewLabel_X",
         "labelY": "Properties_Edit_SkewLabel_Y"
       },
@@ -57,6 +57,14 @@
       },
       "textAlign": {
         "label": "Properties_Edit_TextAlignLabel_Main"
+      },
+      "textOutlineEnabled": {
+        "label": "Properties_Edit_TextOutlineLabel_Main",
+        "labelEnabled": "Properties_Edit_TextOutlineLabel_Enabled"
+      },
+      "textOutlineSize": {
+      },
+      "textOutlineColor": {
       }
     }
   },

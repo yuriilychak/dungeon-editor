@@ -167,6 +167,7 @@ NumberField.propTypes = {
     step: number,
     timeout: number,
     changeFormatDisabled: bool,
+    onChange: func,
     onChangeFormat: func,
     className: string
 };

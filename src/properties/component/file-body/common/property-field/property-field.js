@@ -1,11 +1,13 @@
 import React, { memo } from "react";
 
 import { CheckBox } from '../check-box';
-import { PointField } from '../point-field';
 import { SliderField } from '../slider-field';
-import { ColorField } from '../color-field';
 import { NumberField } from "../number-field";
 import { TextAlignField } from "../text-align-field";
+import {EnabledField} from "../enable-field";
+import {FIELD_TYPE} from "../../../../constants";
+import {PointSelect} from "../base/point-select";
+import {ColorSelect} from "../base/color-select";
 
 const PropertyField = ({
     id,
@@ -17,24 +19,27 @@ const PropertyField = ({
     let Item;
 
     switch(data.type) {
-        case "point":
-            Item = PointField;
+        case FIELD_TYPE.POINT:
+            Item = PointSelect;
             break;
-        case "color":
-            Item = ColorField;
+        case FIELD_TYPE.COLOR:
+            Item = ColorSelect;
             break;
-        case "slider":
+        case FIELD_TYPE.SLIDER:
             Item = SliderField;
             break;
-        case "checkbox":
+        case FIELD_TYPE.CHECKBOX:
             Item = CheckBox;
             break;
-        case "number": {
+        case FIELD_TYPE.NUMBER: {
             Item = NumberField;
             break;
         }
-        case "textAlign":
+        case FIELD_TYPE.TEXT_ALIGN:
             Item = TextAlignField;
+            break;
+        case FIELD_TYPE.ENABLED:
+            Item = EnabledField;
             break;
         default:
             return null;

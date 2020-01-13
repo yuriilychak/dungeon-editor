@@ -2,7 +2,7 @@
   "sectionConfig": [
     [
       {
-        "locale": "BottomMenu_Element_Components",
+        "locale": "BottomMenu_Element_Hierarchy",
         "content": {
           "elements": [
             {
@@ -107,10 +107,6 @@
             }
           ]
         }
-      },
-      {
-        "locale": "BottomMenu_Element_Hierarchy",
-        "content": {}
       },
       {
         "locale": "BottomMenu_Element_Animation",

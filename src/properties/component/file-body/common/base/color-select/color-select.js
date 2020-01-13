@@ -10,18 +10,22 @@ const ColorSelect = ({
                          value,
                          onChange,
                          enableAlpha = false,
-                         placement = "bottomRight"
+                         placement = "bottomRight",
+                         children
                      }) => {
     const handleChange = useCallback(data => onChange({key: id, value: data.color}), [id, onChange]);
 
     return (
-        <ColorPicker
-            enableAlpha={enableAlpha}
-            color={value}
-            onChange={handleChange}
-            mode="RGB"
-            placement={placement}
-        />
+        <>
+            <ColorPicker
+                enableAlpha={enableAlpha}
+                color={value}
+                onChange={handleChange}
+                mode="RGB"
+                placement={placement}
+            />
+            {children}
+        </>
     );
 };
 

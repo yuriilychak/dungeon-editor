@@ -343,7 +343,7 @@ const theme = createMuiTheme({
             root: {
                 borderRadius: INDENT_SIZE.NONE,
                 backgroundColor: BACKGROUND_COLOR.MAIN,
-                border: getBorderStyle(BACKGROUND_COLOR.LIGHT, INDENT_SIZE.XXS)
+                border: getBorderStyle(BACKGROUND_COLOR.MAIN, INDENT_SIZE.XXS)
             },
             grouped: {
                 padding: getIndent(INDENT_SIZE.NONE, INDENT_SIZE.XS)

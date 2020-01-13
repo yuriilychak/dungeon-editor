@@ -154,6 +154,8 @@
         "Properties_Edit_SkewLabel_Y": "Y",
         "Properties_Edit_FontLabel_Main": "Font",
         "Properties_Edit_TextAlignLabel_Main": "Align",
+        "Properties_Edit_TextOutlineLabel_Main": "Outline",
+        "Properties_Edit_TextOutlineLabel_Enabled": "Enabled",
         "RenameFileDialog_Cancel":  "Cancel",
         "RenameFileDialog_Submit": "Submit",
         "RenameFileDialog_ContentText": "For rename file, please enter new name here.",

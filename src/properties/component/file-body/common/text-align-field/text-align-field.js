@@ -9,7 +9,6 @@ import VerticalAlignTopIcon from "@material-ui/icons/VerticalAlignTop";
 import VerticalAlignCenterIcon from "@material-ui/icons/VerticalAlignCenter";
 
 import {ToggleGroupField} from "../toggle-group-field";
-import {PropertyRow} from "../property-row";
 
 import "./text-align-field.scss";
 
@@ -48,9 +47,7 @@ const TextAlignField = ({
     useEffect(() => setAlign({ ...value }),[value]);
 
     return (
-        <PropertyRow
-            label={label}
-        >
+        <div className="properties-text-align-field-root">
             <ToggleGroupField
                 id="x"
                 onChange={handleChange}
@@ -64,7 +61,7 @@ const TextAlignField = ({
                 value={align.y}
                 items={verticalItems}
             />
-        </PropertyRow>
+        </div>
     )
 };
 

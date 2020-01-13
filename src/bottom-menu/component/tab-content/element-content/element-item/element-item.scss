@@ -6,10 +6,10 @@
     cursor: pointer;
     font-size: $font-size_small;
     width: $item-size_big;
-    height: $item-size_big;
+    height: 42px;
     display: flex;
     flex-direction: column;
-    margin: $indent_s;
+    margin: $indent_xxs;
     user-select: auto;
   }
   &-content {

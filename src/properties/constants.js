@@ -4,6 +4,16 @@ export const VALUE_FORMAT = {
     DEGREE: "°"
 };
 
+export const FIELD_TYPE = {
+    POINT: "point",
+    COLOR: "color",
+    SLIDER: "slider",
+    CHECKBOX: "checkbox",
+    NUMBER: "number",
+    TEXT_ALIGN: "textAlign",
+    ENABLED: "enabled"
+};
+
 export const DIMENSION_FORMATS = [
     VALUE_FORMAT.PIXEL,
     VALUE_FORMAT.PERCENT

@@ -10,7 +10,8 @@ import {
     generateColor,
     generateNumber,
     generateTextAlign,
-    updatePoint
+    updatePoint,
+    generateEnabled
 } from "./helpers";
 
 const { mCore } = window;
@@ -90,7 +91,10 @@ const actionHandlers = {
         const textProps = isText ? {
             fontColor: generateColor(stageElement.color),
             fontSize: generateNumber(stageElement.fontSize, VALUE_FORMAT.PIXEL),
-            textAlign: generateTextAlign(stageElement.horizontalAlign - 1, stageElement.verticalAlign - 1)
+            textAlign: generateTextAlign(stageElement.horizontalAlign - 1, stageElement.verticalAlign - 1),
+            textOutlineEnabled: generateEnabled(stageElement.outlineEnabled),
+            textOutlineSize: generateNumber(stageElement.outlineSize, VALUE_FORMAT.PIXEL),
+            textOutlineColor: generateColor(stageElement.outlineColor)
         } : {};
 
         return {
@@ -172,6 +176,18 @@ const actionHandlers = {
             }
             case STAGE_ELEMENT_PROP.TEXT_ALIGN: {
                 nextFileData[key] = generateTextAlign(value.x, value.y);
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED: {
+                nextFileData[key] = generateEnabled(value);
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE: {
+                nextFileData[key] = generateNumber(value, VALUE_FORMAT.PIXEL);
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR: {
+                nextFileData[key] = generateColor(value);
                 break;
             }
             case STAGE_ELEMENT_PROP.NAME: {
