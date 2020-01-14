@@ -287,6 +287,21 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
                 this._selectedElement.outlineColor = changeValue;
                 break;
             }
+            case STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED: {
+                changeValue = value;
+                this._selectedElement.shadowEnabled = changeValue;
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR: {
+                changeValue = color.hexToInt(value);
+                this._selectedElement.shadowColor = changeValue;
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE: {
+                changeValue = {...value};
+                this._selectedElement.setShadowOffset(changeValue);
+                break;
+            }
             default: {
                 return;
             }

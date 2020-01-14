@@ -59,12 +59,22 @@
         "label": "Properties_Edit_TextAlignLabel_Main"
       },
       "textOutlineEnabled": {
-        "label": "Properties_Edit_TextOutlineLabel_Main",
-        "labelEnabled": "Properties_Edit_TextOutlineLabel_Enabled"
+        "label": "Properties_Edit_Text_Outline",
+        "labelEnabled": "Properties_Edit_Common_Enabled"
       },
       "textOutlineSize": {
       },
       "textOutlineColor": {
+      },
+      "textShadowEnabled": {
+        "label": "Properties_Edit_Text_Shadow",
+        "labelEnabled": "Properties_Edit_Common_Enabled"
+      },
+      "textShadowSize": {
+        "labelX": "Properties_Edit_PositionLabel_X",
+        "labelY": "Properties_Edit_PositionLabel_Y"
+      },
+      "textShadowColor": {
       }
     }
   },

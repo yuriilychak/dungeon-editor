@@ -89,12 +89,15 @@ const actionHandlers = {
         };
 
         const textProps = isText ? {
-            fontColor: generateColor(stageElement.color),
-            fontSize: generateNumber(stageElement.fontSize, VALUE_FORMAT.PIXEL),
-            textAlign: generateTextAlign(stageElement.horizontalAlign - 1, stageElement.verticalAlign - 1),
-            textOutlineEnabled: generateEnabled(stageElement.outlineEnabled),
-            textOutlineSize: generateNumber(stageElement.outlineSize, VALUE_FORMAT.PIXEL),
-            textOutlineColor: generateColor(stageElement.outlineColor)
+            [STAGE_ELEMENT_PROP.FONT_COLOR]: generateColor(stageElement.color),
+            [STAGE_ELEMENT_PROP.FONT_SIZE]: generateNumber(stageElement.fontSize, VALUE_FORMAT.PIXEL),
+            [STAGE_ELEMENT_PROP.TEXT_ALIGN]: generateTextAlign(stageElement.horizontalAlign - 1, stageElement.verticalAlign - 1),
+            [STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED]: generateEnabled(stageElement.outlineEnabled),
+            [STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE]: generateNumber(stageElement.outlineSize, VALUE_FORMAT.PIXEL),
+            [STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR]: generateColor(stageElement.outlineColor),
+            [STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED]: generateEnabled(stageElement.shadowEnabled),
+            [STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE]: generatePoint(stageElement.getShadowOffset().x, stageElement.getShadowOffset().y, [VALUE_FORMAT.PIXEL]),
+            [STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR]: generateColor(stageElement.shadowColor)
         } : {};
 
         return {
@@ -187,6 +190,18 @@ const actionHandlers = {
                 break;
             }
             case STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR: {
+                nextFileData[key] = generateColor(value);
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED: {
+                nextFileData[key] = generateEnabled(value);
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE: {
+                nextFileData[key] = updatePoint(state, key, value.x, value.y);
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR: {
                 nextFileData[key] = generateColor(value);
                 break;
             }

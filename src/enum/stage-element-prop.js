@@ -15,7 +15,10 @@ const STAGE_ELEMENT_PROP = {
     TEXT_ALIGN: "textAlign",
     TEXT_OUTLINE_ENABLED: "textOutlineEnabled",
     TEXT_OUTLINE_SIZE: "textOutlineSize",
-    TEXT_OUTLINE_COLOR: "textOutlineColor"
+    TEXT_OUTLINE_COLOR: "textOutlineColor",
+    TEXT_SHADOW_ENABLED: "textShadowEnabled",
+    TEXT_SHADOW_SIZE: "textShadowSize",
+    TEXT_SHADOW_COLOR: "textShadowColor"
 };
 
 export default STAGE_ELEMENT_PROP;

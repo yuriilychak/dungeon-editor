@@ -74,6 +74,13 @@ const StageElementBody = ({
                 {id: STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR},
                 {id: STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE}
             ]
+        },
+        {
+            id: STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED,
+            children: [
+                {id: STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR},
+                {id: STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE}
+            ]
         }
     ];
 
