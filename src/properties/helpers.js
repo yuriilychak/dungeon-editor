@@ -13,7 +13,7 @@ export const generatePoint = (point, formats = [], disabled = false, formatX = 0
 
 const generateProperty = (value, type = null, otherProps = {}) => ({ value, type, ...otherProps });
 
-const generateFormattedProperty = (value, type, format, otherProps = {}) => generateProperty(getNextValue(value, format, otherProps), type, { ...otherProps, format });
+const generateFormattedProperty = (value, type, format, otherProps = {}) => ({ value: getNextValue(value, format, otherProps), type, format, ...otherProps});
 
 export const generateSlider = (value, format, maxValue, minValue = 0) =>
     generateFormattedProperty(value, FIELD_TYPE.SLIDER, format, { maxValue, minValue });

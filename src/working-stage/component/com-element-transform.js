@@ -189,7 +189,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
         switch (this._changeKey) {
             case STAGE_ELEMENT_PROP.ROTATION: {
-                changeValue = math.toRadians(-value);
+                changeValue = math.toRadians(value);
                 this._selectedElement.rotation = changeValue;
                 break;
             }

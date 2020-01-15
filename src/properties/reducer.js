@@ -54,9 +54,9 @@ const actionHandlers = {
             [STAGE_ELEMENT_PROP.ANCHOR]: generatePoint(stageElement.anchor, PERCENT_FORMATS, isContainer),
             [STAGE_ELEMENT_PROP.INTERACTIVE]: generateCheckbox(stageElement.userData.interactive),
             [STAGE_ELEMENT_PROP.VISIBLE]: generateCheckbox(stageElement.visible),
-            [STAGE_ELEMENT_PROP.ROTATION]: generateSlider(convertRotation(stageElement.rotation), VALUE_FORMAT.DEGREE, 359),
+            [STAGE_ELEMENT_PROP.ROTATION]: generateSlider(stageElement.rotation, VALUE_FORMAT.DEGREE, math.FULL_CIRCLE - 1),
             [STAGE_ELEMENT_PROP.TINT]: generateColor(stageElement.tint),
-            [STAGE_ELEMENT_PROP.ALPHA]: generateSlider(stageElement.alpha, VALUE_FORMAT.PERCENT, 100)
+            [STAGE_ELEMENT_PROP.ALPHA]: generateSlider(stageElement.alpha, VALUE_FORMAT.PERCENT, math.MAX_PERCENT)
         };
 
         const textProps = isText ? {
@@ -90,39 +90,10 @@ const actionHandlers = {
         let nextFileData = {};
         let nextFile = {};
 
-
-        switch (key) {
-            case STAGE_ELEMENT_PROP.POSITION:
-            case STAGE_ELEMENT_PROP.SIZE:
-            case STAGE_ELEMENT_PROP.ANCHOR:
-            case STAGE_ELEMENT_PROP.SCALE:
-            case STAGE_ELEMENT_PROP.SKEW:
-            case STAGE_ELEMENT_PROP.ALPHA:
-            case STAGE_ELEMENT_PROP.VISIBLE:
-            case STAGE_ELEMENT_PROP.INTERACTIVE:
-            case STAGE_ELEMENT_PROP.TINT:
-            case STAGE_ELEMENT_PROP.FONT_COLOR:
-            case STAGE_ELEMENT_PROP.FONT_SIZE:
-            case STAGE_ELEMENT_PROP.TEXT_ALIGN:
-            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED:
-            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE:
-            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR:
-            case STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED:
-            case STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE:
-            case STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.ROTATION: {
-                nextFileData[key] = updateValue(state, key, convertRotation(value));
-                break;
-            }
-            case STAGE_ELEMENT_PROP.NAME: {
-                nextFile[key] = value;
-                break;
-            }
-            default:
-                return state;
+        if (key === STAGE_ELEMENT_PROP.NAME) {
+            nextFile[key] = value;
+        } else {
+            nextFileData[key] = updateValue(state, key, value);
         }
 
         return {
@@ -138,11 +109,6 @@ const actionHandlers = {
         };
     }
 };
-
-function convertRotation(value) {
-    const fullCircle = math.multPowTwo(math.HALF_CIRCLE);
-    return math.toRadians(math.round((fullCircle - math.toDegrees(value)) % fullCircle));
-}
 
 function checkSelectedElement(file, id, sectionId) {
     return file !== null && file.id === id && file.sectionId === sectionId;
