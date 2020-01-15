@@ -334,9 +334,6 @@ const theme = createMuiTheme({
                         marginLeft: 0
                     }
                 }
-            },
-            selected: {
-                backgroundColor: "red"
             }
         },
         MuiToggleButtonGroup: {
@@ -347,11 +344,6 @@ const theme = createMuiTheme({
             },
             grouped: {
                 padding: getIndent(INDENT_SIZE.NONE, INDENT_SIZE.XS)
-            }
-        },
-        Mui: {
-            selected: {
-                backgroundColor: "(rgba(0, 0, 0, 0.25))"
             }
         }
     }

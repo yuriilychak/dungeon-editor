@@ -10,7 +10,7 @@ import {
     generateColor,
     generateNumber,
     generateTextAlign,
-    updatePoint,
+    updateValue,
     generateEnabled
 } from "./helpers";
 
@@ -121,23 +121,23 @@ const actionHandlers = {
 
         switch (key) {
             case STAGE_ELEMENT_PROP.POSITION: {
-                nextFileData[key] = updatePoint(state, key, value.x, value.y);
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.SIZE: {
-                nextFileData[key] = updatePoint(state, key, value.x, value.y);
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.ANCHOR: {
-                nextFileData[key] = updatePoint(state, key, math.floatToPercent(value.x), math.floatToPercent(value.y));
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.SCALE: {
-                nextFileData[key] = updatePoint(state, key, math.floatToPercent(value.x), math.floatToPercent(value.y));
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.SKEW: {
-                nextFileData[key] = updatePoint(state, key, math.toDegrees(value.x), math.toDegrees(value.y));
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.ROTATION: {
@@ -166,15 +166,15 @@ const actionHandlers = {
                 break;
             }
             case STAGE_ELEMENT_PROP.TINT: {
-                nextFileData[key] = generateColor(value);
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.FONT_COLOR: {
-                nextFileData[key] = generateColor(value);
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.FONT_SIZE: {
-                nextFileData[key] = generateNumber(value, VALUE_FORMAT.PIXEL);
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.TEXT_ALIGN: {
@@ -182,27 +182,27 @@ const actionHandlers = {
                 break;
             }
             case STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED: {
-                nextFileData[key] = generateEnabled(value);
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE: {
-                nextFileData[key] = generateNumber(value, VALUE_FORMAT.PIXEL);
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR: {
-                nextFileData[key] = generateColor(value);
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED: {
-                nextFileData[key] = generateEnabled(value);
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE: {
-                nextFileData[key] = updatePoint(state, key, value.x, value.y);
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR: {
-                nextFileData[key] = generateColor(value);
+                nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.NAME: {
