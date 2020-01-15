@@ -24,7 +24,7 @@ const NumberField = ({
                          minValue = -Infinity,
                          maxValue = Infinity,
                          format,
-                         changeFormatDisabled,
+                         changeFormatDisabled = true,
                          className,
                          onChange,
                          disabled,

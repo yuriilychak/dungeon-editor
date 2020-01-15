@@ -15,7 +15,7 @@ const generateProperty = (value, type = null, otherProps = {}) => ({ value, type
 
 const generateFormattedProperty = (value, type, format, otherProps = {}) => ({ value: getNextValue(value, format, otherProps), type, format, ...otherProps});
 
-export const generateSlider = (value, format, maxValue, minValue = 0) =>
+export const generateSlider = (value, format, maxValue = 255, minValue = 0) =>
     generateFormattedProperty(value, FIELD_TYPE.SLIDER, format, { maxValue, minValue });
 
 export const generateCheckbox = value => generateFormattedProperty(value, FIELD_TYPE.CHECKBOX, VALUE_FORMAT.BOOL);
@@ -25,30 +25,14 @@ export const generateColor = value => generateFormattedProperty(value, FIELD_TYP
 export const generateEnabled = value => generateFormattedProperty(value, FIELD_TYPE.ENABLED, VALUE_FORMAT.BOOL);
 
 export const generateNumber = (value, format, maxValue = 255, minValue = 0) =>
-    generateFormattedProperty(value, FIELD_TYPE.NUMBER, format, { minValue, maxValue, changeFormatDisabled: true });
+    generateFormattedProperty(value, FIELD_TYPE.NUMBER, format, { minValue, maxValue });
 
 export const generateTextAlign = (horizontalAlign, verticalAlign) => generateProperty({ x: horizontalAlign, y: verticalAlign }, FIELD_TYPE.TEXT_ALIGN);
 
 export const updateValue = (state, key, value) => {
     const data = state.file.data[key];
 
-    switch(data.type) {
-        case FIELD_TYPE.TEXT_ALIGN: {
-            return updateData(data, value);
-        }
-        case FIELD_TYPE.CHECKBOX:
-        case FIELD_TYPE.POINT:
-        case FIELD_TYPE.COLOR:
-        case FIELD_TYPE.NUMBER:
-        case FIELD_TYPE.SLIDER:
-        case FIELD_TYPE.ENABLED: {
-            const nextValue = getNextValue(value, data.format, data);
-
-            return updateData(data, nextValue);
-        }
-        default:
-            return data;
-    }
+    return updateData(data, data.type !== FIELD_TYPE.TEXT_ALIGN ? getNextValue(value, data.format, data) : value);
 };
 
 const updateData = (prevData, nextValue) => {
