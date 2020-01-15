@@ -6,7 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import "./check-box.scss";
 
-const CheckBox = ({checked, onChange, label, id}) => {
+const CheckBox = ({value, onChange, label, id}) => {
     const handleChange = useCallback(event => onChange({key: id, value: event.target.checked}), [id]);
     return (
         <div className="check-box-wrapper">
@@ -20,7 +20,7 @@ const CheckBox = ({checked, onChange, label, id}) => {
                         classes={{
                             root: "check-box-icon-root"
                         }}
-                        checked={checked}
+                        checked={value}
                         onChange={handleChange}
                         color="primary"
                     />}
@@ -32,7 +32,7 @@ const CheckBox = ({checked, onChange, label, id}) => {
 
 CheckBox.propTypes = {
     id: string,
-    checked: bool.isRequired,
+    value: bool.isRequired,
     label: string.isRequired,
     onChange: func.isRequired
 };

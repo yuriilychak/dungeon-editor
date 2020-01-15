@@ -1,6 +1,6 @@
 import StaticData from "./data";
 import STATE from "./state";
-import { handleAction } from "../helpers";
+import {handleAction} from "../helpers";
 import {STAGE_ELEMENT_PROP} from "../enum";
 import {DEGREE_FORMATS, DIMENSION_FORMATS, PERCENT_FORMATS, VALUE_FORMAT} from "./constants";
 import {
@@ -14,9 +14,9 @@ import {
     generateEnabled
 } from "./helpers";
 
-const { mCore } = window;
+const {mCore} = window;
 
-const { math } = mCore.util;
+const {math} = mCore.util;
 
 export const initialState = {
     ...StaticData,
@@ -24,7 +24,10 @@ export const initialState = {
 };
 
 const actionHandlers = {
-    [STATE.SELECT_LIBRARY_ELEMENT]: (state, file) => ({ ...state, file: {...file, isStageElement: false, isRoot: false } }),
+    [STATE.SELECT_LIBRARY_ELEMENT]: (state, file) => ({
+        ...state,
+        file: {...file, isStageElement: false, isRoot: false}
+    }),
     [STATE.DELETE_LIBRARY_ELEMENT]: (state, {ids, sectionId}) =>
         ids.some(id => checkSelectedElement(state.file, id, sectionId)) ? {
             ...state,
@@ -39,53 +42,21 @@ const actionHandlers = {
             }
         } : state,
     [STATE.SELECT_STAGE_ELEMENT]: (state, stageElement) => {
-        const fullCircle = math.multPowTwo(math.HALF_CIRCLE);
         const isContainer = stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.CONTAINER;
         const isText = stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.LABEL ||
             stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.TEXT_FIELD;
 
         const commonProps = {
-            position: generatePoint(
-                stageElement.position.x,
-                stageElement.position.y,
-                DIMENSION_FORMATS,
-                stageElement.userData.isRoot
-            ),
-            size: generatePoint(
-                stageElement.rate.x,
-                stageElement.rate.y,
-                DIMENSION_FORMATS,
-                isContainer
-            ),
-            skew: generatePoint(
-                Math.floor(math.toDegrees(stageElement.skew.x)),
-                Math.floor(math.toDegrees(stageElement.skew.y)),
-                DEGREE_FORMATS
-            ),
-            scale: generatePoint(
-                math.floatToPercent(stageElement.scale.x, true),
-                math.floatToPercent(stageElement.scale.y, true),
-                PERCENT_FORMATS
-            ),
-            anchor: generatePoint(
-                math.floatToPercent(stageElement.anchor.x, true),
-                math.floatToPercent(stageElement.anchor.y, true),
-                PERCENT_FORMATS,
-                isContainer
-            ),
-            interactive: generateCheckbox(stageElement.userData.interactive),
-            visible: generateCheckbox(stageElement.visible),
-            rotation: generateSlider(
-                Math.floor((fullCircle - math.toDegrees(stageElement.rotation)) % fullCircle),
-                VALUE_FORMAT.DEGREE,
-                359
-            ),
-            tint: generateColor(stageElement.tint),
-            alpha: generateSlider(
-                Math.floor(math.floatToPercent(stageElement.alpha)),
-                VALUE_FORMAT.PERCENT,
-                100
-            )
+            [STAGE_ELEMENT_PROP.POSITION]: generatePoint(stageElement.position, DIMENSION_FORMATS, stageElement.userData.isRoot),
+            [STAGE_ELEMENT_PROP.SIZE]: generatePoint(stageElement.rate, DIMENSION_FORMATS, isContainer),
+            [STAGE_ELEMENT_PROP.SKEW]: generatePoint(stageElement.skew, DEGREE_FORMATS),
+            [STAGE_ELEMENT_PROP.SCALE]: generatePoint(stageElement.scale, PERCENT_FORMATS),
+            [STAGE_ELEMENT_PROP.ANCHOR]: generatePoint(stageElement.anchor, PERCENT_FORMATS, isContainer),
+            [STAGE_ELEMENT_PROP.INTERACTIVE]: generateCheckbox(stageElement.userData.interactive),
+            [STAGE_ELEMENT_PROP.VISIBLE]: generateCheckbox(stageElement.visible),
+            [STAGE_ELEMENT_PROP.ROTATION]: generateSlider(convertRotation(stageElement.rotation), VALUE_FORMAT.DEGREE, 359),
+            [STAGE_ELEMENT_PROP.TINT]: generateColor(stageElement.tint),
+            [STAGE_ELEMENT_PROP.ALPHA]: generateSlider(stageElement.alpha, VALUE_FORMAT.PERCENT, 100)
         };
 
         const textProps = isText ? {
@@ -96,7 +67,7 @@ const actionHandlers = {
             [STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE]: generateNumber(stageElement.outlineSize, VALUE_FORMAT.PIXEL),
             [STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR]: generateColor(stageElement.outlineColor),
             [STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED]: generateEnabled(stageElement.shadowEnabled),
-            [STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE]: generatePoint(stageElement.getShadowOffset().x, stageElement.getShadowOffset().y, [VALUE_FORMAT.PIXEL]),
+            [STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE]: generatePoint(stageElement.getShadowOffset(), [VALUE_FORMAT.PIXEL]),
             [STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR]: generateColor(stageElement.shadowColor)
         } : {};
 
@@ -111,98 +82,39 @@ const actionHandlers = {
                 sectionId: stageElement.uiType,
                 id: stageElement.uid,
                 type: stageElement.uiType,
-                data: { isText, ...commonProps, ...textProps }
+                data: {isText, ...commonProps, ...textProps}
             }
         };
     },
-    [STATE.CHANGE_STAGE_ELEMENT]: (state, { key, value }) => {
+    [STATE.CHANGE_STAGE_ELEMENT]: (state, {key, value}) => {
         let nextFileData = {};
         let nextFile = {};
 
+
         switch (key) {
-            case STAGE_ELEMENT_PROP.POSITION: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.SIZE: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.ANCHOR: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.SCALE: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.SKEW: {
+            case STAGE_ELEMENT_PROP.POSITION:
+            case STAGE_ELEMENT_PROP.SIZE:
+            case STAGE_ELEMENT_PROP.ANCHOR:
+            case STAGE_ELEMENT_PROP.SCALE:
+            case STAGE_ELEMENT_PROP.SKEW:
+            case STAGE_ELEMENT_PROP.ALPHA:
+            case STAGE_ELEMENT_PROP.VISIBLE:
+            case STAGE_ELEMENT_PROP.INTERACTIVE:
+            case STAGE_ELEMENT_PROP.TINT:
+            case STAGE_ELEMENT_PROP.FONT_COLOR:
+            case STAGE_ELEMENT_PROP.FONT_SIZE:
+            case STAGE_ELEMENT_PROP.TEXT_ALIGN:
+            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED:
+            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE:
+            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR:
+            case STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED:
+            case STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE:
+            case STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR: {
                 nextFileData[key] = updateValue(state, key, value);
                 break;
             }
             case STAGE_ELEMENT_PROP.ROTATION: {
-                const fullCircle = math.multPowTwo(math.HALF_CIRCLE);
-                nextFileData[key] = generateSlider(
-                    Math.floor((fullCircle - math.toDegrees(value)) % fullCircle),
-                    VALUE_FORMAT.DEGREE,
-                    359
-                );
-                break;
-            }
-            case STAGE_ELEMENT_PROP.ALPHA: {
-                nextFileData[key] = generateSlider(
-                    Math.floor(math.floatToPercent(value)),
-                    VALUE_FORMAT.PERCENT,
-                    100
-                );
-                break;
-            }
-            case STAGE_ELEMENT_PROP.VISIBLE: {
-                nextFileData[key] = generateCheckbox(value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.INTERACTIVE: {
-                nextFileData[key] = generateCheckbox(value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TINT: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.FONT_COLOR: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.FONT_SIZE: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_ALIGN: {
-                nextFileData[key] = generateTextAlign(value.x, value.y);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE: {
-                nextFileData[key] = updateValue(state, key, value);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR: {
-                nextFileData[key] = updateValue(state, key, value);
+                nextFileData[key] = updateValue(state, key, convertRotation(value));
                 break;
             }
             case STAGE_ELEMENT_PROP.NAME: {
@@ -210,6 +122,7 @@ const actionHandlers = {
                 break;
             }
             default:
+                return state;
         }
 
         return {
@@ -225,6 +138,11 @@ const actionHandlers = {
         };
     }
 };
+
+function convertRotation(value) {
+    const fullCircle = math.multPowTwo(math.HALF_CIRCLE);
+    return math.toRadians(math.round((fullCircle - math.toDegrees(value)) % fullCircle));
+}
 
 function checkSelectedElement(file, id, sectionId) {
     return file !== null && file.id === id && file.sectionId === sectionId;

@@ -1,7 +1,10 @@
 export const VALUE_FORMAT = {
     PIXEL: "PX",
     PERCENT: "%",
-    DEGREE: "°"
+    DEGREE: "°",
+    COLOR: "CL",
+    BOOL: "BL",
+    POINT: "PT"
 };
 
 export const FIELD_TYPE = {

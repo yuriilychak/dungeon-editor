@@ -22,7 +22,7 @@ export default ({
     if (data.hasOwnProperty("compressSkeleton")) {
         skeletonCheckbox = (
             <CheckBox
-                checked={data.compressSkeleton}
+                value={data.compressSkeleton}
                 onChange={onSwitchCompressSkeleton}
                 label={compressSkeletonLabel}
             />
@@ -55,7 +55,7 @@ export default ({
         <Fragment>
             {atlasAutocomplete}
             <CheckBox
-                checked={compressName}
+                value={compressName}
                 onChange={onSwitchCompressName}
                 label={compressNameLabel}
             />
