@@ -11,6 +11,18 @@ export const generatePoint = (point, formats = [], disabled = false, formatX = 0
     { formats, disabled }
 );
 
+export const generateProp = (element, data) => {
+    let value = data.fromUserData ? element.userData[data.id] : element[data.id];
+
+    console.log(data.id);
+
+    if (data.type === FIELD_TYPE.POINT) {
+        value = { x: value.x, y: value.y, formatX: 0, formatY: 0 };
+    }
+
+    return ({ value: getNextValue(value, data.format, data), ...data });
+};
+
 const generateProperty = (value, type = null, otherProps = {}) => ({ value, type, ...otherProps });
 
 const generateFormattedProperty = (value, type, format, otherProps = {}) => ({ value: getNextValue(value, format, otherProps), type, format, ...otherProps});

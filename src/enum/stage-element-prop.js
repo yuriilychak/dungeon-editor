@@ -1,6 +1,6 @@
 const STAGE_ELEMENT_PROP = {
     POSITION: "position",
-    SIZE: "size",
+    SIZE: "rate",
     ANCHOR: "anchor",
     SCALE: "scale",
     SKEW: "skew",

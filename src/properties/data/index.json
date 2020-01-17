@@ -17,7 +17,7 @@
         "labelX": "Properties_Edit_PositionLabel_X",
         "labelY": "Properties_Edit_PositionLabel_Y"
       },
-      "size": {
+      "rate": {
         "label": "Properties_Edit_SizeLabel_Main",
         "labelX": "Properties_Edit_SizeLabel_X",
         "labelY": "Properties_Edit_SizeLabel_Y"
@@ -77,6 +77,89 @@
       "textShadowColor": {
       }
     }
+  },
+  "elementProperties": {
+    "common": [
+      {
+        "id": "position",
+        "type": "point",
+        "format": "PT",
+        "formats": ["PX", "%"],
+        "minValue": -32768,
+        "maxValue": 32767,
+        "fromUserData": false
+      },
+      {
+        "id": "rate",
+        "type": "point",
+        "format": "PT",
+        "formats": ["PX", "%"],
+        "minValue": -32768,
+        "maxValue": 32767,
+        "fromUserData": false
+      },
+      {
+        "id": "anchor",
+        "type": "point",
+        "format": "PT",
+        "formats": ["%"],
+        "minValue": -32768,
+        "maxValue": 32767,
+        "fromUserData": false
+      },
+      {
+        "id": "scale",
+        "type": "point",
+        "format": "PT",
+        "formats": ["%"],
+        "minValue": -32768,
+        "maxValue": 32767,
+        "fromUserData": false
+      },
+      {
+        "id": "skew",
+        "type": "point",
+        "format": "PT",
+        "formats": ["°"],
+        "minValue": -359,
+        "maxValue": 359,
+        "fromUserData": false
+      },
+      {
+        "id": "visible",
+        "type": "checkbox",
+        "format": "BL",
+        "fromUserData": false
+      },
+      {
+        "id": "alpha",
+        "type": "slider",
+        "format": "%",
+        "minValue": 0,
+        "maxValue": 100,
+        "fromUserData": false
+      },
+      {
+        "id": "tint",
+        "type": "color",
+        "format": "CL",
+        "fromUserData": false
+      },
+      {
+        "id": "rotation",
+        "type": "slider",
+        "format": "°",
+        "minValue": 0,
+        "maxValue": 359,
+        "fromUserData": false
+      },
+      {
+        "id": "interactive",
+        "type": "checkbox",
+        "format": "BL",
+        "fromUserData": true
+      }
+    ]
   },
   "directoryData": {
     "locale": "Properties_DirectoryTitle",

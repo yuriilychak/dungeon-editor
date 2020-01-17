@@ -11,7 +11,8 @@ import {
     generateNumber,
     generateTextAlign,
     updateValue,
-    generateEnabled
+    generateEnabled,
+    generateProp
 } from "./helpers";
 
 const {mCore} = window;
@@ -45,6 +46,8 @@ const actionHandlers = {
         const isContainer = stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.CONTAINER;
         const isText = stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.LABEL ||
             stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.TEXT_FIELD;
+
+        console.log(state.elementProperties.common.map(data => generateProp(stageElement, data)));
 
         const commonProps = {
             [STAGE_ELEMENT_PROP.POSITION]: generatePoint(stageElement.position, DIMENSION_FORMATS, stageElement.userData.isRoot),
