@@ -1,5 +1,5 @@
-import React, {Fragment, useEffect, useMemo } from "react";
-import {string, func, number, arrayOf, shape, object, bool} from "prop-types";
+import React, {Fragment, useEffect, useMemo} from "react";
+import {string, func, number, arrayOf, shape, object, bool, objectOf} from "prop-types";
 import {useTranslation} from "react-i18next";
 
 import {TitledPanel} from "../../common-ui/titled-panel";
@@ -16,6 +16,7 @@ const Properties = ({
                         directoryData,
                         sectionData,
                         stageData,
+                        stageElementTrees,
                         init,
                         onRenameFile,
                         onSwitchAtlas,
@@ -44,11 +45,11 @@ const Properties = ({
                     data={file.data}
                     isRoot={file.isRoot}
                     locales={localesParsed.stage}
+                    elementTrees={stageElementTrees}
                     onChange={onStageElementChange}
                 />
             );
-        }
-        else if (!file.isDirectory) {
+        } else if (!file.isDirectory) {
             fileBody = (
                 <LibraryElementBody
                     file={file}
@@ -75,6 +76,9 @@ const Properties = ({
                     iconName={data.icon}
                     iconSize={iconSize}
                     preview={file.preview}
+                    compressName={file.compressName}
+                    onSwitchCompressName={onSwitchCompressName}
+                    compressNameLabel={localesParsed.compressNameLabel}
                     onRenameFile={handleRenameFile}
                 />
                 {fileBody}
@@ -120,6 +124,17 @@ Properties.propTypes = {
         locale: string.isRequired,
         icon: string.isRequired
     })).isRequired,
+    stageElementTrees: objectOf(arrayOf(shape({
+        id: string.isRequired,
+        content: arrayOf(shape({
+                id: string.isRequired,
+                children: arrayOf(shape({
+                        id: string.isRequired
+                    })
+                )
+            })
+        ).isRequired
+    }))).isRequired,
     locales: shape({
         compressName: string.isRequired,
         compressSkeleton: string.isRequired,

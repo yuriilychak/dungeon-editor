@@ -5,78 +5,165 @@
     "idTitle": "Properties_IdTitle",
     "nameTitle": "Properties_NameTitle",
     "sectionTitle": "Properties_Title",
+    "compressNameLabel": "Properties_CompressName",
     "library": {
-      "compressNameLabel": "Properties_CompressName",
       "compressSkeletonLabel": "Properties_CompressSkeleton",
       "atlasAutocompleteLabel": "Properties_SelectAtlasLabel",
       "atlasAutocompletePlaceholder": "Properties_SelectAtlasPlaceholder"
     },
     "stage": {
       "position": {
-        "label": "Properties_Edit_PositionLabel_Main",
         "labelX": "Properties_Edit_PositionLabel_X",
         "labelY": "Properties_Edit_PositionLabel_Y"
       },
       "rate": {
-        "label": "Properties_Edit_SizeLabel_Main",
         "labelX": "Properties_Edit_SizeLabel_X",
         "labelY": "Properties_Edit_SizeLabel_Y"
       },
       "anchor": {
-        "label": "Properties_Edit_AnchorLabel_Main",
         "labelX": "Properties_Edit_AnchorLabel_X",
         "labelY": "Properties_Edit_AnchorLabel_Y"
       },
       "scale": {
-        "label": "Properties_Edit_ScaleLabel_Main",
         "labelX": "Properties_Edit_ScaleLabel_X",
         "labelY": "Properties_Edit_ScaleLabel_Y"
       },
       "skew": {
-        "label": "Properties_Edit_SkewLabel_Main",
         "labelX": "Properties_Edit_SkewLabel_X",
         "labelY": "Properties_Edit_SkewLabel_Y"
       },
       "visible": {
         "label": "Properties_Edit_VisibleLabel_Main"
       },
-      "alpha": {
-        "label": "Properties_Edit_AlphaLabel_Main"
-      },
-      "tint": {
-        "label": "Properties_Edit_TintLabel_Main"
-      },
-      "rotation": {
-        "label": "Properties_Edit_RotationLabel_Main"
-      },
       "interactive": {
         "label": "Properties_Edit_InteractiveLabel_Main"
       },
-      "fontColor": {
-        "label": "Properties_Edit_FontLabel_Main"
-      },
-      "textAlign": {
-        "label": "Properties_Edit_TextAlignLabel_Main"
-      },
-      "textOutlineEnabled": {
-        "label": "Properties_Edit_Text_Outline",
+      "outlineEnabled": {
         "labelEnabled": "Properties_Edit_Common_Enabled"
       },
-      "textOutlineSize": {
-      },
-      "textOutlineColor": {
-      },
-      "textShadowEnabled": {
+      "shadowEnabled": {
         "label": "Properties_Edit_Text_Shadow",
         "labelEnabled": "Properties_Edit_Common_Enabled"
       },
-      "textShadowSize": {
+      "shadowOffset": {
         "labelX": "Properties_Edit_PositionLabel_X",
         "labelY": "Properties_Edit_PositionLabel_Y"
       },
-      "textShadowColor": {
+      "autoSize": {
+        "label": "Properties_Edit_PositionLabel_X"
+      },
+      "common": {
+        "row_0": "Properties_Edit_PositionLabel_Main",
+        "row_1": "Properties_Edit_SizeLabel_Main",
+        "row_2": "Properties_Edit_ScaleLabel_Main",
+        "row_3": "Properties_Edit_SkewLabel_Main",
+        "row_4": "Properties_Edit_AnchorLabel_Main",
+        "row_5": "Properties_Edit_RotationLabel_Main",
+        "row_6": "Properties_Edit_AlphaLabel_Main",
+        "row_7": "Properties_Edit_TintLabel_Main"
+      },
+      "text": {
+        "row_0": "Properties_Edit_FontLabel_Main",
+        "row_1": "Properties_Edit_TextAlignLabel_Main",
+        "row_2": "Properties_Edit_Text_Outline",
+        "row_3": "Properties_Edit_Text_Shadow"
       }
     }
+  },
+  "stageElementTrees": {
+    "common": [
+      {
+        "id": "row_0",
+        "content": [
+          { "id": "position" }
+        ]
+      },
+      {
+        "id": "row_1",
+        "content": [
+          { "id": "rate" }
+        ]
+      },
+      {
+        "id": "row_2",
+        "content": [
+          { "id": "scale" }
+        ]
+      },
+      {
+        "id": "row_3",
+        "content": [
+          { "id": "skew" }
+        ]
+      },
+      {
+        "id": "row_4",
+        "content": [
+          { "id": "anchor" }
+        ]
+      },
+      {
+        "id": "row_5",
+        "content": [
+          { "id": "rotation" }
+        ]
+      },
+      {
+        "id": "row_6",
+        "content": [
+          { "id": "alpha" }
+        ]
+      },
+      {
+        "id": "row_7",
+        "content": [
+          { "id": "tint" },
+          { "id": "visible" },
+          { "id": "interactive" }
+        ]
+      }
+    ],
+    "text": [
+      {
+        "id": "row_0",
+        "content": [
+          { "id": "color" },
+          { "id": "fontSize" }
+        ]
+      },
+      {
+        "id": "row_1",
+        "content": [
+          { "id":  "horizontalAlign" },
+          { "id":  "verticalAlign" },
+          { "id":  "autoSize" }
+        ]
+      },
+      {
+        "id": "row_2",
+        "content": [
+          {
+            "id": "outlineEnabled",
+            "children": [
+              { "id":  "outlineColor" },
+              { "id":  "outlineSize" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "row_3",
+        "content": [
+          {
+            "id": "shadowEnabled",
+            "children": [
+              { "id":  "shadowColor" },
+              { "id":  "shadowOffset" }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "elementProperties": {
     "common": [
@@ -158,6 +245,83 @@
         "type": "checkbox",
         "format": "BL",
         "fromUserData": true
+      }
+    ],
+    "text": [
+      {
+        "id": "color",
+        "type": "color",
+        "format": "CL",
+        "fromUserData": false
+      },
+      {
+        "id": "fontSize",
+        "type": "number",
+        "format": "PX",
+        "fromUserData": false,
+        "minValue": 1,
+        "maxValue": 255
+      },
+      {
+        "id": "outlineEnabled",
+        "type": "enabled",
+        "format": "BL",
+        "fromUserData": true
+      },
+      {
+        "id": "outlineColor",
+        "type": "color",
+        "format": "CL",
+        "fromUserData": false
+      },
+      {
+        "id": "outlineSize",
+        "type": "number",
+        "format": "PX",
+        "fromUserData": false,
+        "minValue": 0,
+        "maxValue": 255
+      },
+      {
+        "id": "shadowEnabled",
+        "type": "enabled",
+        "format": "BL",
+        "fromUserData": true
+      },
+      {
+        "id": "shadowColor",
+        "type": "color",
+        "format": "CL",
+        "fromUserData": false
+      },
+      {
+        "id": "shadowOffset",
+        "type": "point",
+        "format": "PT",
+        "formats": ["PX"],
+        "minValue": -32768,
+        "maxValue": 32767,
+        "fromUserData": false
+      },
+      {
+        "id": "horizontalAlign",
+        "type": "toggleGroup",
+        "format": "PX",
+        "offset": 1,
+        "fromUserData": false
+      },
+      {
+        "id": "verticalAlign",
+        "type": "toggleGroup",
+        "format": "PX",
+        "offset": 1,
+        "fromUserData": false
+      },
+      {
+        "id": "autoSize",
+        "type": "checkbox",
+        "format": "BL",
+        "fromUserData": false
       }
     ]
   },

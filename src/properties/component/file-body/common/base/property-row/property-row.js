@@ -11,6 +11,7 @@ const PropertyRow = ({
                      }) => (
     <TitledField
         className="properties-property-row"
+        bodyClassName="properties-property-row-body"
         title={label}
         titleWidth={42}
     >

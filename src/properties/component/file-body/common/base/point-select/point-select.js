@@ -4,12 +4,16 @@ import { string, number, func, arrayOf, bool, shape } from "prop-types";
 import {NumberField} from "../../number-field";
 
 import "./point-select.scss";
+import {FIELD_TYPE} from "../../../../../constants";
+import {generateChangeEvent} from "../../helpers";
 
 const PointSelect = ({
                         id,
                         labelX,
                         labelY,
+                         format,
                         formats,
+                         fromUserData,
                         value,
                         disabled,
                         onChange
@@ -22,8 +26,8 @@ const PointSelect = ({
         const nextData = { ...data, [key]: nextValue };
 
         setData(nextData);
-        onChange({ key: id, value: nextData});
-    }, [data, onChange]);
+        onChange(generateChangeEvent(id, nextData, FIELD_TYPE.POINT, fromUserData, format));
+    }, [id, data, fromUserData, format, onChange]);
 
     const handleChangeFormat = useCallback(cordId => {
         const formatKey = `format${cordId.toUpperCase()}`;

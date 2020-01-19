@@ -6,6 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import {Icon, TitledField, ToolButton, ImagePreview} from "../../../common-ui";
 
 import "./file-header.css";
+import {CheckBox} from "../file-body/common/check-box";
 
 const FileHeader = ({
                         isRoot,
@@ -16,6 +17,9 @@ const FileHeader = ({
                         iconName,
                         iconSize,
                         nameTitle,
+                        compressName,
+                        onSwitchCompressName,
+                        compressNameLabel,
                         onRenameFile,
                         preview
                     }) => {
@@ -48,7 +52,7 @@ const FileHeader = ({
                     <div className="properties-header-name">
                         {fileName}
                     </div>
-                    <div className={classNames({ "properties-header-name-icon-disabled": isRoot })}>
+                    <div className={classNames({"properties-header-name-icon-disabled": isRoot})}>
                         <ToolButton
                             disabled={isRoot}
                             onClick={onRenameFile}
@@ -56,12 +60,19 @@ const FileHeader = ({
                         />
                     </div>
                 </TitledField>
-                <TitledField
-                    className="properties-header-field"
-                    title={idTitle}
-                >
-                    {fileId}
-                </TitledField>
+                <div className="properties-header-params">
+                    <TitledField
+                        className="properties-header-field"
+                        title={idTitle}
+                    >
+                        {fileId}
+                    </TitledField>
+                    <CheckBox
+                        value={compressName}
+                        onChange={onSwitchCompressName}
+                        label={compressNameLabel}
+                    />
+                </div>
             </div>
         </div>
     )

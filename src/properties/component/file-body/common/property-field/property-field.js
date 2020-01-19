@@ -1,18 +1,18 @@
 import React, { memo } from "react";
 
-import { CheckBox } from '../check-box';
 import { SliderField } from '../slider-field';
 import { NumberField } from "../number-field";
-import { TextAlignField } from "../text-align-field";
 import {EnabledField} from "../enable-field";
 import {FIELD_TYPE} from "../../../../constants";
 import {PointSelect} from "../base/point-select";
 import {ColorSelect} from "../base/color-select";
+import {ToggleField} from "../toggle-field";
+import {ToggleGroupField} from "../toggle-group-field";
 
 const PropertyField = ({
     id,
     data,
-    locales,
+    locales = {},
     onChange,
     children
                        }) => {
@@ -29,17 +29,16 @@ const PropertyField = ({
             Item = SliderField;
             break;
         case FIELD_TYPE.CHECKBOX:
-            Item = CheckBox;
+            Item = ToggleField;
             break;
-        case FIELD_TYPE.NUMBER: {
+        case FIELD_TYPE.NUMBER:
             Item = NumberField;
-            break;
-        }
-        case FIELD_TYPE.TEXT_ALIGN:
-            Item = TextAlignField;
             break;
         case FIELD_TYPE.ENABLED:
             Item = EnabledField;
+            break;
+        case FIELD_TYPE.TOGGLE_GROUP:
+            Item = ToggleGroupField;
             break;
         default:
             return null;

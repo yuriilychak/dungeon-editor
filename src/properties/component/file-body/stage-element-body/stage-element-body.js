@@ -1,7 +1,6 @@
-import React from "react";
+import React, {Fragment} from "react";
 
 import {PropertyField} from "../common";
-import {STAGE_ELEMENT_PROP} from "../../../../enum";
 
 import "./stage-element-body.scss";
 import PropertyRow from "../common/base/property-row/property-row";
@@ -10,11 +9,13 @@ const StageElementBody = ({
                               isRoot,
                               locales,
                               data,
+                              elementTrees,
                               onChange
                           }) => {
     const generateElement = (id, children) => (
         <PropertyField
             id={id}
+            key={id}
             locales={locales[id]}
             data={data[id]}
             onChange={onChange}
@@ -23,81 +24,46 @@ const StageElementBody = ({
         </PropertyField>
     );
 
-    let resultStructure = [];
+    const generateSection = (trees, locales, id) => {
+        const sectionTree = trees[id];
+        const sectionLocale = locales[id];
 
-    const transformStructure = [
-        {
-            id: STAGE_ELEMENT_PROP.POSITION
-        },
-        {
-            id: STAGE_ELEMENT_PROP.SIZE
-        },
-        {
-            id: STAGE_ELEMENT_PROP.SCALE
-        },
-        {
-            id: STAGE_ELEMENT_PROP.SKEW
-        },
-        {
-            id: STAGE_ELEMENT_PROP.ANCHOR
-        },
-        {
-            id: STAGE_ELEMENT_PROP.ROTATION
-        },
-        {
-            id: STAGE_ELEMENT_PROP.ALPHA
-        },
-        {
-            id: STAGE_ELEMENT_PROP.TINT,
-            children: [
-                {id: STAGE_ELEMENT_PROP.VISIBLE},
-                {id: STAGE_ELEMENT_PROP.INTERACTIVE}
-            ]
-        }
+        const rows = sectionTree.map(node => {
+            const rowId = node.id;
+            const content = node.content;
+
+            const fields = content.map(element => {
+                const children = element.children ? element.children.map(childElement => generateElement(childElement.id)) : null;
+                return generateElement(element.id, children);
+            });
+
+            return (
+                <PropertyRow key={rowId} label={sectionLocale[rowId]}>
+                    {fields}
+                </PropertyRow>
+            )
+        });
+
+        return (
+            <Fragment key={id}>
+                { rows }
+            </Fragment>
+        );
+    };
+
+
+    let resultStructure = [
+        generateSection(elementTrees, locales, "common")
     ];
 
-    resultStructure = resultStructure.concat(transformStructure);
-
-    const textStructure = [
-        {
-            id: STAGE_ELEMENT_PROP.FONT_COLOR,
-            children: [
-                {id: STAGE_ELEMENT_PROP.FONT_SIZE}
-            ]
-        },
-        {
-            id: STAGE_ELEMENT_PROP.TEXT_ALIGN
-        },
-        {
-            id: STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED,
-            children: [
-                {id: STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR},
-                {id: STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE}
-            ]
-        },
-        {
-            id: STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED,
-            children: [
-                {id: STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR},
-                {id: STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE}
-            ]
-        }
-    ];
 
     if (data.isText) {
-        resultStructure = resultStructure.concat(textStructure);
+        resultStructure.push(generateSection(elementTrees, locales, "text"));
     }
 
     return (
         <div className="properties-stage-element-body-root">
-            {resultStructure.map(element => {
-                const children = element.children ? element.children.map(childElement => generateElement(childElement.id)) : null;
-                return (
-                    <PropertyRow key={element.id} label={locales[element.id].label}>
-                        {generateElement(element.id, children)}
-                    </PropertyRow>
-                );
-            })}
+            {resultStructure}
         </div>
     )
 };

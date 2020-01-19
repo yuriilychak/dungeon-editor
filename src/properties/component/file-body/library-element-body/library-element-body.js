@@ -14,7 +14,7 @@ export default ({
                     onSwitchAtlas,
                     onClearAtlas
                 }) => {
-    const {compressName, atlas, data} = file;
+    const {atlas, data} = file;
 
     let atlasAutocomplete = null;
     let skeletonCheckbox = null;
@@ -54,11 +54,6 @@ export default ({
     return (
         <Fragment>
             {atlasAutocomplete}
-            <CheckBox
-                value={compressName}
-                onChange={onSwitchCompressName}
-                label={compressNameLabel}
-            />
             {skeletonCheckbox}
         </Fragment>
     )

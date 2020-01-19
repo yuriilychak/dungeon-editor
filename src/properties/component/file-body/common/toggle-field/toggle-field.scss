@@ -1,0 +1,50 @@
+@import "../../../../../colors";
+@import "../../../../../sizes";
+
+.properties-toggle-field {
+  &-root {
+    width: 20px;
+    height: 20px;
+    background-color: $back-deep-dark;
+    border: $indent_xxs solid $back-main;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $indent_xs;
+  }
+  &-button {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    background-color: $back-main;
+
+    :global {
+      .MuiIconButton-root {
+        width: 14px;
+        height: 14px;
+        padding: $indent_none;
+      }
+      .MuiSvgIcon-root {
+        font-size: 10px;
+      }
+    }
+  }
+  &-button-unchecked {
+    &:before {
+      position: absolute;
+      content: "";
+      left: 0;
+      top: 50%;
+      right: 0;
+      border-top: $indent_xs solid $text-contrast;
+      transform: rotate(-45deg);
+    }
+
+    :global {
+      .MuiSvgIcon-root {
+        opacity: 0.6;
+      }
+    }
+  }
+}

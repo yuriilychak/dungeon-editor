@@ -183,127 +183,86 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         this._updateTransform();
     }
 
-    _onChangeTransform({ data: { key, value } }) {
+    _onChangeTransform({ data: { key, value, type, format, fromUserData } }) {
         this._changeKey = key;
         let changeValue;
 
-        switch (this._changeKey) {
-            case STAGE_ELEMENT_PROP.ROTATION: {
-                changeValue = math.toRadians(value);
-                this._selectedElement.rotation = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.ALPHA: {
-                changeValue = math.percentToFloat(value);
-                this._selectedElement.alpha = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.VISIBLE: {
-                changeValue = value;
-                this._selectedElement.visible = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.INTERACTIVE: {
-                changeValue = value;
-                this._selectedElement.userData.interactive = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TINT: {
-                changeValue = color.hexToInt(value);
-                this._selectedElement.tint = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.ANCHOR: {
-                changeValue = { ...value };
-                changeValue.x = math.percentToFloat(changeValue.x);
-                changeValue.y = math.percentToFloat(changeValue.y);
+        if (type === "enabled" || type === "checkbox" || type === "toggleGroup" || type === "slider" || type === "number" || type === "color" || type === "slider") {
+            switch(format) {
+                case "PX":
+                case "BL":
+                    changeValue = value;
+                    break;
+                case "%":
+                    changeValue = math.percentToFloat(value);
+                    break;
+                case "°":
+                    changeValue = math.toRadians(value);
+                    break;
+                case "CL":
+                    changeValue = color.hexToInt(value);
+                    break;
+                default:
+                    changeValue = 0;
 
-                this._selectedElement.anchor.copyFrom(changeValue);
-                break;
             }
-            case STAGE_ELEMENT_PROP.SCALE: {
-                changeValue = { ...value };
-                changeValue.x = math.percentToFloat(changeValue.x);
-                changeValue.y = math.percentToFloat(changeValue.y);
 
-                this._selectedElement.scale.copyFrom(changeValue);
-                break;
+            if (fromUserData) {
+                this._selectedElement.userData[key] = changeValue;
             }
-            case STAGE_ELEMENT_PROP.POSITION: {
-                changeValue = value;
-                this._selectedElement.position.copyFrom(changeValue);
-                break;
+            else {
+                this._selectedElement[key] = changeValue;
             }
-            case STAGE_ELEMENT_PROP.SIZE: {
-                changeValue = value;
-                this._selectedElement.rate.copyFrom(changeValue);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.SKEW: {
-                changeValue = { ...value };
-                changeValue.x = math.toRadians(changeValue.x);
-                changeValue.y = math.toRadians(changeValue.y);
-                this._selectedElement.skew.copyFrom(changeValue);
-                break;
-            }
-            case STAGE_ELEMENT_PROP.NAME: {
-                changeValue = value;
-                this._selectedElement.name = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.FONT_COLOR: {
-                changeValue = color.hexToInt(value);
-                this._selectedElement.color = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.FONT_SIZE: {
-                changeValue = value;
 
-                if (changeValue === this._selectedElement.fontSize) {
+        }
+        else {
+            switch (this._changeKey) {
+                case STAGE_ELEMENT_PROP.ANCHOR: {
+                    changeValue = { ...value };
+                    changeValue.x = math.percentToFloat(changeValue.x);
+                    changeValue.y = math.percentToFloat(changeValue.y);
+
+                    this._selectedElement.anchor.copyFrom(changeValue);
+                    break;
+                }
+                case STAGE_ELEMENT_PROP.SCALE: {
+                    changeValue = { ...value };
+                    changeValue.x = math.percentToFloat(changeValue.x);
+                    changeValue.y = math.percentToFloat(changeValue.y);
+
+                    this._selectedElement.scale.copyFrom(changeValue);
+                    break;
+                }
+                case STAGE_ELEMENT_PROP.POSITION: {
+                    changeValue = value;
+                    this._selectedElement.position.copyFrom(changeValue);
+                    break;
+                }
+                case STAGE_ELEMENT_PROP.SIZE: {
+                    changeValue = value;
+                    this._selectedElement.rate.copyFrom(changeValue);
+                    break;
+                }
+                case STAGE_ELEMENT_PROP.SKEW: {
+                    changeValue = { ...value };
+                    changeValue.x = math.toRadians(changeValue.x);
+                    changeValue.y = math.toRadians(changeValue.y);
+                    this._selectedElement.skew.copyFrom(changeValue);
+                    break;
+                }
+                case STAGE_ELEMENT_PROP.NAME: {
+                    changeValue = value;
+                    this._selectedElement.name = changeValue;
+                    break;
+                }
+                case STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE: {
+                    changeValue = {...value};
+                    this._selectedElement.setShadowOffset(changeValue);
+                    break;
+                }
+                default: {
                     return;
                 }
-
-                this._selectedElement.fontSize = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_ALIGN: {
-                changeValue = {...value};
-                this._selectedElement.horizontalAlign = changeValue.x + 1;
-                this._selectedElement.verticalAlign = changeValue.y + 1;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED: {
-                changeValue = value;
-                this._selectedElement.outlineEnabled = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE: {
-                changeValue = value;
-                this._selectedElement.outlineSize = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR: {
-                changeValue = color.hexToInt(value);
-                this._selectedElement.outlineColor = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED: {
-                changeValue = value;
-                this._selectedElement.shadowEnabled = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR: {
-                changeValue = color.hexToInt(value);
-                this._selectedElement.shadowColor = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE: {
-                changeValue = {...value};
-                this._selectedElement.setShadowOffset(changeValue);
-                break;
-            }
-            default: {
-                return;
             }
         }
 

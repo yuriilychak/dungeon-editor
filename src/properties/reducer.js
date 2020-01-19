@@ -2,25 +2,17 @@ import StaticData from "./data";
 import STATE from "./state";
 import {handleAction} from "../helpers";
 import {STAGE_ELEMENT_PROP} from "../enum";
-import {DEGREE_FORMATS, DIMENSION_FORMATS, PERCENT_FORMATS, VALUE_FORMAT} from "./constants";
+
 import {
-    generateSlider,
-    generateCheckbox,
-    generatePoint,
-    generateColor,
-    generateNumber,
-    generateTextAlign,
     updateValue,
-    generateEnabled,
-    generateProp
+    generateSection,
 } from "./helpers";
 
 const {mCore} = window;
 
-const {math} = mCore.util;
-
 export const initialState = {
     ...StaticData,
+    disabledStageProps: [],
     file: null
 };
 
@@ -47,32 +39,20 @@ const actionHandlers = {
         const isText = stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.LABEL ||
             stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.TEXT_FIELD;
 
-        console.log(state.elementProperties.common.map(data => generateProp(stageElement, data)));
+        const disabledStageProps = [];
 
-        const commonProps = {
-            [STAGE_ELEMENT_PROP.POSITION]: generatePoint(stageElement.position, DIMENSION_FORMATS, stageElement.userData.isRoot),
-            [STAGE_ELEMENT_PROP.SIZE]: generatePoint(stageElement.rate, DIMENSION_FORMATS, isContainer),
-            [STAGE_ELEMENT_PROP.SKEW]: generatePoint(stageElement.skew, DEGREE_FORMATS),
-            [STAGE_ELEMENT_PROP.SCALE]: generatePoint(stageElement.scale, PERCENT_FORMATS),
-            [STAGE_ELEMENT_PROP.ANCHOR]: generatePoint(stageElement.anchor, PERCENT_FORMATS, isContainer),
-            [STAGE_ELEMENT_PROP.INTERACTIVE]: generateCheckbox(stageElement.userData.interactive),
-            [STAGE_ELEMENT_PROP.VISIBLE]: generateCheckbox(stageElement.visible),
-            [STAGE_ELEMENT_PROP.ROTATION]: generateSlider(stageElement.rotation, VALUE_FORMAT.DEGREE, math.FULL_CIRCLE - 1),
-            [STAGE_ELEMENT_PROP.TINT]: generateColor(stageElement.tint),
-            [STAGE_ELEMENT_PROP.ALPHA]: generateSlider(stageElement.alpha, VALUE_FORMAT.PERCENT, math.MAX_PERCENT)
-        };
+        if (isContainer) {
+            disabledStageProps.push(STAGE_ELEMENT_PROP.SIZE);
+            disabledStageProps.push(STAGE_ELEMENT_PROP.ANCHOR);
+        }
 
-        const textProps = isText ? {
-            [STAGE_ELEMENT_PROP.FONT_COLOR]: generateColor(stageElement.color),
-            [STAGE_ELEMENT_PROP.FONT_SIZE]: generateNumber(stageElement.fontSize, VALUE_FORMAT.PIXEL),
-            [STAGE_ELEMENT_PROP.TEXT_ALIGN]: generateTextAlign(stageElement.horizontalAlign - 1, stageElement.verticalAlign - 1),
-            [STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED]: generateEnabled(stageElement.outlineEnabled),
-            [STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE]: generateNumber(stageElement.outlineSize, VALUE_FORMAT.PIXEL),
-            [STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR]: generateColor(stageElement.outlineColor),
-            [STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED]: generateEnabled(stageElement.shadowEnabled),
-            [STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE]: generatePoint(stageElement.getShadowOffset(), [VALUE_FORMAT.PIXEL]),
-            [STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR]: generateColor(stageElement.shadowColor)
-        } : {};
+        if (stageElement.userData.isRoot) {
+            disabledStageProps.push(STAGE_ELEMENT_PROP.POSITION);
+        }
+
+        const commonProps = generateSection(state.elementProperties.common, stageElement, disabledStageProps);
+
+        const textProps = isText ? generateSection(state.elementProperties.text, stageElement, disabledStageProps) : {};
 
         return {
             ...state,

@@ -13,19 +13,6 @@ export const FIELD_TYPE = {
     SLIDER: "slider",
     CHECKBOX: "checkbox",
     NUMBER: "number",
-    TEXT_ALIGN: "textAlign",
+    TOGGLE_GROUP: "toggleGroup",
     ENABLED: "enabled"
 };
-
-export const DIMENSION_FORMATS = [
-    VALUE_FORMAT.PIXEL,
-    VALUE_FORMAT.PERCENT
-];
-
-export const PERCENT_FORMATS = [
-    VALUE_FORMAT.PERCENT
-];
-
-export const DEGREE_FORMATS = [
-    VALUE_FORMAT.DEGREE
-];
