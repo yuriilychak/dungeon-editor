@@ -183,73 +183,54 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         this._updateTransform();
     }
 
-    _onChangeTransform({ data: { key, value, type, format, fromUserData } }) {
+    _getFormattedValue(value, format, data) {
+        switch(format) {
+            case "PX":
+            case "BL":
+                return value;
+            case "%":
+                return math.percentToFloat(value);
+            case "°":
+                return math.toRadians(value);
+            case "CL":
+                return color.hexToInt(value);
+            case "PT": {
+                const result = { ... value };
+                result.x = this._getFormattedValue(result.x, data[result.formatX]);
+                result.y = this._getFormattedValue(result.y, data[result.formatY]);
+
+                return result;
+            }
+            default:
+                return 0;
+        }
+    }
+
+    _onChangeTransform({ data: { key, value, type, format, fromUserData, data } }) {
         this._changeKey = key;
         let changeValue;
 
-        if (type === "enabled" || type === "checkbox" || type === "toggleGroup" || type === "slider" || type === "number" || type === "color" || type === "slider") {
-            switch(format) {
-                case "PX":
-                case "BL":
-                    changeValue = value;
-                    break;
-                case "%":
-                    changeValue = math.percentToFloat(value);
-                    break;
-                case "°":
-                    changeValue = math.toRadians(value);
-                    break;
-                case "CL":
-                    changeValue = color.hexToInt(value);
-                    break;
-                default:
-                    changeValue = 0;
+        if (this._changeKey !== STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE && this._changeKey !== STAGE_ELEMENT_PROP.NAME) {
+            changeValue = this._getFormattedValue(value, format, data);
 
+            if (type !== "point") {
+                if (fromUserData) {
+                    this._selectedElement.userData[key] = changeValue;
+                }
+                else {
+                    this._selectedElement[key] = changeValue;
+                }
+            } else {
+                if (fromUserData) {
+                    this._selectedElement.userData[key].copyFrom(changeValue);
+                }
+                else {
+                    this._selectedElement[key].copyFrom(changeValue);
+                }
             }
-
-            if (fromUserData) {
-                this._selectedElement.userData[key] = changeValue;
-            }
-            else {
-                this._selectedElement[key] = changeValue;
-            }
-
         }
         else {
             switch (this._changeKey) {
-                case STAGE_ELEMENT_PROP.ANCHOR: {
-                    changeValue = { ...value };
-                    changeValue.x = math.percentToFloat(changeValue.x);
-                    changeValue.y = math.percentToFloat(changeValue.y);
-
-                    this._selectedElement.anchor.copyFrom(changeValue);
-                    break;
-                }
-                case STAGE_ELEMENT_PROP.SCALE: {
-                    changeValue = { ...value };
-                    changeValue.x = math.percentToFloat(changeValue.x);
-                    changeValue.y = math.percentToFloat(changeValue.y);
-
-                    this._selectedElement.scale.copyFrom(changeValue);
-                    break;
-                }
-                case STAGE_ELEMENT_PROP.POSITION: {
-                    changeValue = value;
-                    this._selectedElement.position.copyFrom(changeValue);
-                    break;
-                }
-                case STAGE_ELEMENT_PROP.SIZE: {
-                    changeValue = value;
-                    this._selectedElement.rate.copyFrom(changeValue);
-                    break;
-                }
-                case STAGE_ELEMENT_PROP.SKEW: {
-                    changeValue = { ...value };
-                    changeValue.x = math.toRadians(changeValue.x);
-                    changeValue.y = math.toRadians(changeValue.y);
-                    this._selectedElement.skew.copyFrom(changeValue);
-                    break;
-                }
                 case STAGE_ELEMENT_PROP.NAME: {
                     changeValue = value;
                     this._selectedElement.name = changeValue;
@@ -521,13 +502,26 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
         if (this._changeCounter > 3) {
             this._changeCounter = 0;
-            this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, { key: this._changeKey, value});
+            const resultValue = mCore.util.type.isObject(value) ? {
+                x: value.x,
+                y: value.y,
+                formatX: 0,
+                formatY: 0
+            } : value;
+
+            this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, { key: this._changeKey, value: resultValue });
         }
     }
 
     _dispatchResultChange(value) {
         this._changeCounter = 0;
-        this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, { key: this._changeKey, value});
+        const resultValue = mCore.util.type.isObject(value) ? {
+            x: value.x,
+            y: value.y,
+            formatX: 0,
+            formatY: 0
+        } : value;
+        this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, { key: this._changeKey, value: resultValue });
         this._changeKey = null;
     }
 

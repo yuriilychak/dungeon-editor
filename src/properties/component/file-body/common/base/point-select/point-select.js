@@ -26,8 +26,8 @@ const PointSelect = ({
         const nextData = { ...data, [key]: nextValue };
 
         setData(nextData);
-        onChange(generateChangeEvent(id, nextData, FIELD_TYPE.POINT, fromUserData, format));
-    }, [id, data, fromUserData, format, onChange]);
+        onChange(generateChangeEvent(id, nextData, FIELD_TYPE.POINT, fromUserData, format, formats));
+    }, [id, data, fromUserData, format, formats, onChange]);
 
     const handleChangeFormat = useCallback(cordId => {
         const formatKey = `format${cordId.toUpperCase()}`;
