@@ -16,6 +16,7 @@
 
 .titled-panel-body {
     flex-grow : 1;
+    height: calc(100% - 24px);
     font-size: 13px;
     color: #ffffff;
     background-color: #2a2b2f;

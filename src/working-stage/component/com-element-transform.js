@@ -1,6 +1,6 @@
 import {EVENT, CURSOR} from "../enum";
 import {updateAnchor, getAnchorPosition, updatePosition} from "../utils";
-import {EDIT_MODE, STAGE_ELEMENT_PROP} from "../../enum";
+import {EDIT_MODE, STAGE_ELEMENT_PROP, VALUE_FORMAT } from "../../enum";
 
 const {mCore, PIXI} = window;
 const {math, geometry, color } = mCore.util;
@@ -185,16 +185,16 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
     _getFormattedValue(value, format, data) {
         switch(format) {
-            case "PX":
-            case "BL":
+            case VALUE_FORMAT.PIXEL:
+            case VALUE_FORMAT.BOOL:
                 return value;
-            case "%":
+            case VALUE_FORMAT.PERCENT:
                 return math.percentToFloat(value);
-            case "°":
+            case VALUE_FORMAT.DEGREE:
                 return math.toRadians(value);
-            case "CL":
+            case VALUE_FORMAT.COLOR:
                 return color.hexToInt(value);
-            case "PT": {
+            case VALUE_FORMAT.POINT: {
                 const result = { ... value };
                 result.x = this._getFormattedValue(result.x, data[result.formatX]);
                 result.y = this._getFormattedValue(result.y, data[result.formatY]);

@@ -157,6 +157,8 @@
         "Properties_Edit_Text_Outline": "Outline",
         "Properties_Edit_Text_Shadow": "Shadow",
         "Properties_Edit_Common_Enabled": "Enabled",
+        "Properties_Edit_Section_Common": "Common",
+        "Properties_Edit_Section_Text": "Text",
         "RenameFileDialog_Cancel":  "Cancel",
         "RenameFileDialog_Submit": "Submit",
         "RenameFileDialog_ContentText": "For rename file, please enter new name here.",

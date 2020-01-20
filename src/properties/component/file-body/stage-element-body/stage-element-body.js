@@ -1,9 +1,15 @@
-import React, {Fragment} from "react";
+import React from "react";
+
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import {PropertyField} from "../common";
+import PropertyRow from "../common/base/property-row/property-row";
 
 import "./stage-element-body.scss";
-import PropertyRow from "../common/base/property-row/property-row";
+
 
 const StageElementBody = ({
                               isRoot,
@@ -45,9 +51,22 @@ const StageElementBody = ({
         });
 
         return (
-            <Fragment key={id}>
-                { rows }
-            </Fragment>
+            <ExpansionPanel key={id}>
+                <ExpansionPanelSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls={id}
+                    id={id}
+                >
+                    <span className="properties-section-title">
+                        {sectionLocale.title}
+                    </span>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                    <div className="properties-stage-content">
+                        { rows }
+                    </div>
+                </ExpansionPanelDetails>
+            </ExpansionPanel>
         );
     };
 

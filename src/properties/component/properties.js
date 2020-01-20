@@ -94,7 +94,6 @@ const Properties = ({
     return (
         <TitledPanel
             title={localesParsed.sectionTitle}
-            bodyPadding="8px 12px 0 12px"
         >
             {content}
         </TitledPanel>

@@ -1,3 +1,14 @@
 .properties-stage-element-body-root {
   font-size: 10px;
+  overflow: hidden auto;
+  height: calc(100% - 54px);
 }
+
+.properties-section-title {
+  font-size: 10px;
+}
+
+.properties-stage-content {
+  padding: 0 12px;
+}
+

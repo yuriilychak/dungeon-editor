@@ -53,6 +53,7 @@
         "label": "Properties_Edit_PositionLabel_X"
       },
       "common": {
+        "title": "Properties_Edit_Section_Common",
         "row_0": "Properties_Edit_PositionLabel_Main",
         "row_1": "Properties_Edit_SizeLabel_Main",
         "row_2": "Properties_Edit_ScaleLabel_Main",
@@ -63,6 +64,7 @@
         "row_7": "Properties_Edit_TintLabel_Main"
       },
       "text": {
+        "title": "Properties_Edit_Section_Text",
         "row_0": "Properties_Edit_FontLabel_Main",
         "row_1": "Properties_Edit_TextAlignLabel_Main",
         "row_2": "Properties_Edit_Text_Outline",
