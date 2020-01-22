@@ -4,7 +4,8 @@ export const VALUE_FORMAT = {
     DEGREE: "°",
     COLOR: "CL",
     BOOL: "BL",
-    POINT: "PT"
+    POINT: "PT",
+    TEXT: "TX"
 };
 
 export const FIELD_TYPE = {
@@ -14,5 +15,6 @@ export const FIELD_TYPE = {
     CHECKBOX: "checkbox",
     NUMBER: "number",
     TOGGLE_GROUP: "toggleGroup",
-    ENABLED: "enabled"
+    ENABLED: "enabled",
+    TEXT: "text"
 };

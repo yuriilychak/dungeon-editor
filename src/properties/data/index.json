@@ -13,24 +13,24 @@
     },
     "stage": {
       "position": {
-        "labelX": "Properties_Edit_PositionLabel_X",
-        "labelY": "Properties_Edit_PositionLabel_Y"
+        "labelX": "Properties_Edit_Common_X",
+        "labelY": "Properties_Edit_Common_Y"
       },
       "rate": {
         "labelX": "Properties_Edit_SizeLabel_X",
         "labelY": "Properties_Edit_SizeLabel_Y"
       },
       "anchor": {
-        "labelX": "Properties_Edit_AnchorLabel_X",
-        "labelY": "Properties_Edit_AnchorLabel_Y"
+        "labelX": "Properties_Edit_Common_X",
+        "labelY": "Properties_Edit_Common_Y"
       },
       "scale": {
-        "labelX": "Properties_Edit_ScaleLabel_X",
-        "labelY": "Properties_Edit_ScaleLabel_Y"
+        "labelX": "Properties_Edit_Common_X",
+        "labelY": "Properties_Edit_Common_Y"
       },
       "skew": {
-        "labelX": "Properties_Edit_SkewLabel_X",
-        "labelY": "Properties_Edit_SkewLabel_Y"
+        "labelX": "Properties_Edit_Common_X",
+        "labelY": "Properties_Edit_Common_Y"
       },
       "visible": {
         "label": "Properties_Edit_VisibleLabel_Main"
@@ -46,11 +46,11 @@
         "labelEnabled": "Properties_Edit_Common_Enabled"
       },
       "shadowOffset": {
-        "labelX": "Properties_Edit_PositionLabel_X",
-        "labelY": "Properties_Edit_PositionLabel_Y"
+        "labelX": "Properties_Edit_Common_X",
+        "labelY": "Properties_Edit_Common_Y"
       },
       "autoSize": {
-        "label": "Properties_Edit_PositionLabel_X"
+        "label": "Properties_Edit_Text_AutoSize"
       },
       "common": {
         "title": "Properties_Edit_Section_Common",
@@ -66,9 +66,10 @@
       "text": {
         "title": "Properties_Edit_Section_Text",
         "row_0": "Properties_Edit_FontLabel_Main",
-        "row_1": "Properties_Edit_TextAlignLabel_Main",
-        "row_2": "Properties_Edit_Text_Outline",
-        "row_3": "Properties_Edit_Text_Shadow"
+        "row_1": "Properties_Edit_Text_Text",
+        "row_2": "Properties_Edit_TextAlignLabel_Main",
+        "row_3": "Properties_Edit_Text_Outline",
+        "row_4": "Properties_Edit_Text_Shadow"
       }
     }
   },
@@ -136,13 +137,19 @@
       {
         "id": "row_1",
         "content": [
+          { "id": "text" }
+        ]
+      },
+      {
+        "id": "row_2",
+        "content": [
           { "id":  "horizontalAlign" },
           { "id":  "verticalAlign" },
           { "id":  "autoSize" }
         ]
       },
       {
-        "id": "row_2",
+        "id": "row_3",
         "content": [
           {
             "id": "outlineEnabled",
@@ -154,7 +161,7 @@
         ]
       },
       {
-        "id": "row_3",
+        "id": "row_4",
         "content": [
           {
             "id": "shadowEnabled",
@@ -323,6 +330,12 @@
         "id": "autoSize",
         "type": "checkbox",
         "format": "BL",
+        "fromUserData": false
+      },
+      {
+        "id": "text",
+        "type": "text",
+        "format": "TX",
         "fromUserData": false
       }
     ]

@@ -4,7 +4,8 @@ const VALUE_FORMAT = {
     DEGREE: "°",
     COLOR: "CL",
     BOOL: "BL",
-    POINT: "PT"
+    POINT: "PT",
+    TEXT: "TX"
 };
 
 export default VALUE_FORMAT;

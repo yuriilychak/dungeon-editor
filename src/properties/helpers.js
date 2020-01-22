@@ -62,6 +62,7 @@ const getNextValue = (value, format, data) => {
         case VALUE_FORMAT.COLOR:
             return color.intToHex(value);
         case VALUE_FORMAT.BOOL:
+        case VALUE_FORMAT.TEXT:
             return value;
         default:
             return 0;

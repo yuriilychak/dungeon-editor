@@ -8,6 +8,7 @@ import {PointSelect} from "../base/point-select";
 import {ColorSelect} from "../base/color-select";
 import {ToggleField} from "../toggle-field";
 import {ToggleGroupField} from "../toggle-group-field";
+import {TextField} from "../text-field";
 
 const PropertyField = ({
     id,
@@ -39,6 +40,9 @@ const PropertyField = ({
             break;
         case FIELD_TYPE.TOGGLE_GROUP:
             Item = ToggleGroupField;
+            break;
+        case FIELD_TYPE.TEXT:
+            Item = TextField;
             break;
         default:
             return null;

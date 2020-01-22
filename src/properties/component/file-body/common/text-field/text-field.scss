@@ -1,0 +1,17 @@
+@import "../../../../../colors";
+@import "../../../../../sizes";
+
+.properties-text-filed {
+  background-color: $back-deep-dark;
+  color: $text-contrast;
+  font-size: $font-size_small;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  flex: 1;
+  outline: none;
+  box-sizing: border-box;
+  border: $back-main $indent_xxs solid;
+  height: $item-size_big;
+  padding: $indent_s;
+  resize: none;
+  overflow: auto hidden;
+}

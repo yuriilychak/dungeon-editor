@@ -187,6 +187,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         switch(format) {
             case VALUE_FORMAT.PIXEL:
             case VALUE_FORMAT.BOOL:
+            case VALUE_FORMAT.TEXT:
                 return value;
             case VALUE_FORMAT.PERCENT:
                 return math.percentToFloat(value);
