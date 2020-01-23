@@ -4,9 +4,9 @@
 .properties-number-filed-root {
   background-color: $back-deep-dark;
   border: 1px solid $back-main;
-  height: 20px;
-  min-width: 48px;
-  width: 48px;
+  height: 24px;
+  min-width: 54px;
+  width: 54px;
   padding-left: $indent_m;
   box-sizing: border-box;
 }
@@ -28,7 +28,7 @@
   border: none;
   outline: none;
   background-color: unset;
-  font-size: $font-size_small;
+  font-size: 12px;
   color: $text-contrast;
 }
 
@@ -37,7 +37,7 @@
   cursor: pointer;
   width: 20px;
   margin-right: $indent_xs;
-  font-size: $font-size_small;
+  font-size: 12px;
   height: 16px;
   display: flex;
   align-items: center;

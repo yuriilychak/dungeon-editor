@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import {PropertyField} from "../common";
 import PropertyRow from "../common/base/property-row/property-row";
+import {Icon} from "../../../../common-ui";
 
 import "./stage-element-body.scss";
 
@@ -57,6 +58,7 @@ const StageElementBody = ({
                     aria-controls={id}
                     id={id}
                 >
+                    <Icon name={`properties/${id}`} size={16} />
                     <span className="properties-section-title">
                         {sectionLocale.title}
                     </span>

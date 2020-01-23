@@ -3,8 +3,8 @@
 
 .properties-toggle-field {
   &-root {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     background-color: $back-deep-dark;
     border: $indent_xxs solid $back-main;
     box-sizing: border-box;
@@ -15,18 +15,18 @@
   }
   &-button {
     position: relative;
-    width: 14px;
-    height: 14px;
+    width: 18px;
+    height: 18px;
     background-color: $back-main;
 
     :global {
       .MuiIconButton-root {
-        width: 14px;
-        height: 14px;
+        width: 18px;
+        height: 18px;
         padding: $indent_none;
       }
       .MuiSvgIcon-root {
-        font-size: 10px;
+        font-size: 12px;
       }
     }
   }

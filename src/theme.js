@@ -205,6 +205,7 @@ const theme = createMuiTheme({
                 }
             },
             content: {
+                alignItems: "center",
                 margin: getIndent(INDENT_SIZE.S, INDENT_SIZE.NONE),
                 "&$expanded": {
                     margin: getIndent(INDENT_SIZE.S, INDENT_SIZE.NONE)
@@ -321,7 +322,7 @@ const theme = createMuiTheme({
         MuiToggleButton: {
             root: {
                 borderRadius: INDENT_SIZE.NONE,
-                height: 20,
+                height: 22,
                 boxSizing: "border-box",
                 border: getBorderStyle(BACKGROUND_COLOR.DEEP_DARK, INDENT_SIZE.XS),
                 "&$selected": {

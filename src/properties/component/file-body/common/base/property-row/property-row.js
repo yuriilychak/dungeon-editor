@@ -13,7 +13,7 @@ const PropertyRow = ({
         className="properties-property-row"
         bodyClassName="properties-property-row-body"
         title={label}
-        titleWidth={42}
+        titleWidth={48}
     >
         {children}
     </TitledField>
