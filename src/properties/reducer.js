@@ -7,12 +7,18 @@ import {
     updateValue,
     generateSection,
 } from "./helpers";
+import {PROPERTY_SECTION} from "./constants";
 
 const {mCore} = window;
 
 export const initialState = {
     ...StaticData,
     disabledStageProps: [],
+    storedInfo: {
+        stage: {},
+        library: {}
+    },
+    currentInfo: null,
     file: null
 };
 
@@ -39,6 +45,21 @@ const actionHandlers = {
         const isText = stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.LABEL ||
             stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.TEXT_FIELD;
 
+        let currentInfo = state.storedInfo.stage[stageElement.uid];
+
+        if (!currentInfo)  {
+            currentInfo = {
+                id: stageElement.uid,
+                sectionId: PROPERTY_SECTION.NONE
+            };
+        }
+
+        let sections = [PROPERTY_SECTION.COMMON];
+
+        if (isText) {
+            sections.push(PROPERTY_SECTION.TEXT);
+        }
+
         const disabledStageProps = [];
 
         if (isContainer) {
@@ -56,6 +77,14 @@ const actionHandlers = {
 
         return {
             ...state,
+            currentInfo,
+            storedInfo: {
+                ...state.storedInfo,
+                stage: {
+                    ...state.storedInfo.stage,
+                    [stageElement.uid]: currentInfo
+                }
+            },
             file: {
                 ...state.file,
                 name: stageElement.name,
@@ -65,7 +94,7 @@ const actionHandlers = {
                 sectionId: stageElement.uiType,
                 id: stageElement.uid,
                 type: stageElement.uiType,
-                data: {isText, ...commonProps, ...textProps}
+                data: {sections, ...commonProps, ...textProps}
             }
         };
     },
@@ -87,6 +116,23 @@ const actionHandlers = {
                 data: {
                     ...state.file.data,
                     ...nextFileData
+                }
+            }
+        };
+    },
+    [STATE.CHANGE_SELECTED_SECTION]: (state, sectionId) => {
+        const currentInfo = {
+            ...state.currentInfo,
+            sectionId
+        };
+        return {
+            ...state,
+            currentInfo,
+            storedInfo: {
+                ...state.storedInfo,
+                stage: {
+                    ...state.storedInfo.stage,
+                    [currentInfo.id]: currentInfo
                 }
             }
         };

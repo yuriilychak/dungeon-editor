@@ -13,6 +13,7 @@ const Properties = ({
                         file,
                         locales,
                         iconSize,
+                        currentInfo,
                         directoryData,
                         sectionData,
                         stageData,
@@ -23,7 +24,8 @@ const Properties = ({
                         onClearAtlas,
                         onStageElementChange,
                         onSwitchCompressSkeleton,
-                        onSwitchCompressName
+                        onSwitchCompressName,
+                        onChangeSelectedSection
                     }) => {
     const {t} = useTranslation();
 
@@ -44,9 +46,11 @@ const Properties = ({
                 <StageElementBody
                     data={file.data}
                     isRoot={file.isRoot}
+                    currentInfo={currentInfo}
                     locales={localesParsed.stage}
                     elementTrees={stageElementTrees}
                     onChange={onStageElementChange}
+                    onChangeSelectedSection={onChangeSelectedSection}
                 />
             );
         } else if (!file.isDirectory) {
@@ -149,7 +153,8 @@ Properties.propTypes = {
     onSwitchCompressName: func.isRequired,
     onRenameFile: func.isRequired,
     onSwitchAtlas: func.isRequired,
-    onClearAtlas: func.isRequired
+    onClearAtlas: func.isRequired,
+    onChangeSelectedSection: func.isRequired
 };
 
 export default Properties;

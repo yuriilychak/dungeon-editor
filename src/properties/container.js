@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { Properties } from "./component";
 import {ProjectData} from "../project-data";
 import {showRenameFileDialog} from "../rename-file-dialog/action";
-import {selectLibraryElement, selectStageElement, changeStageElement} from "./action";
+import {selectLibraryElement, selectStageElement, changeStageElement, changeSelectedSection} from "./action";
 import {WorkingStage} from "../working-stage";
 
 const mapStateToProps = state => ({ ...state.properties });
@@ -38,7 +38,10 @@ const mapDispatchToProps = dispatch => {
         onStageElementChange(data) {
             WorkingStage.dispatchChangeStageElement(data);
         },
-        onClearAtlas() {}
+        onClearAtlas() {},
+        onChangeSelectedSection(sectionId) {
+            dispatch(changeSelectedSection(sectionId));
+        }
     }
 };
 

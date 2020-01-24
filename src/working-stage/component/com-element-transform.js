@@ -196,7 +196,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             case VALUE_FORMAT.COLOR:
                 return color.hexToInt(value);
             case VALUE_FORMAT.POINT: {
-                const result = { ... value };
+                const result = { ...value };
                 result.x = this._getFormattedValue(result.x, data[result.formatX]);
                 result.y = this._getFormattedValue(result.y, data[result.formatY]);
 

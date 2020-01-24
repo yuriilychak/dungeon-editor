@@ -6,3 +6,4 @@ export const deleteLibraryElement = (ids, sectionId) => dispatchAction(STATE.DEL
 export const renameLibraryElement = (id, sectionId, name) => dispatchAction(STATE.RENAME_LIBRARY_ELEMENT, {id, sectionId, name});
 export const selectStageElement = element => dispatchAction(STATE.SELECT_STAGE_ELEMENT, element);
 export const changeStageElement = data => dispatchAction(STATE.CHANGE_STAGE_ELEMENT, data);
+export const changeSelectedSection = sectionId => dispatchAction(STATE.CHANGE_SELECTED_SECTION, sectionId);

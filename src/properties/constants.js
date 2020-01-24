@@ -18,3 +18,9 @@ export const FIELD_TYPE = {
     ENABLED: "enabled",
     TEXT: "text"
 };
+
+export const PROPERTY_SECTION = {
+    COMMON: "common",
+    TEXT: "text",
+    NONE: ""
+};
