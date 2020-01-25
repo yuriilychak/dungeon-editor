@@ -5,14 +5,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import "./check-box.scss";
-import {FIELD_TYPE} from "../../../../constants";
-import {generateChangeEvent} from "../helpers";
 
-const CheckBox = ({value, onChange, label, id, format, fromUserData}) => {
-    const handleChange = useCallback(
-        event => onChange(generateChangeEvent(id, event.target.checked, FIELD_TYPE.CHECKBOX, fromUserData, format)),
-        [id, onChange, format, fromUserData]
-    );
+const CheckBox = ({ value, onChange, label }) => {
+    const handleChange = useCallback(event => onChange(event.target.checked), [onChange]);
     return (
         <div className="check-box-wrapper">
             <FormControlLabel

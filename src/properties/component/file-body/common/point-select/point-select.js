@@ -1,11 +1,9 @@
 import React, {memo, useState, useCallback, useEffect } from "react";
 import { string, number, func, arrayOf, bool, shape } from "prop-types";
 
-import {NumberField} from "../../number-field";
+import {NumberField} from "../number-field";
 
 import "./point-select.scss";
-import {FIELD_TYPE} from "../../../../../constants";
-import {generateChangeEvent} from "../../helpers";
 
 const PointSelect = ({
                         id,
@@ -13,7 +11,6 @@ const PointSelect = ({
                         labelY,
                          format,
                         formats,
-                         fromUserData,
                         value,
                         disabled,
                         onChange
@@ -26,8 +23,8 @@ const PointSelect = ({
         const nextData = { ...data, [key]: nextValue };
 
         setData(nextData);
-        onChange(generateChangeEvent(id, nextData, FIELD_TYPE.POINT, fromUserData, format, formats));
-    }, [id, data, fromUserData, format, formats, onChange]);
+        onChange(nextData);
+    }, [id, data, onChange]);
 
     const handleChangeFormat = useCallback(cordId => {
         const formatKey = `format${cordId.toUpperCase()}`;

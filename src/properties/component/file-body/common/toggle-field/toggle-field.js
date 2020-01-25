@@ -6,8 +6,6 @@ import PanToolIcon from '@material-ui/icons/PanTool';
 import FormatSizeIcon from '@material-ui/icons/FormatSize';
 
 import {ToolButton} from "../../../../../common-ui";
-import {FIELD_TYPE} from "../../../../constants";
-import {generateChangeEvent} from "../helpers";
 
 import "./toggle-field.scss";
 
@@ -21,14 +19,9 @@ const ToggleField = ({
                          id,
                          label,
                          value,
-                         format,
-                         onChange,
-                         fromUserData
+                         onChange
                      }) => {
-    const handleClick = useCallback(
-        () => onChange(generateChangeEvent(id, !value, FIELD_TYPE.CHECKBOX, fromUserData, format)),
-        [id, value, fromUserData, format, onChange]
-    );
+    const handleClick = useCallback(() => onChange(!value), [value, onChange]);
     return (
         <div
             className="properties-toggle-field-root"

@@ -4,8 +4,6 @@ import {string, func, bool} from "prop-types";
 
 import "rc-color-picker/assets/index.css";
 import "./color-select.scss";
-import {FIELD_TYPE} from "../../../../../constants";
-import {generateChangeEvent} from "../../helpers";
 
 const ColorSelect = ({
                          id,
@@ -17,10 +15,7 @@ const ColorSelect = ({
                          placement = "bottomRight",
                          children
                      }) => {
-    const handleChange = useCallback(
-        data => onChange(generateChangeEvent(id, data.color, FIELD_TYPE.COLOR, fromUserData, format)),
-        [id, fromUserData, format, onChange]
-    );
+    const handleChange = useCallback(data => onChange(data.color), [onChange]);
 
     return (
         <>

@@ -6,7 +6,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import {PropertyField} from "../../common";
-import PropertyRow from "../../common/base/property-row/property-row";
+import PropertyRow from "../../common/property-row/property-row";
 import {Icon} from "../../../../../common-ui";
 
 import "./property-section.scss";

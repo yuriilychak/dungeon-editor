@@ -1,19 +1,22 @@
+import {get} from "lodash";
+
 import StaticData from "./data";
 import STATE from "./state";
 import {handleAction} from "../helpers";
 import {STAGE_ELEMENT_PROP} from "../enum";
-
+import {PROPERTY_SECTION} from "./constants";
 import {
     updateValue,
     generateSection,
+    updateSelectedSection,
+    updateFile
 } from "./helpers";
-import {PROPERTY_SECTION} from "./constants";
+
 
 const {mCore} = window;
 
 export const initialState = {
     ...StaticData,
-    disabledStageProps: [],
     storedInfo: {
         stage: {},
         library: {}
@@ -23,41 +26,19 @@ export const initialState = {
 };
 
 const actionHandlers = {
-    [STATE.SELECT_LIBRARY_ELEMENT]: (state, file) => ({
-        ...state,
-        file: {...file, isStageElement: false, isRoot: false}
-    }),
+    [STATE.SELECT_LIBRARY_ELEMENT]: (state, file) => updateFile(state, { ...file, isStageElement: false, isRoot: false }),
     [STATE.DELETE_LIBRARY_ELEMENT]: (state, {ids, sectionId}) =>
-        ids.some(id => checkSelectedElement(state.file, id, sectionId)) ? {
-            ...state,
-            file: null
-        } : state,
+        ids.some(id => checkSelectedElement(state.file, id, sectionId)) ? updateFile(state) : state,
     [STATE.RENAME_LIBRARY_ELEMENT]: (state, {id, sectionId, name}) =>
-        checkSelectedElement(state.file, id, sectionId) ? {
-            ...state,
-            file: {
-                ...state.file,
-                name
-            }
-        } : state,
+        checkSelectedElement(state.file, id, sectionId) ? updateFile(state, { name }) : state,
     [STATE.SELECT_STAGE_ELEMENT]: (state, stageElement) => {
         const isContainer = stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.CONTAINER;
-        const isText = stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.LABEL ||
-            stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.TEXT_FIELD;
+        const id = stageElement.uid;
 
-        let currentInfo = state.storedInfo.stage[stageElement.uid];
+        let currentInfo = state.storedInfo.stage[id];
 
         if (!currentInfo)  {
-            currentInfo = {
-                id: stageElement.uid,
-                sectionId: PROPERTY_SECTION.NONE
-            };
-        }
-
-        let sections = [PROPERTY_SECTION.COMMON];
-
-        if (isText) {
-            sections.push(PROPERTY_SECTION.TEXT);
+            currentInfo = { id, sectionId: get(state.currentInfo, "sectionId", PROPERTY_SECTION.NONE) };
         }
 
         const disabledStageProps = [];
@@ -71,32 +52,33 @@ const actionHandlers = {
             disabledStageProps.push(STAGE_ELEMENT_PROP.POSITION);
         }
 
-        const commonProps = generateSection(state.elementProperties.common, stageElement, disabledStageProps);
+        const sections = state.stageElementSections[stageElement.uiType];
 
-        const textProps = isText ? generateSection(state.elementProperties.text, stageElement, disabledStageProps) : {};
+        let props = {};
 
-        return {
-            ...state,
-            currentInfo,
-            storedInfo: {
-                ...state.storedInfo,
-                stage: {
-                    ...state.storedInfo.stage,
-                    [stageElement.uid]: currentInfo
-                }
-            },
-            file: {
-                ...state.file,
-                name: stageElement.name,
-                isDirectory: false,
-                isStageElement: true,
-                isRoot: stageElement.userData.isRoot,
-                sectionId: stageElement.uiType,
-                id: stageElement.uid,
-                type: stageElement.uiType,
-                data: {sections, ...commonProps, ...textProps}
+        sections.forEach(key => {
+            props = {
+                ...props,
+                ...generateSection(state.elementProperties[key], stageElement, disabledStageProps)
             }
+        });
+
+        const nextFile = {
+            compressName: false,
+            name: stageElement.name,
+            isDirectory: false,
+            isStageElement: true,
+            isRoot: stageElement.userData.isRoot,
+            sectionId: stageElement.uiType,
+            id,
+            type: stageElement.uiType
         };
+        const nextFileData = {
+            sections,
+            ...props
+        };
+
+        return updateFile(updateSelectedSection(state, currentInfo), nextFile, nextFileData);
     },
     [STATE.CHANGE_STAGE_ELEMENT]: (state, {key, value}) => {
         let nextFileData = {};
@@ -108,34 +90,14 @@ const actionHandlers = {
             nextFileData[key] = updateValue(state, key, value);
         }
 
-        return {
-            ...state,
-            file: {
-                ...state.file,
-                ...nextFile,
-                data: {
-                    ...state.file.data,
-                    ...nextFileData
-                }
-            }
-        };
+        return updateFile(state, nextFile, nextFileData);
     },
     [STATE.CHANGE_SELECTED_SECTION]: (state, sectionId) => {
         const currentInfo = {
             ...state.currentInfo,
             sectionId
         };
-        return {
-            ...state,
-            currentInfo,
-            storedInfo: {
-                ...state.storedInfo,
-                stage: {
-                    ...state.storedInfo.stage,
-                    [currentInfo.id]: currentInfo
-                }
-            }
-        };
+        return updateSelectedSection(state, currentInfo);
     }
 };
 

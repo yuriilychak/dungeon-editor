@@ -1,27 +1,30 @@
-import React, { memo } from "react";
+import React, {memo, useCallback} from "react";
 
-import { SliderField } from '../slider-field';
-import { NumberField } from "../number-field";
+import {SliderField} from '../slider-field';
+import {NumberField} from "../number-field";
 import {EnabledField} from "../enable-field";
-import {FIELD_TYPE} from "../../../../constants";
-import {PointSelect} from "../base/point-select";
-import {ColorSelect} from "../base/color-select";
+import {PointSelect} from "../point-select";
+import {ColorSelect} from "../color-select";
 import {ToggleField} from "../toggle-field";
 import {ToggleGroupField} from "../toggle-group-field";
 import {TextField} from "../text-field";
+import {FIELD_TYPE} from "../../../../constants";
 
 const PropertyField = ({
-    id,
-    data,
-    locales = {},
-    onChange,
-    children
+                           id,
+                           data,
+                           locales = {},
+                           format,
+                           onChange,
+                           children
                        }) => {
     let Item;
+    let userData = null;
 
-    switch(data.type) {
+    switch (data.type) {
         case FIELD_TYPE.POINT:
             Item = PointSelect;
+            userData = data.formats;
             break;
         case FIELD_TYPE.COLOR:
             Item = ColorSelect;
@@ -48,12 +51,21 @@ const PropertyField = ({
             return null;
     }
 
+    const dispatchChange = useCallback(value => onChange({
+            key: id,
+            value,
+            type: data.type,
+            fromUserData: data.fromUserData,
+            format: data.format,
+            data: userData
+        }), [id, userData, data, onChange]);
+
     return (
         <Item
             id={id}
             {...locales}
             {...data}
-            onChange={onChange}
+            onChange={dispatchChange}
         >
             {children}
         </Item>

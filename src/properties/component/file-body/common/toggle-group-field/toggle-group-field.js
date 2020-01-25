@@ -10,9 +10,6 @@ import VerticalAlignBottomIcon from "@material-ui/icons/VerticalAlignBottom";
 import VerticalAlignTopIcon from "@material-ui/icons/VerticalAlignTop";
 import VerticalAlignCenterIcon from "@material-ui/icons/VerticalAlignCenter";
 
-import {FIELD_TYPE} from "../../../../constants";
-import {generateChangeEvent} from "../helpers";
-
 const alignGroups = {
     "verticalAlign": [
         VerticalAlignTopIcon,
@@ -30,16 +27,14 @@ const ToggleGroupField = ({
                               id,
                               value,
                               onChange,
-                              offset = 0,
-                              format,
-                              fromUserData
+                              offset = 0
                           }) => {
     const currentValue = value - offset;
     const handleChange = useCallback((event, nextValue) => {
         if (nextValue !== currentValue && nextValue !== null) {
-            onChange(generateChangeEvent(id, nextValue + offset, FIELD_TYPE.TOGGLE_GROUP, fromUserData, format));
+            onChange(nextValue + offset);
         }
-    }, [id, currentValue, offset, fromUserData, format, onChange]);
+    }, [onChange, currentValue, offset]);
 
     return (
         <ToggleButtonGroup

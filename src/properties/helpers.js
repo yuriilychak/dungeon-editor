@@ -1,3 +1,5 @@
+import { get, isEmpty } from "lodash";
+
 import {FIELD_TYPE, VALUE_FORMAT} from "./constants";
 
 const { mCore } = window;
@@ -67,4 +69,33 @@ const getNextValue = (value, format, data) => {
         default:
             return 0;
     }
+};
+
+export const updateSelectedSection = (state, currentInfo) => ({
+        ...state,
+        currentInfo,
+        storedInfo: {
+            ...state.storedInfo,
+            stage: {
+                ...state.storedInfo.stage,
+                [currentInfo.id]: currentInfo
+            }
+        }
+    });
+
+export const updateFile = (state, nextFile = null, nextFileData = null) => {
+    const currentFile = get(state, "file", {});
+    const currentFileData = get(currentFile, "data", {});
+
+    return {
+        ...state,
+        file: nextFile !== null ? {
+            ...currentFile,
+            ...nextFile,
+            data: !isEmpty(nextFileData) ? {
+                ...currentFileData,
+                ...nextFileData
+            } : currentFileData
+        } : nextFile
+    };
 };

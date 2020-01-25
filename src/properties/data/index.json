@@ -73,6 +73,28 @@
       }
     }
   },
+  "stageElementSections": [
+    [],
+    ["common"],
+    ["common"],
+    ["common"],
+    ["common"],
+    ["common"],
+    ["common", "text"],
+    ["common"],
+    ["common"],
+    ["common"],
+    ["common"],
+    ["common"],
+    ["common"],
+    ["common"],
+    ["common", "text"],
+    ["common"],
+    ["common"],
+    ["common"],
+    ["common"],
+    ["common"]
+  ],
   "stageElementTrees": {
     "common": [
       {

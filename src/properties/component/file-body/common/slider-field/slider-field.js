@@ -5,8 +5,6 @@ import Slider from '@material-ui/core/Slider';
 import {NumberField} from "../number-field";
 
 import "./slider-field.scss";
-import {FIELD_TYPE} from "../../../../constants";
-import {generateChangeEvent} from "../helpers";
 
 const SliderField = ({
                          id,
@@ -18,10 +16,7 @@ const SliderField = ({
                          fromUserData,
                          onChange
                      }) => {
-    const handleChange = useCallback(
-        (event, value) => onChange(generateChangeEvent(id, value, FIELD_TYPE.SLIDER, fromUserData, format)),
-        [id, fromUserData, format, onChange]
-    );
+    const handleChange = useCallback((event, value) => onChange(value), [onChange]);
 
     return (
         <div className="properties-slider-field-root">

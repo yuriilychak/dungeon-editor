@@ -6,8 +6,6 @@ import { noop } from "lodash";
 import {TitledField} from "../../../../../common-ui";
 
 import "./number-field.scss";
-import {FIELD_TYPE} from "../../../../constants";
-import {generateChangeEvent} from "../helpers";
 
 const KEYBOARD_KEYS = {
     ENTER: 13,
@@ -30,7 +28,6 @@ const NumberField = ({
                          className,
                          onChange,
                          disabled,
-                         fromUserData,
                          onChangeFormat = noop
                      }) => {
     const [currentValue, setCurrentValue] = useState("");
@@ -58,8 +55,8 @@ const NumberField = ({
         if (isSetValue) {
             setCurrentValue(targetValue);
         }
-        onChange(generateChangeEvent(id, targetValue, FIELD_TYPE.NUMBER, fromUserData, format))
-    }, [id, fromUserData, format, onChange]);
+        onChange(targetValue)
+    }, [onChange]);
 
 
     const handleKeyEvent = useCallback(key => {

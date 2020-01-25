@@ -139,14 +139,16 @@ Properties.propTypes = {
         ).isRequired
     }))).isRequired,
     locales: shape({
-        compressName: string.isRequired,
-        compressSkeleton: string.isRequired,
+        compressNameLabel: string.isRequired,
         emptyDescription: string.isRequired,
         idTitle: string.isRequired,
         nameTitle: string.isRequired,
         sectionTitle: string.isRequired,
-        selectAtlasLabel: string.isRequired,
-        selectAtlasPlaceholder: string.isRequired
+        library: shape({
+            compressSkeletonLabel: string.isRequired,
+            atlasAutocompleteLabel: string.isRequired,
+            atlasAutocompletePlaceholder: string.isRequired
+        }).isRequired
     }).isRequired,
     init: func.isRequired,
     onStageElementChange: func.isRequired,

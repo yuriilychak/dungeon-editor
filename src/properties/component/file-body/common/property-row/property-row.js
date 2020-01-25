@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { string, node } from "prop-types";
 
-import {TitledField} from "../../../../../../common-ui";
+import {TitledField} from "../../../../../common-ui";
 
 import "./property-row.scss";
 
