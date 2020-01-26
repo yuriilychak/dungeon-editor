@@ -9,18 +9,19 @@ const TitledField = ({
                          children,
                          titleWidth,
                          bodyClassName,
+                         titleClassName,
                          className
                      }) => (
     <div className={classNames("titled-field-root", className)}>
         {title && (
-            <span
-                className="titled-field-title"
+            <div
+                className={classNames("titled-field-title", titleClassName)}
                 style={{
                     width: titleWidth
                 }}
             >
                 {`${title}:`}
-            </span>
+            </div>
         )}
         < div className={classNames("titled-field-body", bodyClassName)}>
             {children}
@@ -37,7 +38,8 @@ TitledField.propTypes = {
     children: node.isRequired,
     titleWidth: oneOfType([string, number]),
     className: string,
-    bodyClassName: string
+    bodyClassName: string,
+    titleClassName: string
 };
 
 export default TitledField;

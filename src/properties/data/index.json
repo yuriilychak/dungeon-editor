@@ -61,7 +61,8 @@
         "row_4": "Properties_Edit_AnchorLabel_Main",
         "row_5": "Properties_Edit_RotationLabel_Main",
         "row_6": "Properties_Edit_AlphaLabel_Main",
-        "row_7": "Properties_Edit_TintLabel_Main"
+        "row_7": "Properties_Edit_TintLabel_Main",
+        "row_8": "Properties_Edit_AlignLabel_Main"
       },
       "text": {
         "title": "Properties_Edit_Section_Text",
@@ -73,6 +74,28 @@
       }
     }
   },
+  "stageElementDisabled": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    ["anchor", "rate"],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
   "stageElementSections": [
     [],
     ["common"],
@@ -145,6 +168,12 @@
           { "id": "tint" },
           { "id": "visible" },
           { "id": "interactive" }
+        ]
+      },
+      {
+        "id": "row_8",
+        "content": [
+          { "id": "layout" }
         ]
       }
     ],
@@ -275,6 +304,12 @@
         "id": "interactive",
         "type": "checkbox",
         "format": "BL",
+        "fromUserData": true
+      },
+      {
+        "id": "layout",
+        "type": "layout",
+        "format": "LY",
         "fromUserData": true
       }
     ],

@@ -8,6 +8,7 @@ import {ColorSelect} from "../color-select";
 import {ToggleField} from "../toggle-field";
 import {ToggleGroupField} from "../toggle-group-field";
 import {TextField} from "../text-field";
+import {LayoutField} from "../layout-field";
 import {FIELD_TYPE} from "../../../../constants";
 
 const PropertyField = ({
@@ -46,6 +47,9 @@ const PropertyField = ({
             break;
         case FIELD_TYPE.TEXT:
             Item = TextField;
+            break;
+        case FIELD_TYPE.LAYOUT:
+            Item = LayoutField;
             break;
         default:
             return null;

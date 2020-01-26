@@ -12,9 +12,6 @@ import {
     updateFile
 } from "./helpers";
 
-
-const {mCore} = window;
-
 export const initialState = {
     ...StaticData,
     storedInfo: {
@@ -32,7 +29,7 @@ const actionHandlers = {
     [STATE.RENAME_LIBRARY_ELEMENT]: (state, {id, sectionId, name}) =>
         checkSelectedElement(state.file, id, sectionId) ? updateFile(state, { name }) : state,
     [STATE.SELECT_STAGE_ELEMENT]: (state, stageElement) => {
-        const isContainer = stageElement.uiType === mCore.enumerator.ui.UI_ELEMENT.CONTAINER;
+        const sectionId = stageElement.uiType;
         const id = stageElement.uid;
 
         let currentInfo = state.storedInfo.stage[id];
@@ -41,18 +38,14 @@ const actionHandlers = {
             currentInfo = { id, sectionId: get(state.currentInfo, "sectionId", PROPERTY_SECTION.NONE) };
         }
 
-        const disabledStageProps = [];
+        const disabledStageProps = [ ...state.stageElementDisabled[sectionId] ];
 
-        if (isContainer) {
-            disabledStageProps.push(STAGE_ELEMENT_PROP.SIZE);
-            disabledStageProps.push(STAGE_ELEMENT_PROP.ANCHOR);
-        }
 
         if (stageElement.userData.isRoot) {
             disabledStageProps.push(STAGE_ELEMENT_PROP.POSITION);
         }
 
-        const sections = state.stageElementSections[stageElement.uiType];
+        const sections = state.stageElementSections[sectionId];
 
         let props = {};
 
@@ -69,9 +62,9 @@ const actionHandlers = {
             isDirectory: false,
             isStageElement: true,
             isRoot: stageElement.userData.isRoot,
-            sectionId: stageElement.uiType,
+            sectionId,
             id,
-            type: stageElement.uiType
+            type: sectionId
         };
         const nextFileData = {
             sections,

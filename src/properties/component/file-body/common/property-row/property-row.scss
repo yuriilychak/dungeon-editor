@@ -2,13 +2,15 @@
 
 .properties-property-row {
   font-size: 12px;
-  margin-bottom: $indent_m;
+  margin-bottom: $indent_s;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: stretch;
   min-height: 24px;
+}
 
-
+.properties-property-row-title {
+  margin-top: $indent_m;
 }
 
 .properties-property-row-body {

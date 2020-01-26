@@ -1,13 +1,8 @@
 import React, {memo, useCallback} from "react";
 
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
 import {PropertyField} from "../../common";
 import PropertyRow from "../../common/property-row/property-row";
-import {Icon} from "../../../../../common-ui";
+import {ExpansionPanel} from "../../../../../common-ui";
 
 import "./property-section.scss";
 import {PROPERTY_SECTION} from "../../../../constants";
@@ -54,22 +49,16 @@ export const PropertySection = ({
     });
 
     return (
-        <ExpansionPanel expanded={expanded} onChange={handleExpansionChange}>
-            <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls={id}
-                id={id}
-            >
-                <Icon name={`properties/${id}`} size={16} />
-                <span className="properties-section-title">
-                        {sectionLocale.title}
-                    </span>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-                <div className="properties-stage-content">
-                    { rows }
-                </div>
-            </ExpansionPanelDetails>
+        <ExpansionPanel
+            id={id}
+            icon={`properties/${id}`}
+            expanded={expanded}
+            onChange={handleExpansionChange}
+            title={sectionLocale.title}
+        >
+            <div className="properties-stage-content">
+                { rows }
+            </div>
         </ExpansionPanel>
     );
 };

@@ -1,24 +1,18 @@
 import React, {memo} from "react";
 import {number, string, func, arrayOf, object} from "prop-types";
 
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
 import {SectionHeader} from "./section-header";
 import {SectionBody} from "./section-body";
+import {ExpansionPanel} from "../../../common-ui";
 
-const Section = (props) => (
-    <ExpansionPanel>
-        <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon/>}
-        >
-            <SectionHeader {...props} />
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-            <SectionBody {...props} />
-        </ExpansionPanelDetails>
+const Section = props => (
+    <ExpansionPanel
+        id={props.id}
+        icon={`${props.icon}_root`}
+        title={props.titleText}
+        headerContent={<SectionHeader {...props} />}
+    >
+        <SectionBody {...props} />
     </ExpansionPanel>
 );
 

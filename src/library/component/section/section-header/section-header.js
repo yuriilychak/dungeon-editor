@@ -4,24 +4,17 @@ import CreateNewFolder from "@material-ui/icons/CreateNewFolder";
 import {number, string, func} from "prop-types";
 
 import {ToolButton} from "../../../../common-ui/tool-button";
-import {Icon} from "../../../../common-ui/icon";
-
 import "./section-header.css";
 
 const SectionHeader = ({
                            id,
                            icon,
-                           titleText,
                            addElementText,
                            addDirectoryText,
                            onAddFile,
                            onAddDirectory
                        }) => (
     <Fragment>
-        <Icon name={`${icon}_root`}/>
-        <div className="library-section-header-title">
-            {titleText}
-        </div>
         <ToolButton
             title={addElementText}
             Icon={Add}
@@ -37,8 +30,6 @@ const SectionHeader = ({
 
 SectionHeader.propTypes = {
     id: number.isRequired,
-    icon: string.isRequired,
-    titleText: string.isRequired,
     addElementText: string.isRequired,
     addDirectoryText: string.isRequired,
     onAddFile: func.isRequired,

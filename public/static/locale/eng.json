@@ -147,6 +147,7 @@
         "Properties_Edit_Text_AutoSize": "Auto Size",
         "Properties_Edit_FontLabel_Main": "Font",
         "Properties_Edit_TextAlignLabel_Main": "Align",
+        "Properties_Edit_AlignLabel_Main": "Layout",
         "Properties_Edit_Text_Outline": "Outline",
         "Properties_Edit_Text_Shadow": "Shadow",
         "Properties_Edit_Text_Text": "Text",

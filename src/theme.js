@@ -19,7 +19,6 @@ const theme = createMuiTheme({
             contrastText: TEXT_COLOR.CONTRAST
         }
     },
-
     typography: {
         useNextVariants: true,
         fontFamily: "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
