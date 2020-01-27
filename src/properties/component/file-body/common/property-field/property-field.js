@@ -8,13 +8,12 @@ import {ColorSelect} from "../color-select";
 import {ToggleField} from "../toggle-field";
 import {ToggleGroupField} from "../toggle-group-field";
 import {TextField} from "../text-field";
-import {LayoutField} from "../layout-field";
 import {FIELD_TYPE} from "../../../../constants";
 
 const PropertyField = ({
                            id,
                            data,
-                           locales = {},
+                           label,
                            format,
                            onChange,
                            children
@@ -48,9 +47,6 @@ const PropertyField = ({
         case FIELD_TYPE.TEXT:
             Item = TextField;
             break;
-        case FIELD_TYPE.LAYOUT:
-            Item = LayoutField;
-            break;
         default:
             return null;
     }
@@ -67,9 +63,9 @@ const PropertyField = ({
     return (
         <Item
             id={id}
-            {...locales}
-            {...data}
+            label={label}
             onChange={dispatchChange}
+            {...data}
         >
             {children}
         </Item>

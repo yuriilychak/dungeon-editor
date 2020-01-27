@@ -12,46 +12,18 @@
       "atlasAutocompletePlaceholder": "Properties_SelectAtlasPlaceholder"
     },
     "stage": {
-      "position": {
-        "labelX": "Properties_Edit_Common_X",
-        "labelY": "Properties_Edit_Common_Y"
-      },
-      "rate": {
-        "labelX": "Properties_Edit_SizeLabel_X",
-        "labelY": "Properties_Edit_SizeLabel_Y"
-      },
-      "anchor": {
-        "labelX": "Properties_Edit_Common_X",
-        "labelY": "Properties_Edit_Common_Y"
-      },
-      "scale": {
-        "labelX": "Properties_Edit_Common_X",
-        "labelY": "Properties_Edit_Common_Y"
-      },
-      "skew": {
-        "labelX": "Properties_Edit_Common_X",
-        "labelY": "Properties_Edit_Common_Y"
-      },
-      "visible": {
-        "label": "Properties_Edit_VisibleLabel_Main"
-      },
-      "interactive": {
-        "label": "Properties_Edit_InteractiveLabel_Main"
-      },
-      "outlineEnabled": {
-        "labelEnabled": "Properties_Edit_Common_Enabled"
-      },
-      "shadowEnabled": {
-        "label": "Properties_Edit_Text_Shadow",
-        "labelEnabled": "Properties_Edit_Common_Enabled"
-      },
-      "shadowOffset": {
-        "labelX": "Properties_Edit_Common_X",
-        "labelY": "Properties_Edit_Common_Y"
-      },
-      "autoSize": {
-        "label": "Properties_Edit_Text_AutoSize"
-      },
+      "tint": "Properties_Edit_TintLabel_Main",
+      "visible": "Properties_Edit_VisibleLabel_Main",
+      "interactive": "Properties_Edit_InteractiveLabel_Main",
+      "outlineEnabled": "Properties_Edit_Common_Enabled",
+      "shadowEnabled": "Properties_Edit_Common_Enabled",
+      "autoSize": "Properties_Edit_Text_AutoSize",
+      "stretchWidth": "Properties_Edit_StretchWidth",
+      "stretchHeight": "Properties_Edit_StretchHeight",
+      "marginTopEnabled": "Properties_Edit_MarginTop",
+      "marginBottomEnabled": "Properties_Edit_MarginBottom",
+      "marginLeftEnabled": "Properties_Edit_MarginLeft",
+      "marginRightEnabled": "Properties_Edit_MarginRight",
       "common": {
         "title": "Properties_Edit_Section_Common",
         "row_0": "Properties_Edit_PositionLabel_Main",
@@ -62,7 +34,8 @@
         "row_5": "Properties_Edit_RotationLabel_Main",
         "row_6": "Properties_Edit_AlphaLabel_Main",
         "row_7": "Properties_Edit_TintLabel_Main",
-        "row_8": "Properties_Edit_AlignLabel_Main"
+        "row_8": "Properties_Edit_HLayout",
+        "row_9": "Properties_Edit_VLayout"
       },
       "text": {
         "title": "Properties_Edit_Section_Text",
@@ -173,7 +146,37 @@
       {
         "id": "row_8",
         "content": [
-          { "id": "layout" }
+          {
+            "id": "marginLeftEnabled",
+            "children": [
+              { "id": "marginLeft" }
+            ]
+          },
+          {
+            "id": "marginRightEnabled",
+            "children": [
+              { "id": "marginRight" }
+            ]
+          },
+          { "id": "stretchWidth" }
+        ]
+      },
+      {
+        "id": "row_9",
+        "content": [
+          {
+            "id": "marginTopEnabled",
+            "children": [
+              { "id": "marginTop" }
+            ]
+          },
+          {
+            "id": "marginBottomEnabled",
+            "children": [
+              { "id": "marginBottom" }
+            ]
+          },
+          { "id": "stretchHeight" }
         ]
       }
     ],
@@ -311,6 +314,74 @@
         "type": "layout",
         "format": "LY",
         "fromUserData": true
+      },
+      {
+        "id": "marginRight",
+        "type": "number",
+        "format": "PX",
+        "minValue": -32768,
+        "maxValue": 32767,
+        "fromUserData": true
+      },
+      {
+        "id": "marginLeft",
+        "type": "number",
+        "format": "PX",
+        "minValue": -32768,
+        "maxValue": 32767,
+        "fromUserData": true
+      },
+      {
+        "id": "marginTop",
+        "type": "number",
+        "format": "PX",
+        "minValue": -32768,
+        "maxValue": 32767,
+        "fromUserData": true
+      },
+      {
+        "id": "marginBottom",
+        "type": "number",
+        "format": "PX",
+        "minValue": -32768,
+        "maxValue": 32767,
+        "fromUserData": true
+      },
+      {
+        "id": "marginLeftEnabled",
+        "type": "enabled",
+        "format": "BL",
+        "fromUserData": true
+      },
+      {
+        "id": "marginRightEnabled",
+        "type": "enabled",
+        "format": "BL",
+        "fromUserData": true
+      },
+      {
+        "id": "marginTopEnabled",
+        "type": "enabled",
+        "format": "BL",
+        "fromUserData": true
+      },
+      {
+        "id": "marginBottomEnabled",
+        "type": "enabled",
+        "format": "BL",
+        "fromUserData": true
+      },
+      {
+        "id": "stretchWidth",
+        "type": "checkbox",
+        "format": "BL",
+        "fromUserData": true
+      },
+      {
+        "id": "stretchHeight",
+        "type": "checkbox",
+        "format": "BL",
+        "fromUserData": true
       }
     ],
     "text": [
@@ -332,7 +403,7 @@
         "id": "outlineEnabled",
         "type": "enabled",
         "format": "BL",
-        "fromUserData": true
+        "fromUserData": false
       },
       {
         "id": "outlineColor",
@@ -352,7 +423,7 @@
         "id": "shadowEnabled",
         "type": "enabled",
         "format": "BL",
-        "fromUserData": true
+        "fromUserData": false
       },
       {
         "id": "shadowColor",

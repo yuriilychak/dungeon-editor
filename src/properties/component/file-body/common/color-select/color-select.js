@@ -8,26 +8,21 @@ import "./color-select.scss";
 const ColorSelect = ({
                          id,
                          value,
-                         format,
+                         label,
                          onChange,
-                         fromUserData,
                          enableAlpha = false,
-                         placement = "bottomRight",
-                         children
+                         placement = "bottomRight"
                      }) => {
     const handleChange = useCallback(data => onChange(data.color), [onChange]);
 
     return (
-        <>
-            <ColorPicker
-                enableAlpha={enableAlpha}
-                color={value}
-                onChange={handleChange}
-                mode="RGB"
-                placement={placement}
-            />
-            {children}
-        </>
+        <ColorPicker
+            enableAlpha={enableAlpha}
+            color={value}
+            onChange={handleChange}
+            mode="RGB"
+            placement={placement}
+        />
     );
 };
 
@@ -35,6 +30,7 @@ ColorSelect.propTypes = {
     id: string.isRequired,
     value: string.isRequired,
     onChange: func.isRequired,
+    label: string,
     enableAlpha: bool,
     placement: string
 };

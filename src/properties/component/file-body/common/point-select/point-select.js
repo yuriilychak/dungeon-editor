@@ -7,8 +7,6 @@ import "./point-select.scss";
 
 const PointSelect = ({
                         id,
-                        labelX,
-                        labelY,
                          format,
                         formats,
                         value,
@@ -37,7 +35,7 @@ const PointSelect = ({
         dispatchChange(formatKey, nextFormat);
     }, [formats, data, dispatchChange]);
 
-    const handleChange = useCallback(({key, value}) => dispatchChange(key, value), [data, onChange, id]);
+    const handleChange = useCallback((value, key) => dispatchChange(key, value), [data, onChange, id]);
 
     const changeFormatDisabled = formats.length < 2;
 
@@ -45,7 +43,7 @@ const PointSelect = ({
         <div className="properties-point-select-root">
             <NumberField
                 className="properties-point-select-number"
-                label={labelX}
+                label="X"
                 id="x"
                 value={data.x}
                 disabled={disabled}
@@ -57,7 +55,7 @@ const PointSelect = ({
             <div className="properties-point-select-padding" />
             <NumberField
                 className="properties-point-select-number"
-                label={labelY}
+                label="Y"
                 id="y"
                 value={data.y}
                 disabled={disabled}

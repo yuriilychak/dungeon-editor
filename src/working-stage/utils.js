@@ -181,7 +181,17 @@ export function createElement(type, isRoot = false) {
     }
 
     element.userData = {
+        marginLeft: 0,
+        marginRight: 0,
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeftEnabled: false,
+        marginRightEnabled: false,
+        marginTopEnabled: false,
+        marginBottomEnabled: false,
         interactive: true,
+        stretchWidth: false,
+        stretchHeight: false,
         isRoot
     };
 
@@ -199,19 +209,6 @@ export function updatePosition(element, prevGlobal, nextGlobal) {
     const nextLocal = element.parent.toLocal(nextGlobal);
     const offset = geometry.pSub(nextLocal, prevLocal);
     geometry.pAdd(element.position, offset, true);
-}
-
-/**
- * @param {mCore.view.ComponentContainer} element
- * @param {mCore.view.ComponentContainer} root
- * @returns {mCore.geometry.Point}
- */
-
-export function getWorldScale(element, root) {
-    return mCore.geometry.Point.create(
-        element.worldTransform.a / root.scale.x,
-        element.worldTransform.d / root.scale.y,
-    )
 }
 
 export function updateAnchor(element, nextAnchor) {

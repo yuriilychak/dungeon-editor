@@ -15,8 +15,9 @@
 
 .properties-property-row-body {
   & > * {
-    margin-right: 8px !important;
+    margin-right: 8px;
+    &:last-child {
+      margin-right: 0;
+    }
   }
-
-  margin-right: -8px;
 }

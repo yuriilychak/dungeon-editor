@@ -1,19 +1,11 @@
-import React, {memo, useCallback} from "react";
+import React, { memo, useCallback } from "react";
 import classNames from "classnames";
+import { string, bool, func } from "prop-types";
 
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import PanToolIcon from '@material-ui/icons/PanTool';
-import FormatSizeIcon from '@material-ui/icons/FormatSize';
-
-import {ToolButton} from "../../../../../common-ui";
+import { ToolButton } from "../../../../../common-ui";
+import { ICONS, STYLES } from "./constants";
 
 import "./toggle-field.scss";
-
-const iconList = {
-    "visible": VisibilityIcon,
-    "interactive": PanToolIcon,
-    "autoSize": FormatSizeIcon
-};
 
 const ToggleField = ({
                          id,
@@ -22,20 +14,13 @@ const ToggleField = ({
                          onChange
                      }) => {
     const handleClick = useCallback(() => onChange(!value), [value, onChange]);
+
     return (
-        <div
-            className="properties-toggle-field-root"
-        >
-            <div
-                className={classNames(
-                    "properties-toggle-field-button", {
-                        "properties-toggle-field-button-unchecked": !value
-                    }
-                )}
-            >
+        <div className={STYLES.ROOT}>
+            <div className={classNames(STYLES.BUTTON, { [STYLES.BUTTON_UNCHECKED]: !value })}>
                 <ToolButton
                     onClick={handleClick}
-                    Icon={iconList[id]}
+                    Icon={ICONS[id]}
                     title={label}
                 />
             </div>
@@ -43,5 +28,11 @@ const ToggleField = ({
     );
 };
 
+ToggleField.propTypes = {
+    id: string.isRequired,
+    value: bool.isRequired,
+    onChange: func.isRequired,
+    label: string
+};
 
 export default memo(ToggleField);

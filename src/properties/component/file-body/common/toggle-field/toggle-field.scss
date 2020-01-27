@@ -13,6 +13,7 @@
     align-items: center;
     padding: $indent_xs;
   }
+
   &-button {
     position: relative;
     width: 18px;
@@ -29,21 +30,22 @@
         font-size: 12px;
       }
     }
-  }
-  &-button-unchecked {
-    &:before {
-      position: absolute;
-      content: "";
-      left: 0;
-      top: 50%;
-      right: 0;
-      border-top: $indent_xs solid $text-contrast;
-      transform: rotate(-45deg);
-    }
 
-    :global {
-      .MuiSvgIcon-root {
-        opacity: 0.6;
+    &-unchecked {
+      &:before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 50%;
+        right: 0;
+        border-top: $indent_xs solid $text-contrast;
+        transform: rotate(-45deg);
+      }
+
+      :global {
+        .MuiSvgIcon-root {
+          opacity: 0.6;
+        }
       }
     }
   }

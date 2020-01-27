@@ -21,7 +21,17 @@ const STAGE_ELEMENT_PROP = {
     TEXT_SHADOW_COLOR: "shadowColor",
     TEXT_AUTO_SIZE: "autoSize",
     TEXT_HORIZONTAL_ALIGN: "horizontalAlign",
-    TEXT_VERTICAL_ALIGN: "verticalAlign"
+    TEXT_VERTICAL_ALIGN: "verticalAlign",
+    MARGIN_TOP_ENABLED: "marginTopEnabled",
+    MARGIN_TOP: "marginTop",
+    MARGIN_BOTTOM_ENABLED: "marginBottomEnabled",
+    MARGIN_BOTTOM: "marginBottom",
+    MARGIN_LEFT_ENABLED: "marginLeftEnabled",
+    MARGIN_LEFT: "marginLeft",
+    MARGIN_RIGHT_ENABLED: "marginRightEnabled",
+    MARGIN_RIGHT: "marginRight",
+    STRETCH_WIDTH: "stretchWidth",
+    STRETCH_HEIGHT: "stretchHeight"
 };
 
 export default STAGE_ELEMENT_PROP;

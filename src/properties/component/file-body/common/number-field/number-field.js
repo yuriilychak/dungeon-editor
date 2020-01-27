@@ -55,8 +55,8 @@ const NumberField = ({
         if (isSetValue) {
             setCurrentValue(targetValue);
         }
-        onChange(targetValue)
-    }, [onChange]);
+        onChange(targetValue, id);
+    }, [onChange, id]);
 
 
     const handleKeyEvent = useCallback(key => {

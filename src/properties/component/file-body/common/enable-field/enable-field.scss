@@ -1,0 +1,16 @@
+.properties-enable-field {
+  display: flex;
+  flex-direction: row;
+
+  & > * {
+    margin-right: 8px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.properties-enable-field-deselected {
+  pointer-events: none;
+  opacity: 0.5;
+}

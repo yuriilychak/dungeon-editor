@@ -1,11 +1,10 @@
 import React, {memo, useCallback} from "react";
 
-import {PropertyField} from "../../common";
-import PropertyRow from "../../common/property-row/property-row";
+import {PropertyField, PropertyRow } from "../../common";
 import {ExpansionPanel} from "../../../../../common-ui";
+import {PROPERTY_SECTION} from "../../../../constants";
 
 import "./property-section.scss";
-import {PROPERTY_SECTION} from "../../../../constants";
 
 export const PropertySection = ({
                                     id,
@@ -20,7 +19,7 @@ export const PropertySection = ({
         <PropertyField
             id={id}
             key={id}
-            locales={locales[id]}
+            label={locales[id]}
             data={data[id]}
             onChange={onChange}
         >
