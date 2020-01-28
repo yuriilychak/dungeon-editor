@@ -73,17 +73,24 @@ const actionHandlers = {
 
         return updateFile(updateSelectedSection(state, currentInfo), nextFile, nextFileData);
     },
-    [STATE.CHANGE_STAGE_ELEMENT]: (state, {key, value}) => {
-        let nextFileData = {};
-        let nextFile = {};
+    [STATE.CHANGE_STAGE_ELEMENT]: (state, changedValues) => {
+        let nextFileData;
+        let nextFile;
+        let nextState = state;
 
-        if (key === STAGE_ELEMENT_PROP.NAME) {
-            nextFile[key] = value;
-        } else {
-            nextFileData[key] = updateValue(state, key, value);
-        }
+        changedValues.forEach(({ key, value }) => {
+            nextFileData = {};
+            nextFile = {};
 
-        return updateFile(state, nextFile, nextFileData);
+            if (key === STAGE_ELEMENT_PROP.NAME) {
+                nextFile[key] = value;
+            } else {
+                nextFileData[key] = updateValue(nextState, key, value);
+            }
+            nextState = updateFile(nextState, nextFile, nextFileData);
+        });
+
+        return nextState;
     },
     [STATE.CHANGE_SELECTED_SECTION]: (state, sectionId) => {
         const currentInfo = {

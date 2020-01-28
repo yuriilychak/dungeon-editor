@@ -16,13 +16,20 @@ const ColorSelect = ({
     const handleChange = useCallback(data => onChange(data.color), [onChange]);
 
     return (
-        <ColorPicker
-            enableAlpha={enableAlpha}
-            color={value}
-            onChange={handleChange}
-            mode="RGB"
-            placement={placement}
-        />
+        <div className="properties-color-select">
+            <ColorPicker
+                enableAlpha={enableAlpha}
+                color={value}
+                onChange={handleChange}
+                mode="RGB"
+                placement={placement}
+            />
+            {label && (
+                <span className="properties-color-select-tooltip">
+                    {label}
+                </span>
+            )}
+        </div>
     );
 };
 

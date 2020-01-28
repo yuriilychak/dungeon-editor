@@ -502,19 +502,16 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         ++this._changeCounter;
 
         if (this._changeCounter > 3) {
-            this._changeCounter = 0;
-            const resultValue = mCore.util.type.isObject(value) ? {
-                x: value.x,
-                y: value.y,
-                formatX: 0,
-                formatY: 0
-            } : value;
-
-            this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, { key: this._changeKey, value: resultValue });
+            this._dispatchChange(value);
         }
     }
 
     _dispatchResultChange(value) {
+        this._dispatchChange(value);
+        this._changeKey = null;
+    }
+
+    _dispatchChange(value) {
         this._changeCounter = 0;
         const resultValue = mCore.util.type.isObject(value) ? {
             x: value.x,
@@ -522,8 +519,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
             formatX: 0,
             formatY: 0
         } : value;
-        this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, { key: this._changeKey, value: resultValue });
-        this._changeKey = null;
+        this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, [{ key: this._changeKey, value: resultValue }]);
     }
 
     _setSelectedElementListeners(

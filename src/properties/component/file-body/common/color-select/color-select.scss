@@ -1,6 +1,28 @@
 @import "../../../../../sizes";
 @import "../../../../../colors";
 
+.properties-color-select-tooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background-color: $primary-main;
+  font-size: 10px;
+  padding: 6px;
+  opacity: 0;
+}
+
+.properties-color-select {
+  position: relative;
+  height: 24px;
+
+  &:hover .properties-color-select-tooltip {
+    transition: opacity 0.3s, visibility 0.3s;
+    opacity: 1;
+  }
+}
+
 .rc-color-picker-wrap {
   height: 24px;
 }
