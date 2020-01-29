@@ -16,8 +16,7 @@ export const FIELD_TYPE = {
     NUMBER: "number",
     TOGGLE_GROUP: "toggleGroup",
     ENABLED: "enabled",
-    TEXT: "text",
-    LAYOUT: "layout"
+    TEXT: "text"
 };
 
 export const PROPERTY_SECTION = {

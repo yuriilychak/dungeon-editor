@@ -1,6 +1,6 @@
 import {EVENT, CURSOR} from "../enum";
 import {updateAnchor, getAnchorPosition, updatePosition} from "../utils";
-import {EDIT_MODE, STAGE_ELEMENT_PROP, VALUE_FORMAT } from "../../enum";
+import {EDIT_MODE, STAGE_ELEMENT_PROP, VALUE_FORMAT, FIELD_TYPE } from "../../enum";
 
 const {mCore, PIXI} = window;
 const {math, geometry, color } = mCore.util;
@@ -214,7 +214,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         if (this._changeKey !== STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE && this._changeKey !== STAGE_ELEMENT_PROP.NAME) {
             changeValue = this._getFormattedValue(value, format, data);
 
-            if (type !== "point") {
+            if (type !== FIELD_TYPE.POINT) {
                 if (fromUserData) {
                     this._selectedElement.userData[key] = changeValue;
                 }
@@ -561,9 +561,10 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         eventDrag = null,
         eventDragFinish = null
     ) {
-        this._selectedElement.interactionManager.eventDragStart = eventDragStart;
-        this._selectedElement.interactionManager.eventDrag = eventDrag;
-        this._selectedElement.interactionManager.eventDragFinish = eventDragFinish;
+        const manager = this._selectedElement.interactionManager;
+        manager.eventDragStart = eventDragStart;
+        manager.eventDrag = eventDrag;
+        manager.eventDragFinish = eventDragFinish;
     }
 
     _toParentCoords(point) {
