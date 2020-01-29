@@ -513,13 +513,47 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
     _dispatchChange(value) {
         this._changeCounter = 0;
-        const resultValue = mCore.util.type.isObject(value) ? {
-            x: value.x,
-            y: value.y,
-            formatX: 0,
-            formatY: 0
-        } : value;
-        this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, [{ key: this._changeKey, value: resultValue }]);
+        const resultValue = mCore.util.type.isObject(value) ? this._generatePoint(value.x, value.y) : value;
+
+        const result = [this._generateProp(this._changeKey, resultValue)];
+
+        switch (this._changeKey) {
+            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED: {
+                if (!resultValue) {
+                    result.push(
+                        this._generateProp(STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE, 0),
+                        this._generateProp(STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR, mCore.util.color.COLORS.WHITE)
+                    );
+                }
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED: {
+                if (!resultValue) {
+                    result.push(
+                        this._generateProp(STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE, this._generatePoint(0, 0)),
+                        this._generateProp(STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR, mCore.util.color.COLORS.WHITE)
+                    );
+                }
+                break;
+            }
+            case STAGE_ELEMENT_PROP.ANCHOR: {
+                result.push(
+                    this._generateProp(STAGE_ELEMENT_PROP.POSITION, this._generatePoint(this._selectedElement.x, this._selectedElement.y)),
+                );
+                break;
+            }
+            default:
+        }
+
+        this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, result);
+    }
+
+    _generatePoint(x, y, formatX = 0, formatY = 0) {
+        return { x, y, formatX, formatY };
+    }
+
+    _generateProp(key, value) {
+        return { key, value };
     }
 
     _setSelectedElementListeners(
