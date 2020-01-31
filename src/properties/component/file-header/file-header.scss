@@ -1,3 +1,6 @@
+@import "../../../sizes";
+@import "../../../colors";
+
 .properties-header-root {
     user-select: none;
     display: flex;
@@ -24,7 +27,7 @@
 
 .properties-header-icon-title {
     text-align: center;
-    font-size: 10px;
+    font-size: $font-size_small;
 }
 
 .properties-header-description {
@@ -38,11 +41,11 @@
 .properties-header-name-field {
     width: 100%;
     margin-bottom: 4px;
-    font-size: 13px;
+    font-size: $font-size_big;
 }
 
 .properties-header-field {
-    font-size: 10px;
+    font-size: $font-size_small;
     width: 64px;
 }
 

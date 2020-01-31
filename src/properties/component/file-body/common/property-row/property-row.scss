@@ -1,7 +1,7 @@
 @import "../../../../../sizes";
 
 .properties-property-row {
-  font-size: 12px;
+  font-size: $font-size_medium;
   margin-bottom: $indent_s;
   display: flex;
   justify-content: flex-start;

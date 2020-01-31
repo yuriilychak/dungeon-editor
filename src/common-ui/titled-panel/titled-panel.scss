@@ -1,3 +1,6 @@
+@import "../../sizes";
+@import "../../colors";
+
 .titled-panel-root {
     width: 100%;
     height: 50%;
@@ -10,20 +13,20 @@
     padding: 0 10px;
     display: flex;
     flex-flow: row;
-    min-height: 24px;
-    background-color: #3f4045;
+    min-height: $item-size_small;
+    background-color: $back-main;
 }
 
 .titled-panel-body {
     flex-grow : 1;
     height: calc(100% - 24px);
-    font-size: 13px;
-    color: #ffffff;
-    background-color: #2a2b2f;
+    font-size: $font-size_big;
+    color: $text-contrast;
+    background-color: $back-dark;
 }
 
 .titled-panel-text {
     text-align: left;
     flex-grow: 1;
-    color: #ffffff !important;
+    color: $text-contrast !important;
 }

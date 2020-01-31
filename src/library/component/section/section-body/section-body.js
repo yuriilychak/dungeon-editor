@@ -4,7 +4,7 @@ import {number, string, func, arrayOf, object} from "prop-types";
 import {FileTree} from "../../../../common-ui/file-tree";
 import {useSectionBody} from "./hooks";
 
-import "./section-body.css";
+import "./section-body.scss";
 
 const SectionBody = ({
                          id,

@@ -42,7 +42,7 @@ const actionHandlers = {
 
 
         if (stageElement.userData.isRoot) {
-            disabledStageProps.push(STAGE_ELEMENT_PROP.POSITION);
+            disabledStageProps.push(...state.rootDisabled);
         }
 
         const sections = state.stageElementSections[sectionId];

@@ -18,6 +18,7 @@ export const ICONS = {
 
 export const STYLES = {
     ROOT: `${stylePrefix}-root`,
+    ROOT_DISABLED: `${stylePrefix}-root-disabled`,
     BUTTON: `${stylePrefix}-button`,
     BUTTON_UNCHECKED: `${stylePrefix}-button-unchecked`
 };

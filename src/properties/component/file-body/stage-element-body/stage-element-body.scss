@@ -1,11 +1,13 @@
+@import "../../../../sizes";
+
 .properties-stage-element-body-root {
-  font-size: 10px;
+  font-size: $font-size_small;
   overflow: hidden auto;
   height: calc(100% - 54px);
 }
 
 .properties-section-title {
-  font-size: 14px;
+  font-size: $font-size_big;
   margin-left: 8px;
 }
 

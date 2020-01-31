@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 import Typography from "@material-ui/core/Typography";
 
-import './titled-panel.css';
+import './titled-panel.scss';
 
 const TitledPanel = ({title, children, titleChildren, bodyPadding, bodyClassName }) => (
     <div className="titled-panel-root">

@@ -1,5 +1,7 @@
+@import "../../sizes";
+
 .expansion-panel-title {
-  font-size: 14px;
-  margin-left: 8px;
+  font-size: $font-size_big;
+  margin-left: $indent_l;
   flex: 1;
 }

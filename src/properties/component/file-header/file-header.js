@@ -4,9 +4,9 @@ import classNames from "classnames";
 import EditIcon from '@material-ui/icons/Edit';
 
 import {Icon, TitledField, ToolButton, ImagePreview} from "../../../common-ui";
-
-import "./file-header.css";
 import {CheckBox} from "../file-body/common/check-box";
+
+import "./file-header.scss";
 
 const FileHeader = ({
                         isRoot,

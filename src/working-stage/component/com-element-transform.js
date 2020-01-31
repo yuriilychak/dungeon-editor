@@ -373,6 +373,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
                 } else {
                     index.x = index.x - 1;
                     index.y = 1 - index.y;
+
                     const startPos = this._toLocal(this._globalStart);
                     const endPos = this._toLocal(data.data.global);
                     const invertedIndex = mCore.geometry.Point.create(index.y, index.x);

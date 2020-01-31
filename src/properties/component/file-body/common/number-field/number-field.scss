@@ -28,7 +28,7 @@
   border: none;
   outline: none;
   background-color: unset;
-  font-size: 12px;
+  font-size: $font-size_medium;
   color: $text-contrast;
 }
 
@@ -37,7 +37,7 @@
   cursor: pointer;
   width: 20px;
   margin-right: $indent_xs;
-  font-size: 12px;
+  font-size: $font-size_medium;
   height: 16px;
   display: flex;
   align-items: center;

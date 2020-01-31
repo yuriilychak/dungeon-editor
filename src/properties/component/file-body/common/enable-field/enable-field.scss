@@ -10,6 +10,11 @@
   }
 }
 
+.properties-enable-field-toggle-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 .properties-enable-field-deselected {
   pointer-events: none;
   opacity: 0.5;

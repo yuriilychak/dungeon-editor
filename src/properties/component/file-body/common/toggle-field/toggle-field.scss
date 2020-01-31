@@ -1,10 +1,12 @@
 @import "../../../../../colors";
 @import "../../../../../sizes";
 
+$inner_button_size: $item-size_small - $indent_m;
+
 .properties-toggle-field {
   &-root {
-    width: 24px;
-    height: 24px;
+    width: $item-size_small;
+    height: $item-size_small;
     background-color: $back-deep-dark;
     border: $indent_xxs solid $back-main;
     box-sizing: border-box;
@@ -12,22 +14,27 @@
     justify-content: center;
     align-items: center;
     padding: $indent_xs;
+
+    &-disabled {
+      pointer-events: none;
+      opacity: 0.7;
+    }
   }
 
   &-button {
     position: relative;
-    width: 18px;
-    height: 18px;
+    width: $inner_button_size;
+    height: $inner_button_size;
     background-color: $back-main;
 
     :global {
       .MuiIconButton-root {
-        width: 18px;
-        height: 18px;
+        width: $inner_button_size;
+        height: $inner_button_size;
         padding: $indent_none;
       }
       .MuiSvgIcon-root {
-        font-size: 12px;
+        font-size: $font-size_medium;
       }
     }
 

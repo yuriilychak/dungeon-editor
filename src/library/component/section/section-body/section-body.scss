@@ -1,10 +1,13 @@
+@import "../../../../sizes";
+@import "../../../../colors";
+
 .section-body-icon {
-    font-size: 16px !important;
+    font-size: $font-size_huge !important;
 }
 
 .section-body-text {
-    color: white;
-    font-size: 14px;
+    color: $text-contrast;
+    font-size: $font-size_big;
 }
 
 .section-body-empty {

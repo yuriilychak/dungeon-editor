@@ -47,6 +47,15 @@
       }
     }
   },
+  "rootDisabled": [
+    "position",
+    "marginTopEnabled",
+    "marginBottomEnabled",
+    "marginLeftEnabled",
+    "marginRightEnabled",
+    "stretchWidth",
+    "stretchHeight"
+  ],
   "stageElementDisabled": [
     [],
     [],

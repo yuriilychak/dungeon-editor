@@ -8,9 +8,10 @@
   transform: translateX(-50%);
   z-index: 2;
   background-color: $primary-main;
-  font-size: 10px;
+  font-size: $font-size_small;
   padding: 6px;
   opacity: 0;
+  pointer-events: none;
 }
 
 .properties-color-select {
