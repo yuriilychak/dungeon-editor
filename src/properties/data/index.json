@@ -56,6 +56,14 @@
     "stretchWidth",
     "stretchHeight"
   ],
+  "layoutDisabled": [
+    "marginTopEnabled",
+    "marginBottomEnabled",
+    "marginLeftEnabled",
+    "marginRightEnabled",
+    "stretchWidth",
+    "stretchHeight"
+  ],
   "stageElementDisabled": [
     [],
     [],
@@ -67,7 +75,16 @@
     [],
     [],
     [],
-    ["anchor", "rate"],
+    [
+      "anchor",
+      "rate",
+      "marginTopEnabled",
+      "marginBottomEnabled",
+      "marginLeftEnabled",
+      "marginRightEnabled",
+      "stretchWidth",
+      "stretchHeight"
+    ],
     [],
     [],
     [],

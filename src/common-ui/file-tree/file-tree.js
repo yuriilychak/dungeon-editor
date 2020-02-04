@@ -5,7 +5,7 @@ import {arrayOf, func, object} from "prop-types";
 
 import { useFileTree } from "./hooks";
 
-import "./file-tree.css";
+import "./file-tree.scss";
 
 export const FileTree = ({
                       treeData,

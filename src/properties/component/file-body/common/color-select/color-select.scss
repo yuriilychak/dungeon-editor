@@ -1,10 +1,12 @@
 @import "../../../../../sizes";
 @import "../../../../../colors";
 
+$font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+
 .properties-color-select-tooltip {
   position: absolute;
   top: calc(100% + 10px);
-  left: 50%;
+  left: $half-size;
   transform: translateX(-50%);
   z-index: 2;
   background-color: $primary-main;
@@ -16,7 +18,7 @@
 
 .properties-color-select {
   position: relative;
-  height: 24px;
+  height: $item-size_small;
 
   &:hover .properties-color-select-tooltip {
     transition: opacity 0.3s, visibility 0.3s;
@@ -25,7 +27,7 @@
 }
 
 .rc-color-picker-wrap {
-  height: 24px;
+  height: $item-size_small;
 }
 
 .rc-color-picker-trigger {
@@ -33,8 +35,8 @@
   box-shadow: 0 0 0 2px $back-deep-dark inset;
   border: 1px solid $back-main;
   border-radius: $indent_none;
-  width: 24px;
-  height: 24px;
+  width: $item-size_small;
+  height: $item-size_small;
   box-sizing: border-box;
 }
 
@@ -48,7 +50,7 @@
 .rc-color-picker-panel-ribbon {
   border-radius: 0;
   border: 1px solid $back-light;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: $font-family;
   color: $text-contrast;
   box-shadow: 0.5px 0 0 3px $back-deep-dark inset;
 }
@@ -57,7 +59,7 @@
   border-radius: 0;
   border: 1px solid $back-light;
   background-color: $back-dark;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: $font-family;
   color: $text-contrast;
 }
 
@@ -91,7 +93,7 @@
 .rc-color-picker-panel-board-handler {
   border-radius: 0;
   box-shadow: 0 0 0 3px black inset;
-  border: 1px solid $back-light;
+  border: $indent_xxs solid $back-light;
 }
 
 .rc-color-picker-panel-preview {
@@ -102,8 +104,8 @@
 .rc-color-picker-panel-preview span,
 .rc-color-picker-panel-preview input[type=color] {
   box-shadow: 0 0 0 3px black inset;
-  width: 30px;
-  height: 30px;
-  border: 1px solid $back-light;
+  width: $item-size_medium - $indent_xs;
+  height: $item-size_medium - $indent_xs;
+  border: $indent_xxs solid $back-light;
   border-radius: 0;
 }

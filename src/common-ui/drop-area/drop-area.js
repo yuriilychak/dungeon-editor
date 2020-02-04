@@ -3,7 +3,7 @@ import Fade from "@material-ui/core/Fade";
 import {useDropzone} from "react-dropzone";
 import { func, string, element, arrayOf, oneOfType } from "prop-types";
 
-import "./drop-area.css";
+import "./drop-area.scss";
 
 const DropArea = ({
                       children,

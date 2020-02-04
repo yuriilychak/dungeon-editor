@@ -43,7 +43,7 @@ $inner_button_size: $item-size_small - $indent_m;
         position: absolute;
         content: "";
         left: 0;
-        top: 50%;
+        top: $half-size;
         right: 0;
         border-top: $indent_xs solid $text-contrast;
         transform: rotate(-45deg);

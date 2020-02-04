@@ -1,5 +1,8 @@
+@import "../../sizes";
+@import "../../colors";
+
 .file-tree-root {
-    width: 100%;
+    width: $full-size;
 }
 
 .rstcustom__rowWrapper {
@@ -10,14 +13,14 @@
     display: flex;
     align-items: center;
     justify-content: left;
-    width: 100%;
-    max-width: 100%;
+    width: $full-size;
+    max-width: $full-size;
     padding: 0 10px;
     position: relative;
 }
 
 .rstcustom__row {
-    height: 100%;
+    height: $full-size;
     flex-grow: 1;
     min-width: 0;
 }
@@ -35,7 +38,7 @@
 
 .rstcustom__rowLabel {
     display: flex;
-    height: 100%;
+    height: $full-size;
     align-items: center;
     justify-content: left;
     flex-grow: 1;
@@ -51,46 +54,40 @@
 }
 
 .rstcustom__expandButton {
-    -webkit-transform: translate3d(-35%, -50%, 0);
     transform: translate3d(-35%, -50%, 0);
 }
 
 .rstcustom__expandButton::after {
     border: solid transparent 6px;
-    border-top-color: white;
+    border-top-color: $text-contrast;
     border-left-width: 5px;
     border-right-width: 5px;
 
 }
 
 .rstcustom__expandButton:hover::after {
-    border-top-color: white;
+    border-top-color: $text-contrast;
 }
 
 .rstcustom__expandButton::after {
-    -webkit-transform: translate3d(-35%, -50%, 0) rotateZ(-90deg);
     transform: translate3d(-35%, -50%, 0) rotateZ(-90deg);
 }
 
 .rstcustom__collapseButton:hover::after {
-    border-top-color: white;
+    border-top-color: $text-contrast;
 }
 
 .rstcustom__collapseButton {
-    -webkit-transform: translate3d(-35%, -50%, 0);
     transform: translate3d(-35%, -50%, 0);
 }
 
 .rstcustom__collapseButton::after {
     content: '';
     position: absolute;
-    -webkit-transform-origin: 5px 5px;
-    -ms-transform-origin: 5px 4px;
     transform-origin: 5px 5px;
-    -webkit-transform: translate3d(-35%, -25%, 0);
     transform: translate3d(-35%, -25%, 0);
     border: solid transparent 6px;
     border-left-width: 5px;
     border-right-width: 5px;
-    border-top-color: white;
+    border-top-color: $text-contrast;
 }

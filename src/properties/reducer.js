@@ -22,6 +22,8 @@ export const initialState = {
     file: null
 };
 
+const { mCore } = window;
+
 const actionHandlers = {
     [STATE.SELECT_LIBRARY_ELEMENT]: (state, file) => updateFile(state, { ...file, isStageElement: false, isRoot: false }),
     [STATE.DELETE_LIBRARY_ELEMENT]: (state, {ids, sectionId}) =>
@@ -43,6 +45,8 @@ const actionHandlers = {
 
         if (stageElement.userData.isRoot) {
             disabledStageProps.push(...state.rootDisabled);
+        } else if (stageElement.parent.uiType === mCore.enumerator.ui.UI_ELEMENT.CONTAINER) {
+            disabledStageProps.push(...state.layoutDisabled);
         }
 
         const sections = state.stageElementSections[sectionId];
