@@ -1,56 +1,54 @@
 @import "../../colors";
 @import "../../sizes";
+@import "../../other";
 
 .working-area-root {
-    height: 100%;
-    width: 100%;
+    height: $full-size;
+    width: $full-size;
     display: flex;
     flex-direction: column;
     background-color: $back-deep-dark;
 }
 
 .working-area-header {
-    width: 100%;
+    width: $full-size;
     background-color: $back-dark;
 }
 
 .working-area-body {
     position: relative;
-    width: 100%;
+    width: $full-size;
     flex: 1;
 }
 
 .working-area-empty-container {
+    @extend %flex-row;
     position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
     justify-content: center;
+    left: $indent_none;
+    right: $indent_none;
+    top: $indent_none;
+    bottom: $indent_none;
 }
 
 .working-area-control-panel {
-    display: flex;
-    align-items: center;
+    @extend %flex-row;
     justify-content: center;
-    padding: 0 8px;
     box-sizing: border-box;
     position: absolute;
-    width: 256px;
-    height: 32px;
-    bottom: 0;
-    right: 0;
-    color: $text-contrast;
     user-select: none;
+    padding: $indent_none $indent_l;
+    width: $item-size_giant;
+    height: $item-size_medium;
+    bottom: $indent_none;
+    right: $indent_none;
+    color: $text-contrast;
     background-color: $back-dark;
 }
 
 .working-area-control-panel-mode {
+    @extend %flex-row;
     cursor: pointer;
-    display: flex;
-    align-items: center;
     justify-content: center;
     width: 48px;
     height: $item-size_small;
@@ -61,10 +59,10 @@
 
 .working-area-interactions {
     position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    left: $indent_none;
+    right: $indent_none;
+    top: $indent_none;
+    bottom: $indent_none;
 }
 
 .working-area-empty-message {

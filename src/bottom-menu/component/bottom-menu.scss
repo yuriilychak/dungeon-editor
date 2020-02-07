@@ -1,5 +1,7 @@
 @import "../../colors";
 @import "../../sizes";
+@import "../../other";
+@import "../../utils";
 
 .bottom-menu {
   &-root {
@@ -12,12 +14,13 @@
     background-color: $back-dark;
   }
   &-title {
+    user-select: none;
     text-align: left;
     width: $full-size;
     height: $item-size_medium;
     background-color: $back-main;
   }
   &-content {
-    height: calc(#{$full-size} - #{$item-size_medium});
+    height: calcSize($item-size_medium);
   }
 }

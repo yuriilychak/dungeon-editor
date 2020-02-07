@@ -1,5 +1,7 @@
+@import "../../../../../sizes";
+
 .properties-point-select-padding {
-  width: 16px;
+  width: $item-size_micro;
 }
 
 .properties-point-select-number {

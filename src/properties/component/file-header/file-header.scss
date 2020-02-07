@@ -1,26 +1,22 @@
 @import "../../../sizes";
 @import "../../../colors";
+@import "../../../other";
+@import "../../../utils";
 
 .properties-header-root {
+    @extend %flex-row;
     user-select: none;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-bottom: $indent_xs solid $back-light;
+    border-bottom: smallBorder($back-light, $indent_xs);
     padding-top: $indent_l;
 }
 
 .properties-header-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @extend %flex-column;
     width: 60px;
 }
 
 .properties-header-params {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    @extend %flex-row;
     width: $full-size;
     margin-bottom: $indent_s;
 }
@@ -31,11 +27,9 @@
 }
 
 .properties-header-description {
-    width: calc(#{$full-size} - #{$item-size_big});
+    @extend %flex-column;
+    width: calcSize($item-size_big);
     margin-left: $indent_s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .properties-header-name-field {

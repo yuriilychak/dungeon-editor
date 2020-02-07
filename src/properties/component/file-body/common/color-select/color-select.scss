@@ -5,7 +5,7 @@
 
 .properties-color-select-tooltip {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calcSize(10px);
   left: $half-size;
   transform: translateX(-$half-size);
   z-index: 2;

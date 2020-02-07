@@ -1,14 +1,14 @@
-import { connect } from 'react-redux';
+import {connectStore} from "../helpers";
 import { Properties } from "./component";
 import {ProjectData} from "../project-data";
 import {showRenameFileDialog} from "../rename-file-dialog/action";
 import {selectLibraryElement, selectStageElement, changeStageElement, changeSelectedSection} from "./action";
 import {WorkingStage} from "../working-stage";
 
-const mapStateToProps = state => ({ ...state.properties });
-
-const mapDispatchToProps = dispatch => {
-    return {
+export default connectStore(
+    Properties,
+    "properties",
+    dispatch => ({
         init() {
             WorkingStage.setChangeStageElementCallback(({data}) => dispatch(changeStageElement(data)));
             WorkingStage.setSelectStageElementCallback(({data}) => dispatch(selectStageElement(data)));
@@ -42,12 +42,5 @@ const mapDispatchToProps = dispatch => {
         onChangeSelectedSection(sectionId) {
             dispatch(changeSelectedSection(sectionId));
         }
-    }
-};
-
-const ConProperties = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Properties);
-
-export default ConProperties;
+    })
+);

@@ -1,31 +1,35 @@
 @import "../../../../sizes";
 @import "../../../../colors";
 
-.section-body-icon {
-    font-size: $font-size_huge !important;
+.section-body {
+    &-icon {
+        font-size: $font-size_huge !important;
+    }
+
+    &-text {
+        color: $text-contrast;
+        font-size: $font-size_big;
+    }
+
+    &-empty {
+        user-drag: none;
+        user-select: none;
+        padding: $indent_none $indent_xl $indent_m $indent_xl;
+    }
+
+    &-preview {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+
+    &-preview-image {
+        height: 200px;
+        width: auto;
+    }
 }
 
-.section-body-text {
-    color: $text-contrast;
-    font-size: $font-size_big;
-}
 
-.section-body-empty {
-    user-drag: none;
-    user-select: none;
-    padding: 0 12px 6px 12px;
-}
-
-.section-body-preview {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
-.section-body-preview-image {
-    height: 200px;
-    width: auto;
-}
 

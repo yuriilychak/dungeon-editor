@@ -5,3 +5,15 @@ $font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
 $border-light: smallBorder($back-light);
 $border-main: smallBorder($back-main);
+
+%flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+%flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

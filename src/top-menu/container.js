@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import {connectStore} from "../helpers";
 import { openTab,  closeTab, selectToggle } from './action';
 import { TopMenu } from "./component";
 import { showNewProjectDialog } from "../new-project-dialog/action";
@@ -7,14 +7,10 @@ import ProjectData from "../project-data/project-data";
 
 import SUBSECTIONS from "./enum/subsection";
 
-const mapStateToProps = (state) => {
-    return {
-        ...state.topMenu
-    }
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
+export default connectStore(
+    TopMenu,
+    "topMenu",
+    dispatch => ({
         onOpenTab: id => {
             dispatch(openTab(id));
         },
@@ -22,7 +18,6 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(closeTab());
         },
         onSelectSection: id => {
-
             switch (id) {
                 case SUBSECTIONS.NEW_PROJECT: {
                     dispatch(showNewProjectDialog());
@@ -50,12 +45,5 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(selectToggle(id));
             //dispatch(closeTab());
         }
-    }
-};
-
-const ConTopMenu = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(TopMenu);
-
-export default ConTopMenu;
+    })
+);

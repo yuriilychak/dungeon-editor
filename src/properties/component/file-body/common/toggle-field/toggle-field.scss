@@ -1,19 +1,19 @@
 @import "../../../../../colors";
 @import "../../../../../sizes";
 @import "../../../../../other";
+@import "../../../../../utils";
 
 $inner_button_size: $item-size_small - $indent_m;
 
 .properties-toggle-field {
   &-root {
+    @extend %flex-row;
     width: $item-size_small;
     height: $item-size_small;
     background-color: $back-deep-dark;
     border: $border-main;
     box-sizing: border-box;
-    display: flex;
     justify-content: center;
-    align-items: center;
     padding: $indent_xs;
 
     &-disabled {
@@ -46,7 +46,7 @@ $inner_button_size: $item-size_small - $indent_m;
         left: 0;
         top: $half-size;
         right: 0;
-        border-top: $indent_xs solid $text-contrast;
+        border-top: smallBorder($text-contrast, $indent_xs);
         transform: rotate(-45deg);
       }
 

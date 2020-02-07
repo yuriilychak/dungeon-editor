@@ -1,27 +1,23 @@
-import { connect } from 'react-redux';
-import { hideNewFileDialog, changeElementType } from './action';
+import {connectStore} from "../helpers";
+import {hideNewFileDialog, changeElementType} from './action';
 import ProjectData from '../project-data/project-data';
 import WorkingStage from "../working-stage/working-stage";
-import { NewFileDialog } from "./component";
+import {NewFileDialog} from "./component";
 import {addFile} from "../library/action";
 import {addTab} from "../working-area/action";
 import {openElement} from "../bottom-menu/action";
 
-const mapStateToProps = (state) => {
-    return {
-        ...state.newFileDialog
-    }
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
+export default connectStore(
+    NewFileDialog,
+    'newFileDialog',
+    dispatch => ({
         onClosePopup: () => {
             dispatch(hideNewFileDialog());
         },
         onSubmitPopup: (sectionId, fileName, fileType) => {
             const file = ProjectData.createFile(sectionId, fileName, fileType);
             WorkingStage.createUIElement(fileType, file.id, fileName);
-            
+
             dispatch(addFile(file, sectionId));
             dispatch(addTab(fileName, file.id, sectionId));
             dispatch(openElement(file.id, sectionId));
@@ -30,12 +26,5 @@ const mapDispatchToProps = (dispatch) => {
         onChangeType: typeId => {
             dispatch(changeElementType((typeId)));
         }
-    }
-};
-
-const ConTopMenu = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(NewFileDialog);
-
-export default ConTopMenu;
+    })
+);

@@ -71,7 +71,6 @@
       "!<rootDir>/src/**/index.js",
       "!<rootDir>/src/**/types.js",
       "!<rootDir>/src/**/constant/*.js",
-      "!<rootDir>/src/**/container.js",
       "!<rootDir>/src/**/enum/*.js",
       "!<rootDir>/src/**/state.js"
     ],

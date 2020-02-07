@@ -1,11 +1,13 @@
 @import "colors";
+@import "sizes";
+@import "other";
 
 body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
   background-color: $back-deep-dark;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: $font-family;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -21,10 +23,8 @@ html, #root {
 }
 
 ::-webkit-scrollbar {
-  $scrollbarSize: 8px;
-
-  width: $scrollbarSize;
-  height: $scrollbarSize;
+  width: $item-size_nano;
+  height: $item-size_nano;
 
   &-track {
     background: $back-light;

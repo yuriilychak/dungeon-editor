@@ -1,16 +1,12 @@
-import { connect } from 'react-redux';
-import { hideExportProjectDialog } from './action';
-import { ExportProjectDialog } from "./component";
+import {connectStore} from "../helpers";
+import {hideExportProjectDialog} from './action';
+import {ExportProjectDialog} from "./component";
 import ProjectData from "../project-data/project-data";
 
-const mapStateToProps = (state) => {
-    return {
-        ...state.exportProjectDialog
-    }
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
+export default connectStore(
+    ExportProjectDialog,
+    "exportProjectDialog",
+    dispatch => ({
         onClosePopup: () => {
             dispatch(hideExportProjectDialog());
         },
@@ -18,12 +14,5 @@ const mapDispatchToProps = (dispatch) => {
             ProjectData.save();
             dispatch(hideExportProjectDialog());
         }
-    }
-};
-
-const ConExportProjectPopup = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ExportProjectDialog);
-
-export default ConExportProjectPopup;
+    })
+);

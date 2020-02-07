@@ -1,5 +1,9 @@
 @import "sizes";
 
-@function smallBorder($color) {
-  @return $indent_xxs solid $color;
+@function smallBorder($color, $size: $indent_xxs) {
+  @return $size solid $color;
+}
+
+@function calcSize($offset) {
+  @return calc(#{$full-size} - #{$offset});
 }

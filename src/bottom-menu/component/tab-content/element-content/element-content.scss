@@ -1,15 +1,16 @@
 @import "../../../../sizes";
 @import "../../../../colors";
+@import "../../../../other";
+@import "../../../../utils";
 
 .element-content {
   &-title {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 26px;
+    @extend %flex-row;
+    user-select: none;
+    width: $full-size;
+    height: $item-size_medium;
     font-size: $font-size_big;
-    border-bottom: $indent_xs solid $back-light;
+    border-bottom: smallBorder($back-light, $indent_xs);
     margin-bottom: $indent_m;
   }
   &-root {
@@ -17,7 +18,7 @@
     flex-direction: column;
     width: 330px;
     margin: $indent_l;
-    height: 100%;
+    height: $full-size;
   }
   &-elements-root {
     display: flex;

@@ -1,16 +1,12 @@
-import { connect } from 'react-redux';
+import {connectStore} from "../helpers";
 import { hideNewProjectDialog } from './action';
 import ProjectData from '../project-data/project-data';
 import { NewProjectDialog } from "./component";
 
-const mapStateToProps = (state) => {
-    return {
-        ...state.newProjectDialog
-    }
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
+export default connectStore(
+    NewProjectDialog,
+    "newProjectDialog",
+    dispatch => ({
         onClosePopup: () => {
             dispatch(hideNewProjectDialog());
         },
@@ -18,12 +14,6 @@ const mapDispatchToProps = (dispatch) => {
             ProjectData.rename(projectName);
             dispatch(hideNewProjectDialog());
         }
-    }
-};
+    })
 
-const ConTopMenu = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(NewProjectDialog);
-
-export default ConTopMenu;
+);

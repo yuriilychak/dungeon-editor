@@ -1,28 +1,26 @@
 @import "../../../../../sizes";
 @import "../../../../../colors";
+@import "../../../../../other";
 
 .element-item {
   &-root {
+    @extend %flex-column;
     cursor: pointer;
     font-size: $font-size_small;
     width: $item-size_big;
     height: 42px;
-    display: flex;
-    flex-direction: column;
     margin: $indent_xxs;
     user-select: auto;
   }
   &-content {
+    @extend %flex-row;
     flex: 1;
-    display: flex;
-    align-items: center;
     justify-content: center;
     user-select: none;
   }
   &-title {
+    @extend %flex-row;
     user-select: none;
-    display: flex;
-    align-items: center;
     justify-content: center;
     width: $full-size;
     height: $item-size_micro;

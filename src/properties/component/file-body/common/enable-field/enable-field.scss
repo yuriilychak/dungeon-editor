@@ -1,9 +1,11 @@
+@import "../../../../../sizes";
+
 .properties-enable-field {
   display: flex;
   flex-direction: row;
 
   & > * {
-    margin-right: 8px;
+    margin-right: $indent_l;
     &:last-child {
       margin-right: 0;
     }

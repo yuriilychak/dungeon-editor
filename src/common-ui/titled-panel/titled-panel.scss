@@ -1,15 +1,17 @@
 @import "../../sizes";
 @import "../../colors";
+@import "../../other";
+@import "../../utils";
 
 .titled-panel-root {
-    width: 100%;
-    height: 50%;
+    width: $full-size;
+    height: $half-size;
     display: flex;
     flex-flow: column;
 }
 
 .titled-panel-container {
-    width: calc(100% - 20px);
+    width: calcSize(20px);
     padding: 0 10px;
     display: flex;
     flex-flow: row;
@@ -19,7 +21,7 @@
 
 .titled-panel-body {
     flex-grow : 1;
-    height: calc(100% - 24px);
+    height: calcSize($item-size_small);
     font-size: $font-size_big;
     color: $text-contrast;
     background-color: $back-dark;

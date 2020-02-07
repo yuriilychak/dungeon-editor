@@ -1,93 +1,111 @@
 @import "../../sizes";
 @import "../../colors";
+@import "../../other";
+@import "../../utils";
 
 .file-tree-root {
     width: $full-size;
 }
 
-.rstcustom__rowWrapper {
-    cursor: pointer;
-}
+.rstcustom__ {
+    &rowWrapper {
+        cursor: pointer;
+    }
 
-.rstcustom__rowContents {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    width: $full-size;
-    max-width: $full-size;
-    padding: 0 10px;
-    position: relative;
-}
+    &rowContents {
+        @extend %flex-row;
+        justify-content: left;
+        width: $full-size;
+        max-width: $full-size;
+        padding: $indent_none $indent_xl;
+        position: relative;
+    }
 
-.rstcustom__row {
-    height: $full-size;
-    flex-grow: 1;
-    min-width: 0;
-}
+    &row {
+        height: $full-size;
+        flex-grow: 1;
+        min-width: 0;
+    }
 
-.rstcustom__node {
-    height: 20px !important;
-    padding: 5px 0;
-}
+    &node {
+        height: 20px !important;
+        padding: $indent_s $indent_none;
+    }
 
-.rstcustom__toolbarButton {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-}
+    &toolbarButton {
+        @extend %flex-row;
+        justify-content: left;
+    }
 
-.rstcustom__rowLabel {
-    display: flex;
-    height: $full-size;
-    align-items: center;
-    justify-content: left;
-    flex-grow: 1;
-    padding: 0 5px;
-    min-width: 0;
-}
+    &rowLabel {
+        @extend %flex-row;
+        height: $full-size;
+        justify-content: left;
+        flex-grow: 1;
+        padding: $indent_none $indent_s;
+        min-width: $indent_none;
 
-.rstcustom__rowLabel  > span {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    min-width: 0;
-}
+        & > span {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+    }
 
-.rstcustom__expandButton {
-    transform: translate3d(-35%, -50%, 0);
-}
 
-.rstcustom__expandButton::after {
-    border: solid transparent 6px;
-    border-top-color: $text-contrast;
-    border-left-width: 5px;
-    border-right-width: 5px;
 
-}
+    &expandButton {
+        $button-transform: translate3d(-10%, -50%, 0);
 
-.rstcustom__expandButton:hover::after {
-    border-top-color: $text-contrast;
-}
+        outline: none;
+        width: $item-size_micro;
+        height: $item-size_micro;
+        transform: $button-transform;
 
-.rstcustom__expandButton::after {
-    transform: translate3d(-35%, -50%, 0) rotateZ(-90deg);
-}
+        &::after {
+            outline: none;
+            border: solid transparent $indent_m;
+            border-top-color: $text-contrast;
+            border-left-width: $indent_s;
+            border-right-width: $indent_s;
 
-.rstcustom__collapseButton:hover::after {
-    border-top-color: $text-contrast;
-}
+        }
 
-.rstcustom__collapseButton {
-    transform: translate3d(-35%, -50%, 0);
-}
+        &:hover::after {
+            outline: none;
+            border-top-color: $text-contrast;
+        }
 
-.rstcustom__collapseButton::after {
-    content: '';
-    position: absolute;
-    transform-origin: 5px 5px;
-    transform: translate3d(-35%, -25%, 0);
-    border: solid transparent 6px;
-    border-left-width: 5px;
-    border-right-width: 5px;
-    border-top-color: $text-contrast;
+        &::after {
+            outline: none;
+            transform: $button-transform rotateZ(-90deg);
+        }
+    }
+
+    &collapseButton {
+        $button-transform: translate3d(-10%, -35%, 0);
+
+        outline: none;
+        width: $item-size_micro;
+        height: $item-size_micro;
+        transform: $button-transform;
+
+        &:hover::after {
+            outline: none;
+            border-top-color: $text-contrast;
+        }
+
+        &::after {
+            outline: none;
+            content: '';
+            position: absolute;
+            transform-origin: $indent_s $indent_s;
+            transform: $button-transform;
+            border: solid transparent $indent_m;
+            border-left-width: $indent_s;
+            border-right-width: $indent_s;
+            border-top-color: $text-contrast;
+        }
+    }
 }

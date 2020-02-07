@@ -1,4 +1,5 @@
 import { map, isString } from "lodash";
+import { connect } from 'react-redux';
 
 export function getIndent() {
     return map(arguments, element => `${element}px`).join(" ");
@@ -28,3 +29,5 @@ export const generateLocale = (localeTemplate, t) => {
 
     return result;
 };
+
+export const connectStore = (component, storeKey, callbacks) => connect(state => state[storeKey], callbacks)(component);

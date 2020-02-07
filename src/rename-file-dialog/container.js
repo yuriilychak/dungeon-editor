@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import {connectStore} from "../helpers";
 import { hideRenameFileDialog } from './action';
 import ProjectData from '../project-data/project-data';
 import { RenameFileDialog } from "./component";
@@ -7,14 +7,10 @@ import {renameLibraryElement} from "../properties/action";
 import {checkRename} from "../working-area/action";
 import {WorkingStage} from "../working-stage";
 
-const mapStateToProps = (state) => {
-    return {
-        ...state.renameFileDialog
-    }
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
+export default connectStore(
+    RenameFileDialog,
+    "renameFileDialog",
+    dispatch => ({
         onClosePopup: () => {
             ProjectData.resetFileRename();
             dispatch(hideRenameFileDialog());
@@ -33,12 +29,5 @@ const mapDispatchToProps = dispatch => {
 
             dispatch(hideRenameFileDialog());
         }
-    }
-};
-
-const ConRenameFileDialog = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(RenameFileDialog);
-
-export default ConRenameFileDialog;
+    })
+);
