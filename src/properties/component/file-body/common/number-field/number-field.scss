@@ -1,10 +1,11 @@
 @import "../../../../../colors";
 @import "../../../../../sizes";
+@import "../../../../../other";
 
 .properties-number-filed-root {
   background-color: $back-deep-dark;
-  border: 1px solid $back-main;
-  height: 24px;
+  border: $border-main;
+  height: $item-size_small;
   min-width: 54px;
   width: 54px;
   padding-left: $indent_m;
@@ -38,7 +39,7 @@
   width: 20px;
   margin-right: $indent_xs;
   font-size: $font-size_medium;
-  height: 16px;
+  height: $item-size_micro;
   display: flex;
   align-items: center;
   justify-content: center;

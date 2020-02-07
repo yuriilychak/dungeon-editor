@@ -1,17 +1,17 @@
 @import "../../../../../sizes";
 @import "../../../../../colors";
-
-$font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+@import "../../../../../utils";
+@import "../../../../../other";
 
 .properties-color-select-tooltip {
   position: absolute;
   top: calc(100% + 10px);
   left: $half-size;
-  transform: translateX(-50%);
+  transform: translateX(-$half-size);
   z-index: 2;
   background-color: $primary-main;
   font-size: $font-size_small;
-  padding: 6px;
+  padding: $indent_m;
   opacity: 0;
   pointer-events: none;
 }
@@ -33,7 +33,7 @@ $font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 .rc-color-picker-trigger {
   padding: $indent_none;
   box-shadow: 0 0 0 2px $back-deep-dark inset;
-  border: 1px solid $back-main;
+  border: $border-main;
   border-radius: $indent_none;
   width: $item-size_small;
   height: $item-size_small;
@@ -49,7 +49,7 @@ $font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
 .rc-color-picker-panel-ribbon {
   border-radius: 0;
-  border: 1px solid $back-light;
+  border: $border-light;
   font-family: $font-family;
   color: $text-contrast;
   box-shadow: 0.5px 0 0 3px $back-deep-dark inset;
@@ -57,7 +57,7 @@ $font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
 .rc-color-picker-panel-params input {
   border-radius: 0;
-  border: 1px solid $back-light;
+  border: $border-light;
   background-color: $back-dark;
   font-family: $font-family;
   color: $text-contrast;
@@ -82,7 +82,7 @@ $font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 .rc-color-picker-panel-params input[type=number] {
   background-color: $back-dark;
   border-radius: 0;
-  border: 1px solid $back-light;
+  border: $border-light;
   color: $text-contrast;
 }
 
@@ -93,7 +93,7 @@ $font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 .rc-color-picker-panel-board-handler {
   border-radius: 0;
   box-shadow: 0 0 0 3px black inset;
-  border: $indent_xxs solid $back-light;
+  border: $border-light;
 }
 
 .rc-color-picker-panel-preview {
@@ -106,6 +106,6 @@ $font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   box-shadow: 0 0 0 3px black inset;
   width: $item-size_medium - $indent_xs;
   height: $item-size_medium - $indent_xs;
-  border: $indent_xxs solid $back-light;
+  border: $border-light;
   border-radius: 0;
 }

@@ -1,15 +1,16 @@
 @import "../../../../../colors";
 @import "../../../../../sizes";
+@import "../../../../../other";
 
 .properties-text-filed {
   background-color: $back-deep-dark;
   color: $text-contrast;
   font-size: $font-size_medium;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: $font-family;
   flex: 1;
   outline: none;
   box-sizing: border-box;
-  border: $back-main $indent_xxs solid;
+  border: $border-main;
   height: $item-size_big;
   padding: $indent_m;
   resize: none;

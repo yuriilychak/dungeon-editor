@@ -1,0 +1,7 @@
+@import "utils";
+@import "colors";
+
+$font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+
+$border-light: smallBorder($back-light);
+$border-main: smallBorder($back-main);

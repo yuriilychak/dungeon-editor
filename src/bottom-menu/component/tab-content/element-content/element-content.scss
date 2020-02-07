@@ -9,7 +9,7 @@
     align-items: center;
     height: 26px;
     font-size: $font-size_big;
-    border-bottom: 2px solid $back-light;
+    border-bottom: $indent_xs solid $back-light;
     margin-bottom: $indent_m;
   }
   &-root {

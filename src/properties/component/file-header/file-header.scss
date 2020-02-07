@@ -6,8 +6,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    border-bottom: 2px solid #595a5f;
-    padding-top: 8px;
+    border-bottom: $indent_xs solid $back-light;
+    padding-top: $indent_l;
 }
 
 .properties-header-icon {
@@ -21,8 +21,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
-    margin-bottom: 4px;
+    width: $full-size;
+    margin-bottom: $indent_s;
 }
 
 .properties-header-icon-title {
@@ -31,22 +31,22 @@
 }
 
 .properties-header-description {
-    width: calc(100% - 64px);
-    margin-left: 4px;
+    width: calc(#{$full-size} - #{$item-size_big});
+    margin-left: $indent_s;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .properties-header-name-field {
-    width: 100%;
-    margin-bottom: 4px;
+    width: $full-size;
+    margin-bottom: $indent_s;
     font-size: $font-size_big;
 }
 
 .properties-header-field {
     font-size: $font-size_small;
-    width: 64px;
+    width: $item-size_big;
 }
 
 .properties-header-name {

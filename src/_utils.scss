@@ -1,0 +1,5 @@
+@import "sizes";
+
+@function smallBorder($color) {
+  @return $indent_xxs solid $color;
+}

@@ -1,5 +1,6 @@
 @import "../../../../../colors";
 @import "../../../../../sizes";
+@import "../../../../../other";
 
 $inner_button_size: $item-size_small - $indent_m;
 
@@ -8,7 +9,7 @@ $inner_button_size: $item-size_small - $indent_m;
     width: $item-size_small;
     height: $item-size_small;
     background-color: $back-deep-dark;
-    border: $indent_xxs solid $back-main;
+    border: $border-main;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
