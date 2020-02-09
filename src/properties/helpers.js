@@ -1,6 +1,7 @@
 import { get, isEmpty } from "lodash";
 
-import {FIELD_TYPE, VALUE_FORMAT} from "./constants";
+import {VALUE_FORMAT} from "../enum";
+import {FIELD_TYPE} from "./constants";
 
 const { mCore } = window;
 
@@ -65,6 +66,7 @@ const getNextValue = (value, format, data) => {
             return color.intToHex(value);
         case VALUE_FORMAT.BOOL:
         case VALUE_FORMAT.TEXT:
+        case VALUE_FORMAT.OBJECT:
             return value;
         default:
             return 0;

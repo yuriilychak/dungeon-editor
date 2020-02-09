@@ -7,12 +7,17 @@
     @extend %flex-row;
     user-select: none;
     border-bottom: smallBorder($back-light, $indent_xs);
-    padding-top: $indent_l;
+    height: $item-size_large;
 }
 
 .properties-header-icon {
     @extend %flex-column;
-    width: 60px;
+    height: $full-size;
+    min-width: $item-size_big;
+}
+
+.properties-header-icon-root {
+    padding: $indent_xs;
 }
 
 .properties-header-params {
@@ -28,6 +33,7 @@
 
 .properties-header-description {
     @extend %flex-column;
+    padding-top: $indent_l;
     width: calcSize($item-size_big);
     margin-left: $indent_s;
 }

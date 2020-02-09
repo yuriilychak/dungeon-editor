@@ -1,5 +1,5 @@
 {
-  "iconSize": 20,
+  "iconSize": 28,
   "locales": {
     "emptyDescription": "Properties_EmptyDescription",
     "idTitle": "Properties_IdTitle",
@@ -44,6 +44,13 @@
         "row_2": "Properties_Edit_TextAlignLabel_Main",
         "row_3": "Properties_Edit_Text_Outline",
         "row_4": "Properties_Edit_Text_Shadow"
+      },
+      "button": {
+        "title": "Properties_Stage_Button",
+        "row_0": "Properties_Edit_FrameUp",
+        "row_1": "Properties_Edit_FrameDown",
+        "row_2": "Properties_Edit_FrameOver",
+        "row_3": "Properties_Edit_FrameDisabled"
       }
     }
   },
@@ -101,7 +108,7 @@
     ["common"],
     ["common"],
     ["common"],
-    ["common"],
+    ["common", "button"],
     ["common", "text"],
     ["common"],
     ["common"],
@@ -203,6 +210,32 @@
             ]
           },
           { "id": "stretchHeight" }
+        ]
+      }
+    ],
+    "button": [
+      {
+        "id": "row_0",
+        "content": [
+          { "id": "upFrame" }
+        ]
+      },
+      {
+        "id": "row_1",
+        "content": [
+          { "id": "downFrame" }
+        ]
+      },
+      {
+        "id": "row_2",
+        "content": [
+          { "id": "overFrame" }
+        ]
+      },
+      {
+        "id": "row_3",
+        "content": [
+          { "id": "disabledFrame" }
         ]
       }
     ],
@@ -410,6 +443,36 @@
         "fromUserData": true
       }
     ],
+    "button": [
+      {
+        "id": "upFrame",
+        "type": "dropArea",
+        "format": "OB",
+        "dropId": "texture",
+        "fromUserData": false
+      },
+      {
+        "id": "downFrame",
+        "type": "dropArea",
+        "format": "OB",
+        "dropId": "texture",
+        "fromUserData": false
+      },
+      {
+        "id": "overFrame",
+        "type": "dropArea",
+        "format": "OB",
+        "dropId": "texture",
+        "fromUserData": false
+      },
+      {
+        "id": "disabledFrame",
+        "type": "dropArea",
+        "format": "OB",
+        "dropId": "texture",
+        "fromUserData": false
+      }
+    ],
     "text": [
       {
         "id": "color",
@@ -531,83 +594,83 @@
   "stageData": [
     {
       "locale": "Properties_Stage_None",
-      "icon": "element/container"
+      "icon": "container"
     },
     {
       "locale": "Properties_Stage_UIElement",
-      "icon": "element/ui_element"
+      "icon": "ui_element"
     },
     {
       "locale": "Properties_Stage_Widget",
-      "icon": "element/widget"
+      "icon": "widget"
     },
     {
       "locale": "Properties_Stage_Panel",
-      "icon": "element/panel"
+      "icon": "panel"
     },
     {
       "locale": "Properties_Stage_ImageView",
-      "icon": "element/image_view"
+      "icon": "image_view"
     },
     {
       "locale": "Properties_Stage_Button",
-      "icon": "element/button"
+      "icon": "button"
     },
     {
       "locale": "Properties_Stage_Label",
-      "icon": "element/label"
+      "icon": "label"
     },
     {
       "locale": "Properties_Stage_Slider",
-      "icon": "element/slider"
+      "icon": "slider"
     },
     {
       "locale": "Properties_Stage_ToggleButton",
-      "icon": "element/toggle_button"
+      "icon": "toggle_button"
     },
     {
       "locale": "Properties_Stage_Sprite",
-      "icon": "element/sprite"
+      "icon": "sprite"
     },
     {
       "locale": "Properties_Stage_Container",
-      "icon": "element/container"
+      "icon": "container"
     },
     {
       "locale": "Properties_Stage_ProgressBar",
-      "icon": "element/progress_bar"
+      "icon": "progress_bar"
     },
     {
       "locale": "Properties_Stage_Checkbox",
-      "icon": "element/checkbox"
+      "icon": "checkbox"
     },
     {
       "locale": "Properties_Stage_AtlasLabel",
-      "icon": "element/atlas_label"
+      "icon": "atlas_label"
     },
     {
       "locale": "Properties_Stage_TextField",
-      "icon": "element/text_field"
+      "icon": "text_field"
     },
     {
       "locale": "Properties_Stage_ScrollView",
-      "icon": "element/scroll_view"
+      "icon": "scroll_view"
     },
     {
       "locale": "Properties_Stage_ListView",
-      "icon": "element/list_view"
+      "icon": "list_view"
     },
     {
       "locale": "Properties_Stage_PageView",
-      "icon": "element/page_view"
+      "icon": "page_view"
     },
     {
       "locale": "Properties_Stage_Skeleton",
-      "icon": "element/skeleton"
+      "icon": "skeleton"
     },
     {
       "locale": "Properties_Stage_Particle",
-      "icon": "element/particle"
+      "icon": "particle"
     }
   ]
 }

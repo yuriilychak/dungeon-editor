@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { string, func, node, bool } from "prop-types";
+import { string, number, oneOfType, func, node, bool } from "prop-types";
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -30,7 +30,7 @@ const ExpansionPanelLocal = ({
                 aria-controls={id}
                 id={id}
             >
-                <Icon name={icon} size={16} />
+                <Icon name={icon} size={20} />
                 <span className="expansion-panel-title">
                     {title}
                 </span>
@@ -44,7 +44,7 @@ const ExpansionPanelLocal = ({
 };
 
 ExpansionPanelLocal.propTypes = {
-    id: string.isRequired,
+    id: oneOfType([string, number]).isRequired,
     icon: string.isRequired,
     title: string.isRequired,
     children: node.isRequired,

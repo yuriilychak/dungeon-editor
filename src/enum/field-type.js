@@ -6,7 +6,8 @@ const FIELD_TYPE = {
     NUMBER: "number",
     TOGGLE_GROUP: "toggleGroup",
     ENABLED: "enabled",
-    TEXT: "text"
+    TEXT: "text",
+    DROP_AREA: "dropArea"
 };
 
 export default FIELD_TYPE;

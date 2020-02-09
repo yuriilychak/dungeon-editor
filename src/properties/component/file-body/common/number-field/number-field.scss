@@ -6,8 +6,8 @@
   background-color: $back-deep-dark;
   border: $border-main;
   height: $item-size_small;
-  min-width: 54px;
-  width: 54px;
+  min-width: $item-size_big;
+  width: $item-size_big;
   padding-left: $indent_m;
   box-sizing: border-box;
 }

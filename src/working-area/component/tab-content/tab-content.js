@@ -4,7 +4,7 @@ import Close from "@material-ui/icons/Close";
 
 import {Icon} from "../../../common-ui/icon";
 
-import "./tab-content.css"
+import "./tab-content.scss"
 
 const TabContent = ({title, icon, index, onClose, isDefault}) => {
     return (

@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 import { ELEMENT_DROP_ID } from "../../../constant";
 
-import "./working-canvas.css"
+import "./working-canvas.scss"
 
 const WorkingCanvas = ({onGetCanvasRef, hidden, onCreateElement}) => {
     const onDrop = event => {

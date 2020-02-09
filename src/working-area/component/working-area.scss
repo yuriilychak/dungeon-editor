@@ -50,7 +50,7 @@
     @extend %flex-row;
     cursor: pointer;
     justify-content: center;
-    width: 48px;
+    width: $item-size_large;
     height: $item-size_small;
     margin-left: $indent_l;
     background-color: $back-main;

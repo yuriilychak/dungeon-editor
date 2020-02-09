@@ -25,7 +25,11 @@ const FileHeader = ({
                     }) => {
     const iconSection = (
         <div className="properties-header-icon">
-            <Icon name={iconName} size={iconSize}/>
+            <Icon
+                name={iconName}
+                size={iconSize}
+                className="properties-header-icon-root"
+            />
             <div className="properties-header-icon-title">
                 {fileType}
             </div>

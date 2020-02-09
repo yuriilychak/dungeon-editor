@@ -50,7 +50,7 @@ export const PropertySection = ({
     return (
         <ExpansionPanel
             id={id}
-            icon={`properties/${id}`}
+            icon={id}
             expanded={expanded}
             onChange={handleExpansionChange}
             title={sectionLocale.title}

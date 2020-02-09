@@ -1,0 +1,7 @@
+@import "../../sizes";
+
+.properties-empty-text {
+    user-select: none;
+    font-size: $font-size_medium;
+    padding: $indent_l $indent_xl;
+}

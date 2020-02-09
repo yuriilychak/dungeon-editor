@@ -8,7 +8,8 @@ import {ColorSelect} from "../color-select";
 import {ToggleField} from "../toggle-field";
 import {ToggleGroupField} from "../toggle-group-field";
 import {TextField} from "../text-field";
-import {FIELD_TYPE} from "../../../../constants";
+import {FileArea} from "../../../../../common-ui";
+import {FIELD_TYPE} from "../../../../../enum";
 
 const PropertyField = ({
                            id,
@@ -46,6 +47,9 @@ const PropertyField = ({
             break;
         case FIELD_TYPE.TEXT:
             Item = TextField;
+            break;
+        case FIELD_TYPE.DROP_AREA:
+            Item = FileArea;
             break;
         default:
             return null;

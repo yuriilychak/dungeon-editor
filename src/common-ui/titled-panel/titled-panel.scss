@@ -12,7 +12,7 @@
 
 .titled-panel-container {
     width: calcSize(20px);
-    padding: 0 10px;
+    padding: $indent_none 10px;
     display: flex;
     flex-flow: row;
     min-height: $item-size_small;

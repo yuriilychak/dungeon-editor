@@ -1,6 +1,7 @@
 import React from "react";
 
 import {PropertySection} from "./property-section";
+import {FileArea} from "../../../../common-ui";
 
 import "./stage-element-body.scss";
 

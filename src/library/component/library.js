@@ -41,6 +41,7 @@ const Library = props => {
                 icon={tab.icon}
                 key={tab.id}
                 id={tab.id}
+                dropId={tab.dropId}
                 addDirectoryText={addDirectoryLocale}
                 addElementText={addElementLocale}
                 deleteText={deleteItemLocale}
@@ -95,6 +96,7 @@ const Library = props => {
 Library.propTypes = {
     tabs: arrayOf(shape({
         id: number.isRequired,
+        dropId: string.isRequired,
         locale: string.isRequired,
         icon: string.isRequired
     })).isRequired,

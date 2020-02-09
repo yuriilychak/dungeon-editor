@@ -2,9 +2,9 @@
 @import "../../../../../utils";
 
 .properties-stage-element-body-root {
-  font-size: $font-size_small;
+  font-size: $item-size_big;
   overflow: hidden auto;
-  height: calcSize(54px);
+  height: calcSize($item-size_big);
 }
 
 .properties-section-title {

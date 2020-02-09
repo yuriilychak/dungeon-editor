@@ -7,7 +7,7 @@ import {FileHeader} from "./file-header";
 import {LibraryElementBody, StageElementBody} from "./file-body";
 import {generateLocale} from "../../helpers";
 
-import "./properties.css";
+import "./properties.scss";
 
 const Properties = ({
                         file,

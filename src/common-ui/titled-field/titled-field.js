@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import {string, number, oneOfType, node} from "prop-types";
 
-import "./titled-field.css";
+import "./titled-field.scss";
 
 const TitledField = ({
                          title,

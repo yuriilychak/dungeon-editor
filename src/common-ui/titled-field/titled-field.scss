@@ -1,0 +1,27 @@
+@import "../../other";
+@import "../../sizes";
+
+.titled-field {
+    &-root {
+        @extend %flex-row;
+    }
+
+    &-title {
+        user-select: none;
+        padding-right: $indent_s;
+    }
+
+    &-body {
+        @extend %flex-row;
+        user-select: none;
+        flex: 1;
+        min-width: $item-size_none;
+    }
+}
+
+
+
+
+
+
+

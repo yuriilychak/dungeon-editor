@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { string, number, object, oneOfType } from "prop-types";
 
-import "./icon.css";
+import "./icon.scss";
 
 const Icon = ({name, size, className, style = {} }) => (
     <img

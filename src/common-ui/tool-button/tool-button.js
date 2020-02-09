@@ -31,7 +31,7 @@ const ToolButton = ({
         </IconButton>
     );
 
-    return hasPopup ? (
+    return hasPopup && !disabled ? (
         <Tooltip title={title}>
             {content}
         </Tooltip>

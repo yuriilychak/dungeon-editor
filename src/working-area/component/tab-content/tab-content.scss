@@ -1,0 +1,15 @@
+@import "../../../other";
+@import "../../../colors";
+@import "../../../sizes";
+
+.tab-content-root {
+    @extend %flex-row;
+    justify-content: left;
+}
+
+.tab-content-title {
+    font-size: $font-size_small;
+    font-weight: 500;
+    color: $text-contrast;
+    padding: $indent_none $indent_s;
+}

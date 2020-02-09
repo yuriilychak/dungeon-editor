@@ -2,36 +2,43 @@
   "tabs": [
     {
       "id": 0,
+      "dropId": "element",
       "locale": "Library_Elements",
       "icon": "element"
     },
     {
       "id": 1,
+      "dropId": "font",
       "locale": "Library_Fonts",
       "icon": "font"
     },
     {
       "id": 2,
+      "dropId": "particle",
       "locale": "Library_Particles",
       "icon": "particle"
     },
     {
       "id": 3,
+      "dropId": "skeleton",
       "locale": "Library_Skeletons",
       "icon":"skeleton"
     },
     {
       "id": 4,
+      "dropId": "sound",
       "locale": "Library_Sound",
       "icon":"sound"
     },
     {
       "id": 5,
+      "dropId": "texture",
       "locale": "Library_Textures",
       "icon": "texture"
     },
     {
       "id": 6,
+      "dropId": "tileMap",
       "locale": "Library_TileMap",
       "icon": "tile_map"
     }

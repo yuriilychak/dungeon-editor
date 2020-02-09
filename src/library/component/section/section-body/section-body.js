@@ -8,6 +8,7 @@ import "./section-body.scss";
 
 const SectionBody = ({
                          id,
+                         dropId,
                          files,
                          icon,
                          emptyText,
@@ -38,9 +39,11 @@ const SectionBody = ({
 
     return files.length !== 0 ? (
         <FileTree
+            dndType={dropId}
             treeData={files}
             onChange={onChange}
             generateNodeProps={generateNodeProps}
+            shouldCopyOnOutsideDrop
         />
     ) : (
         <span className="section-body-empty">
@@ -51,6 +54,7 @@ const SectionBody = ({
 
 SectionBody.propTypes = {
     id: number.isRequired,
+    dropId: string.isRequired,
     files: arrayOf(object).isRequired,
     icon: string.isRequired,
     emptyText: string.isRequired,

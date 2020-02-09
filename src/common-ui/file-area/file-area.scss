@@ -1,0 +1,59 @@
+@import "../../sizes";
+@import "../../colors";
+@import "../../other";
+
+.file-area {
+  $field-size: $item-size_small - $indent_s;
+
+  &-root {
+    @extend %flex-row;
+    font-size: $font-size_medium;
+    height: $item-size_small;
+    min-width: $item-size_big;
+    background-color: $back-deep-dark;
+    border: $border-main;
+    padding-left: $indent_m;
+    flex: 1;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+  }
+
+  &-title {
+    flex: 1;
+  }
+
+  &-close {
+    @extend %flex-row;
+    background-color: $back-main;
+    cursor: pointer;
+    width: $field-size;
+    margin-right: $indent_xs;
+    font-size: $font-size_medium;
+    height: $item-size_micro;
+    justify-content: center;
+    user-select: none;
+
+    &-disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+
+  &-drop-area {
+    position: absolute;
+    left: 0;
+    right: $item-size_small;
+    top: 0;
+    bottom: 0;
+  }
+
+  :global {
+    .rstcustom__ {
+      &node {
+        max-height: $item-size_small;
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ import CreateNewFolder from "@material-ui/icons/CreateNewFolder";
 import {number, string, func} from "prop-types";
 
 import {ToolButton} from "../../../../common-ui/tool-button";
-import "./section-header.css";
+import "./section-header.scss";
 
 const SectionHeader = ({
                            id,
