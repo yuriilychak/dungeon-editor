@@ -3,3 +3,4 @@ export { default as EDIT_MODE } from "./edit-mode";
 export { default as STAGE_ELEMENT_PROP } from "./stage-element-prop";
 export { default as VALUE_FORMAT } from "./value-format";
 export { default as FIELD_TYPE } from "./field-type";
+export { default as UI_SECTION } from "./ui-section";

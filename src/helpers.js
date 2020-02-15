@@ -8,10 +8,6 @@ export function getIndent() {
 export const getBorderStyle = (color, size = 1, type = "solid") => `${color} ${type} ${size}px`;
 export const createAction = (type, payload) => ({ type, payload });
 export const dispatchAction = (type, payload) => ({ type, payload });
-export const handleAction = (state, handlers, action) => {
-    const handler = handlers[action.type];
-    return handler ? handler(state, action.payload) : state;
-};
 
 export const generateLocale = (localeTemplate, t) => {
     const result = {};
@@ -31,3 +27,5 @@ export const generateLocale = (localeTemplate, t) => {
 };
 
 export const connectStore = (component, storeKey, callbacks) => connect(state => state[storeKey], callbacks)(component);
+
+export const generateReducerData = (definedState, handlers) => ({ definedState, handlers });

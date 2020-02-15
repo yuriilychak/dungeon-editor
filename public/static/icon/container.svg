@@ -7,11 +7,11 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   height="32"
-   width="32"
+   height="16"
+   width="16"
    version="1.1"
    id="svg22"
-   sodipodi:docname="button (9th copy).svg"
+   sodipodi:docname="container.svg"
    inkscape:version="0.92.4 (unknown)">
   <metadata
      id="metadata28">
@@ -21,7 +21,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -41,32 +41,27 @@
      id="namedview24"
      showgrid="false"
      inkscape:pagecheckerboard="true"
-     inkscape:zoom="6.3054108"
-     inkscape:cx="43.003328"
-     inkscape:cy="58.76627"
+     inkscape:zoom="90.509668"
+     inkscape:cx="7.6437651"
+     inkscape:cy="9.4388099"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
      inkscape:current-layer="g20" />
   <g
-     transform="translate(-19,-271.29999)"
+     transform="translate(-19,-287.29999)"
      id="g20">
     <path
-       d="m 35.52,277.29999 v 7 h -1.04 v -7 H 32.4 l 2.6,-3 2.6,3 h -2.08 m 2.08,10 v -1 h 7.28 v -2 l 3.12,2.5 -3.12,2.5 v -2 H 37.6 m -1.04,1 v 1 h -3.12 v -1 h 3.12 m 1.04,9 -2.496,3 -2.704,-3 h 2.08 v -7 h 1.04 v 7 h 2.08 m -12.48,-8 -3.12,-2.45 3.12,-2.55 v 2 h 7.28 v 1 h -7.28 v 2"
+       d="m 28,290.29999 v 3 h -2 v -3 h -1 l 2,-2 2,2 m 0,6 v -2 h 3 v -1 l 2,2 -2,2 v -1 h -3 m 0,4 -2,2 -2,-2 h 1 v -3 h 2 v 3 m -6,-3 -2,-2 2,-2 v 1 h 3 v 2 h -3"
        id="path12"
        inkscape:connector-curvature="0"
-       style="fill:#9595a0;fill-rule:evenodd;stroke:none;stroke-width:1.01980388"
-       sodipodi:nodetypes="ccccccccccccccccccccccccccccccccccccc" />
+       style="fill:#9595a0;fill-rule:evenodd;stroke:none;stroke-width:0.54912519"
+       sodipodi:nodetypes="ccccccccccccccccccccccccccccc" />
     <path
-       d="m 33.44,285.2996 v 3 h 3.12 v -3 z"
+       d="m 26,294.29999 v 2 h 2 v -2 z"
        id="path2"
-       style="fill:#fafafc;fill-opacity:1;stroke-width:1.01980388"
+       style="fill:#fafafc;fill-opacity:1;stroke-width:0.54912519"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
-    <path
-       d="m 55.1,303.2 v 0.1 H 55 v -0.1 h 0.1"
-       id="path16"
-       inkscape:connector-curvature="0"
-       style="fill:#000000;fill-opacity:0.41960784;fill-rule:evenodd;stroke:none" />
   </g>
 </svg>

@@ -11,7 +11,9 @@ import {ActionDialog} from "../../common-ui/action-dialog";
 import {NameInput} from "../../common-ui/name-input";
 
 const NewFileDialog = ({
-                           staticData,
+                           locale,
+                           maxNameLength,
+                           sections,
                            isPopupOpen,
                            elementType,
                            sectionId,
@@ -20,7 +22,6 @@ const NewFileDialog = ({
                            onClosePopup
                        }) => {
     const {t} = useTranslation();
-    const {locale, maxNameLength, sections} = staticData;
     const [isError, setError] = useState(false);
     const section = sections.find(element => element.id === sectionId);
     const sectionName = section ? t(section.locale) : "unknown";
@@ -103,26 +104,24 @@ NewFileDialog.propTypes = {
     isPopupOpen: bool.isRequired,
     sectionId: number.isRequired,
     elementType: number.isRequired,
-    staticData: shape({
-        sections: arrayOf(shape({
+    sections: arrayOf(shape({
+        id: number.isRequired,
+        locale: string.isRequired,
+        types: arrayOf(shape({
             id: number.isRequired,
-            locale: string.isRequired,
-            types: arrayOf(shape({
-                id: number.isRequired,
-                locale: string.isRequired
-            })).isRequired
-        })).isRequired,
-        locale: shape({
-            buttonCancel: string.isRequired,
-            buttonSubmit: string.isRequired,
-            contentTitle: string.isRequired,
-            contentText: string.isRequired,
-            inputError: string.isRequired,
-            inputTitle: string.isRequired,
-            selectTitle: string.isRequired
-        }),
-        maxNameLength: number
+            locale: string.isRequired
+        })).isRequired
+    })).isRequired,
+    locale: shape({
+        buttonCancel: string.isRequired,
+        buttonSubmit: string.isRequired,
+        contentTitle: string.isRequired,
+        contentText: string.isRequired,
+        inputError: string.isRequired,
+        inputTitle: string.isRequired,
+        selectTitle: string.isRequired
     }),
+    maxNameLength: number,
     onChangeType: func,
     onClosePopup: func,
     onSubmitPopup: func

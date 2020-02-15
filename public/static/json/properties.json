@@ -51,6 +51,10 @@
         "row_1": "Properties_Edit_FrameDown",
         "row_2": "Properties_Edit_FrameOver",
         "row_3": "Properties_Edit_FrameDisabled"
+      },
+      "image_view": {
+        "title": "Properties_Stage_ImageView",
+        "row_0": "Frame"
       }
     }
   },
@@ -107,7 +111,7 @@
     ["common"],
     ["common"],
     ["common"],
-    ["common"],
+    ["common", "image_view"],
     ["common", "button"],
     ["common", "text"],
     ["common"],
@@ -210,6 +214,14 @@
             ]
           },
           { "id": "stretchHeight" }
+        ]
+      }
+    ],
+    "image_view": [
+      {
+        "id": "row_0",
+        "content": [
+          { "id": "frameName" }
         ]
       }
     ],
@@ -441,6 +453,15 @@
         "type": "checkbox",
         "format": "BL",
         "fromUserData": true
+      }
+    ],
+    "image_view": [
+      {
+        "id": "frameName",
+        "type": "dropArea",
+        "format": "OB",
+        "dropId": "texture",
+        "fromUserData": false
       }
     ],
     "button": [

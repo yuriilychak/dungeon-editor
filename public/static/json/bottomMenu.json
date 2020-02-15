@@ -46,11 +46,6 @@
               "title": "BottomMenu_Element_TitleToggleButton"
             },
             {
-              "id": 9,
-              "icon": "sprite",
-              "title": "BottomMenu_Element_TitleSprite"
-            },
-            {
               "id": 10,
               "icon": "container",
               "title": "BottomMenu_Element_TitleContainer"

@@ -6,10 +6,11 @@ import {renameFile} from "../library/action";
 import {renameLibraryElement} from "../properties/action";
 import {checkRename} from "../working-area/action";
 import {WorkingStage} from "../working-stage";
+import {UI_SECTION} from "../enum";
 
 export default connectStore(
     RenameFileDialog,
-    "renameFileDialog",
+    UI_SECTION.RENAME_FILE_DIALOG,
     dispatch => ({
         onClosePopup: () => {
             ProjectData.resetFileRename();

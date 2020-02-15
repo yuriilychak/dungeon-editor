@@ -6,10 +6,11 @@ import {NewFileDialog} from "./component";
 import {addFile} from "../library/action";
 import {addTab} from "../working-area/action";
 import {openElement} from "../bottom-menu/action";
+import {UI_SECTION} from "../enum";
 
 export default connectStore(
     NewFileDialog,
-    'newFileDialog',
+    UI_SECTION.NEW_FILE_DIALOG,
     dispatch => ({
         onClosePopup: () => {
             dispatch(hideNewFileDialog());

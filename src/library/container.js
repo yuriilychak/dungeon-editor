@@ -8,14 +8,14 @@ import {showNewFileDialog} from "../new-file-dialog/action";
 import {selectLibraryElement, deleteLibraryElement} from "../properties/action";
 import {removeFile} from "./action";
 import * as LibraryActions from "./action";
-import { SECTION_ID } from "../enum";
+import {SECTION_ID, UI_SECTION} from "../enum";
 import {checkDelete} from "../working-area/action";
 import {addTab} from "../working-area/action";
 import {openElement} from "../bottom-menu/action";
 
 const ConLibrary = connectStore(
     Library,
-    'library',
+    UI_SECTION.LIBRARY,
     dispatch => ({
         onRemoveFile: (sectionId, fileId, isDirectory) => {
             ProjectData.removeFile(fileId, sectionId, isDirectory, removedIds => {

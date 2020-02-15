@@ -4,10 +4,11 @@ import {ProjectData} from "../project-data";
 import {showRenameFileDialog} from "../rename-file-dialog/action";
 import {selectLibraryElement, selectStageElement, changeStageElement, changeSelectedSection} from "./action";
 import {WorkingStage} from "../working-stage";
+import {UI_SECTION} from "../enum";
 
 export default connectStore(
     Properties,
-    "properties",
+    UI_SECTION.PROPERTIES,
     dispatch => ({
         init() {
             WorkingStage.setChangeStageElementCallback(({data}) => dispatch(changeStageElement(data)));

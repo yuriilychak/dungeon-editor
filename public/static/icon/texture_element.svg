@@ -15,13 +15,13 @@
    y="0px"
    viewBox="0 0 15.999999 15.999999"
    xml:space="preserve"
-   sodipodi:docname="insert-picture-icon.svg"
+   sodipodi:docname="texture_element.svg"
    width="16"
    height="16"
    inkscape:version="0.92.4 (unknown)"><metadata
    id="metadata41"><rdf:RDF><cc:Work
        rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
    id="defs39" /><sodipodi:namedview
    pagecolor="#ffffff"
    bordercolor="#666666"
@@ -36,9 +36,9 @@
    id="namedview37"
    showgrid="false"
    inkscape:pagecheckerboard="true"
-   inkscape:zoom="35.751817"
-   inkscape:cx="11.527335"
-   inkscape:cy="4.3709863"
+   inkscape:zoom="25.280352"
+   inkscape:cx="6.4373267"
+   inkscape:cy="7.8028044"
    inkscape:window-x="0"
    inkscape:window-y="24"
    inkscape:window-maximized="1"
@@ -49,9 +49,10 @@
    style="fill:#fffbfb;fill-opacity:1">
 	<path
    style="fill:#fffbfb;fill-opacity:1"
-   d="M 264.959,9.35 H 33.787 C 15.153,9.35 0,24.498 0,43.154 v 212.461 c 0,18.634 15.153,33.766 33.787,33.766 h 231.171 c 18.634,0 33.771,-15.132 33.771,-33.766 V 43.154 C 298.73,24.498 283.593,9.35 264.959,9.35 Z m -71.785,50.273 c 18.02,0 32.634,14.615 32.634,32.634 0,18.019 -14.615,32.634 -32.634,32.634 -18.025,0 -32.634,-14.615 -32.634,-32.634 0,-18.019 14.609,-32.634 32.634,-32.634 z m 61.189,198.526 H 149.362 49.039 c -9.013,0 -13.027,-6.521 -8.964,-14.566 l 56.006,-110.93 c 4.058,-8.044 11.792,-8.762 17.269,-1.605 l 56.316,73.596 c 5.477,7.158 15.05,7.767 21.386,1.354 l 13.777,-13.951 c 6.331,-6.413 15.659,-5.619 20.826,1.762 l 35.675,50.959 c 5.157,7.392 2.046,13.381 -6.967,13.381 z"
+   d="M 298.729,9.35 H 0 V 289.381 H 298.729 Z M 186.70563,61.855807 c 18.02,0 37.34112,16.984876 37.34112,35.003876 0,18.018997 -19.32212,35.003877 -37.34112,35.003877 -18.025,0 -37.34113,-16.98488 -37.34113,-35.003877 0,-18.019 19.31613,-35.003876 37.34113,-35.003876 z M 18.670563,254.37712 112.02338,131.86356 l 74.68225,87.50969 37.34112,-35.00388 56.01169,70.00775 z"
    id="path2"
-   inkscape:connector-curvature="0" />
+   inkscape:connector-curvature="0"
+   sodipodi:nodetypes="cccccssssscccccc" />
 </g>
 <g
    id="g6"

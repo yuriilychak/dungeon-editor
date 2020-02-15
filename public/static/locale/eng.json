@@ -116,6 +116,7 @@
         "Properties_Stage_Button": "Button",
         "Properties_Stage_Widget": "Widget",
         "Properties_Stage_Panel": "Panel",
+        "Properties_Stage_ImageView": "Image",
         "Properties_Stage_UIElement": "UI Element",
         "Properties_Stage_Image": "Image",
         "Properties_Stage_Label": "Label",

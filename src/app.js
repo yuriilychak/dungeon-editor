@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, {useState, useEffect} from "react";
+import {Provider} from "react-redux";
 
 import theme from "./theme";
 
@@ -14,44 +15,56 @@ import {NewFileDialog} from "./new-file-dialog";
 import {ExportProjectDialog} from "./export-project-dialog";
 import {RenameFileDialog} from "./rename-file-dialog";
 import {WorkingArea} from "./working-area";
-import {Loader} from "./common-ui";
-import fetchLocale from "./locale";
+import {loadStatic} from "./loader";
+import initStore from "./store";
 
 import "./app.scss";
 
+
 const App = () => {
-    const [localeFetched, setLocaleFetched] = useState(false);
+    const [store, setStore] = useState(null);
 
-    fetchLocale().then(() => setLocaleFetched(true));
+    useEffect(() => {
+        loadStatic().then(() => setStore(initStore()))
+    }, []);
 
-    return localeFetched ? (
-    <MuiThemeProvider theme={theme}>
-        <div className="app-root">
-            <NewProjectDialog/>
-            <NewFileDialog/>
-            <ExportProjectDialog/>
-            <RenameFileDialog/>
-            <div className="app-grid">
-                <Grid container className="app-full-height">
-                    <Grid item lg={10} md={9} sm={8} className="app-left-column">
-                        <div className="app-working-area">
-                            <WorkingArea/>
-                        </div>
-                        <div className="app-bottom-menu">
-                            <BottomMenu/>
-                        </div>
-                    </Grid>
-                    <Grid item lg={2} md={3} sm={4} className="app-right-column">
-                        <Properties/>
-                        <Library/>
-                    </Grid>
-                </Grid>
-            </div>
-            <TopMenu/>
-        </div>
-    </MuiThemeProvider>
+    return store ? (
+        <Provider store={store}>
+            <MuiThemeProvider theme={theme}>
+                <div className="app-root">
+                    <NewProjectDialog/>
+                    <NewFileDialog/>
+                    <ExportProjectDialog/>
+                    <RenameFileDialog/>
+                    <div className="app-grid">
+                        <Grid container className="app-full-height">
+                            <Grid item lg={10} md={9} sm={8} className="app-left-column">
+                                <div className="app-working-area">
+                                    <WorkingArea/>
+                                </div>
+                                <div className="app-bottom-menu">
+                                    <BottomMenu/>
+                                </div>
+                            </Grid>
+                            <Grid item lg={2} md={3} sm={4} className="app-right-column">
+                                <Properties/>
+                                <Library/>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    <TopMenu/>
+                </div>
+            </MuiThemeProvider>
+        </Provider>
     ) : (
-        <Loader className="loader" size={80} isLoading={!localeFetched} />
+        <div className="loader">
+            <div className="loader-ring">
+                <div/>
+                <div/>
+                <div/>
+                <div/>
+            </div>
+        </div>
     )
 };
 

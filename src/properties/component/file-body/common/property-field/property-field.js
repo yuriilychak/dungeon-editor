@@ -50,6 +50,7 @@ const PropertyField = ({
             break;
         case FIELD_TYPE.DROP_AREA:
             Item = FileArea;
+            userData = data.dropId;
             break;
         default:
             return null;

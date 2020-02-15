@@ -1,6 +1,5 @@
-import StaticData from "./data";
 import STATE from "./state";
-import { handleAction } from "../helpers";
+import {generateReducerData} from "../helpers";
 
 /**
  * @typedef {Object}
@@ -15,73 +14,6 @@ import { handleAction } from "../helpers";
  * @property {Array<LibraryData>} tabs
  * @property {Array<Object>} files
  */
-
-/**
- * @type {LibraryState}
- */
-
-export const initialState = {
-    ...StaticData,
-    files: [[], [], [], [], [], [], []]
-};
-
-/**
- * @type {Object.<string, function(LibraryState, ActionData): LibraryState>}
- */
-
-const actionHandlers = {
-    [STATE.ADD_DIRECTORY]: (state, payload) => addElementToTree(payload, true, state),
-    [STATE.ADD_FILE]: (state, payload) => addElementToTree(payload, false, state),
-    [STATE.REMOVE_FILE]: (state, payload) => {
-        const files = state.files.slice(0);
-        const { sectionId, id } = payload;
-        const fileTree = files[sectionId];
-        const element = findElement(fileTree, id);
-        const parentId = element.parentId;
-
-        if (parentId === -1) {
-            files[sectionId] = fileTree.filter(element => element.id !== id);
-        }
-        else {
-            const parent = findElement(fileTree, parentId);
-            parent.children = parent.children.filter(element => element.id !== id);
-
-            files[sectionId] = fileTree.slice(0);
-        }
-
-        return {
-            ...state,
-            files
-        }
-    },
-    [STATE.UPDATE_TREE]: (state, payload) => {
-        const files = state.files.slice(0);
-        const {fileTree, sectionId} = payload;
-        refreshParentIds(fileTree);
-
-        files[sectionId] = fileTree;
-
-        return {...state, files};
-    },
-    [STATE.RENAME_FILE]: (state, payload) => {
-        const files = state.files.slice(0);
-        const {id, sectionId, name} = payload;
-        const fileTree = files[sectionId];
-
-        const element = findElement(fileTree, id);
-
-        if (!element) {
-            return state;
-        }
-
-        element.title = name;
-
-        files[sectionId] = fileTree.slice(0);
-
-        return {...state, files};
-    },
-    [STATE.CLEAR]: state => ({...state, files: [[], [], [], [], [], [], []]})
-};
 
 function refreshParentIds(files, parentId = -1) {
     files.forEach(file => {
@@ -155,6 +87,61 @@ function findElement(data, id) {
  * @return {LibraryState}
  */
 
-export default function topMenuReducer(state = initialState, action) {
-    return handleAction(state, actionHandlers, action);
-}
+export default generateReducerData(
+    {
+        files: [[], [], [], [], [], [], []]
+    },
+    {
+        [STATE.ADD_DIRECTORY]: (state, payload) => addElementToTree(payload, true, state),
+        [STATE.ADD_FILE]: (state, payload) => addElementToTree(payload, false, state),
+        [STATE.REMOVE_FILE]: (state, payload) => {
+            const files = state.files.slice(0);
+            const { sectionId, id } = payload;
+            const fileTree = files[sectionId];
+            const element = findElement(fileTree, id);
+            const parentId = element.parentId;
+
+            if (parentId === -1) {
+                files[sectionId] = fileTree.filter(element => element.id !== id);
+            }
+            else {
+                const parent = findElement(fileTree, parentId);
+                parent.children = parent.children.filter(element => element.id !== id);
+
+                files[sectionId] = fileTree.slice(0);
+            }
+
+            return {
+                ...state,
+                files
+            }
+        },
+        [STATE.UPDATE_TREE]: (state, payload) => {
+            const files = state.files.slice(0);
+            const {fileTree, sectionId} = payload;
+            refreshParentIds(fileTree);
+
+            files[sectionId] = fileTree;
+
+            return {...state, files};
+        },
+        [STATE.RENAME_FILE]: (state, payload) => {
+            const files = state.files.slice(0);
+            const {id, sectionId, name} = payload;
+            const fileTree = files[sectionId];
+
+            const element = findElement(fileTree, id);
+
+            if (!element) {
+                return state;
+            }
+
+            element.title = name;
+
+            files[sectionId] = fileTree.slice(0);
+
+            return {...state, files};
+        },
+        [STATE.CLEAR]: state => ({...state, files: [[], [], [], [], [], [], []]})
+    }
+    );

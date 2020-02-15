@@ -7,8 +7,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   height="32"
-   width="32"
+   height="16"
+   width="16"
    version="1.1"
    id="svg22"
    sodipodi:docname="scroll_view.svg"
@@ -41,32 +41,27 @@
      id="namedview24"
      showgrid="false"
      inkscape:pagecheckerboard="true"
-     inkscape:zoom="1.5763527"
-     inkscape:cx="202.96247"
-     inkscape:cy="99.973198"
+     inkscape:zoom="35.66879"
+     inkscape:cx="-0.069067928"
+     inkscape:cy="5.9090118"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
      inkscape:current-layer="g20" />
   <g
-     transform="translate(-19,-271.29999)"
+     transform="translate(-19,-287.29999)"
      id="g20">
     <path
-       d="m 42,300.29999 v -6 h 6 v 6 h -6 m -1,-7 H 22 v -19 h 19 v 19"
+       d="m 31,302.29999 v -3 h 3 v 3 h -3 m -1,-4 H 20 v -10 h 10 v 10"
        id="path12"
        inkscape:connector-curvature="0"
-       style="fill:#9595a0;fill-rule:evenodd;stroke:none"
+       style="fill:#9595a0;fill-rule:evenodd;stroke:none;stroke-width:0.53846157"
        sodipodi:nodetypes="cccccccccc" />
     <path
-       d="m 42,274.2996 v 19 h 6 v -19 z m 3,2 2,3 h -4 z m -2,12 h 4 l -2,3 z m -21,6 v 6 h 19 v -6 z m 5,1 v 4 l -3,-2 z m 9,0 3,2 -3,2 z"
+       d="m 31,288.29978 v 10.00021 h 3 v -10.00021 z m 1.5,1.00021 1,2 h -2 z m -1,6 h 2 l -1,2 z m -11.5,4 v 2.99979 h 10 v -2.99979 z m 2.999807,0.5 3.85e-4,2 -2.000192,-1 z m 4.000001,0 2.000192,1 -1.999808,1 z"
        id="path2"
-       style="fill:#fafafc;fill-opacity:1"
+       style="fill:#fafafc;fill-opacity:1;stroke-width:0.53846157"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccccccccccccccccccccc" />
-    <path
-       d="m 55.1,303.2 v 0.1 H 55 v -0.1 h 0.1"
-       id="path16"
-       inkscape:connector-curvature="0"
-       style="fill:#000000;fill-opacity:0.41960784;fill-rule:evenodd;stroke:none" />
   </g>
 </svg>

@@ -3,10 +3,11 @@ import {WorkingArea} from "./component";
 import {selectTab, closeTab, zoomChange, transformReset, changeMode} from "./action";
 import {WorkingStage} from "../working-stage";
 import {openElement} from "../bottom-menu/action";
+import {UI_SECTION} from "../enum";
 
 export default connectStore(
     WorkingArea,
-    "workingArea",
+    UI_SECTION.WORKING_AREA,
     dispatch => ({
         onComponentMount() {
             WorkingStage.setZoomCallback(zoom => dispatch(zoomChange(zoom)));

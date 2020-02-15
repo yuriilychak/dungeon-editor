@@ -202,6 +202,8 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
                 return result;
             }
+            case VALUE_FORMAT.OBJECT:
+                return value.title;
             default:
                 return 0;
         }

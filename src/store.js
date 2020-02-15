@@ -1,3 +1,7 @@
+import {createStore, combineReducers} from 'redux';
+
+import {JSON_DATA } from "./loader";
+import {UI_SECTION} from "./enum";
 import TopMenuReducer from "./top-menu/reducer";
 import bottomMenuReducer from "./bottom-menu/reducer";
 import newFileDialogReducer from "./new-file-dialog/reducer";
@@ -7,7 +11,6 @@ import exportProjectDialogReducer from "./export-project-dialog/reducer";
 import libraryReducer from "./library/reducer";
 import propertiesReducer from "./properties/reducer";
 import workingAreaReducer from "./working-area/reducer";
-import { createStore, combineReducers } from 'redux';
 
 /**
  * @typedef {Object}
@@ -16,16 +19,36 @@ import { createStore, combineReducers } from 'redux';
  * @property {*} payload
  */
 
-const store = createStore(combineReducers({
-    topMenu: TopMenuReducer,
-    bottomMenu: bottomMenuReducer,
-    library: libraryReducer,
-    properties: propertiesReducer,
-    renameFileDialog: renameFileDialogReducer,
-    exportProjectDialog: exportProjectDialogReducer,
-    newFileDialog: newFileDialogReducer,
-    newProjectDialog: newProjectDialogReducer,
-    workingArea: workingAreaReducer
-}));
+const initStore = () => {
+    const content = {
+        [UI_SECTION.TOP_MENU]: TopMenuReducer,
+        [UI_SECTION.BOTTOM_MENU]: bottomMenuReducer,
+        [UI_SECTION.LIBRARY]: libraryReducer,
+        [UI_SECTION.PROPERTIES]: propertiesReducer,
+        [UI_SECTION.RENAME_FILE_DIALOG]: renameFileDialogReducer,
+        [UI_SECTION.EXPORT_PROJECT_DIALOG]: exportProjectDialogReducer,
+        [UI_SECTION.NEW_FILE_DIALOG]: newFileDialogReducer,
+        [UI_SECTION.NEW_PROJECT_DIALOG]: newProjectDialogReducer,
+        [UI_SECTION.WORKING_AREA]: workingAreaReducer
+    };
 
-export default store;
+    const sectionIds = Object.values(UI_SECTION);
+
+    const reducers = {};
+
+    sectionIds.forEach(sectionId => {
+        const { definedState, handlers } = content[sectionId];
+        const initialState = {
+            ...definedState,
+            ...JSON_DATA[sectionId]
+        };
+        reducers[sectionId] = (state = initialState, action)  => {
+            const handler = handlers[action.type];
+            return handler ? handler(state, action.payload) : state;
+        };
+    });
+
+    return createStore(combineReducers(reducers));
+};
+
+export default initStore;

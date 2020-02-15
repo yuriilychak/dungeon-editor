@@ -1,6 +1,5 @@
 import STATE from "./state";
-import StaticData from "./data";
-import { handleAction } from "../helpers";
+import {generateReducerData} from "../helpers";
 
 /**
  * @typedef {Object}
@@ -18,28 +17,6 @@ import { handleAction } from "../helpers";
  * @property {?ProgressData} progressData
  */
 
-/**
- * @type {ExportProjectDialogState}
- */
-
-export const initialState = {
-    ...StaticData,
-    isPopupOpen: false,
-    progressData: null
-};
-
-/**
- * @type {Object.<string, function(ExportProjectDialogState, ActionData): ExportProjectDialogState>}
- */
-
-const actionHandlers = {
-    [STATE.CHANGE_ACTIVITY]: (state, isPopupOpen) => ({
-        ...state,
-        isPopupOpen,
-        progressData: null
-    }),
-    [STATE.PROGRESS]: (state, progressData) => ({ ...state, progressData })
-};
 
 /**
  * @param {ExportProjectDialogState} state
@@ -47,6 +24,17 @@ const actionHandlers = {
  * @return {ExportProjectDialogState}
  */
 
-export default function topMenuReducer(state = initialState, action) {
-    return handleAction(state, actionHandlers, action);
-}
+export default generateReducerData(
+    {
+        isPopupOpen: false,
+        progressData: null
+    },
+    {
+        [STATE.CHANGE_ACTIVITY]: (state, isPopupOpen) => ({
+            ...state,
+            isPopupOpen,
+            progressData: null
+        }),
+        [STATE.PROGRESS]: (state, progressData) => ({ ...state, progressData })
+    }
+);

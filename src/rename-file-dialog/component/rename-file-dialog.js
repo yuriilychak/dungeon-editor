@@ -7,8 +7,7 @@ import {NameInput} from "../../common-ui/name-input";
 
 const RenameFileDialog = props => {
     const { t } = useTranslation();
-    const { staticData, isPopupOpen } = props;
-    const { locale, maxNameLength } = staticData;
+    const { locale, maxNameLength, isPopupOpen } = props;
     const [ isError, setError ] = useState(false);
 
     let nameInputRef = React.createRef();
@@ -55,17 +54,15 @@ const RenameFileDialog = props => {
 
 RenameFileDialog.propTypes = {
     isPopupOpen: bool,
-    staticData: shape({
-        locale: shape({
-            buttonCancel: string,
-            buttonSubmit: string,
-            contentTitle: string,
-            contentText: string,
-            inputError: string,
-            inputTitle: string
-        }),
-        maxNameLength: number
+    locale: shape({
+        buttonCancel: string,
+        buttonSubmit: string,
+        contentTitle: string,
+        contentText: string,
+        inputError: string,
+        inputTitle: string
     }),
+    maxNameLength: number,
     onClosePopup: func,
     onSubmitProject: func
 };

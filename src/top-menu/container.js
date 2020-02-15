@@ -6,10 +6,11 @@ import { showExportProjectDialog } from "../export-project-dialog/action";
 import ProjectData from "../project-data/project-data";
 
 import SUBSECTIONS from "./enum/subsection";
+import {UI_SECTION} from "../enum";
 
 export default connectStore(
     TopMenu,
-    "topMenu",
+    UI_SECTION.TOP_MENU,
     dispatch => ({
         onOpenTab: id => {
             dispatch(openTab(id));
