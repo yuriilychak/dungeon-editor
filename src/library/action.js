@@ -1,4 +1,5 @@
 import state from "./state";
+import { handleAction } from "../helpers";
 
 
 /**
@@ -7,13 +8,7 @@ import state from "./state";
  * @return {ActionData}
  */
 
-export const addFile = (data, sectionId) => ({
-    type: state.ADD_FILE,
-    payload: {
-        data,
-        sectionId
-    }
-});
+export const addFile = (data, sectionId) => handleAction(state.ADD_FILE, { data, sectionId });
 
 /**
  * @function
@@ -22,14 +17,7 @@ export const addFile = (data, sectionId) => ({
  * @return {ActionData}
  */
 
-export const renameFile = (id, sectionId, name) => ({
-    type: state.RENAME_FILE,
-    payload: {
-        id,
-        sectionId,
-        name
-    }
-});
+export const renameFile = (id, sectionId, name) => handleAction(state.RENAME_FILE, { id, sectionId, name });
 
 
 /**
@@ -39,13 +27,7 @@ export const renameFile = (id, sectionId, name) => ({
  * @return {ActionData}
  */
 
-export const removeFile = (id, sectionId) => ({
-    type: state.REMOVE_FILE,
-    payload: {
-        id,
-        sectionId
-    }
-});
+export const removeFile = (id, sectionId) => handleAction(state.REMOVE_FILE, { id, sectionId });
 
 /**
  * @function
@@ -54,13 +36,7 @@ export const removeFile = (id, sectionId) => ({
  * @return {ActionData}
  */
 
-export const updateTree = (fileTree, sectionId) => ({
-    type: state.UPDATE_TREE,
-    payload: {
-        fileTree,
-        sectionId
-    }
-});
+export const updateTree = (fileTree, sectionId) => handleAction(state.UPDATE_TREE, { fileTree, sectionId });
 
 /**
  * @function
@@ -69,20 +45,13 @@ export const updateTree = (fileTree, sectionId) => ({
  * @return {ActionData}
  */
 
-export const addDirectory = (sectionId, data) => ({
-    type: state.ADD_DIRECTORY,
-    payload: {
-        data,
-        sectionId
-    }
-});
+export const addDirectory = (sectionId, data) => handleAction(state.ADD_DIRECTORY, { data, sectionId });
 
 /**
  * @function
  * @return {ActionData}
  */
 
-export const clearLibrary = () => ({
-        type: state.CLEAR,
-        payload: null
-});
+export const clearLibrary = () => handleAction(state.CLEAR);
+
+export const changeSelectedSection = selectedId => handleAction(state.CHANGE_SELECTED_SECTION, selectedId);

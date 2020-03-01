@@ -6,12 +6,14 @@ import {showExportProjectDialog} from "../export-project-dialog/action";
 import {showRenameFileDialog} from "../rename-file-dialog/action";
 import {showNewFileDialog} from "../new-file-dialog/action";
 import {selectLibraryElement, deleteLibraryElement} from "../properties/action";
-import {removeFile} from "./action";
+import {removeFile, changeSelectedSection } from "./action";
 import * as LibraryActions from "./action";
 import {SECTION_ID, UI_SECTION} from "../enum";
 import {checkDelete} from "../working-area/action";
 import {addTab} from "../working-area/action";
 import {openElement} from "../bottom-menu/action";
+
+const NEW_FILE_DIALOG_IDS = [SECTION_ID.ELEMENT, SECTION_ID.PARTICLE, SECTION_ID.TILE_MAP];
 
 const ConLibrary = connectStore(
     Library,
@@ -48,11 +50,7 @@ const ConLibrary = connectStore(
             ProjectData.export();
         },
         onAddFile: sectionId => {
-            if (
-                sectionId === SECTION_ID.ELEMENT ||
-                sectionId === SECTION_ID.PARTICLE ||
-                sectionId === SECTION_ID.TILE_MAP
-            ) {
+            if (NEW_FILE_DIALOG_IDS.includes(sectionId)) {
                 dispatch(showNewFileDialog(sectionId));
             } else {
                 ProjectData.addFiles();
@@ -75,6 +73,9 @@ const ConLibrary = connectStore(
 
             dispatch(addTab(element.name, fileId, sectionId));
             dispatch(openElement(fileId, sectionId));
+        },
+        onExpansionChange: selectedId => {
+            dispatch(changeSelectedSection(selectedId));
         }
     })
 );

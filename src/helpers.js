@@ -6,8 +6,7 @@ export function getIndent() {
 }
 
 export const getBorderStyle = (color, size = 1, type = "solid") => `${color} ${type} ${size}px`;
-export const createAction = (type, payload) => ({ type, payload });
-export const dispatchAction = (type, payload) => ({ type, payload });
+export const handleAction = (type, payload = null) => ({ type, payload });
 
 export const generateLocale = (localeTemplate, t) => {
     const result = {};

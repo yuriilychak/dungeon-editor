@@ -1,4 +1,5 @@
 const SECTION_ID = {
+    NONE: -1,
     ELEMENT: 0,
     FONT: 1,
     PARTICLE: 2,

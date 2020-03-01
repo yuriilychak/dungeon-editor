@@ -9,6 +9,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 
 import {ActionDialog} from "../../common-ui/action-dialog";
 import {NameInput} from "../../common-ui/name-input";
+import {generateLocale} from "../../helpers";
 
 const NewFileDialog = ({
                            locale,
@@ -22,6 +23,7 @@ const NewFileDialog = ({
                            onClosePopup
                        }) => {
     const {t} = useTranslation();
+    const locales = generateLocale(locale, t);
     const [isError, setError] = useState(false);
     const section = sections.find(element => element.id === sectionId);
     const sectionName = section ? t(section.locale) : "unknown";
@@ -83,8 +85,8 @@ const NewFileDialog = ({
             dialogId={"new-file"}
             title={t(locale.contentTitle, sectionObject)}
             description={t(locale.contentText, sectionObject)}
-            submitTitle={t(locale.buttonSubmit)}
-            rejectTitle={t(locale.buttonCancel)}
+            submitTitle={locales.buttonSubmit}
+            rejectTitle={locales.buttonCancel}
             onReject={onReject}
             onSubmit={onSubmit}
         >
@@ -92,7 +94,7 @@ const NewFileDialog = ({
                 isError={isError}
                 ref={ref => nameInputRef = ref}
                 titleLocale={t(locale.inputTitle, sectionObject)}
-                errorLocale={t(locale.inputError)}
+                errorLocale={locales.inputError}
                 maxLength={maxNameLength}
             />
             {typeSelect}

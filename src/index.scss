@@ -2,10 +2,12 @@
 @import "sizes";
 @import "other";
 
+$height: 100vh;
+
 body {
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
+  min-height: $height;
+  margin: $indent_none;
+  padding: $indent_none;
   background-color: $back-deep-dark;
   font-family: $font-family;
   -webkit-font-smoothing: antialiased;
@@ -17,7 +19,7 @@ div {
 }
 
 html, #root {
-  height: 100vh;
+  height: $height;
   overflow: hidden;
   background-color: $back-deep-dark;
 }

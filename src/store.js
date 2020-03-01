@@ -33,18 +33,22 @@ const initStore = () => {
     };
 
     const sectionIds = Object.values(UI_SECTION);
+    const sectionKeys = Object.keys(UI_SECTION);
 
     const reducers = {};
 
-    sectionIds.forEach(sectionId => {
+    sectionIds.forEach((sectionId, index) => {
         const { definedState, handlers } = content[sectionId];
         const initialState = {
             ...definedState,
             ...JSON_DATA[sectionId]
         };
-        reducers[sectionId] = (state = initialState, action)  => {
-            const handler = handlers[action.type];
-            return handler ? handler(state, action.payload) : state;
+        reducers[sectionId] = (state = initialState, { type, payload })  => {
+            if (type.indexOf(sectionKeys[index]) !== 0) {
+                return state;
+            }
+            const handler = handlers[type];
+            return handler ? handler(state, payload) : state;
         };
     });
 

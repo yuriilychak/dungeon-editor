@@ -1,15 +1,6 @@
 import STATE from "./state";
+import {handleAction} from "../helpers";
 
-export const showNewFileDialog = sectionId => ({
-    type: STATE.OPEN_POPUP,
-    payload: sectionId
-});
-export const hideNewFileDialog = () => ({
-    type: STATE.CLOSE_POPUP,
-    payload: null
-});
-
-export const changeElementType = typeId => ({
-    type: STATE.CHANGE_TYPE,
-    payload: typeId
-});
+export const showNewFileDialog = sectionId => handleAction(STATE.OPEN_POPUP, sectionId);
+export const hideNewFileDialog = () => handleAction(STATE.CLOSE_POPUP);
+export const changeElementType = typeId => handleAction(STATE.CHANGE_TYPE, typeId);

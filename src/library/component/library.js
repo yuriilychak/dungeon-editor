@@ -6,13 +6,13 @@ import Add from "@material-ui/icons/Add";
 import Publish from "@material-ui/icons/Publish";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 
-import { TitledPanel } from "../../common-ui/titled-panel";
-import {ToolButton} from "../../common-ui/tool-button";
-import {DropArea} from "../../common-ui/drop-area";
+import { TitledPanel, ToolButton, DropArea } from "../../common-ui";
 import {Section} from "./section";
+import {generateLocale} from "../../helpers";
 
 const Library = props => {
     const {
+        selectedId,
         locales,
         tabs,
         files,
@@ -26,27 +26,25 @@ const Library = props => {
         onExportProject,
         onPublishProject,
         onSelectFile,
-        onUpdateTree
+        onUpdateTree,
+        onExpansionChange
     } = props;
     const {t} = useTranslation();
 
-    const addDirectoryLocale = t(locales.addDirectory);
-    const addElementLocale = t(locales.addElement);
-    const emptyTabLocale = t(locales.emptyTab);
-    const deleteItemLocale = t(locales.itemDelete);
-    const renameItemLocale = t(locales.itemRename);
+    const localeItems = generateLocale(locales, t);
 
     const tabViews = tabs.map(tab => (
             <Section
+                expanded={selectedId === tab.id}
                 icon={tab.icon}
                 key={tab.id}
                 id={tab.id}
                 dropId={tab.dropId}
-                addDirectoryText={addDirectoryLocale}
-                addElementText={addElementLocale}
-                deleteText={deleteItemLocale}
-                emptyText={emptyTabLocale}
-                renameText={renameItemLocale}
+                addDirectoryText={localeItems.addDirectory}
+                addElementText={localeItems.addElement}
+                deleteText={localeItems.itemDelete}
+                emptyText={localeItems.emptyTab}
+                renameText={localeItems.itemRename}
                 titleText={t(tab.locale)}
                 files={files[tab.id]}
                 onAddFile={onAddFile}
@@ -56,6 +54,7 @@ const Library = props => {
                 onRemoveFile={onRemoveFile}
                 onRenameFile={onRenameFile}
                 onSelectFile={onSelectFile}
+                onExpansionChange={onExpansionChange}
             />
         )
     );
@@ -94,6 +93,7 @@ const Library = props => {
 };
 
 Library.propTypes = {
+    selectedId: number.isRequired,
     tabs: arrayOf(shape({
         id: number.isRequired,
         dropId: string.isRequired,
@@ -117,6 +117,7 @@ Library.propTypes = {
             object.isRequired
         )
     ),
+    onExpansionChange: func.isRequired,
     onAddDirectory: func.isRequired,
     onAddFile: func.isRequired,
     onAddFiles: func.isRequired,

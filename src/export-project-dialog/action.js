@@ -1,4 +1,5 @@
 import STATE from "./state";
+import {handleAction} from "../helpers";
 
 /**
  * @return {ActionData}
@@ -19,21 +20,16 @@ export const hideExportProjectDialog = () => changeDialogActivity(false);
  * @return {ActionData}
  */
 
-export const changeProgress = (progress, fileName = null, isComplete = false) => ({
-        type: STATE.PROGRESS,
-        payload: {
-            progress,
-            fileName,
-            isComplete
-        }
-});
+export const changeProgress = (progress, fileName = null, isComplete = false) => handleAction(
+    STATE.PROGRESS, {
+        progress,
+        fileName,
+        isComplete
+    });
 
 /**
  * @param {boolean} activity
  * @return {ActionData}
  */
 
-const changeDialogActivity = activity => ({
-        type: STATE.CHANGE_ACTIVITY,
-        payload: activity
-});
+const changeDialogActivity = activity => handleAction(STATE.CHANGE_ACTIVITY, activity);
