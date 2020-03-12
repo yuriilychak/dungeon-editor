@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import classNames from "classnames";
 
 import EditIcon from '@material-ui/icons/Edit';
@@ -82,5 +82,5 @@ const FileHeader = ({
     )
 };
 
-export default FileHeader;
+export default memo(FileHeader);
 

@@ -1,2 +1,1 @@
-export { LibraryElementBody }  from "./library-element-body";
-export { StageElementBody }  from "./stage-element-body";
+export { default as FileBody } from "./file-body";

@@ -1,15 +1,13 @@
 import React, {useState, memo} from "react";
 import {bool, func, string, number, shape, arrayOf} from "prop-types";
-import {useTranslation} from "react-i18next";
 
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 
-import {ActionDialog} from "../../common-ui/action-dialog";
-import {NameInput} from "../../common-ui/name-input";
-import {generateLocale} from "../../helpers";
+import {NameInput, ActionDialog} from "../../common-ui";
+import {useLocalization} from "../../hooks";
 
 const NewFileDialog = ({
                            locale,
@@ -22,8 +20,7 @@ const NewFileDialog = ({
                            onSubmitPopup,
                            onClosePopup
                        }) => {
-    const {t} = useTranslation();
-    const locales = generateLocale(locale, t);
+    const {localization, t} = useLocalization(locale);
     const [isError, setError] = useState(false);
     const section = sections.find(element => element.id === sectionId);
     const sectionName = section ? t(section.locale) : "unknown";
@@ -85,8 +82,8 @@ const NewFileDialog = ({
             dialogId={"new-file"}
             title={t(locale.contentTitle, sectionObject)}
             description={t(locale.contentText, sectionObject)}
-            submitTitle={locales.buttonSubmit}
-            rejectTitle={locales.buttonCancel}
+            submitTitle={localization.buttonSubmit}
+            rejectTitle={localization.buttonCancel}
             onReject={onReject}
             onSubmit={onSubmit}
         >
@@ -94,7 +91,7 @@ const NewFileDialog = ({
                 isError={isError}
                 ref={ref => nameInputRef = ref}
                 titleLocale={t(locale.inputTitle, sectionObject)}
-                errorLocale={locales.inputError}
+                errorLocale={localization.inputError}
                 maxLength={maxNameLength}
             />
             {typeSelect}

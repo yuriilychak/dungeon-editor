@@ -1,11 +1,10 @@
-import React, {Fragment, useEffect, useMemo} from "react";
+import React, {Fragment, useEffect, useCallback} from "react";
 import {string, func, number, arrayOf, shape, object, bool, objectOf} from "prop-types";
-import {useTranslation} from "react-i18next";
 
-import {TitledPanel} from "../../common-ui/titled-panel";
+import {TitledPanel} from "../../common-ui";
 import {FileHeader} from "./file-header";
-import {LibraryElementBody, StageElementBody} from "./file-body";
-import {generateLocale} from "../../helpers";
+import { FileBody } from "./file-body";
+import {useLocalization} from "../../hooks";
 
 import "./properties.scss";
 
@@ -27,11 +26,13 @@ const Properties = ({
                         onSwitchCompressName,
                         onChangeSelectedSection
                     }) => {
-    const {t} = useTranslation();
-
     useEffect(init, []);
 
-    const localesParsed = useMemo(() => generateLocale(locales, t), [locales, t]);
+    const { localization, t } = useLocalization(locales);
+
+    const handleRenameFile = useCallback(
+        () => onRenameFile(file.id, file.sectionId, file.isStageElement),
+        [file]);
 
     let content;
 
@@ -39,65 +40,48 @@ const Properties = ({
         const data = file.isDirectory ? directoryData :
             file.isStageElement ? stageData[file.sectionId] : sectionData[file.sectionId];
         const fileType = t(data.locale);
-        let fileBody = null;
-
-        if (file.isStageElement) {
-            fileBody = (
-                <StageElementBody
-                    data={file.data}
-                    isRoot={file.isRoot}
-                    currentInfo={currentInfo}
-                    locales={localesParsed.stage}
-                    elementTrees={stageElementTrees}
-                    onChange={onStageElementChange}
-                    onChangeSelectedSection={onChangeSelectedSection}
-                />
-            );
-        } else if (!file.isDirectory) {
-            fileBody = (
-                <LibraryElementBody
-                    file={file}
-                    {...localesParsed.library}
-                    onSwitchAtlas={onSwitchAtlas}
-                    onSwitchCompressSkeleton={onSwitchCompressSkeleton}
-                    onSwitchCompressName={onSwitchCompressName}
-                    onClearAtlas={onClearAtlas}
-                />
-            );
-        }
-
-        const handleRenameFile = () => onRenameFile(file.id, file.sectionId, file.isStageElement);
 
         content = (
             <Fragment>
                 <FileHeader
                     isRoot={file.isRoot}
                     fileName={file.name}
-                    nameTitle={localesParsed.nameTitle}
+                    nameTitle={localization.nameTitle}
                     fileId={file.id}
-                    idTitle={localesParsed.idTitle}
+                    idTitle={localization.idTitle}
                     fileType={fileType}
                     iconName={data.icon}
                     iconSize={iconSize}
                     preview={file.preview}
                     compressName={file.compressName}
                     onSwitchCompressName={onSwitchCompressName}
-                    compressNameLabel={localesParsed.compressNameLabel}
+                    compressNameLabel={localization.compressNameLabel}
                     onRenameFile={handleRenameFile}
                 />
-                {fileBody}
+                <FileBody
+                    file={file}
+                    locales={localization}
+                    currentInfo={currentInfo}
+                    stageElementTrees={stageElementTrees}
+                    onSwitchAtlas={onSwitchAtlas}
+                    onClearAtlas={onClearAtlas}
+                    onStageElementChange={onStageElementChange}
+                    onSwitchCompressSkeleton={onSwitchCompressSkeleton}
+                    onSwitchCompressName={onSwitchCompressName}
+                    onChangeSelectedSection={onChangeSelectedSection}
+                />
             </Fragment>
         );
     } else {
         content = (
             <div className="properties-empty-text">
-                {localesParsed.emptyDescription}
+                {localization.emptyDescription}
             </div>
         );
     }
     return (
         <TitledPanel
-            title={localesParsed.sectionTitle}
+            title={localization.sectionTitle}
         >
             {content}
         </TitledPanel>

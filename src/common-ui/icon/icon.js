@@ -4,7 +4,7 @@ import { string, number, object, oneOfType } from "prop-types";
 
 import "./icon.scss";
 
-const Icon = ({name, size, className, style = {} }) => (
+const Icon = ({name, size = 16, className, style = {} }) => (
     <img
         src={`${process.env.PUBLIC_URL}/static/icon/${name}.svg`}
         style={{
@@ -17,10 +17,6 @@ const Icon = ({name, size, className, style = {} }) => (
         draggable={false}
     />
 );
-
-Icon.defaultProps = {
-    size: 16
-};
 
 Icon.propTypes = {
     name: string.isRequired,

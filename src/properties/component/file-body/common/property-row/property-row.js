@@ -5,10 +5,7 @@ import {TitledField} from "../../../../../common-ui";
 
 import "./property-row.scss";
 
-const PropertyRow = ({
-                         label,
-                         children
-                     }) => (
+const PropertyRow = ({ label, children }) => (
     <TitledField
         className="properties-property-row"
         titleClassName="properties-property-row-title"

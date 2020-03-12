@@ -1,6 +1,5 @@
 import React, {Fragment} from "react";
 import { string, func, number, arrayOf, shape, object } from "prop-types";
-import {useTranslation} from "react-i18next";
 
 import Add from "@material-ui/icons/Add";
 import Publish from "@material-ui/icons/Publish";
@@ -8,7 +7,7 @@ import SaveAlt from "@material-ui/icons/SaveAlt";
 
 import { TitledPanel, ToolButton, DropArea } from "../../common-ui";
 import {Section} from "./section";
-import {generateLocale} from "../../helpers";
+import {useLocalization} from "../../hooks";
 
 const Library = props => {
     const {
@@ -29,9 +28,8 @@ const Library = props => {
         onUpdateTree,
         onExpansionChange
     } = props;
-    const {t} = useTranslation();
 
-    const localeItems = generateLocale(locales, t);
+    const { localization, t } = useLocalization(locales);
 
     const tabViews = tabs.map(tab => (
             <Section
@@ -40,11 +38,11 @@ const Library = props => {
                 key={tab.id}
                 id={tab.id}
                 dropId={tab.dropId}
-                addDirectoryText={localeItems.addDirectory}
-                addElementText={localeItems.addElement}
-                deleteText={localeItems.itemDelete}
-                emptyText={localeItems.emptyTab}
-                renameText={localeItems.itemRename}
+                addDirectoryText={localization.addDirectory}
+                addElementText={localization.addElement}
+                deleteText={localization.itemDelete}
+                emptyText={localization.emptyTab}
+                renameText={localization.itemRename}
                 titleText={t(tab.locale)}
                 files={files[tab.id]}
                 onAddFile={onAddFile}

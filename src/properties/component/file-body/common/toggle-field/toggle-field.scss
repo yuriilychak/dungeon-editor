@@ -49,12 +49,10 @@ $inner_button_size: $item-size_small - $indent_m;
         border-top: smallBorder($text-contrast, $indent_xs);
         transform: rotate(-45deg);
       }
-
-      :global {
-        .MuiSvgIcon-root {
-          opacity: 0.6;
-        }
-      }
     }
+  }
+
+  &-icon {
+    opacity: 0.6;
   }
 }

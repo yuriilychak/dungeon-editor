@@ -1,9 +1,9 @@
-import React, {memo, useCallback} from "react";
+import React, {memo, useCallback, useMemo } from "react";
 import classNames from "classnames";
 import {string, bool, func} from "prop-types";
 
-import {ToolButton} from "../../../../../common-ui";
-import {ICONS, STYLES} from "./constants";
+import {ToolButton, Icon } from "../../../../../common-ui";
+import {STYLES} from "./constants";
 
 import "./toggle-field.scss";
 
@@ -14,14 +14,22 @@ const ToggleField = ({
                          disabled,
                          onChange
                      }) => {
+    const classes = useMemo(() => ({
+        root: classNames(STYLES.ROOT, { [STYLES.ROOT_DISABLED]: disabled }),
+        icon: classNames({ [STYLES.ICON]: !value }),
+        button: classNames(STYLES.BUTTON, { [STYLES.BUTTON_UNCHECKED]: !value })
+    }), [value, disabled]);
+
     const handleClick = useCallback(() => onChange(!value), [value, onChange]);
 
+    const IconElement = () => <Icon name={id} className={classes.icon} />;
+
     return (
-        <div className={classNames(STYLES.ROOT, {[STYLES.ROOT_DISABLED]: disabled})}>
-            <div className={classNames(STYLES.BUTTON, {[STYLES.BUTTON_UNCHECKED]: !value})}>
+        <div className={classes.root}>
+            <div className={classes.button}>
                 <ToolButton
                     onClick={handleClick}
-                    Icon={ICONS[id]}
+                    Icon={IconElement}
                     title={label}
                     disabled={disabled}
                 />
