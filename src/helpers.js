@@ -28,3 +28,5 @@ export const generateLocale = (localeTemplate, t) => {
 export const connectStore = (component, storeKey, callbacks) => connect(state => state[storeKey], callbacks)(component);
 
 export const generateReducerData = (definedState, handlers) => ({ definedState, handlers });
+
+export const addFormat = (path, format) => `${path}.${format}`;
