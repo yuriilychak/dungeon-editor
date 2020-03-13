@@ -1,27 +1,27 @@
-import React, {memo, useCallback} from "react";
+import React, { memo, useCallback } from "react";
 import { number, string, func, arrayOf, object, bool } from "prop-types";
 
-import {SectionHeader} from "./section-header";
-import {SectionBody} from "./section-body";
-import {ExpansionPanel} from "../../../common-ui";
-import {SECTION_ID} from "../../../enum";
+import { SectionHeader } from "./section-header";
+import { SectionBody } from "./section-body";
+import { ExpansionPanel } from "../../../common-ui";
+import { SECTION_ID } from "../../../enum";
 
 const Section = props => {
     const handleExpansionChange = useCallback(
         (event, isExpanded) => props.onExpansionChange(isExpanded ? props.id : SECTION_ID.NONE),
         [props.id, props.onExpansionChange]);
     return (
-    <ExpansionPanel
-        id={props.id}
-        icon={`${props.icon}_root`}
-        title={props.titleText}
-        expanded={props.expanded}
-        onChange={handleExpansionChange}
-        headerContent={<SectionHeader {...props} />}
-    >
-        <SectionBody {...props} />
-    </ExpansionPanel>
-)
+        <ExpansionPanel
+            id={props.id}
+            icon={`${props.icon}_root`}
+            title={props.titleText}
+            expanded={props.expanded}
+            onChange={handleExpansionChange}
+            headerContent={<SectionHeader {...props} />}
+        >
+            <SectionBody {...props} />
+        </ExpansionPanel>
+    );
 };
 
 Section.propTypes = {

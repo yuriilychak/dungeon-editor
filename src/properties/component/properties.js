@@ -1,31 +1,31 @@
-import React, {Fragment, useEffect, useCallback} from "react";
-import {string, func, number, arrayOf, shape, object, bool, objectOf} from "prop-types";
+import React, { Fragment, useEffect, useCallback } from "react";
+import { string, func, number, arrayOf, shape, object, bool, objectOf } from "prop-types";
 
-import {TitledPanel} from "../../common-ui";
-import {FileHeader} from "./file-header";
+import { TitledPanel } from "../../common-ui";
+import { FileHeader } from "./file-header";
 import { FileBody } from "./file-body";
-import {useLocalization} from "../../hooks";
+import { useLocalization } from "../../hooks";
 
 import "./properties.scss";
 
 const Properties = ({
-                        file,
-                        locales,
-                        iconSize,
-                        currentInfo,
-                        directoryData,
-                        sectionData,
-                        stageData,
-                        stageElementTrees,
-                        init,
-                        onRenameFile,
-                        onSwitchAtlas,
-                        onClearAtlas,
-                        onStageElementChange,
-                        onSwitchCompressSkeleton,
-                        onSwitchCompressName,
-                        onChangeSelectedSection
-                    }) => {
+    file,
+    locales,
+    iconSize,
+    currentInfo,
+    directoryData,
+    sectionData,
+    stageData,
+    stageElementTrees,
+    init,
+    onRenameFile,
+    onSwitchAtlas,
+    onClearAtlas,
+    onStageElementChange,
+    onSwitchCompressSkeleton,
+    onSwitchCompressName,
+    onChangeSelectedSection
+}) => {
     useEffect(init, []);
 
     const { localization, t } = useLocalization(locales);
@@ -85,7 +85,7 @@ const Properties = ({
         >
             {content}
         </TitledPanel>
-    )
+    );
 };
 
 Properties.propTypes = {
@@ -114,13 +114,12 @@ Properties.propTypes = {
     stageElementTrees: objectOf(arrayOf(shape({
         id: string.isRequired,
         content: arrayOf(shape({
-                id: string.isRequired,
-                children: arrayOf(shape({
-                        id: string.isRequired
-                    })
-                )
+            id: string.isRequired,
+            children: arrayOf(shape({
+                id: string.isRequired
             })
-        ).isRequired
+            )
+        })).isRequired
     }))).isRequired,
     locales: shape({
         compressNameLabel: string.isRequired,

@@ -1,33 +1,33 @@
-import React, {useState, memo} from "react";
-import {bool, func, string, number, shape, arrayOf} from "prop-types";
+import React, { useState, memo } from "react";
+import { bool, func, string, number, shape, arrayOf } from "prop-types";
 
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 
-import {NameInput, ActionDialog} from "../../common-ui";
-import {useLocalization} from "../../hooks";
+import { NameInput, ActionDialog } from "../../common-ui";
+import { useLocalization } from "../../hooks";
 
 const NewFileDialog = ({
-                           locale,
-                           maxNameLength,
-                           sections,
-                           isPopupOpen,
-                           elementType,
-                           sectionId,
-                           onChangeType,
-                           onSubmitPopup,
-                           onClosePopup
-                       }) => {
-    const {localization, t} = useLocalization(locale);
+    locale,
+    maxNameLength,
+    sections,
+    isPopupOpen,
+    elementType,
+    sectionId,
+    onChangeType,
+    onSubmitPopup,
+    onClosePopup
+}) => {
+    const { localization, t } = useLocalization(locale);
     const [isError, setError] = useState(false);
     const section = sections.find(element => element.id === sectionId);
     const sectionName = section ? t(section.locale) : "unknown";
     const selectName = "type";
     const selectId = `${selectName}-${sectionName}`;
-    const sectionObject = {sectionName};
-    const onChange = ({target}) => {
+    const sectionObject = { sectionName };
+    const onChange = ({ target }) => {
         onChangeType(target.value);
     };
     const typeSelect = section ? (
@@ -40,16 +40,16 @@ const NewFileDialog = ({
                 onChange={onChange}
                 inputProps={{
                     name: selectName,
-                    id: selectId,
+                    id: selectId
                 }}
             >
                 {
-                    section.types.map(({id, locale}) => (
+                    section.types.map(data => (
                         <MenuItem
-                            value={id}
-                            key={id}
+                            value={data.id}
+                            key={data.id}
                         >
-                            {t(locale)}
+                            {t(data.locale)}
                         </MenuItem>
                     ))
                 }
