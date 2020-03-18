@@ -134,6 +134,7 @@ Properties.propTypes = {
         }).isRequired
     }).isRequired,
     init: func.isRequired,
+    onSwitchCompressSkeleton: func.isRequired,
     onStageElementChange: func.isRequired,
     onSwitchCompressName: func.isRequired,
     onRenameFile: func.isRequired,
