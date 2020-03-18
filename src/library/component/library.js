@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React, { Fragment, useEffect } from "react";
 import { string, func, number, arrayOf, shape, object } from "prop-types";
 
 import Add from "@material-ui/icons/Add";
@@ -6,11 +6,12 @@ import Publish from "@material-ui/icons/Publish";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 
 import { TitledPanel, ToolButton, DropArea } from "../../common-ui";
-import {Section} from "./section";
-import {useLocalization} from "../../hooks";
+import { Section } from "./section";
+import { useLocalization } from "../../hooks";
 
 const Library = props => {
     const {
+        init,
         selectedId,
         locales,
         tabs,
@@ -31,31 +32,32 @@ const Library = props => {
 
     const { localization, t } = useLocalization(locales);
 
+    useEffect(init, []);
+
     const tabViews = tabs.map(tab => (
-            <Section
-                expanded={selectedId === tab.id}
-                icon={tab.icon}
-                key={tab.id}
-                id={tab.id}
-                dropId={tab.dropId}
-                addDirectoryText={localization.addDirectory}
-                addElementText={localization.addElement}
-                deleteText={localization.itemDelete}
-                emptyText={localization.emptyTab}
-                renameText={localization.itemRename}
-                titleText={t(tab.locale)}
-                files={files[tab.id]}
-                onAddFile={onAddFile}
-                onOpenFile={onOpenFile}
-                onAddDirectory={onAddDirectory}
-                onUpdateTree={onUpdateTree}
-                onRemoveFile={onRemoveFile}
-                onRenameFile={onRenameFile}
-                onSelectFile={onSelectFile}
-                onExpansionChange={onExpansionChange}
-            />
-        )
-    );
+        <Section
+            expanded={selectedId === tab.id}
+            icon={tab.icon}
+            key={tab.id}
+            id={tab.id}
+            dropId={tab.dropId}
+            addDirectoryText={localization.addDirectory}
+            addElementText={localization.addElement}
+            deleteText={localization.itemDelete}
+            emptyText={localization.emptyTab}
+            renameText={localization.itemRename}
+            titleText={t(tab.locale)}
+            files={files[tab.id]}
+            onAddFile={onAddFile}
+            onOpenFile={onOpenFile}
+            onAddDirectory={onAddDirectory}
+            onUpdateTree={onUpdateTree}
+            onRemoveFile={onRemoveFile}
+            onRenameFile={onRenameFile}
+            onSelectFile={onSelectFile}
+            onExpansionChange={onExpansionChange}
+        />
+    ));
 
     return (
         <TitledPanel
@@ -115,6 +117,7 @@ Library.propTypes = {
             object.isRequired
         )
     ),
+    init: func.isRequired,
     onExpansionChange: func.isRequired,
     onAddDirectory: func.isRequired,
     onAddFile: func.isRequired,

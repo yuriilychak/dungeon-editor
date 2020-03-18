@@ -8,7 +8,7 @@ import { handleAction } from "../helpers";
  * @return {ActionData}
  */
 
-export const addFile = (data, sectionId) => handleAction(state.ADD_FILE, { data, sectionId });
+export const addFile = ({ data, sectionId }) => handleAction(state.ADD_FILE, { data, sectionId });
 
 /**
  * @function
@@ -45,7 +45,7 @@ export const updateTree = (fileTree, sectionId) => handleAction(state.UPDATE_TRE
  * @return {ActionData}
  */
 
-export const addDirectory = (sectionId, data) => handleAction(state.ADD_DIRECTORY, { data, sectionId });
+export const addDirectory = ({ sectionId, data }) => handleAction(state.ADD_DIRECTORY, { data, sectionId });
 
 /**
  * @function

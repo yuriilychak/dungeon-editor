@@ -1,8 +1,8 @@
-import {connectStore} from "../helpers";
-import {hideExportProjectDialog} from './action';
-import {ExportProjectDialog} from "./component";
+import { connectStore } from "../helpers";
+import { hideExportProjectDialog } from './action';
+import { ExportProjectDialog } from "./component";
 import ProjectData from "../project-data/project-data";
-import {UI_SECTION} from "../enum";
+import { UI_SECTION } from "../enum";
 
 export default connectStore(
     ExportProjectDialog,

@@ -20,7 +20,7 @@ export const hideExportProjectDialog = () => changeDialogActivity(false);
  * @return {ActionData}
  */
 
-export const changeProgress = (progress, fileName = null, isComplete = false) => handleAction(
+export const changeProgress = ({ progress, fileName = null, isComplete = false }) => handleAction(
     STATE.PROGRESS, {
         progress,
         fileName,

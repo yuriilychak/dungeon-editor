@@ -1,12 +1,12 @@
-import {connectStore} from "../helpers";
-import {hideNewFileDialog, changeElementType} from './action';
+import { connectStore } from "../helpers";
+import { hideNewFileDialog, changeElementType } from './action';
 import ProjectData from '../project-data/project-data';
 import WorkingStage from "../working-stage/working-stage";
-import {NewFileDialog} from "./component";
-import {addFile} from "../library/action";
-import {addTab} from "../working-area/action";
-import {openElement} from "../bottom-menu/action";
-import {UI_SECTION} from "../enum";
+import { NewFileDialog } from "./component";
+import { addFile } from "../library/action";
+import { addTab } from "../working-area/action";
+import { openElement } from "../bottom-menu/action";
+import { UI_SECTION } from "../enum";
 
 export default connectStore(
     NewFileDialog,

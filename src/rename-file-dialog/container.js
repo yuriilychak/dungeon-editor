@@ -1,12 +1,12 @@
-import {connectStore} from "../helpers";
+import { connectStore } from "../helpers";
 import { hideRenameFileDialog } from './action';
 import ProjectData from '../project-data/project-data';
 import { RenameFileDialog } from "./component";
-import {renameFile} from "../library/action";
-import {renameLibraryElement} from "../properties/action";
-import {checkRename} from "../working-area/action";
-import {WorkingStage} from "../working-stage";
-import {UI_SECTION} from "../enum";
+import { renameFile } from "../library/action";
+import { renameLibraryElement } from "../properties/action";
+import { checkRename } from "../working-area/action";
+import { WorkingStage } from "../working-stage";
+import { UI_SECTION } from "../enum";
 
 export default connectStore(
     RenameFileDialog,
@@ -25,7 +25,7 @@ export default connectStore(
                 });
             }
             else {
-                WorkingStage.dispatchChangeStageElement({ key: "name", value: nextName })
+                WorkingStage.dispatchChangeStageElement({ key: "name", value: nextName });
             }
 
             dispatch(hideRenameFileDialog());

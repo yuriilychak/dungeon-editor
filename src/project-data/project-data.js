@@ -2,9 +2,6 @@ import JSZip from "jszip";
 import fileDialog from "file-dialog";
 import { saveAs } from "file-saver";
 
-import store from "../store";
-import {changeProgress} from "../export-project-dialog/action";
-import * as LibraryActions from "../library/action";
 import FileUtil from "./file-util";
 import {
     FontComponent,
@@ -16,7 +13,11 @@ import {
     TileMapComponent
 } from "./component";
 import CONST from "./const";
-import { SECTION_ID } from "../enum";
+import { FILE_FORMAT, SECTION_ID } from "../enum";
+import EVENT from "./enum/event";
+
+const { mCore } = window;
+const { math, type, format } = mCore.util;
 
 const ProjectData = {
     /**
@@ -47,7 +48,7 @@ const ProjectData = {
 
     _metaJsonConfig: {
         name: "meta",
-        format: "json"
+        format: FILE_FORMAT.JSON
     },
 
     /**
@@ -125,19 +126,18 @@ const ProjectData = {
 
     export() {
         const zip = new JSZip();
-        const maxPercent = 100;
         let fileCount = 1;
 
         this._components.forEach(component => fileCount += component.fileCount);
 
-        const percentPerFile = maxPercent / (fileCount + 1);
+        const percentPerFile = math.MAX_PERCENT / (fileCount + 1);
         let currentFileIndex = 0;
         let progress = 0;
 
         const progressCallback = path => {
             ++currentFileIndex;
-            progress = percentPerFile * currentFileIndex;
-            store.dispatch(changeProgress(progress, path));
+            progress = math.round(percentPerFile * currentFileIndex);
+            this._dispatchPercentChange(progress, path);
         };
         const projectData = {
             name: this._projectName,
@@ -147,27 +147,44 @@ const ProjectData = {
 
         this._components.forEach(component => component.export(projectData, zip, progressCallback));
 
-        FileUtil.packJson(zip, `${this._metaJsonConfig.name}.${this._metaJsonConfig.format}`, projectData, progressCallback);
+        FileUtil.packJson(
+            zip,
+            format.addFileType(this._metaJsonConfig.name, this._metaJsonConfig.format),
+            projectData,
+            progressCallback
+        );
 
-        store.dispatch(changeProgress(maxPercent));
+        this._dispatchPercentChange(math.MAX_PERCENT);
 
         zip.generateAsync({ type: "blob" })
             .then(content => {
                 this._zipData = content;
-                store.dispatch(changeProgress(maxPercent, null, true));
+                this._dispatchPercentChange(math.MAX_PERCENT, null, true);
             });
     },
 
     _addHandler(data, sectionId) {
-        store.dispatch(LibraryActions.addFile(data, sectionId));
+        this._dispatch(EVENT.ADD_FILE, { sectionId, data });
     },
 
-    _dirHandler(dirData, sectionId) {
-        store.dispatch(LibraryActions.addDirectory(sectionId, dirData));
+    _dirHandler(data, sectionId) {
+        this._dispatch(EVENT.ADD_DIRECTORY, { sectionId, data });
     },
 
     _errorHandler(error) {
         console.warn(`error when import: ${error}`);
+    },
+
+    _isDataSelected() {
+        return !type.isNull(this._selectData);
+    },
+
+    _dispatch(event, data) {
+        mCore.eventDispatcher.dispatch(event, this, data);
+    },
+
+    _dispatchPercentChange(progress, fileName = null, isComplete = false) {
+        this._dispatch(EVENT.CHANGE_PROGRESS, { progress, fileName, isComplete });
     },
 
     /**
@@ -176,10 +193,10 @@ const ProjectData = {
      */
 
     save() {
-        if (this._zipData === null) {
+        if (type.isNull(this._zipData)) {
             return;
         }
-        saveAs(this._zipData, `${this._projectName}.zip`);
+        saveAs(this._zipData, format.addFileType(this._projectName, FILE_FORMAT.ZIP));
     },
 
     /**
@@ -188,36 +205,39 @@ const ProjectData = {
      */
 
     async import() {
-        fileDialog({ multiple: false, accept: "application/zip" })
+        fileDialog({ multiple: false, accept: `application/${FILE_FORMAT.ZIP}` })
             .then(file =>
-                    JSZip.loadAsync(file[0]).then(async content => {
-                        store.dispatch(LibraryActions.clearLibrary());
-                        const metaData = await FileUtil.extractFile(content,`${this._metaJsonConfig.name}.${this._metaJsonConfig.format}`);
-                        /**
-                         * @type {ProjectData}
-                         */
-                        const projectData = JSON.parse(metaData);
+                JSZip.loadAsync(file[0]).then(async content => {
+                    this._dispatch(EVENT.CLEAR_LIBRARY);
+                    const metaData = await FileUtil.extractFile(
+                        content,
+                        format.addFileType(this._metaJsonConfig.name, this._metaJsonConfig.format)
+                    );
+                    /**
+                     * @type {ProjectData}
+                     */
+                    const projectData = JSON.parse(metaData);
 
-                        this._projectName = projectData.name;
+                    this._projectName = projectData.name;
 
-                        this._atlases = projectData.atlases;
+                    this._atlases = projectData.atlases;
 
-                        this._atlasId = projectData.atlasId;
+                    this._atlasId = projectData.atlasId;
 
-                        const componentCount = this._components.length;
-                        let i, component;
+                    const componentCount = this._components.length;
+                    let i, component;
 
-                        for (i = 0; i < componentCount; ++i) {
-                            component = this._components[i];
-                            await component.import(
-                                content,
-                                projectData[component.rootName],
-                                this._addHandler,
-                                this._dirHandler,
-                                this._errorHandler
-                            );
-                        }
-                    })
+                    for (i = 0; i < componentCount; ++i) {
+                        component = this._components[i];
+                        await component.import(
+                            content,
+                            projectData[component.rootName],
+                            this._addHandler.bind(this),
+                            this._dirHandler.bind(this),
+                            this._errorHandler.bind(this)
+                        );
+                    }
+                })
             );
     },
 
@@ -237,7 +257,7 @@ const ProjectData = {
     async importFiles(files) {
         const fileElements = await FileUtil.readUploadedFiles(files);
 
-        this._components.forEach(component => component.add(fileElements, this._addHandler));
+        this._components.forEach(component => component.add(fileElements, this._addHandler.bind(this)));
     },
 
     /**
@@ -269,13 +289,13 @@ const ProjectData = {
     /**
      * @function
      * @public
-     * @param {number} sectionIndex
+     * @param {number} sectionId
      * @param {number} [parentId = -1]
      */
 
-    addDirectory(sectionIndex, parentId = -1) {
-        const dirData = this._components[sectionIndex].addDirectory(parentId);
-        store.dispatch(LibraryActions.addDirectory(sectionIndex, dirData));
+    addDirectory(sectionId, parentId = -1) {
+        const data = this._components[sectionId].addDirectory(parentId);
+        this._dispatch(EVENT.ADD_DIRECTORY, { sectionId, data });
     },
 
     bindFileRename(id, sectionId) {
@@ -283,7 +303,7 @@ const ProjectData = {
     },
 
     isRenameBinded() {
-        return this._renameData !== null;
+        return !type.isNull(this._renameData);
     },
 
     resetFileRename() {
@@ -298,7 +318,7 @@ const ProjectData = {
      */
 
     renameFile(newName, callback) {
-        if (this._renameData === null) {
+        if (type.isNull(this._renameData)) {
             return;
         }
 
@@ -357,7 +377,7 @@ const ProjectData = {
                 id: ++this._atlasId
             };
 
-            this._atlases.push(atlas)
+            this._atlases.push(atlas);
         }
 
         if (!this._isDataSelected()) {
@@ -400,10 +420,6 @@ const ProjectData = {
         const component = this._components[sectionId];
 
         return component.switchFileValue(fileId, key);
-    },
-
-    _isDataSelected() {
-        return this._selectData !== null;
     }
 };
 

@@ -1,31 +1,30 @@
-import React, {useState, useEffect} from "react";
-import {Provider} from "react-redux";
+import React, { useState, useEffect } from "react";
+import { Provider } from "react-redux";
 
 import theme from "./theme";
 
-import {MuiThemeProvider} from "@material-ui/core/styles";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
-import {BottomMenu} from "./bottom-menu";
-import {TopMenu} from "./top-menu";
-import {Library} from "./library";
-import {Properties} from "./properties";
-import {NewProjectDialog} from "./new-project-dialog";
-import {NewFileDialog} from "./new-file-dialog";
-import {ExportProjectDialog} from "./export-project-dialog";
-import {RenameFileDialog} from "./rename-file-dialog";
-import {WorkingArea} from "./working-area";
-import {loadStatic} from "./loader";
+import { BottomMenu } from "./bottom-menu";
+import { TopMenu } from "./top-menu";
+import { Library } from "./library";
+import { Properties } from "./properties";
+import { NewProjectDialog } from "./new-project-dialog";
+import { NewFileDialog } from "./new-file-dialog";
+import { ExportProjectDialog } from "./export-project-dialog";
+import { RenameFileDialog } from "./rename-file-dialog";
+import { WorkingArea } from "./working-area";
+import { loadStatic } from "./loader";
 import initStore from "./store";
 
 import "./app.scss";
-
 
 const App = () => {
     const [store, setStore] = useState(null);
 
     useEffect(() => {
-        loadStatic().then(() => setStore(initStore()))
+        loadStatic().then(() => setStore(initStore()));
     }, []);
 
     return store ? (
@@ -65,7 +64,7 @@ const App = () => {
                 <div/>
             </div>
         </div>
-    )
+    );
 };
 
 export default App;
