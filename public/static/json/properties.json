@@ -459,7 +459,7 @@
       {
         "id": "frameName",
         "type": "dropArea",
-        "format": "OB",
+        "format": "TE",
         "dropId": "texture",
         "fromUserData": false
       }
@@ -468,28 +468,28 @@
       {
         "id": "upFrame",
         "type": "dropArea",
-        "format": "OB",
+        "format": "TE",
         "dropId": "texture",
         "fromUserData": false
       },
       {
         "id": "downFrame",
         "type": "dropArea",
-        "format": "OB",
+        "format": "TE",
         "dropId": "texture",
         "fromUserData": false
       },
       {
         "id": "overFrame",
         "type": "dropArea",
-        "format": "OB",
+        "format": "TE",
         "dropId": "texture",
         "fromUserData": false
       },
       {
         "id": "disabledFrame",
         "type": "dropArea",
-        "format": "OB",
+        "format": "TE",
         "dropId": "texture",
         "fromUserData": false
       }

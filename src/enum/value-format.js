@@ -6,7 +6,8 @@ const VALUE_FORMAT = {
     BOOL: "BL",
     POINT: "PT",
     TEXT: "TX",
-    OBJECT: "OB"
+    OBJECT: "OB",
+    TEXTURE: "TE"
 };
 
 export default VALUE_FORMAT;

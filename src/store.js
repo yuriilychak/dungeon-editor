@@ -1,7 +1,7 @@
-import {createStore, combineReducers} from 'redux';
+import { createStore, combineReducers } from 'redux';
 
-import {JSON_DATA } from "./loader";
-import {UI_SECTION} from "./enum";
+import { JSON_DATA } from "./loader";
+import { UI_SECTION } from "./enum";
 import TopMenuReducer from "./top-menu/reducer";
 import bottomMenuReducer from "./bottom-menu/reducer";
 import newFileDialogReducer from "./new-file-dialog/reducer";

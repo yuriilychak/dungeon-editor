@@ -1,7 +1,7 @@
 import { get, isEmpty } from "lodash";
 
-import {VALUE_FORMAT} from "../enum";
-import {FIELD_TYPE} from "./constants";
+import { VALUE_FORMAT } from "../enum";
+import { FIELD_TYPE } from "./constants";
 
 const { mCore } = window;
 
@@ -48,43 +48,45 @@ const updateData = (prevData, nextValue) => {
 
 const getNextValue = (value, format, data) => {
     switch (format) {
-        case VALUE_FORMAT.POINT: {
-            const formatX = data.formats[value.formatX];
-            const formatY = data.formats[value.formatY];
-            const x = getNextValue(value.x, formatX, data);
-            const y = getNextValue(value.y, formatY, data);
+    case VALUE_FORMAT.POINT: {
+        const formatX = data.formats[value.formatX];
+        const formatY = data.formats[value.formatY];
+        const x = getNextValue(value.x, formatX, data);
+        const y = getNextValue(value.y, formatY, data);
 
-            return {...value, x, y};
-        }
-        case VALUE_FORMAT.PIXEL:
-            return math.round(value);
-        case VALUE_FORMAT.PERCENT:
-            return math.floatToPercent(value, true);
-        case VALUE_FORMAT.DEGREE:
-            return math.round(math.toDegrees(value));
-        case VALUE_FORMAT.COLOR:
-            return color.intToHex(value);
-        case VALUE_FORMAT.BOOL:
-        case VALUE_FORMAT.TEXT:
-            return value;
-        case VALUE_FORMAT.OBJECT:
-            return { id: 1, title: value };
-        default:
-            return 0;
+        return { ...value, x, y };
+    }
+    case VALUE_FORMAT.PIXEL:
+        return math.round(value);
+    case VALUE_FORMAT.PERCENT:
+        return math.floatToPercent(value, true);
+    case VALUE_FORMAT.DEGREE:
+        return math.round(math.toDegrees(value));
+    case VALUE_FORMAT.COLOR:
+        return color.intToHex(value);
+    case VALUE_FORMAT.BOOL:
+    case VALUE_FORMAT.TEXT:
+        return value;
+    case VALUE_FORMAT.TEXTURE:
+        return { id: 1, title: value };
+    case VALUE_FORMAT.OBJECT:
+        return { id: 1, title: value };
+    default:
+        return 0;
     }
 };
 
 export const updateSelectedSection = (state, currentInfo) => ({
-        ...state,
-        currentInfo,
-        storedInfo: {
-            ...state.storedInfo,
-            stage: {
-                ...state.storedInfo.stage,
-                [currentInfo.id]: currentInfo
-            }
+    ...state,
+    currentInfo,
+    storedInfo: {
+        ...state.storedInfo,
+        stage: {
+            ...state.storedInfo.stage,
+            [currentInfo.id]: currentInfo
         }
-    });
+    }
+});
 
 export const updateFile = (state, nextFile = null, nextFileData = null) => {
     const currentFile = get(state, "file", {});

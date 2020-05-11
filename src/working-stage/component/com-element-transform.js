@@ -1,9 +1,9 @@
-import {EVENT, CURSOR} from "../enum";
-import {updateAnchor, getAnchorPosition, updatePosition} from "../utils";
-import {EDIT_MODE, STAGE_ELEMENT_PROP, VALUE_FORMAT, FIELD_TYPE } from "../../enum";
+import { EVENT, CURSOR } from "../enum";
+import { updateAnchor, getAnchorPosition, updatePosition } from "../utils";
+import { EDIT_MODE, STAGE_ELEMENT_PROP, VALUE_FORMAT, FIELD_TYPE } from "../../enum";
 
-const {mCore, PIXI} = window;
-const {math, geometry, color } = mCore.util;
+const { mCore, PIXI } = window;
+const { math, geometry, color } = mCore.util;
 
 export default class ComElementTransform extends mCore.component.ui.ComUI {
     constructor() {
@@ -116,7 +116,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
     }
 
     _addSelectListeners(path, onDrag, onOver, onOut, onDragStart, onDragFinish) {
-        const {INTERACTIVE_EVENT} = mCore.enumerator.ui;
+        const { INTERACTIVE_EVENT } = mCore.enumerator.ui;
 
         this.addChildListener(onDrag, INTERACTIVE_EVENT.DRAG, path);
         this.addChildListener(onOver, INTERACTIVE_EVENT.OVER, path);
@@ -131,7 +131,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         }
     }
 
-    _onBorderOver({target}) {
+    _onBorderOver({ target }) {
         const index = this._extractBorderIndex(target.name);
         const pointerPrefixes = [
             ["nwse", "ns", "nesw"],
@@ -154,7 +154,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         this._canvas.style.cursor = CURSOR.AUTO;
     }
 
-    _onAnchorDrag({data}) {
+    _onAnchorDrag({ data }) {
         if (!this._isLeftButton(data)) {
             return;
         }
@@ -185,27 +185,29 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
     _getFormattedValue(value, format, data) {
         switch(format) {
-            case VALUE_FORMAT.PIXEL:
-            case VALUE_FORMAT.BOOL:
-            case VALUE_FORMAT.TEXT:
-                return value;
-            case VALUE_FORMAT.PERCENT:
-                return math.percentToFloat(value);
-            case VALUE_FORMAT.DEGREE:
-                return math.toRadians(value);
-            case VALUE_FORMAT.COLOR:
-                return color.hexToInt(value);
-            case VALUE_FORMAT.POINT: {
-                const result = { ...value };
-                result.x = this._getFormattedValue(result.x, data[result.formatX]);
-                result.y = this._getFormattedValue(result.y, data[result.formatY]);
+        case VALUE_FORMAT.TEXTURE:
+            return `texture_${value.id}`;
+        case VALUE_FORMAT.PIXEL:
+        case VALUE_FORMAT.BOOL:
+        case VALUE_FORMAT.TEXT:
+            return value;
+        case VALUE_FORMAT.PERCENT:
+            return math.percentToFloat(value);
+        case VALUE_FORMAT.DEGREE:
+            return math.toRadians(value);
+        case VALUE_FORMAT.COLOR:
+            return color.hexToInt(value);
+        case VALUE_FORMAT.POINT: {
+            const result = { ...value };
+            result.x = this._getFormattedValue(result.x, data[result.formatX]);
+            result.y = this._getFormattedValue(result.y, data[result.formatY]);
 
-                return result;
-            }
-            case VALUE_FORMAT.OBJECT:
-                return value.title;
-            default:
-                return 0;
+            return result;
+        }
+        case VALUE_FORMAT.OBJECT:
+            return value.title;
+        default:
+            return 0;
         }
     }
 
@@ -234,19 +236,19 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         }
         else {
             switch (this._changeKey) {
-                case STAGE_ELEMENT_PROP.NAME: {
-                    changeValue = value;
-                    this._selectedElement.name = changeValue;
-                    break;
-                }
-                case STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE: {
-                    changeValue = {...value};
-                    this._selectedElement.setShadowOffset(changeValue);
-                    break;
-                }
-                default: {
-                    return;
-                }
+            case STAGE_ELEMENT_PROP.NAME: {
+                changeValue = value;
+                this._selectedElement.name = changeValue;
+                break;
+            }
+            case STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE: {
+                changeValue = { ...value };
+                this._selectedElement.setShadowOffset(changeValue);
+                break;
+            }
+            default: {
+                return;
+            }
             }
         }
 
@@ -265,7 +267,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         this._dispatchResultChange(this._selectedElement.anchor);
     }
 
-    _onElementClick({target, data}) {
+    _onElementClick({ target, data }) {
         if (!this._isLeftButton(data)) {
             return;
         }
@@ -281,18 +283,18 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
     _refreshEditMode() {
         switch (this._editMode) {
-            case EDIT_MODE.SIZE: {
-                this._editMode = EDIT_MODE.SKEW;
-                break;
-            }
-            case EDIT_MODE.SKEW: {
-                this._editMode = EDIT_MODE.SCALE;
-                break;
-            }
-            default: {
-                this._editMode = EDIT_MODE.SIZE;
-                break;
-            }
+        case EDIT_MODE.SIZE: {
+            this._editMode = EDIT_MODE.SKEW;
+            break;
+        }
+        case EDIT_MODE.SKEW: {
+            this._editMode = EDIT_MODE.SCALE;
+            break;
+        }
+        default: {
+            this._editMode = EDIT_MODE.SIZE;
+            break;
+        }
         }
     }
 
@@ -313,7 +315,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         );
     }
 
-    _onBorderDragStart({data}) {
+    _onBorderDragStart({ data }) {
         if (this._editMode !== EDIT_MODE.SKEW) {
             return;
         }
@@ -333,7 +335,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         this._beginElementAngle = 0;
     }
 
-    _onBorderDrag({data, target}) {
+    _onBorderDrag({ data, target }) {
         if (!this._isLeftButton(data)) {
             return;
         }
@@ -343,96 +345,100 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         let changeValue;
 
         switch (this._editMode) {
-            case EDIT_MODE.SIZE: {
-                const nextSize = this._calculateNextSize(data.data.global, index, true);
+        case EDIT_MODE.SIZE: {
+            const nextSize = this._calculateNextSize(data.data.global, index, true);
 
-                this._refreshTransform();
+            this._refreshTransform();
 
-                const elementWorldScale = this._getElementWorldScale();
+            const elementWorldScale = this._getElementWorldScale();
 
-                geometry.pRound(geometry.pCompDiv(nextSize, elementWorldScale, true), true);
+            geometry.pRound(geometry.pCompDiv(nextSize, elementWorldScale, true), true);
 
-                this._selectedElement.width = nextSize.x;
-                this._selectedElement.height = nextSize.y;
+            this._selectedElement.width = nextSize.x;
+            this._selectedElement.height = nextSize.y;
 
-                nextSize.destroy();
-                elementWorldScale.destroy();
+            nextSize.destroy();
+            elementWorldScale.destroy();
 
-                this._changeKey = STAGE_ELEMENT_PROP.SIZE;
-                changeValue = this._selectedElement.rate;
-                break;
-            }
-            case EDIT_MODE.SKEW: {
-                if (index.x === index.y || math.abs(index.y - index.x) === 2) {
-                    this._changeKey = STAGE_ELEMENT_PROP.ROTATION;
-                    const ownerPos = this.owner.parent.toGlobal(this.owner.position);
-                    const offset = geometry.pSub(data.data.global, ownerPos, true);
-                    const rotation = this._beginElementAngle + Math.atan2(offset.y, offset.x) - this._beginEditAngle;
+            this._changeKey = STAGE_ELEMENT_PROP.SIZE;
+            changeValue = this._selectedElement.rate;
+            break;
+        }
+        case EDIT_MODE.SKEW: {
+            if (index.x === index.y || math.abs(index.y - index.x) === 2) {
+                this._changeKey = STAGE_ELEMENT_PROP.ROTATION;
+                const ownerPos = this.owner.parent.toGlobal(this.owner.position);
+                const offset = geometry.pSub(data.data.global, ownerPos, true);
+                const rotation = this._beginElementAngle + Math.atan2(offset.y, offset.x) - this._beginEditAngle;
 
-                    this._selectedElement.rotation = this._selectedElement.parent.worldTransform.c + rotation;
+                this._selectedElement.rotation = this._selectedElement.parent.worldTransform.c + rotation;
 
-                    changeValue = this._selectedElement.rotation;
-                } else {
-                    index.x = index.x - 1;
-                    index.y = 1 - index.y;
+                changeValue = this._selectedElement.rotation;
+            } else {
+                index.x = index.x - 1;
+                index.y = 1 - index.y;
 
-                    const startPos = this._toLocal(this._globalStart);
-                    const endPos = this._toLocal(data.data.global);
-                    const invertedIndex = mCore.geometry.Point.create(index.y, index.x);
-                    const offset = geometry.pRound(
-                        geometry.pCompMult(
-                            geometry.pSub(
-                                endPos,
-                                startPos,
-                                true
-                            ),
-                            invertedIndex,
-                            true,
+                const startPos = this._toLocal(this._globalStart);
+                const endPos = this._toLocal(data.data.global);
+                const invertedIndex = mCore.geometry.Point.create(index.y, index.x);
+                const offset = geometry.pRound(
+                    geometry.pCompMult(
+                        geometry.pSub(
+                            endPos,
+                            startPos,
                             true
                         ),
+                        invertedIndex,
+                        true,
                         true
+                    ),
+                    true
+                );
+
+                if (index.y === 0) {
+                    this._selectedElement.skew.y = math.toFixed(
+                        Math.atan2(offset.y, math.divPowTwo(this._selectedElement.width))
                     );
-
-                    if (index.y === 0) {
-                        this._selectedElement.skew.y = math.toFixed(Math.atan2(offset.y, math.divPowTwo(this._selectedElement.width)));
-                    } else {
-                        this._selectedElement.skew.x = math.toFixed(Math.atan2(math.divPowTwo(this._selectedElement.height), offset.x) - Math.PI / 2);
-                    }
-
-                    this._changeKey = STAGE_ELEMENT_PROP.SKEW;
-                    changeValue = this._selectedElement.skew;
+                } else {
+                    this._selectedElement.skew.x = math.toFixed(
+                        Math.atan2(math.divPowTwo(this._selectedElement.height), offset.x) - Math.PI / 2
+                    );
                 }
-                break;
+
+                this._changeKey = STAGE_ELEMENT_PROP.SKEW;
+                changeValue = this._selectedElement.skew;
             }
-            default: {
-                const nextSize = this._calculateNextSize(data.data.global, index, false);
+            break;
+        }
+        default: {
+            const nextSize = this._calculateNextSize(data.data.global, index, false);
 
-                this._refreshTransform();
+            this._refreshTransform();
 
-                this._selectedElement.scale.copyFrom(
-                    geometry.pCompDiv(
-                        nextSize,
-                        geometry.pCompMult(
-                            geometry.pFromSize(this._selectedElement),
-                            geometry.pCompDiv(
-                                this._getElementWorldScale(),
-                                this._selectedElement.scale,
-                                true
-                            ),
-                            true,
+            this._selectedElement.scale.copyFrom(
+                geometry.pCompDiv(
+                    nextSize,
+                    geometry.pCompMult(
+                        geometry.pFromSize(this._selectedElement),
+                        geometry.pCompDiv(
+                            this._getElementWorldScale(),
+                            this._selectedElement.scale,
                             true
                         ),
                         true,
                         true
-                    )
-                );
+                    ),
+                    true,
+                    true
+                )
+            );
 
-                nextSize.destroy();
+            nextSize.destroy();
 
-                this._changeKey = STAGE_ELEMENT_PROP.SCALE;
-                changeValue = this._selectedElement.scale;
-                break;
-            }
+            this._changeKey = STAGE_ELEMENT_PROP.SCALE;
+            changeValue = this._selectedElement.scale;
+            break;
+        }
         }
         this._updateTransform();
         this._dispatchChangeWithCounter(changeValue);
@@ -450,15 +456,15 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
     _calculateDimension(localPos, index, cord) {
         switch (index[cord]) {
-            case 0: {
-                return math.round(this.owner.rate[cord] - localPos[cord]);
-            }
-            case 1: {
-                return math.round(this.owner.rate[cord]);
-            }
-            default: {
-                return math.round(localPos[cord]);
-            }
+        case 0: {
+            return math.round(this.owner.rate[cord] - localPos[cord]);
+        }
+        case 1: {
+            return math.round(this.owner.rate[cord]);
+        }
+        default: {
+            return math.round(localPos[cord]);
+        }
         }
     }
 
@@ -466,7 +472,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         return this._isLeftButton(data) && !this._selectedElement.userData.isRoot;
     }
 
-    _onPositionDragStart({data}) {
+    _onPositionDragStart({ data }) {
         if (!this._canDrag(data)) {
             return;
         }
@@ -475,7 +481,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         this._changeKey = STAGE_ELEMENT_PROP.POSITION;
     }
 
-    _onPositionDragMove({data}) {
+    _onPositionDragMove({ data }) {
         if (!this._canDrag(data)) {
             return;
         }
@@ -489,7 +495,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         this._dispatchChangeWithCounter(this._selectedElement.position);
     }
 
-    _onPositionDragFinish({data}) {
+    _onPositionDragFinish({ data }) {
         if (!this._canDrag(data)) {
             return;
         }
@@ -521,31 +527,34 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         const result = [this._generateProp(this._changeKey, resultValue)];
 
         switch (this._changeKey) {
-            case STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED: {
-                if (!resultValue) {
-                    result.push(
-                        this._generateProp(STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE, 0),
-                        this._generateProp(STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR, mCore.util.color.COLORS.WHITE)
-                    );
-                }
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED: {
-                if (!resultValue) {
-                    result.push(
-                        this._generateProp(STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE, this._generatePoint(0, 0)),
-                        this._generateProp(STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR, mCore.util.color.COLORS.WHITE)
-                    );
-                }
-                break;
-            }
-            case STAGE_ELEMENT_PROP.ANCHOR: {
+        case STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED: {
+            if (!resultValue) {
                 result.push(
-                    this._generateProp(STAGE_ELEMENT_PROP.POSITION, this._generatePoint(this._selectedElement.x, this._selectedElement.y)),
+                    this._generateProp(STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE, 0),
+                    this._generateProp(STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR, mCore.util.color.COLORS.WHITE)
                 );
-                break;
             }
-            default:
+            break;
+        }
+        case STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED: {
+            if (!resultValue) {
+                result.push(
+                    this._generateProp(STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE, this._generatePoint(0, 0)),
+                    this._generateProp(STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR, mCore.util.color.COLORS.WHITE)
+                );
+            }
+            break;
+        }
+        case STAGE_ELEMENT_PROP.ANCHOR: {
+            result.push(
+                this._generateProp(
+                    STAGE_ELEMENT_PROP.POSITION,
+                    this._generatePoint(this._selectedElement.x, this._selectedElement.y)
+                ),
+            );
+            break;
+        }
+        default:
         }
 
         this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, result);
@@ -608,7 +617,9 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
         this.owner.refreshAnchorElement();
 
-        const pointToCheck = this._zeroPositionTypes.includes(this._selectedElement.uiType) ? this._zeroPoint : getAnchorPosition(this._selectedElement);
+        const pointToCheck = this._zeroPositionTypes.includes(this._selectedElement.uiType)
+            ? this._zeroPoint
+            : getAnchorPosition(this._selectedElement);
 
         this.owner.position.copyFrom(this._toParentCoords(this._selectedElement.toGlobal(pointToCheck)));
     }

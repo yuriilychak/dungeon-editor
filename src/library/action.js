@@ -8,7 +8,7 @@ import { handleAction } from "../helpers";
  * @return {ActionData}
  */
 
-export const addFile = ({ data, sectionId }) => handleAction(state.ADD_FILE, { data, sectionId });
+export const addFile = data => handleAction(state.ADD_FILE, data);
 
 /**
  * @function

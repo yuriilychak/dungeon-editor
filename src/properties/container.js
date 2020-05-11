@@ -1,18 +1,19 @@
-import {connectStore} from "../helpers";
+import { connectStore } from "../helpers";
 import { Properties } from "./component";
-import {ProjectData} from "../project-data";
-import {showRenameFileDialog} from "../rename-file-dialog/action";
-import {selectLibraryElement, selectStageElement, changeStageElement, changeSelectedSection} from "./action";
-import {WorkingStage} from "../working-stage";
-import {UI_SECTION} from "../enum";
+import { ProjectData } from "../project-data";
+import { showRenameFileDialog } from "../rename-file-dialog/action";
+import { selectLibraryElement, selectStageElement, changeStageElement, changeSelectedSection } from "./action";
+import { WorkingStage } from "../working-stage";
+import { UI_SECTION } from "../enum";
 
 export default connectStore(
     Properties,
     UI_SECTION.PROPERTIES,
     dispatch => ({
         init() {
-            WorkingStage.setChangeStageElementCallback(({data}) => dispatch(changeStageElement(data)));
-            WorkingStage.setSelectStageElementCallback(({data}) => dispatch(selectStageElement(data)));
+            const createCallback = (event, callback) => dispatch(callback(event.data));
+            WorkingStage.setChangeStageElementCallback(event => createCallback(event, changeStageElement));
+            WorkingStage.setSelectStageElementCallback(event => createCallback(event, selectStageElement));
         },
         onRenameFile(fileId, sectionId, isStageElement) {
             if (!isStageElement) {

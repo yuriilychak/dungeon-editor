@@ -1,5 +1,5 @@
 import STATE from "./state";
-import {handleAction} from "../helpers";
+import { handleAction } from "../helpers";
 
 /**
  * @return {ActionData}

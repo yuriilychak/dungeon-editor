@@ -1,8 +1,8 @@
-import {default as reducer, initialState} from "../reducer";
+import { default as reducer, initialState } from "../reducer";
 import STATE from "../state";
 
-const createAction = (type, payload = null) => ({type, payload});
-const stateFromSection = section => ({...initialState, files: [section, [], [], [], []]});
+const createAction = (type, payload = null) => ({ type, payload });
+const stateFromSection = section => ({ ...initialState, files: [section, [], [], [], []] });
 const createTreeElement = (id, isDirectory, parentId = -1, children = undefined, customTitle = null) => ({
     id, title: customTitle || `test${id}`, parentId, children, isDirectory
 });
@@ -99,17 +99,17 @@ describe("library reducer", () => {
         outTree = [ element ];
         payload = { sectionId: 0, data:  {
             ...element,
-                name: element.title
-            } };
+            name: element.title
+        } };
         testState(STATE.ADD_FILE, payload, inTree, outTree);
 
         element = createTreeElement(0, false, 1);
         inTree = [];
         outTree = [];
         payload = { sectionId: 0, data:  {
-                ...element,
-                name: element.title
-            } };
+            ...element,
+            name: element.title
+        } };
         testState(STATE.ADD_FILE, payload, inTree, outTree);
     });
 
@@ -118,9 +118,9 @@ describe("library reducer", () => {
         inTree = [];
         outTree = [ element ];
         payload = { sectionId: 0, data:  {
-                ...element,
-                name: element.title
-            } };
+            ...element,
+            name: element.title
+        } };
         testState(STATE.ADD_DIRECTORY, payload, inTree, outTree);
 
         element = createTreeElement(0, true, 1);
@@ -129,9 +129,9 @@ describe("library reducer", () => {
             element
         ])];
         payload = { sectionId: 0, data:  {
-                ...element,
-                name: element.title
-            } };
+            ...element,
+            name: element.title
+        } };
         testState(STATE.ADD_DIRECTORY, payload, inTree, outTree);
 
         element = createTreeElement(0, true, 1);
@@ -140,9 +140,9 @@ describe("library reducer", () => {
             element
         ])];
         payload = { sectionId: 0, data:  {
-                ...element,
-                name: element.title
-            } };
+            ...element,
+            name: element.title
+        } };
         testState(STATE.ADD_DIRECTORY, payload, inTree, outTree);
     });
 });

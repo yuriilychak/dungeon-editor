@@ -19,7 +19,7 @@ export default connectStore(
             const file = ProjectData.createFile(sectionId, fileName, fileType);
             WorkingStage.createUIElement(fileType, file.id, fileName);
 
-            dispatch(addFile(file, sectionId));
+            dispatch(addFile({ data: file, sectionId }));
             dispatch(addTab(fileName, file.id, sectionId));
             dispatch(openElement(file.id, sectionId));
             dispatch(hideNewFileDialog());

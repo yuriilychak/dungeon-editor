@@ -1,5 +1,5 @@
 import STATE from "./state";
-import {generateReducerData} from "../helpers";
+import { generateReducerData } from "../helpers";
 import { SECTION_ID } from "../enum";
 
 /**
@@ -22,12 +22,12 @@ function refreshParentIds(files, parentId = -1) {
         if (file.isDirectory && file.children && file.children.length !== 0) {
             refreshParentIds(file.children, file.id);
         }
-    })
+    });
 }
 
 function addElementToTree(payload, isDirectory, state) {
     const files = state.files.slice(0);
-    const {sectionId, data} = payload;
+    const { sectionId, data } = payload;
     const file = {
         title: data.name,
         id: data.id,
@@ -104,7 +104,7 @@ export default generateReducerData(
             const element = findElement(fileTree, id);
             const parentId = element.parentId;
 
-            const filterIds = tree => tree.filter(element => element.id !== id);
+            const filterIds = tree => tree.filter(treeElement => treeElement.id !== id);
 
             if (parentId === -1) {
                 files[sectionId] = filterIds(fileTree);
@@ -119,7 +119,7 @@ export default generateReducerData(
             return {
                 ...state,
                 files
-            }
+            };
         },
         [STATE.UPDATE_TREE]: (state, { fileTree, sectionId }) => {
             const files = state.files.slice(0);
@@ -127,7 +127,7 @@ export default generateReducerData(
 
             files[sectionId] = fileTree;
 
-            return {...state, files};
+            return { ...state, files };
         },
         [STATE.RENAME_FILE]: (state, { id, sectionId, name }) => {
             const files = state.files.slice(0);
@@ -148,4 +148,4 @@ export default generateReducerData(
         [STATE.CHANGE_SELECTED_SECTION]: (state, selectedId) => ({ ...state, selectedId }),
         [STATE.CLEAR]: state => ({ ...state, files: emptyFiles })
     }
-    );
+);

@@ -1,6 +1,6 @@
 import { EVENT } from "../enum";
 import { SECTION_ID } from "../../enum";
-import { DEFAULT_ANCHOR,  } from "../constants";
+import { DEFAULT_ANCHOR  } from "../constants";
 import { createElement } from "../utils";
 import { EditArea } from "../view";
 import ComElementTransform from "./com-element-transform";
@@ -74,8 +74,8 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         this.listenerManager.addEventListener(EVENT.ELEMENT_CLEAR_SELECTION, this._onClearSelection);
     }
 
-    _onCreateElement({data}) {
-        const {type} = data;
+    _onCreateElement({ data }) {
+        const { type } = data;
         const element = createElement(type);
 
         element.interactive = true;
@@ -92,7 +92,7 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         this._comElementTransform.selectedElement = null;
     }
 
-    _onCreateUIElement({data}) {
+    _onCreateUIElement({ data }) {
         const { id, type } = data;
         const element = createElement(type, true);
 
@@ -116,28 +116,28 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         let element;
 
         switch (type) {
-            case SECTION_ID.TEXTURE: {
-                if (this._uiElements.hasElement(key)) {
-                    element = this._uiElements.getElement(key);
-                }
-                else {
-                    element = view.ComponentSprite.create(key);
-                    this._addElement(element, key);
-                }
-
-                this._showElement(element);
-                this._comElementTransform.selectedElement = null;
-
-                break;
-            }
-            case SECTION_ID.ELEMENT: {
+        case SECTION_ID.TEXTURE: {
+            if (this._uiElements.hasElement(key)) {
                 element = this._uiElements.getElement(key);
-                this._comElementTransform.selectedElement = null;
-                break;
             }
-            default: {
-                break;
+            else {
+                element = view.ComponentSprite.create(key);
+                this._addElement(element, key);
             }
+
+            this._showElement(element);
+            this._comElementTransform.selectedElement = null;
+
+            break;
+        }
+        case SECTION_ID.ELEMENT: {
+            element = this._uiElements.getElement(key);
+            this._comElementTransform.selectedElement = null;
+            break;
+        }
+        default: {
+            break;
+        }
         }
 
         if (element) {
@@ -164,12 +164,12 @@ export default class ComStageGrid extends mCore.component.ui.ComUI {
         element.visible = true;
     }
 
-    _onZoomChange({data}) {
+    _onZoomChange({ data }) {
         this._editArea.changeScale(data);
         this._root.scale.set(data);
     }
 
-    _onOffsetChange({data}) {
+    _onOffsetChange({ data }) {
         this._root.position.copyFrom(data);
     }
 };
