@@ -1,17 +1,17 @@
 import STATE from "./state";
-import {WorkingStage} from "../working-stage";
-import {EDIT_MODE} from "../enum";
-import {generateReducerData} from "../helpers";
+import { WorkingStage } from "../working-stage";
+import { EDIT_MODE } from "../enum";
+import { generateReducerData } from "../helpers";
 
 const closeTab = (state, tabIndex) => {
-    let {tabs, selectedTab} = state;
+    let { tabs, selectedTab } = state;
 
     if (tabIndex >= tabs.length) {
         return state;
     }
 
     if (selectedTab >= tabIndex && selectedTab !== 0) {
-        --selectedTab;
+        selectedTab -= 1;
     }
 
     const nextTabs = tabs.filter((tab, index) => index !== tabIndex);
@@ -53,7 +53,7 @@ export default generateReducerData(
     },
     {
         [STATE.TAB_ADD]: (state, fileData) => {
-            let {tabs} = state;
+            let { tabs } = state;
 
             if (isTabExist(tabs, fileData)) {
                 const tabIndex = getTabIndex(tabs, fileData);
@@ -64,14 +64,14 @@ export default generateReducerData(
                 ...state,
                 tabs: [...tabs, fileData],
                 selectedTab: tabs.length
-            }
+            };
         },
         [STATE.TAB_SELECT]: selectTab,
         [STATE.TAB_CLOSE]: closeTab,
-        [STATE.ZOOM_CHANGE]: (state, zoomValue) => ({...state, zoomValue}),
-        [STATE.TRANSFORM_RESET]: state => ({...state, zoomValue: 1}),
+        [STATE.ZOOM_CHANGE]: (state, zoomValue) => ({ ...state, zoomValue }),
+        [STATE.TRANSFORM_RESET]: state => ({ ...state, zoomValue: 1 }),
         [STATE.CHECK_RENAME]: (state, fileData) => {
-            const {tabs} = state;
+            const { tabs } = state;
 
             if (!isTabExist(tabs, fileData)) {
                 return state;
@@ -85,24 +85,24 @@ export default generateReducerData(
                         title: fileData.title
                     }
                 )
-            }
+            };
         },
-        [STATE.CHANGE_MODE]: (state) => {
+        [STATE.CHANGE_MODE]: state => {
             let mode;
 
             switch (state.mode) {
-                case EDIT_MODE.SIZE: {
-                    mode = EDIT_MODE.SKEW;
-                    break;
-                }
-                case EDIT_MODE.SKEW: {
-                    mode = EDIT_MODE.SCALE;
-                    break;
-                }
-                default: {
-                    mode = EDIT_MODE.SIZE;
-                    break;
-                }
+            case EDIT_MODE.SIZE: {
+                mode = EDIT_MODE.SKEW;
+                break;
+            }
+            case EDIT_MODE.SKEW: {
+                mode = EDIT_MODE.SCALE;
+                break;
+            }
+            default: {
+                mode = EDIT_MODE.SIZE;
+                break;
+            }
             }
 
             return {

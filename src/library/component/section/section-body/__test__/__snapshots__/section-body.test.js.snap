@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SectionBody test default snapshot 1`] = `"<div>Test file tree</div>"`;
+exports[`SectionBody test default snapshot 1`] = `"<div>Mock file tree</div>"`;
 
 exports[`SectionBody test snapshot with empty fields 1`] = `"<span class=\\"section-body-empty\\">test</span>"`;

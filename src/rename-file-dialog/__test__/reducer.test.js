@@ -1,29 +1,18 @@
-import { default as reducer, initialState } from '../reducer';
-import types from '../state';
+import reducer from "../reducer";
+import types from "../state";
+import { reducerTemplate } from "../../../test_templates";
+import {UI_SECTION} from "../../enum";
 
-describe('rename-file-dialog reducer', () => {
-    it('handle empty state', () => {
-        expect(reducer(undefined, {})).toEqual(initialState);
-    });
+describe("rename-file-dialog reducer", () => {
 
-    it('handle CHANGE_ACTIVITY', () => {
-        expect(
-            reducer(undefined, {
-                type: types.CHANGE_ACTIVITY,
-                payload: true
-            })
-        ).toEqual({
-            ...initialState,
-            isPopupOpen: true
-        });
-        expect(
-            reducer(undefined, {
-                type: types.CHANGE_ACTIVITY,
-                payload: false
-            })
-        ).toEqual({
-            ...initialState,
-            isPopupOpen: false
-        });
-    });
+    const { checkHandlerArray } = reducerTemplate(reducer, UI_SECTION.RENAME_FILE_DIALOG);
+
+    checkHandlerArray(
+        types.CHANGE_ACTIVITY,
+        [true, false],
+        [
+            { isPopupOpen: true },
+            { isPopupOpen: false }
+        ]
+    );
 });

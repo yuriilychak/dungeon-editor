@@ -1,45 +1,41 @@
 import { addFile, renameFile, removeFile, updateTree, addDirectory, clearLibrary } from '../action';
 import STATE from '../state';
+import { handleAction } from "../../helpers";
 
 describe('library actions', () => {
     it('clearLibrary', () => {
-        const expectedAction = {
-            type: STATE.CLEAR,
-            payload: null
-        };
+        const expectedAction = handleAction(STATE.CLEAR, null);
         expect(clearLibrary()).toEqual(expectedAction);
     });
 
     it('addDirectory', () => {
-        const expectedAction = {
-            type: STATE.ADD_DIRECTORY,
-            payload: {
-                sectionId: 5,
-                data: 4
-            }
+        const data = {
+            sectionId: 5,
+            data: 4
         };
-        expect(addDirectory(5, 4)).toEqual(expectedAction);
+        const expectedAction = handleAction(STATE.ADD_DIRECTORY, data);
+        expect(addDirectory(data)).toEqual(expectedAction);
     });
 
     it('updateTree', () => {
-        const expectedAction = {
-            type: STATE.UPDATE_TREE,
-            payload: {
+        const expectedAction = handleAction(
+            STATE.UPDATE_TREE,
+            {
                 fileTree: [],
                 sectionId: 5
             }
-        };
+        );
         expect(updateTree([], 5)).toEqual(expectedAction);
     });
 
     it('removeFile', () => {
-        const expectedAction = {
-            type: STATE.REMOVE_FILE,
-            payload: {
+        const expectedAction = handleAction(
+            STATE.REMOVE_FILE,
+            {
                 id: 3,
                 sectionId: 5
             }
-        };
+        );
         expect(removeFile(3, 5)).toEqual(expectedAction);
     });
 
@@ -58,11 +54,8 @@ describe('library actions', () => {
     it('addFile', () => {
         const expectedAction = {
             type: STATE.ADD_FILE,
-            payload: {
-                data: {},
-                sectionId: 3
-            }
+            payload: {}
         };
-        expect(addFile({}, 3)).toEqual(expectedAction);
+        expect(addFile({})).toEqual(expectedAction);
     });
 });

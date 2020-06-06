@@ -1,34 +1,26 @@
-import {default as reducer, initialState} from '../reducer';
+import reducer from '../reducer';
 import types from '../state';
+import { reducerTemplate } from "../../../test_templates";
+import { UI_SECTION } from "../../enum";
 
-describe('new-project-dialog reducer', () => {
-    it('handle empty state', () => {
-        expect(reducer(undefined, {})).toEqual(initialState);
-    });
+describe("new-project-dialog reducer", () => {
+    const { checkHandler } = reducerTemplate(reducer, UI_SECTION.NEW_FILE_DIALOG);
 
-    it('handle OPEN_POPUP', () => {
-        expect(
-            reducer(undefined, {
-                type: types.OPEN_POPUP,
-                payload: 0
-            })
-        ).toEqual({
-            ...initialState,
+    checkHandler(
+        types.OPEN_POPUP,
+        0,
+        {
             isPopupOpen: true,
             sectionId: 0,
             elementType: 2
-        });
-    });
+        }
+    );
 
-    it('handle CLOSE_POPUP', () => {
-        expect(
-            reducer(undefined, {
-                type: types.CLOSE_POPUP,
-                payload: false
-            })
-        ).toEqual({
-            ...initialState,
+    checkHandler(
+        types.CLOSE_POPUP,
+        false,
+        {
             isPopupOpen: false
-        });
-    });
+        }
+    );
 });

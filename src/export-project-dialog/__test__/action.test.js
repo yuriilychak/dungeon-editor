@@ -27,7 +27,7 @@ describe('new-project-dialog actions', () => {
                 isComplete: false
             }
         };
-        expect(changeProgress(50, "text.json", false)).toEqual(expectedAction);
+        expect(changeProgress({ progress: 50, fileName: "text.json", isComplete: false })).toEqual(expectedAction);
     });
 
     it('changeProgress with percent only', () => {
@@ -39,6 +39,6 @@ describe('new-project-dialog actions', () => {
                 isComplete: false
             }
         };
-        expect(changeProgress(50)).toEqual(expectedAction);
+        expect(changeProgress({ progress: 50 })).toEqual(expectedAction);
     });
 });

@@ -1,9 +1,13 @@
-import {default as reducer, initialState} from '../reducer';
-import { closeTab, selectTab, addTab } from "../action";
+import reducer from "../reducer";
+import { reducerTemplate } from "../../../test_templates";
+import STATE from "../state";
+import { UI_SECTION } from "../../enum";
 
 jest.mock("../../working-stage");
 
-describe('working-area reducer', () => {
+describe("working-area reducer", () => {
+    const { initialState, checkHandler } = reducerTemplate(reducer, UI_SECTION.WORKING_AREA);
+
     const createState = (tabCount, selectedTab, startIndex = 1) => {
         const tabs = [];
         const lastIndex = tabCount + startIndex - 1;
@@ -19,45 +23,32 @@ describe('working-area reducer', () => {
             ...initialState,
             tabs,
             selectedTab
-        }
+        };
     };
 
-    const addNewTab = () => addTab("test_1", 1, 1);
+    const testTab = { title: "test_1", fileId: 1, sectionId: 1 };
 
     const oneItemState = createState(1, 0);
     const twoItemState = createState(2, 1);
+    const threeItemState = createState(3, 0);
 
-    it('handle empty state', () => {
-        expect(reducer(undefined, {})).toEqual(initialState);
-    });
-
-    it('handle TAB_ADD', () => {
-        expect(reducer(undefined, addNewTab())).toEqual(oneItemState);
-    });
-
-    it('handle TAB_ADD with existing tab', () => {
-        expect(reducer(oneItemState, addNewTab())).toEqual(oneItemState);
-    });
-
-    it('handle TAB_SELECT', () => {
-        expect(reducer(twoItemState, selectTab(0)))
-            .toEqual(createState(2, 0));
-    });
-
-    it('handle TAB_SELECT when select selected tab', () => {
-        expect(reducer(twoItemState, selectTab(1))).toEqual(twoItemState);
-    });
-
-    it('handle TAB_CLOSE', () => {
-        expect(reducer(twoItemState, closeTab(1))).toEqual(oneItemState);
-    });
-
-    it('handle TAB_CLOSE when close first tab', () => {
-        expect(reducer(createState(2, 0), closeTab(0))).toEqual(createState(1, 0, 2));
-    });
-
-    it('handle TAB_CLOSE with close not existing tab', () => {
-        const state = createState(3, 0);
-        expect(reducer(state, closeTab(3))).toEqual(state);
-    });
+    checkHandler(STATE.TAB_ADD, testTab, oneItemState);
+    checkHandler(STATE.TAB_ADD, testTab, oneItemState, oneItemState, "when add existing tab");
+    checkHandler(STATE.TAB_SELECT, 0, createState(2, 0), twoItemState);
+    checkHandler(STATE.TAB_SELECT, 1, twoItemState, twoItemState, "when select selected tab");
+    checkHandler(STATE.TAB_CLOSE, 1, oneItemState, twoItemState);
+    checkHandler(
+        STATE.TAB_CLOSE,
+        0,
+        createState(1, 0, 2),
+        createState(2, 0),
+        "when close first tab"
+    );
+    checkHandler(
+        STATE.TAB_CLOSE,
+        3,
+        threeItemState,
+        threeItemState,
+        "when close not exist tab"
+    );
 });

@@ -1,14 +1,21 @@
 import React from "react";
 import 'babel-polyfill';
 
-import { createMount } from '@material-ui/core/test-utils';
+import { createShallow } from '@material-ui/core/test-utils';
 
-import { initialState } from '../../reducer';
+import reducer from '../../reducer';
 import Library from "../library";
+import { getInitialState } from "../../../../test_templates";
+import { UI_SECTION } from "../../../enum";
 
 jest.mock("../../../common-ui/file-tree/file-tree");
 
+jest.mock("react-sortable-tree", () => () => (
+    <div/>
+));
+
 describe('Library test',() => {
+    const initialState = getInitialState(reducer, UI_SECTION.LIBRARY);
 
     const defaultProps = {
         ...initialState,
@@ -27,7 +34,7 @@ describe('Library test',() => {
     };
 
     it("default snapshot", () => {
-        const wrapper = createMount()(
+        const wrapper = createShallow()(
             <Library
                 {...defaultProps}
             />

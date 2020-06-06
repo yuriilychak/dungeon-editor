@@ -42,6 +42,7 @@
     "lint": "eslint --ext .jsx --ext .js src/",
     "build": "react-scripts build",
     "test": "jest --coverage",
+    "test-update-snapshots": "jest -u --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

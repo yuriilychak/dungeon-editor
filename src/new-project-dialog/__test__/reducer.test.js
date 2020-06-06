@@ -1,29 +1,17 @@
-import { default as reducer, initialState } from '../reducer';
+import reducer from '../reducer';
 import types from '../state';
+import { reducerTemplate } from "../../../test_templates";
+import {UI_SECTION} from "../../enum";
 
 describe('new-project-dialog reducer', () => {
-    it('handle empty state', () => {
-        expect(reducer(undefined, {})).toEqual(initialState);
-    });
+    const { checkHandlerArray } = reducerTemplate(reducer, UI_SECTION.NEW_PROJECT_DIALOG);
 
-    it('handle CHANGE_ACTIVITY', () => {
-        expect(
-            reducer(undefined, {
-                type: types.CHANGE_ACTIVITY,
-                payload: true
-            })
-        ).toEqual({
-                ...initialState,
-                isPopupOpen: true
-        });
-        expect(
-            reducer(undefined, {
-                type: types.CHANGE_ACTIVITY,
-                payload: false
-            })
-        ).toEqual({
-            ...initialState,
-            isPopupOpen: false
-        });
-    });
+    checkHandlerArray(
+        types.CHANGE_ACTIVITY,
+        [true, false],
+        [
+            { isPopupOpen: true },
+            { isPopupOpen: false }
+        ]
+    );
 });

@@ -1,14 +1,17 @@
 import React from "react";
-import { createMount } from "@material-ui/core/test-utils";
+import { createShallow } from "@material-ui/core/test-utils";
 
 import Section from "../section";
 
 jest.mock("../../../../common-ui/file-tree/file-tree");
 
-describe("Section test", () => {
+jest.mock("react-sortable-tree", () => () => (
+    <div/>
+));
 
+describe("Section test", () => {
     it("default snapshot", () => {
-        const wrapper = createMount()(
+        const wrapper = createShallow()(
             <Section
                 id={0}
                 icon="test"

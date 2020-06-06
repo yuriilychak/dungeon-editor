@@ -1,0 +1,1 @@
+export { reducerTemplate, getInitialState } from './reducer';

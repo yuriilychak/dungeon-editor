@@ -1,10 +1,14 @@
 import NewProjectDialog from "../component/new-project-dialog";
-import { initialState } from '../reducer';
+import reducer from '../reducer';
 import React from "react";
 import { createMount } from '@material-ui/core/test-utils';
+import { getInitialState } from "../../../test_templates";
+import { UI_SECTION } from "../../enum";
 
 
 describe('new-project-dialog index test',()=>{
+    const initialState = getInitialState(reducer, UI_SECTION.NEW_PROJECT_DIALOG);
+
     const props = {
         ...initialState,
         isPopupOpen: true,

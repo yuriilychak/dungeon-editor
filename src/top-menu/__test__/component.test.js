@@ -7,8 +7,10 @@ import { MenuSection } from "../component/menu-section";
 import Toolbar from "../component/toolbar";
 import TopMenu from "../component/top-menu";
 import React from "react";
-import { initialState } from "../reducer";
+import reducer from "../reducer";
 import { createMount, createShallow } from "@material-ui/core/test-utils";
+import {getInitialState} from "../../../test_templates";
+import {UI_SECTION} from "../../enum";
 
 document.createRange = jest.fn();
 
@@ -19,6 +21,7 @@ jest.mock("@material-ui/core/Popper", () => ({children}) => (
 ));
 
 describe("top-menu test",()=> {
+    const initialState = getInitialState(reducer, UI_SECTION.TOP_MENU);
     it ( "top-menu snapshot", () => {
         const wrapper = createShallow()(
             <TopMenu {...initialState} />

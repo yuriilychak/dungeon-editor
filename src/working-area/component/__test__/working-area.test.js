@@ -2,12 +2,16 @@ import React from "react";
 
 import { createShallow } from "@material-ui/core/test-utils";
 
-import {initialState} from "../../reducer";
+import reducer from "../../reducer";
 import WorkingArea from "../working-area";
+import { getInitialState } from "../../../../test_templates";
+import { UI_SECTION } from "../../../enum";
 
 jest.mock("../../../working-stage");
 
 describe("working-area test", () => {
+    const initialState = getInitialState(reducer, UI_SECTION.WORKING_AREA);
+
     it ( 'working-area default snapshot', () => {
         const wrapper = createShallow()(
             <WorkingArea

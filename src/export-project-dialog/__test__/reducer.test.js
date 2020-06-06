@@ -1,43 +1,29 @@
-import { default as reducer, initialState } from '../reducer';
+import reducer from '../reducer';
 import types from '../state';
+import { reducerTemplate } from "../../../test_templates";
+import {UI_SECTION} from "../../enum";
 
 describe('new-project-dialog reducer', () => {
-    it('handle empty state', () => {
-        expect(reducer(undefined, {})).toEqual(initialState);
-    });
+    const { checkHandlerArray } = reducerTemplate(reducer, UI_SECTION.NEW_PROJECT_DIALOG);
 
-    it('handle CHANGE_ACTIVITY', () => {
-        const checkActivity = activity => {
-            expect(
-                reducer(undefined, {
-                    type: types.CHANGE_ACTIVITY,
-                    payload: activity
-                })
-            ).toEqual({
-                ...initialState,
-                isPopupOpen: activity
-            });
-        };
+    checkHandlerArray(
+        types.CHANGE_ACTIVITY,
+        [true, false],
+        [
+            { isPopupOpen: true },
+            { isPopupOpen: false }
+        ]
+    );
 
-        checkActivity(true);
-        checkActivity(false);
-
-    });
-
-    it('handle PROGRESS', () => {
-        const checkProgress = progressData => {
-            expect(
-                reducer(undefined, {
-                    type: types.PROGRESS,
-                    payload: progressData
-                })
-            ).toEqual({
-                ...initialState,
-                progressData: progressData
-            });
-        };
-
-        checkProgress(null);
-        checkProgress({progress: 50, fileName: "text.json", isComplete: false});
-    });
+    checkHandlerArray(
+        types.PROGRESS,
+        [
+            null,
+            { progress: 50, fileName: "text.json", isComplete: false }
+        ],
+        [
+            { progressData: null },
+            { progressData: { progress: 50, fileName: "text.json", isComplete: false } }
+        ]
+    );
 });

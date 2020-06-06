@@ -1,11 +1,11 @@
 import React from "react";
 
-export default (props) => {
+export default props => {
     const { treeData, generateNodeProps, onChange } = props;
 
     const iterateElements = elements => {
         elements.forEach(element => {
-            const props = generateNodeProps({node: element});
+            const props = generateNodeProps({ node: element });
 
             props.onClick();
 
@@ -20,6 +20,8 @@ export default (props) => {
     onChange(treeData);
 
     return (
-        <div>Test file tree</div>
+        <div>
+            Mock file tree
+        </div>
     );
 };

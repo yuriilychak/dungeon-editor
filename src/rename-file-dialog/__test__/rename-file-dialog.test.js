@@ -1,9 +1,12 @@
 import { RenameFileDialog } from "../component";
-import { initialState } from '../reducer';
+import reducer from '../reducer';
 import React from "react";
 import { createMount } from '@material-ui/core/test-utils';
+import {getInitialState} from "../../../test_templates";
+import {UI_SECTION} from "../../enum";
 
 describe('rename-file-dialog index test',() => {
+    const initialState = getInitialState(reducer, UI_SECTION.RENAME_FILE_DIALOG);
     const props = {
         ...initialState,
         isPopupOpen: true,
