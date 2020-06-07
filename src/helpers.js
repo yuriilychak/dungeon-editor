@@ -13,10 +13,6 @@ export const generateLocale = (localeTemplate, t) => {
     let localeData, key;
 
     for (key in localeTemplate){
-        if (!localeTemplate.hasOwnProperty(key)) {
-            continue;
-        }
-
         localeData = localeTemplate[key];
 
         result[key] = isString(localeData) ? t(localeData) : generateLocale(localeData, t);

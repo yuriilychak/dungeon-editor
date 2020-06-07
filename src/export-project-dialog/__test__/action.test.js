@@ -1,44 +1,23 @@
-import { hideExportProjectDialog, showExportProjectDialog, changeProgress } from '../action';
-import types from '../state';
+import { hideExportProjectDialog, showExportProjectDialog, changeProgress } from "../action";
+import STATES from "../state";
+import { checkAction } from "../../../test_templates";
 
-describe('new-project-dialog actions', () => {
-    it('hideExportProjectDialog', () => {
-        const expectedAction = {
-            type: types.CHANGE_ACTIVITY,
-            payload: false
-        };
-        expect(hideExportProjectDialog()).toEqual(expectedAction);
-    });
+describe("new-project-dialog actions", () => {
+    const fullProgressPayload = {
+        progress: 50,
+        fileName: "text.json",
+        isComplete: false
+    };
 
-    it('showExportProjectDialog', () => {
-        const expectedAction = {
-            type: types.CHANGE_ACTIVITY,
-            payload: true
-        };
-        expect(showExportProjectDialog()).toEqual(expectedAction);
-    });
+    const percentOnlyData = { progress: 50 };
+    const percentOnlyPayload = {
+        progress: 50,
+        fileName: null,
+        isComplete: false
+    };
 
-    it('changeProgress with full data', () => {
-        const expectedAction = {
-            type: types.PROGRESS,
-            payload: {
-                progress: 50,
-                fileName: "text.json",
-                isComplete: false
-            }
-        };
-        expect(changeProgress({ progress: 50, fileName: "text.json", isComplete: false })).toEqual(expectedAction);
-    });
-
-    it('changeProgress with percent only', () => {
-        const expectedAction = {
-            type: types.PROGRESS,
-            payload: {
-                progress: 50,
-                fileName: null,
-                isComplete: false
-            }
-        };
-        expect(changeProgress({ progress: 50 })).toEqual(expectedAction);
-    });
+    checkAction(hideExportProjectDialog(), STATES.CHANGE_ACTIVITY, false, "hideExportProjectDialog");
+    checkAction(showExportProjectDialog(), STATES.CHANGE_ACTIVITY, true, "showExportProjectDialog");
+    checkAction(changeProgress(fullProgressPayload), STATES.PROGRESS, fullProgressPayload, "pass full data");
+    checkAction(changeProgress(percentOnlyData), STATES.PROGRESS, percentOnlyPayload, "pass percent only");
 });

@@ -1,15 +1,15 @@
-import React, {useEffect} from "react";
-import {useTranslation} from "react-i18next";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Slider from '@material-ui/core/Slider';
-import {makeStyles} from "@material-ui/styles";
+import { makeStyles } from "@material-ui/styles";
 import Cached from "@material-ui/icons/Cached";
 
-import {ToolButton} from "../../common-ui/tool-button";
-import {WorkingCanvas} from "./working-canvas";
-import {TabContent} from "./tab-content";
+import { ToolButton } from "../../common-ui/tool-button";
+import { WorkingCanvas } from "./working-canvas";
+import { TabContent } from "./tab-content";
 
 import {
     ITEM_SIZE,
@@ -19,7 +19,7 @@ import {
     TEXT_COLOR
 } from "../../constant";
 
-import {getIndent} from "../../helpers";
+import { getIndent } from "../../helpers";
 
 import "./working-area.scss";
 
@@ -47,29 +47,29 @@ const useTabsStyles = makeStyles({
 });
 
 const WorkingArea = ({
-                         zoom,
-                         zoomValue,
-                         emptyIndex,
-                         locales,
-                         emptyIcon,
-                         tabs,
-                         icons,
-                         mode,
-                         selectedTab,
-                         onSelectTab,
-                         onGetCanvasRef,
-                         onCloseTab,
-                         onZoomChange,
-                         onTransformReset,
-                         onCreateElement,
-                         onComponentMount,
-                         onScrollStart,
-                         onScrollMove,
-                         onScrollEnd,
-                         onChangeMode
-                     }) => {
+    zoom,
+    zoomValue,
+    emptyIndex,
+    locales,
+    emptyIcon,
+    tabs,
+    icons,
+    mode,
+    selectedTab,
+    onSelectTab,
+    onGetCanvasRef,
+    onCloseTab,
+    onZoomChange,
+    onTransformReset,
+    onCreateElement,
+    onComponentMount,
+    onScrollStart,
+    onScrollMove,
+    onScrollEnd,
+    onChangeMode
+}) => {
     const classes = useTabStyles();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     useEffect(onComponentMount, []);
 
@@ -92,7 +92,7 @@ const WorkingArea = ({
     const tabsExist = tabs.length !== 0;
 
     const tabElements = tabsExist ?
-        tabs.map(({title, sectionId}, index) => createTab(index, title, `${icons[sectionId]}_element`), false) :
+        tabs.map(({ title, sectionId }, index) => createTab(index, title, `${icons[sectionId]}_element`), false) :
         createTab(emptyIndex, t(locales.emptyTitle), emptyIcon, true);
 
     const getAriaValueText = value => `${Math.round(value * 100)}%`;
@@ -102,7 +102,7 @@ const WorkingArea = ({
         if (!tabs.length) {
             return;
         }
-        const {sectionId, fileId} = tabs[index];
+        const { sectionId, fileId } = tabs[index];
         onSelectTab(index, sectionId, fileId);
     };
 
@@ -119,9 +119,9 @@ const WorkingArea = ({
             </div>
             <div className="working-area-body">
                 <div className="working-area-interactions"
-                     onMouseDown={onScrollStart}
-                     onMouseUp={onScrollEnd}
-                     onMouseMove={onScrollMove}
+                    onMouseDown={onScrollStart}
+                    onMouseUp={onScrollEnd}
+                    onMouseMove={onScrollMove}
                 >
                     <WorkingCanvas
                         onCreateElement={onCreateElement}

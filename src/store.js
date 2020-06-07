@@ -43,13 +43,10 @@ const initStore = () => {
             ...definedState,
             ...JSON_DATA[sectionId]
         };
-        reducers[sectionId] = (state = initialState, { type, payload })  => {
-            if (type.indexOf(sectionKeys[index]) !== 0) {
-                return state;
-            }
-            const handler = handlers[type];
-            return handler ? handler(state, payload) : state;
-        };
+        reducers[sectionId] = (state = initialState, { type, payload } = { type: '', payload: null })  =>
+            type.indexOf(sectionKeys[index]) !== 0 || !handlers.hasOwnProperty(type)
+                ? state
+                : handlers[type](state, payload);
     });
 
     return createStore(combineReducers(reducers));

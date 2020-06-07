@@ -9,6 +9,7 @@ describe("SectionBody test",() => {
     const defaultProps = {
         id: 0,
         icon: "test",
+        dropId: "test",
         emptyText: "test",
         renameText: "test",
         deleteText: "test",

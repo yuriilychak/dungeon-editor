@@ -1,7 +1,7 @@
 import NewFileDialog from "../component/new-file-dialog";
-import reducer from '../reducer';
+import reducer from "../reducer";
 import React from "react";
-import { createMount } from '@material-ui/core/test-utils';
+import { createMount } from "@material-ui/core/test-utils";
 import { getInitialState } from "../../../test_templates";
 import { UI_SECTION } from "../../enum";
 
@@ -9,7 +9,7 @@ jest.mock("react-sortable-tree", () => () => (
     <div/>
 ));
 
-describe('new-file-dialog index test',()=> {
+describe("new-file-dialog index test",()=> {
     const initialState = getInitialState(reducer, UI_SECTION.NEW_FILE_DIALOG);
     const props = {
         ...initialState,
@@ -25,13 +25,13 @@ describe('new-file-dialog index test',()=> {
         />
     );
 
-    const projectInput = wrapper.find('input');
+    const projectInput = wrapper.find("input");
 
-    it('Open snapshot', () => {
+    it("Open snapshot", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it('Close snapshot', () => {
+    it("Close snapshot", () => {
         const wrapper = createMount()(
             <NewFileDialog
                 {...initialState}
@@ -43,31 +43,31 @@ describe('new-file-dialog index test',()=> {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it('Click submit with empty project name', () => {
+    it("Click submit with empty project name", () => {
         jest.spyOn(wrapper.props(), "onSubmitPopup");
 
-        const button = wrapper.find('#new-file-submit').first();
+        const button = wrapper.find("#new-file-submit").first();
 
-        projectInput.simulate('change', { target: { value: '' } });
-        button.simulate('click');
+        projectInput.simulate("change", { target: { value: "" } });
+        button.simulate("click");
         expect(wrapper.props().onSubmitPopup).not.toHaveBeenCalled();
     });
 
-    it('Click submit with "test" project name', () => {
+    it("Click submit with 'test' project name", () => {
         jest.spyOn(wrapper.props(), "onSubmitPopup");
 
-        const button = wrapper.find('#new-file-submit').first();
+        const button = wrapper.find("#new-file-submit").first();
 
-        projectInput.simulate('change', { target: { value: 'test' } });
-        button.simulate('click');
+        projectInput.simulate("change", { target: { value: "test" } });
+        button.simulate("click");
         expect(wrapper.props().onSubmitPopup).toHaveBeenCalled();
     });
 
-    it('Click cancel', () => {
+    it("Click cancel", () => {
         jest.spyOn(wrapper.props(), "onClosePopup");
 
-        const button = wrapper.find('#new-file-reject').first();
-        button.simulate('click');
+        const button = wrapper.find("#new-file-reject").first();
+        button.simulate("click");
         expect(wrapper.props().onClosePopup).toHaveBeenCalled();
     });
 

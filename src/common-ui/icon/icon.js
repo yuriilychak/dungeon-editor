@@ -24,7 +24,7 @@ const Icon = ({name, size = 16, className, style = {} }) => (
 Icon.propTypes = {
     name: string.isRequired,
     className: string,
-    size: oneOfType([number, string]).isRequired,
+    size: oneOfType([number, string]),
     style: object
 };
 

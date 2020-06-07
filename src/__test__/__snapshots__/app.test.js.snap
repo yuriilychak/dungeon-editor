@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GIVEN App component WHEN render App with empty store THEN rendered result should match snapshot 1`] = `"<div class=\\"loader\\"><div class=\\"loader-ring\\"><div></div><div></div><div></div><div></div></div></div>"`;
+
+exports[`GIVEN App component WHEN render App with non empty store THEN rendered result should match snapshot 1`] = `"<div class=\\"loader\\"><div class=\\"loader-ring\\"><div></div><div></div><div></div><div></div></div></div>"`;
