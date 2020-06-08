@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 import { string, func, shape, number, bool } from "prop-types";
 import { useTranslation } from "react-i18next";
 
-import DialogContentText from '@material-ui/core/DialogContentText';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import DialogContentText from "@material-ui/core/DialogContentText";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
-import {ActionDialog} from "../../common-ui/action-dialog";
+import { ActionDialog } from "../../common-ui/action-dialog";
 
 const ExportProjectDialog = props => {
     const { t } = useTranslation();
@@ -45,10 +45,10 @@ const ExportProjectDialog = props => {
             onSubmit={onExportProject}
             onReject={onClosePopup}
         >
-                <DialogContentText>
-                    { progressText }
-                </DialogContentText>
-                <LinearProgress color="primary" variant="determinate" value={progress} />
+            <DialogContentText>
+                { progressText }
+            </DialogContentText>
+            <LinearProgress color="primary" variant="determinate" value={progress} />
         </ActionDialog>
     );
 };

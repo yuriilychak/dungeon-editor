@@ -6,6 +6,12 @@ import ExportPopupDialog from "../export-project-dialog";
 import {getInitialState} from "../../../../test_templates";
 import {UI_SECTION} from "../../../enum";
 
+jest.mock("@material-ui/core/LinearProgress", () => ({ value }) => (
+    <div>
+        {`Progress mock progress: ${value}`}
+    </div>
+));
+
 describe("export-project-dialog index test",()=> {
     const initialState = getInitialState(reducer, UI_SECTION.EXPORT_PROJECT_DIALOG);
     const props = {
