@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Select test Default snapshot 1`] = `"<div><div class=\\"MuiPaper-root makeStyles-root-1 MuiPaper-elevation1\\"><div class=\\"MuiButtonBase-root MuiListItem-root MuiMenuItem-root makeStyles-menuItem-2 makeStyles-menuItemDefault-4 Mui-selected MuiMenuItem-gutters MuiListItem-gutters MuiListItem-button Mui-selected\\" tabindex=\\"-1\\" role=\\"menuitem\\" aria-disabled=\\"false\\">test<span class=\\"MuiTouchRipple-root\\"></span></div></div></div>"`;
+exports[`Select test Default snapshot 1`] = `"<div><div class=\\"MuiPaper-root makeStyles-root-1 MuiPaper-elevation1\\"><button>test</button></div></div>"`;
 
 exports[`Select test Snapshot closed 1`] = `"<div></div>"`;
 
-exports[`Select test Snapshot with empty input 1`] = `"<div><div class=\\"MuiPaper-root makeStyles-root-1 MuiPaper-elevation1\\"><div class=\\"MuiButtonBase-root MuiListItem-root MuiMenuItem-root makeStyles-menuItem-2 makeStyles-menuItemDefault-4 Mui-selected MuiMenuItem-gutters MuiListItem-gutters MuiListItem-button Mui-selected\\" tabindex=\\"-1\\" role=\\"menuitem\\" aria-disabled=\\"false\\">test<span class=\\"MuiTouchRipple-root\\"></span></div></div></div>"`;
+exports[`Select test Snapshot with empty input 1`] = `"<div><div class=\\"MuiPaper-root makeStyles-root-1 MuiPaper-elevation1\\"><button>test</button></div></div>"`;
 
 exports[`Select test Snapshot with empty input and without show empty 1`] = `"<div><div class=\\"MuiPaper-root makeStyles-root-1 MuiPaper-elevation1\\"></div></div>"`;
 
-exports[`Select test Snapshot without show empty 1`] = `"<div><div class=\\"MuiPaper-root makeStyles-root-1 MuiPaper-elevation1\\"><div class=\\"MuiButtonBase-root MuiListItem-root MuiMenuItem-root makeStyles-menuItem-2 makeStyles-menuItemDefault-4 Mui-selected MuiMenuItem-gutters MuiListItem-gutters MuiListItem-button Mui-selected\\" tabindex=\\"-1\\" role=\\"menuitem\\" aria-disabled=\\"false\\">test<span class=\\"MuiTouchRipple-root\\"></span></div></div></div>"`;
+exports[`Select test Snapshot without show empty 1`] = `"<div><div class=\\"MuiPaper-root makeStyles-root-1 MuiPaper-elevation1\\"><button>test</button></div></div>"`;

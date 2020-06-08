@@ -10,4 +10,21 @@ React.useLayoutEffect = React.useEffect;
 
 i18n.use(initReactI18next).init(locale);
 
+jest.mock("@material-ui/core/ButtonBase", () => ({ children, onClick }) => (
+    <button
+        onClick={onClick}
+    >
+        {children}
+    </button>
+));
+
+jest.mock("@material-ui/core/Tooltip", () => ({ children }) => (
+    <div>
+        <span>Tooltip mock</span>
+        <div>
+            {children}
+        </div>
+    </div>
+));
+
 configure({ adapter: new Adapter() });

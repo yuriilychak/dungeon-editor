@@ -1,8 +1,8 @@
-import React, {useCallback, useMemo, memo} from "react";
+import React, { useCallback, useMemo, memo } from "react";
 import classNames from "classnames";
 import SortableTree from "react-sortable-tree";
 import FileExplorerTheme from "react-sortable-tree-theme-file-explorer";
-import {string, shape, number, func} from "prop-types";
+import { string, shape, number, func } from "prop-types";
 
 import { EMPTY_VALUE, TREE_DATA, STYLES } from "./constants";
 import { canDrag, canDrop, generateNodeProps, cloneValue } from "./helpers";
@@ -10,11 +10,10 @@ import { canDrag, canDrop, generateNodeProps, cloneValue } from "./helpers";
 import "./file-area.scss";
 
 export const FileArea = ({
-                             dropId,
-                             label,
-                             value,
-                             onChange
-                         }) => {
+    dropId,
+    value,
+    onChange
+}) => {
     const isEmpty = value.id === EMPTY_VALUE.id;
     const handleChangeWithClone = useCallback(data => onChange(cloneValue(data)), [onChange]);
     const closeStyle = useMemo(() => classNames(STYLES.CLOSE, { [STYLES.CLOSE_DISABLED]: isEmpty }), [isEmpty]);
@@ -24,7 +23,7 @@ export const FileArea = ({
     return (
         <div className={STYLES.ROOT}>
             <span className={STYLES.TITLE}>
-            {value.title}
+                {value.title}
             </span>
             <span
                 className={closeStyle}
@@ -52,7 +51,6 @@ export const FileArea = ({
 };
 
 FileArea.propTypes = {
-    label: string.isRequired,
     value: shape({
         id: number.isRequired,
         title: string.isRequired

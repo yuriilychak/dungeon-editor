@@ -1,29 +1,23 @@
-import reducer from '../reducer';
-import types from '../state';
+import reducer from "../reducer";
+import STATES from "../state";
 import { reducerTemplate } from "../../../test_templates";
-import {UI_SECTION} from "../../enum";
+import { UI_SECTION } from "../../enum";
 
-describe('new-project-dialog reducer', () => {
-    const { checkHandlerArray } = reducerTemplate(reducer, UI_SECTION.NEW_PROJECT_DIALOG);
+describe("export-project-dialog reducer", () => {
+    const { checkHandlerArray } = reducerTemplate(reducer, UI_SECTION.EXPORT_PROJECT_DIALOG);
 
-    checkHandlerArray(
-        types.CHANGE_ACTIVITY,
+    const testType = (state, payloads, stateGenerator) =>
+        checkHandlerArray(state, payloads, payloads.map(stateGenerator));
+
+    testType(
+        STATES.CHANGE_ACTIVITY,
         [true, false],
-        [
-            { isPopupOpen: true },
-            { isPopupOpen: false }
-        ]
+        isPopupOpen => ({ isPopupOpen })
     );
 
-    checkHandlerArray(
-        types.PROGRESS,
-        [
-            null,
-            { progress: 50, fileName: "text.json", isComplete: false }
-        ],
-        [
-            { progressData: null },
-            { progressData: { progress: 50, fileName: "text.json", isComplete: false } }
-        ]
+    testType(
+        STATES.PROGRESS,
+        [null, { progress: 50, fileName: "text.json", isComplete: false }],
+        progressData => ({ progressData })
     );
 });

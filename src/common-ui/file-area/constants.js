@@ -1,6 +1,7 @@
+
 const stylePrefix = "file-area-";
 
-export const EMPTY_VALUE = { id: -1, value: "Default" };
+export const EMPTY_VALUE = { id: -1, title: "Default" };
 export const TREE_DATA = [{}];
 export const STYLES = {
     ROOT: `${stylePrefix}root`,

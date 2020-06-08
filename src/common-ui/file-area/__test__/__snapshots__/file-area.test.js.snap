@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GIVEN file-area WHEN render component WITH default props THEN result should match snapshot 1`] = `"<div class=\\"file-area-root\\"><span class=\\"file-area-title\\">testTitle1</span><span class=\\"file-area-close\\">✕</span><div class=\\"file-area-drop-area\\"><button id=\\"SortableTree\\">Sortable tree mock drag:false drop:true nodeProps:{ testProps }</button></div></div>"`;

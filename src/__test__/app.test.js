@@ -47,12 +47,14 @@ jest.mock("../working-area", () => ({
 
 describe("GIVEN App component", () => {
     it("WHEN render App with empty store THEN rendered result should match snapshot", () => {
+        jest.spyOn(React, "useState").mockImplementation(() => [null, jest.fn()]);
+        jest.spyOn(React, "useEffect").mockImplementation(callback => callback());
         const wrapper = createShallow()(<App/>);
         expect(wrapper.html()).toMatchSnapshot();
     });
 
     it("WHEN render App with non empty store THEN rendered result should match snapshot", () => {
-        jest.spyOn(React, "useState").mockImplementation(() => [{ getState: jest.fn() }, jest.fn()]);
+        jest.spyOn(React, "useState").mockImplementation(() => [{}, jest.fn()]);
         jest.spyOn(React, "useEffect").mockImplementation(callback => callback());
         const wrapper = createMount()(<App/>);
         expect(wrapper.html()).toMatchSnapshot();

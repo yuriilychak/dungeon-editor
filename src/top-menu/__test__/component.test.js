@@ -120,7 +120,7 @@ describe("top-menu test",()=> {
         it ( "click", () => {
             jest.spyOn(wrapper.props(), "onClick");
 
-            wrapper.find("li").first().simulate("click");
+            wrapper.find("button").first().simulate("click");
 
             const onClick = wrapper.props().onClick;
 

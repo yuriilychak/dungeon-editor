@@ -1,19 +1,19 @@
-import React, {Fragment, memo} from "react";
+import React, { Fragment, memo } from "react";
 import Add from "@material-ui/icons/Add";
 import CreateNewFolder from "@material-ui/icons/CreateNewFolder";
-import {number, string, func} from "prop-types";
+import { number, string, func } from "prop-types";
 
-import {ToolButton} from "../../../../common-ui/tool-button";
+import { ToolButton } from "../../../../common-ui/tool-button";
+
 import "./section-header.scss";
 
 const SectionHeader = ({
-                           id,
-                           icon,
-                           addElementText,
-                           addDirectoryText,
-                           onAddFile,
-                           onAddDirectory
-                       }) => (
+    id,
+    addElementText,
+    addDirectoryText,
+    onAddFile,
+    onAddDirectory
+}) => (
     <Fragment>
         <ToolButton
             title={addElementText}
