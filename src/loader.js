@@ -10,7 +10,7 @@ const pathPrefix = `${process.env.PUBLIC_URL}/static/`;
 
 const fetchJSON = path => fetch(addFormat(`${pathPrefix}${path}`, FILE_FORMAT.JSON));
 
-export const loadStatic = () => fetchJSON('locale/eng')
+export const loadStatic = callback => fetchJSON('locale/eng')
     .then(result => result.json())
     .then(data => {
         i18n.use(initReactI18next).init(data);
@@ -22,5 +22,6 @@ export const loadStatic = () => fetchJSON('locale/eng')
         ).then(configs => Promise.all(configs.map((config, index) =>
             config.json().then(configData => JSON_DATA[UI_SECTION[sections[index]]] = configData
             ))));
-    });
+    })
+    .then(callback);
 

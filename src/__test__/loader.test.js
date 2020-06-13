@@ -14,7 +14,7 @@ global.fetch = () => Promise.resolve({ json: () => Promise.resolve({ name: 'fetc
 
 describe("GIVEN root loader", () => {
     it("WHEN call loadStatic THEN localization should init", async () => {
-        await loadStatic();
+        await loadStatic(jest.fn());
 
         expect(i18n.use).toHaveBeenCalled();
     });

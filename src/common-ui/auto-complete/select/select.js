@@ -1,11 +1,11 @@
 import React from "react";
 import deburr from "lodash/deburr";
 
-import {makeStyles} from "@material-ui/styles";
+import { makeStyles } from "@material-ui/styles";
 import Paper from "@material-ui/core/Paper";
 
-import {SuggestionItem} from "./suggestion-item";
-import {arrayOf, bool, func, shape, string, number} from "prop-types";
+import { SuggestionItem } from "./suggestion-item";
+import { arrayOf, bool, func, shape, string, number } from "prop-types";
 
 const useStyles = makeStyles({
     root: {
@@ -24,21 +24,21 @@ const useStyles = makeStyles({
 });
 
 const Select = ({
-                    showEmpty,
-                    isOpen,
-                    inputValue,
-                    highlightedIndex,
-                    selectedItem,
-                    getItemProps,
-                    getMenuProps,
-                    suggestions
-                }) => {
+    showEmpty,
+    isOpen,
+    inputValue,
+    highlightedIndex,
+    selectedItem,
+    getItemProps,
+    getMenuProps,
+    suggestions
+}) => {
     const menuProps = getMenuProps();
 
     if (!isOpen) {
         return (
             <div {...menuProps}/>
-        )
+        );
     }
 
     const targetValue = deburr(inputValue.trim()).toLowerCase();
@@ -70,7 +70,7 @@ const Select = ({
 Select.propTypes = {
     isOpen: bool.isRequired,
     showEmpty: bool.isRequired,
-    suggestions: arrayOf(shape({item: string})).isRequired,
+    suggestions: arrayOf(shape({ item: string })).isRequired,
     inputValue: string.isRequired,
     highlightedIndex: number,
     selectedItem: string,

@@ -1,20 +1,20 @@
-import React, {memo, useState, useCallback, useEffect} from "react";
+import React, { memo, useState, useCallback, useEffect } from "react";
 import classNames from "classnames";
 
 import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 
-import {ToolButton} from "../../../../../common-ui";
+import { ToolButton } from "../../../../../common-ui";
 
-import "./enable-field.scss"
+import "./enable-field.scss";
 
-const EnableField = ({
-                         label,
-                         value,
-                         disabled,
-                         onChange,
-                         children
-                     }) => {
+export const EnableField = ({
+    label,
+    value,
+    disabled,
+    onChange,
+    children
+}) => {
     const [enabled, setEnabled] = useState(false);
 
     useEffect(() => setEnabled(value), [value]);
@@ -36,13 +36,13 @@ const EnableField = ({
             />
             <div
                 className={
-                    classNames("properties-enable-field", {"properties-enable-field-deselected": !enabled})
+                    classNames("properties-enable-field", { "properties-enable-field-deselected": !enabled })
                 }
             >
                 {children}
             </div>
         </>
-    )
+    );
 };
 
 export default memo(EnableField);

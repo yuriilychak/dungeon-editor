@@ -1,19 +1,21 @@
-import React, {memo, useCallback} from "react";
+import React, { memo } from "react";
 import ColorPicker from "rc-color-picker";
-import {string, func, bool} from "prop-types";
+import { string, func, bool } from "prop-types";
+
+import {useChange} from "../../../../../hooks";
 
 import "rc-color-picker/assets/index.css";
 import "./color-select.scss";
 
-const ColorSelect = ({
-                         id,
-                         value,
-                         label,
-                         onChange,
-                         enableAlpha = false,
-                         placement = "bottomRight"
-                     }) => {
-    const handleChange = useCallback(data => onChange(data.color), [onChange]);
+export const ColorSelect = ({
+    id,
+    value,
+    label,
+    onChange,
+    enableAlpha = false,
+    placement = "bottomRight"
+}) => {
+    const handleChange = useChange(onChange, ({ color }) => color);
 
     return (
         <div className="properties-color-select">

@@ -4,10 +4,14 @@ import React from "react";
 import App from "../app";
 
 jest.mock("../loader", () => ({
-    loadStatic: jest.fn(() => Promise.resolve())
+    loadStatic: jest.fn(callback => callback())
 }));
 
-jest.mock("../store", () => () => ({}));
+jest.mock("react-redux", () => ({
+    Provider: props => (<div {...props} />)
+}));
+
+jest.mock("../store", () => () => ({ getState: jest.fn() }));
 
 jest.mock("../bottom-menu", () => ({
     BottomMenu: () => <span>BottomMenu</span>
@@ -54,7 +58,7 @@ describe("GIVEN App component", () => {
     });
 
     it("WHEN render App with non empty store THEN rendered result should match snapshot", () => {
-        jest.spyOn(React, "useState").mockImplementation(() => [{}, jest.fn()]);
+        jest.spyOn(React, "useState").mockImplementation(() => [{ getState: jest.fn() }, jest.fn()]);
         jest.spyOn(React, "useEffect").mockImplementation(callback => callback());
         const wrapper = createMount()(<App/>);
         expect(wrapper.html()).toMatchSnapshot();

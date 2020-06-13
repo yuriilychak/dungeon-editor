@@ -11,7 +11,7 @@ const TextField = ({ value, onChange }) => {
             value={value}
             onChange={handleChange}
         />
-)
+    );
 };
 
 export default memo(TextField);

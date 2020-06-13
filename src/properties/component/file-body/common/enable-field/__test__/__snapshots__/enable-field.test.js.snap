@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GIVEN EnableField from property section WHEN render component with default props THEN component should match snapshot 1`] = `"<button>Mock Colorpicker</button><div class=\\"properties-enable-field\\"></div>"`;

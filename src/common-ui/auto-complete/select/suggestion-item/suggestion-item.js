@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 });
 
 
-const SuggestionItem = memo(({suggestion, getItemProps, isHighlighted, isSelected}) => {
+const SuggestionItem = ({suggestion, getItemProps, isHighlighted, isSelected}) => {
     const itemProps = getItemProps(suggestion);
     const classes = useStyles();
 
@@ -40,7 +40,7 @@ const SuggestionItem = memo(({suggestion, getItemProps, isHighlighted, isSelecte
             {suggestion.item}
         </MenuItem>
     );
-});
+};
 
 SuggestionItem.propTypes = {
     isHighlighted: bool.isRequired,
@@ -49,4 +49,4 @@ SuggestionItem.propTypes = {
     suggestion: shape({ item: string }).isRequired,
 };
 
-export default SuggestionItem;
+export default memo(SuggestionItem);

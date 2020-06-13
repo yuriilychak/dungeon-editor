@@ -9,12 +9,14 @@ import TopMenu from "../component/top-menu";
 import React from "react";
 import reducer from "../reducer";
 import { createMount, createShallow } from "@material-ui/core/test-utils";
-import {getInitialState} from "../../../test_templates";
-import {UI_SECTION} from "../../enum";
+import { getInitialState } from "../../../test_templates";
+import { UI_SECTION } from "../../enum";
 
 document.createRange = jest.fn();
 
-jest.mock("@material-ui/core/Popper", () => ({children}) => (
+jest.mock("@material-ui/core/MenuItem", () => props => (<button {...props} />));
+
+jest.mock("@material-ui/core/Popper", () => ({ children }) => (
     <div>
         {children}
     </div>

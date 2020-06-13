@@ -1,27 +1,27 @@
 import React from "react";
-import {number, string, func, arrayOf, object} from "prop-types";
+import { number, string, func, arrayOf, object } from "prop-types";
 
-import {FileTree} from "../../../../common-ui/file-tree";
-import {useSectionBody} from "./hooks";
+import { FileTree } from "../../../../common-ui/file-tree";
+import { useSectionBody } from "./hooks";
 
 import "./section-body.scss";
 
 const SectionBody = ({
-                         id,
-                         dropId,
-                         files,
-                         icon,
-                         emptyText,
-                         renameText,
-                         deleteText,
-                         addDirectoryText,
-                         onAddDirectory,
-                         onUpdateTree,
-                         onRemoveFile,
-                         onOpenFile,
-                         onRenameFile,
-                         onSelectFile
-                     }) => {
+    id,
+    dropId,
+    files,
+    icon,
+    emptyText,
+    renameText,
+    deleteText,
+    addDirectoryText,
+    onAddDirectory,
+    onUpdateTree,
+    onRemoveFile,
+    onOpenFile,
+    onRenameFile,
+    onSelectFile
+}) => {
 
     const [generateNodeProps, onChange] = useSectionBody(
         id,

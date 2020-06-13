@@ -12,7 +12,7 @@ import MenuBackground from "./menu-background";
 
 export const MenuSection = props => {
     const { t } = useTranslation();
-    const {locale, onOpen, onClose, onSelectSection, isOpen, sections, id, toggledSections} = props;
+    const { locale, onOpen, onClose, onSelectSection, isOpen, sections, id, toggledSections } = props;
     const [anchorEl, setAnchorEl] = useState(null);
 
     function handleClick(event) {
@@ -42,7 +42,7 @@ export const MenuSection = props => {
                 aria-haspopup="true"
                 onClick={handleClick}
             >
-               {t(locale)}
+                {t(locale)}
             </Button>
             <Popper
                 placement="bottom-start"

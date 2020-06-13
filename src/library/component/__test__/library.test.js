@@ -19,6 +19,7 @@ describe('Library test',() => {
 
     const defaultProps = {
         ...initialState,
+        init: jest.fn(),
         files: [[], [], [], [], [], [], []],
         onAddDirectory: jest.fn(),
         onAddFiles: jest.fn(),
@@ -30,7 +31,8 @@ describe('Library test',() => {
         onRenameFile: jest.fn(),
         onSelectFile: jest.fn(),
         onUpdateTree: jest.fn(),
-        onOpenFile: jest.fn()
+        onOpenFile: jest.fn(),
+        onExpansionChange: jest.fn()
     };
 
     it("default snapshot", () => {

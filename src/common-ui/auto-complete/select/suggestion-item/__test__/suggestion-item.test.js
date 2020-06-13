@@ -1,40 +1,22 @@
 import React from "react";
-import { createMount } from "@material-ui/core/test-utils";
+import { createShallow } from "@material-ui/core/test-utils";
 
 import SuggestionItem from "../suggestion-item";
+
+jest.mock("@material-ui/core/MenuItem", () => props => (<div {...props} />));
 
 describe("SuggestionItem test",()=> {
     const defaultProps = {
         isHighlighted: false,
         isSelected: false,
         suggestion: { item: "test" },
-        getItemProps: (suggestion) => ({})
+        getItemProps: () => ({})
     };
 
     it("Default snapshot", () => {
-        const wrapper = createMount()(
+        const wrapper = createShallow()(
             <SuggestionItem
                 {...defaultProps}
-            />
-        );
-        expect(wrapper.html()).toMatchSnapshot();
-    });
-
-    it("Highlighted snapshot", () => {
-        const wrapper = createMount()(
-            <SuggestionItem
-                {...defaultProps}
-                isHighlighted
-            />
-        );
-        expect(wrapper.html()).toMatchSnapshot();
-    });
-
-    it("Selected snapshot", () => {
-        const wrapper = createMount()(
-            <SuggestionItem
-                {...defaultProps}
-                isSelected
             />
         );
         expect(wrapper.html()).toMatchSnapshot();

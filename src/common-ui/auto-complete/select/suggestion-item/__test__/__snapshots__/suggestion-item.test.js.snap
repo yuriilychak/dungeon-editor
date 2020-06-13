@@ -1,7 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SuggestionItem test Default snapshot 1`] = `"<button>test</button>"`;
-
-exports[`SuggestionItem test Highlighted snapshot 1`] = `"<button>test</button>"`;
-
-exports[`SuggestionItem test Selected snapshot 1`] = `"<button>test</button>"`;
+exports[`SuggestionItem test Default snapshot 1`] = `"<div component=\\"div\\" class=\\"makeStyles-menuItem-1 makeStyles-menuItemDefault-3\\">test</div>"`;

@@ -1,5 +1,5 @@
-import React, {memo, useCallback} from "react";
-import {string, number, func} from "prop-types";
+import React, { memo, useCallback } from "react";
+import { string, number, func } from "prop-types";
 
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
@@ -24,11 +24,11 @@ const alignGroups = {
 };
 
 const ToggleGroupField = ({
-                              id,
-                              value,
-                              onChange,
-                              offset = 0
-                          }) => {
+    id,
+    value,
+    onChange,
+    offset = 0
+}) => {
     const currentValue = value - offset;
     const handleChange = useCallback((event, nextValue) => {
         if (nextValue !== currentValue && nextValue !== null) {

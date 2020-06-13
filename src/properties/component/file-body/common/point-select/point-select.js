@@ -1,18 +1,18 @@
-import React, {memo, useState, useCallback, useEffect } from "react";
+import React, { memo, useState, useCallback, useEffect } from "react";
 import { string, number, func, arrayOf, bool, shape } from "prop-types";
 
-import {NumberField} from "../number-field";
+import { NumberField } from "../number-field";
 
 import "./point-select.scss";
 
 const PointSelect = ({
-                        id,
-                         format,
-                        formats,
-                        value,
-                        disabled,
-                        onChange
-                    }) => {
+    id,
+    format,
+    formats,
+    value,
+    disabled,
+    onChange
+}) => {
     const [data, setData] = useState({ x: 0, y: 0, formatX: 0, formatY: 0 });
 
     useEffect(() => setData({ ...value }), [value]);

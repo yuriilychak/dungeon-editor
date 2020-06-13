@@ -14,6 +14,7 @@ describe("Section test", () => {
         const wrapper = createShallow()(
             <Section
                 id={0}
+                dropId="test"
                 icon="test"
                 files={[]}
                 addDirectoryText="test"

@@ -3,6 +3,8 @@ import { createMount } from "@material-ui/core/test-utils";
 
 import Select from "../select";
 
+jest.mock("@material-ui/core/MenuItem", () => props => (<div {...props} />));
+
 describe("Select test",()=> {
     const defaultProps = {
         getMenuProps: jest.fn(),
@@ -18,43 +20,46 @@ describe("Select test",()=> {
         highlightedIndex: 0
     };
 
-    it("Default snapshot", () => {
-        const wrapper = createMount()(
-            <Select {...defaultProps} />
-        );
+    const wrapper = createMount()(
+        <Select {...defaultProps} />
+    );
 
+
+    it("Default snapshot", () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
     it("Snapshot closed", () => {
-        const wrapper = createMount()(
-            <Select {...defaultProps} isOpen={false}/>
-        );
+        wrapper.setProps({
+            ...defaultProps,
+            isOpen: false
+        });
 
         expect(wrapper.html()).toMatchSnapshot();
     });
 
     it("Snapshot without show empty", () => {
-        const wrapper = createMount()(
-            <Select {...defaultProps} showEmpty={false}/>
-        );
-
+        wrapper.setProps({
+            ...defaultProps,
+            showEmpty: false
+        });
         expect(wrapper.html()).toMatchSnapshot();
     });
 
     it("Snapshot with empty input", () => {
-        const wrapper = createMount()(
-            <Select {...defaultProps} inputValue={""}/>
-        );
-
+        wrapper.setProps({
+            ...defaultProps,
+            inputValue: ""
+        });
         expect(wrapper.html()).toMatchSnapshot();
     });
 
     it("Snapshot with empty input and without show empty", () => {
-        const wrapper = createMount()(
-            <Select {...defaultProps} inputValue={""} showEmpty={false}/>
-        );
-
+        wrapper.setProps({
+            ...defaultProps,
+            inputValue: "",
+            showEmpty: false
+        });
         expect(wrapper.html()).toMatchSnapshot();
     });
 });

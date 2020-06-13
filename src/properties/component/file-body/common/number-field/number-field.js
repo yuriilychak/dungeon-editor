@@ -1,9 +1,9 @@
-import React, {memo, useCallback, useState, useEffect, useMemo } from "react";
+import React, { memo, useCallback, useState, useEffect, useMemo } from "react";
 import classNames from "classnames";
 import { string, bool, func, number } from "prop-types";
 import { noop } from "lodash";
 
-import {TitledField} from "../../../../../common-ui";
+import { TitledField } from "../../../../../common-ui";
 
 import "./number-field.scss";
 
@@ -16,20 +16,20 @@ const KEYBOARD_KEYS = {
 const emptyKeyData = { keyCode: null, timerId: null };
 
 const NumberField = ({
-                         label,
-                         id,
-                         value,
-                         step = 1,
-                         timeout = 50,
-                         minValue = -Infinity,
-                         maxValue = Infinity,
-                         format,
-                         changeFormatDisabled = true,
-                         className,
-                         onChange,
-                         disabled,
-                         onChangeFormat = noop
-                     }) => {
+    label,
+    id,
+    value,
+    step = 1,
+    timeout = 50,
+    minValue = -Infinity,
+    maxValue = Infinity,
+    format,
+    changeFormatDisabled = true,
+    className,
+    onChange,
+    disabled,
+    onChangeFormat = noop
+}) => {
     const [currentValue, setCurrentValue] = useState("");
     const [keyData, setKeyData] = useState(emptyKeyData);
 
@@ -61,29 +61,29 @@ const NumberField = ({
 
     const handleKeyEvent = useCallback(key => {
         switch(key) {
-            case KEYBOARD_KEYS.ENTER: {
-                if (currentValue !== "") {
-                    dispatchChange(currentValue, false);
-                }
-                break;
+        case KEYBOARD_KEYS.ENTER: {
+            if (currentValue !== "") {
+                dispatchChange(currentValue, false);
             }
-            case KEYBOARD_KEYS.UP: {
-                const nextValue = currentValue + step;
-                if (nextValue <= maxValue) {
-                    dispatchChange(nextValue);
-                }
-                break;
+            break;
+        }
+        case KEYBOARD_KEYS.UP: {
+            const nextValue = currentValue + step;
+            if (nextValue <= maxValue) {
+                dispatchChange(nextValue);
             }
-            case KEYBOARD_KEYS.DOWN: {
-                const nextValue = currentValue - step;
-                if (nextValue >= minValue) {
-                    dispatchChange(nextValue);
-                }
-                break;
+            break;
+        }
+        case KEYBOARD_KEYS.DOWN: {
+            const nextValue = currentValue - step;
+            if (nextValue >= minValue) {
+                dispatchChange(nextValue);
             }
-            default: {
-                return;
-            }
+            break;
+        }
+        default: {
+            return;
+        }
         }
     }, [dispatchChange, currentValue, step, minValue, maxValue]);
 
@@ -98,7 +98,7 @@ const NumberField = ({
             setKeyData({
                 keyCode,
                 timerId: null
-            })
+            });
         }
     }, [keyData, handleKeyEvent]);
 
@@ -127,7 +127,7 @@ const NumberField = ({
         }), [changeFormatDisabled]);
 
     const rootClassName = useMemo(() => classNames("properties-number-filed-root", {
-        "properties-number-filed-root-disabled": disabled,
+        "properties-number-filed-root-disabled": disabled
     }, className), [className, disabled]);
 
     return (
@@ -149,8 +149,8 @@ const NumberField = ({
                 className={formatClassName}
                 onClick={handleChangeFormat}
             >
-            {format}
-        </span>
+                {format}
+            </span>
         </TitledField>
     );
 };

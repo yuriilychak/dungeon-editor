@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GIVEN ColorSelect from property section WHEN render component with default props THEN component should match snapshot 1`] = `"<div class=\\"properties-color-select\\"><button>Mock Colorpicker</button><span class=\\"properties-color-select-tooltip\\">test</span></div>"`;

@@ -24,7 +24,7 @@ const App = () => {
     const [store, setStore] = useState(null);
 
     useEffect(() => {
-        loadStatic().then(() => setStore(initStore()));
+        loadStatic(() => setStore(initStore()));
     }, []);
 
     return store ? (
