@@ -1,20 +1,20 @@
-import React, {memo, useCallback} from "react";
+import React, { memo, useCallback } from "react";
 
-import {PropertyField, PropertyRow } from "../../common";
-import {ExpansionPanel} from "../../../../../common-ui";
-import {PROPERTY_SECTION} from "../../../../constants";
+import { PropertyField, PropertyRow } from "../../common";
+import { ExpansionPanel } from "../../../../../common-ui";
+import { PROPERTY_SECTION } from "../../../../constants";
 
 import "./property-section.scss";
 
 export const PropertySection = ({
-                                    id,
-                                    expanded,
-                                    data,
-                                    locales,
-                                    sectionTree,
-                                    onChange,
-                                    onExpansionChange
-                                }) => {
+    id,
+    expanded,
+    data,
+    locales,
+    sectionTree,
+    onChange,
+    onExpansionChange
+}) => {
     const generateElement = (id, children) => (
         <PropertyField
             id={id}
@@ -44,7 +44,7 @@ export const PropertySection = ({
             <PropertyRow key={rowId} label={sectionLocale[rowId]}>
                 {fields}
             </PropertyRow>
-        )
+        );
     });
 
     return (

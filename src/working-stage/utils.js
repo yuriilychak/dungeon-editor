@@ -1,4 +1,4 @@
-import {DEFAULT_SIZE, DEFAULT_TEXTURE} from "./enum";
+import { DEFAULT_SIZE, DEFAULT_TEXTURE } from "./enum";
 import {
     DEFAULT_ANCHOR,
     DEFAULT_FONT_NAME,
@@ -8,7 +8,7 @@ import {
     DEFAULT_TEXT_COLOR
 } from "./constants";
 
-const {mCore} = window;
+const { mCore } = window;
 const { view, ui, util } = mCore;
 const { geometry }  = mCore.util;
 
@@ -27,7 +27,7 @@ function setSizing(element, size, isSliceEnabled = false) {
 }
 
 function createDefaultLabel(text) {
-    const {HORIZONTAL_ALIGN, VERTICAL_ALIGN} = mCore.enumerator.ui;
+    const { HORIZONTAL_ALIGN, VERTICAL_ALIGN } = mCore.enumerator.ui;
     /**
      * @type {mCore.ui.Label}
      */
@@ -53,131 +53,131 @@ function setInnerSize(element, size) {
 export function createElement(type, isRoot = false) {
     let element;
 
-    const {UI_ELEMENT, PANEL_GRAPHIC_TYPE, PROGRESS_TYPE } = mCore.enumerator.ui;
+    const { UI_ELEMENT, PANEL_GRAPHIC_TYPE, PROGRESS_TYPE } = mCore.enumerator.ui;
 
     switch (type) {
-        case UI_ELEMENT.WIDGET: {
-            element = ui.Widget.create();
-            element.width = DEFAULT_SIZE.PANEL.width;
-            element.height = DEFAULT_SIZE.PANEL.height;
-            element.anchor.set(DEFAULT_ANCHOR);
-            break;
-        }
-        case UI_ELEMENT.BUTTON: {
-            element = ui.Button.create(
-                DEFAULT_TEXTURE.ROUND_RECT_UP,
-                DEFAULT_TEXTURE.ROUND_RECT_DOWN,
-                DEFAULT_TEXTURE.ROUND_RECT_OVER,
-                DEFAULT_TEXTURE.ROUND_RECT_DISABLED
-            );
-            setSizing(element, DEFAULT_SIZE.FIELD, true);
-            createTitle(element, "Button");
-            break;
-        }
-        case UI_ELEMENT.PANEL: {
-            element = ui.Panel.create(PANEL_GRAPHIC_TYPE.SPRITE, DEFAULT_TEXTURE.ROUND_RECT_OVER);
-            setSizing(element, DEFAULT_SIZE.PANEL, true);
-            break;
-        }
-        case UI_ELEMENT.LABEL: {
-            element = createDefaultLabel("Label");
-            break;
-        }
-        case UI_ELEMENT.TEXT_FIELD: {
-            element = ui.TextField.create(DEFAULT_FONT_NAME, DEFAULT_FONT_SIZE);
-            setSizing(element, DEFAULT_SIZE.FIELD, false);
-            element.text = "Text field";
-            element.color = DEFAULT_TEXT_COLOR;
-            break;
-        }
-        case UI_ELEMENT.IMAGE_VIEW: {
-            element = ui.ImageView.create(DEFAULT_TEXTURE.IMAGE);
-            element.anchor.set(DEFAULT_ANCHOR);
-            break;
-        }
-        case UI_ELEMENT.SPRITE: {
-            element = view.ComponentSprite.create(DEFAULT_TEXTURE.IMAGE);
-            element.anchor.set(DEFAULT_ANCHOR);
-            break;
-        }
-        case UI_ELEMENT.CONTAINER: {
-            element = view.ComponentContainer.create();
-            break;
-        }
-        case UI_ELEMENT.PROGRESS_BAR: {
-            element = ui.ProgressBar.create(
-                DEFAULT_TEXTURE.ROUND_RECT_OVER,
-                mCore.enumerator.DIRECTION.LEFT,
-                PROGRESS_TYPE.SIZE
-            );
-            setSizing(element, DEFAULT_SIZE.PROGRESS, true);
-            element.progress = DEFAULT_PROGRESS;
-            break;
-        }
-        case UI_ELEMENT.SLIDER: {
-            const ball = ui.ImageView.create(DEFAULT_TEXTURE.ROUND_RECT_OVER);
-            setSizing(ball, DEFAULT_SIZE.CHECKBOX, true);
-            element = ui.Slider.create(
-                ball,
-                mCore.enumerator.DIRECTION.LEFT,
-                DEFAULT_TEXTURE.ROUND_RECT_UP
-            );
-            setSizing(element, DEFAULT_SIZE.PROGRESS, false);
-            element.progress = DEFAULT_PROGRESS;
-            element.progressBar.setSlice(
-                DEFAULT_SLICE,
-                DEFAULT_SLICE,
-                DEFAULT_SLICE,
-                DEFAULT_SLICE
-            );
-            break;
-        }
-        case UI_ELEMENT.TOGGLE_BUTTON: {
-            element = ui.ToggleButton.create(
-                DEFAULT_TEXTURE.ROUND_RECT_UP,
-                DEFAULT_TEXTURE.ROUND_RECT_UP,
-                DEFAULT_TEXTURE.ROUND_RECT_DOWN,
-                DEFAULT_TEXTURE.ROUND_RECT_DOWN,
-                DEFAULT_TEXTURE.ROUND_RECT_OVER,
-                DEFAULT_TEXTURE.ROUND_RECT_OVER,
-                DEFAULT_TEXTURE.ROUND_RECT_DISABLED,
-                DEFAULT_TEXTURE.ROUND_RECT_DISABLED
-            );
-            setSizing(element, DEFAULT_SIZE.FIELD, true);
-            createTitle(element, "Toggle button");
-            break;
-        }
-        case UI_ELEMENT.CHECK_BOX: {
-            /**
+    case UI_ELEMENT.WIDGET: {
+        element = ui.Widget.create();
+        element.width = DEFAULT_SIZE.PANEL.width;
+        element.height = DEFAULT_SIZE.PANEL.height;
+        element.anchor.set(DEFAULT_ANCHOR);
+        break;
+    }
+    case UI_ELEMENT.BUTTON: {
+        element = ui.Button.create(
+            DEFAULT_TEXTURE.ROUND_RECT_UP,
+            DEFAULT_TEXTURE.ROUND_RECT_DOWN,
+            DEFAULT_TEXTURE.ROUND_RECT_OVER,
+            DEFAULT_TEXTURE.ROUND_RECT_DISABLED
+        );
+        setSizing(element, DEFAULT_SIZE.FIELD, true);
+        createTitle(element, "Button");
+        break;
+    }
+    case UI_ELEMENT.PANEL: {
+        element = ui.Panel.create(PANEL_GRAPHIC_TYPE.SPRITE, DEFAULT_TEXTURE.ROUND_RECT_OVER);
+        setSizing(element, DEFAULT_SIZE.PANEL, true);
+        break;
+    }
+    case UI_ELEMENT.LABEL: {
+        element = createDefaultLabel("Label");
+        break;
+    }
+    case UI_ELEMENT.TEXT_FIELD: {
+        element = ui.TextField.create(DEFAULT_FONT_NAME, DEFAULT_FONT_SIZE);
+        setSizing(element, DEFAULT_SIZE.FIELD, false);
+        element.text = "Text field";
+        element.color = DEFAULT_TEXT_COLOR;
+        break;
+    }
+    case UI_ELEMENT.IMAGE_VIEW: {
+        element = ui.ImageView.create(DEFAULT_TEXTURE.IMAGE);
+        element.anchor.set(DEFAULT_ANCHOR);
+        break;
+    }
+    case UI_ELEMENT.SPRITE: {
+        element = view.ComponentSprite.create(DEFAULT_TEXTURE.IMAGE);
+        element.anchor.set(DEFAULT_ANCHOR);
+        break;
+    }
+    case UI_ELEMENT.CONTAINER: {
+        element = view.ComponentContainer.create();
+        break;
+    }
+    case UI_ELEMENT.PROGRESS_BAR: {
+        element = ui.ProgressBar.create(
+            DEFAULT_TEXTURE.ROUND_RECT_OVER,
+            mCore.enumerator.DIRECTION.LEFT,
+            PROGRESS_TYPE.SIZE
+        );
+        setSizing(element, DEFAULT_SIZE.PROGRESS, true);
+        element.progress = DEFAULT_PROGRESS;
+        break;
+    }
+    case UI_ELEMENT.SLIDER: {
+        const ball = ui.ImageView.create(DEFAULT_TEXTURE.ROUND_RECT_OVER);
+        setSizing(ball, DEFAULT_SIZE.CHECKBOX, true);
+        element = ui.Slider.create(
+            ball,
+            mCore.enumerator.DIRECTION.LEFT,
+            DEFAULT_TEXTURE.ROUND_RECT_UP
+        );
+        setSizing(element, DEFAULT_SIZE.PROGRESS, false);
+        element.progress = DEFAULT_PROGRESS;
+        element.progressBar.setSlice(
+            DEFAULT_SLICE,
+            DEFAULT_SLICE,
+            DEFAULT_SLICE,
+            DEFAULT_SLICE
+        );
+        break;
+    }
+    case UI_ELEMENT.TOGGLE_BUTTON: {
+        element = ui.ToggleButton.create(
+            DEFAULT_TEXTURE.ROUND_RECT_UP,
+            DEFAULT_TEXTURE.ROUND_RECT_UP,
+            DEFAULT_TEXTURE.ROUND_RECT_DOWN,
+            DEFAULT_TEXTURE.ROUND_RECT_DOWN,
+            DEFAULT_TEXTURE.ROUND_RECT_OVER,
+            DEFAULT_TEXTURE.ROUND_RECT_OVER,
+            DEFAULT_TEXTURE.ROUND_RECT_DISABLED,
+            DEFAULT_TEXTURE.ROUND_RECT_DISABLED
+        );
+        setSizing(element, DEFAULT_SIZE.FIELD, true);
+        createTitle(element, "Toggle button");
+        break;
+    }
+    case UI_ELEMENT.CHECK_BOX: {
+        /**
              * @type {mCore.ui.CheckBox}
              */
-            element = ui.CheckBox.create(
-                DEFAULT_TEXTURE.ROUND_RECT_UP,
-                DEFAULT_TEXTURE.CHECK,
-                DEFAULT_TEXTURE.ROUND_RECT_DOWN,
-                DEFAULT_TEXTURE.ROUND_RECT_OVER,
-                DEFAULT_TEXTURE.ROUND_RECT_DISABLED
-            );
-            setSizing(element, DEFAULT_SIZE.CHECKBOX, true);
-            element.selected = true;
-            element.icon.anchor.set(DEFAULT_ANCHOR);
-            break;
-        }
-        case UI_ELEMENT.SCROLL_VIEW: {
-            element = ui.ScrollView.create(PANEL_GRAPHIC_TYPE.SPRITE, DEFAULT_TEXTURE.ROUND_RECT_OVER);
-            setSizing(element, DEFAULT_SIZE.PANEL, true);
-            setInnerSize(element, DEFAULT_SIZE.PANEL);
-            break;
-        }
-        case UI_ELEMENT.LIST_VIEW: {
-            element = ui.ListView.create(PANEL_GRAPHIC_TYPE.SPRITE, DEFAULT_TEXTURE.ROUND_RECT_OVER);
-            setSizing(element, DEFAULT_SIZE.PANEL, true);
-            setInnerSize(element, DEFAULT_SIZE.PANEL);
-            break;
-        }
-        default:
-            element = mCore.view.ComponentContainer.create();
-            break;
+        element = ui.CheckBox.create(
+            DEFAULT_TEXTURE.ROUND_RECT_UP,
+            DEFAULT_TEXTURE.CHECK,
+            DEFAULT_TEXTURE.ROUND_RECT_DOWN,
+            DEFAULT_TEXTURE.ROUND_RECT_OVER,
+            DEFAULT_TEXTURE.ROUND_RECT_DISABLED
+        );
+        setSizing(element, DEFAULT_SIZE.CHECKBOX, true);
+        element.selected = true;
+        element.icon.anchor.set(DEFAULT_ANCHOR);
+        break;
+    }
+    case UI_ELEMENT.SCROLL_VIEW: {
+        element = ui.ScrollView.create(PANEL_GRAPHIC_TYPE.SPRITE, DEFAULT_TEXTURE.ROUND_RECT_OVER);
+        setSizing(element, DEFAULT_SIZE.PANEL, true);
+        setInnerSize(element, DEFAULT_SIZE.PANEL);
+        break;
+    }
+    case UI_ELEMENT.LIST_VIEW: {
+        element = ui.ListView.create(PANEL_GRAPHIC_TYPE.SPRITE, DEFAULT_TEXTURE.ROUND_RECT_OVER);
+        setSizing(element, DEFAULT_SIZE.PANEL, true);
+        setInnerSize(element, DEFAULT_SIZE.PANEL);
+        break;
+    }
+    default:
+        element = mCore.view.ComponentContainer.create();
+        break;
     }
 
     element.userData = {

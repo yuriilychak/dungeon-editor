@@ -187,10 +187,6 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         switch(format) {
         case VALUE_FORMAT.TEXTURE:
             return `texture_${value.id}`;
-        case VALUE_FORMAT.PIXEL:
-        case VALUE_FORMAT.BOOL:
-        case VALUE_FORMAT.TEXT:
-            return value;
         case VALUE_FORMAT.PERCENT:
             return math.percentToFloat(value);
         case VALUE_FORMAT.DEGREE:
@@ -207,49 +203,19 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         case VALUE_FORMAT.OBJECT:
             return value.title;
         default:
-            return 0;
+            return value;
         }
     }
 
     _onChangeTransform({ data: { key, value, type, format, fromUserData, data } }) {
         this._changeKey = key;
-        let changeValue;
+        const changeValue = this._getFormattedValue(value, format, data);
 
-        if (this._changeKey !== STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE && this._changeKey !== STAGE_ELEMENT_PROP.NAME) {
-            changeValue = this._getFormattedValue(value, format, data);
-
-            if (type !== FIELD_TYPE.POINT) {
-                if (fromUserData) {
-                    this._selectedElement.userData[key] = changeValue;
-                }
-                else {
-                    this._selectedElement[key] = changeValue;
-                }
-            } else {
-                if (fromUserData) {
-                    this._selectedElement.userData[key].copyFrom(changeValue);
-                }
-                else {
-                    this._selectedElement[key].copyFrom(changeValue);
-                }
-            }
+        if (fromUserData) {
+            this._selectedElement.userData[key] = changeValue;
         }
         else {
-            switch (this._changeKey) {
-            case STAGE_ELEMENT_PROP.NAME: {
-                changeValue = value;
-                this._selectedElement.name = changeValue;
-                break;
-            }
-            case STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE: {
-                changeValue = { ...value };
-                this._selectedElement.setShadowOffset(changeValue);
-                break;
-            }
-            default: {
-                return;
-            }
-            }
+            this._selectedElement[key] = changeValue;
         }
 
         this._updateTransform();

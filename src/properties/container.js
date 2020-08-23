@@ -33,7 +33,7 @@ export default connectStore(
             }
         },
         onSwitchCompressSkeleton() {
-            if (ProjectData.switchFileValue("compressSkeleton")) {
+            if (ProjectData.switchFileValue("compsressSkeleton")) {
                 dispatch(selectLibraryElement(ProjectData.getSelectedFile()));
             }
         },

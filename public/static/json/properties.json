@@ -55,6 +55,11 @@
       "image_view": {
         "title": "Properties_Stage_ImageView",
         "row_0": "Frame"
+      },
+      "slice9": {
+        "title": "Properties_Edit_Slice9",
+        "row_0": "Properties_Edit_Slice9_Horizontal",
+        "row_1": "Properties_Edit_Slice9_Vertical"
       }
     }
   },
@@ -111,8 +116,8 @@
     ["common"],
     ["common"],
     ["common"],
-    ["common", "image_view"],
-    ["common", "button"],
+    ["common", "image_view", "slice9"],
+    ["common", "button", "slice9"],
     ["common", "text"],
     ["common"],
     ["common"],
@@ -295,6 +300,22 @@
               { "id":  "shadowOffset" }
             ]
           }
+        ]
+      }
+    ],
+    "slice9": [
+      {
+        "id": "row_0",
+        "content": [
+          { "id": "leftSlice" },
+          { "id": "rightSlice" }
+        ]
+      },
+      {
+        "id": "row_1",
+        "content": [
+          { "id": "topSlice" },
+          { "id": "bottomSlice" }
         ]
       }
     ]
@@ -574,6 +595,40 @@
         "id": "text",
         "type": "text",
         "format": "TX",
+        "fromUserData": false
+      }
+    ],
+    "slice9": [
+      {
+        "id": "leftSlice",
+        "type": "number",
+        "format": "PX",
+        "minValue": 0,
+        "maxValue": 32767,
+        "fromUserData": false
+      },
+      {
+        "id": "rightSlice",
+        "type": "number",
+        "format": "PX",
+        "minValue": 0,
+        "maxValue": 32767,
+        "fromUserData": false
+      },
+      {
+        "id": "topSlice",
+        "type": "number",
+        "format": "PX",
+        "minValue": 0,
+        "maxValue": 32767,
+        "fromUserData": false
+      },
+      {
+        "id": "bottomSlice",
+        "type": "number",
+        "format": "PX",
+        "minValue": 0,
+        "maxValue": 32767,
         "fromUserData": false
       }
     ]
