@@ -191,13 +191,13 @@
           {
             "id": "marginLeftEnabled",
             "children": [
-              { "id": "marginLeft" }
+              { "id": "leftMargin" }
             ]
           },
           {
             "id": "marginRightEnabled",
             "children": [
-              { "id": "marginRight" }
+              { "id": "rightMargin" }
             ]
           },
           { "id": "stretchWidth" }
@@ -209,13 +209,13 @@
           {
             "id": "marginTopEnabled",
             "children": [
-              { "id": "marginTop" }
+              { "id": "topMargin" }
             ]
           },
           {
             "id": "marginBottomEnabled",
             "children": [
-              { "id": "marginBottom" }
+              { "id": "bottomMargin" }
             ]
           },
           { "id": "stretchHeight" }
@@ -329,7 +329,7 @@
         "formats": ["PX", "%"],
         "minValue": -32768,
         "maxValue": 32767,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "rate",
@@ -338,7 +338,7 @@
         "formats": ["PX", "%"],
         "minValue": -32768,
         "maxValue": 32767,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "anchor",
@@ -347,7 +347,7 @@
         "formats": ["%"],
         "minValue": -32768,
         "maxValue": 32767,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "scale",
@@ -356,7 +356,7 @@
         "formats": ["%"],
         "minValue": -32768,
         "maxValue": 32767,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "skew",
@@ -365,13 +365,13 @@
         "formats": ["°"],
         "minValue": -359,
         "maxValue": 359,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "visible",
         "type": "checkbox",
         "format": "BL",
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "alpha",
@@ -379,13 +379,13 @@
         "format": "%",
         "minValue": 0,
         "maxValue": 100,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "tint",
         "type": "color",
         "format": "CL",
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "rotation",
@@ -393,87 +393,87 @@
         "format": "°",
         "minValue": 0,
         "maxValue": 359,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "interactive",
         "type": "checkbox",
         "format": "BL",
-        "fromUserData": true
+        "location": "userData"
       },
       {
         "id": "layout",
         "type": "layout",
         "format": "LY",
-        "fromUserData": true
+        "location": "layout"
       },
       {
-        "id": "marginRight",
+        "id": "rightMargin",
         "type": "number",
         "format": "PX",
         "minValue": -32768,
         "maxValue": 32767,
-        "fromUserData": true
+        "location": "layout"
       },
       {
-        "id": "marginLeft",
+        "id": "leftMargin",
         "type": "number",
         "format": "PX",
         "minValue": -32768,
         "maxValue": 32767,
-        "fromUserData": true
+        "location": "layout"
       },
       {
-        "id": "marginTop",
+        "id": "topMargin",
         "type": "number",
         "format": "PX",
         "minValue": -32768,
         "maxValue": 32767,
-        "fromUserData": true
+        "location": "layout"
       },
       {
-        "id": "marginBottom",
+        "id": "bottomMargin",
         "type": "number",
         "format": "PX",
         "minValue": -32768,
         "maxValue": 32767,
-        "fromUserData": true
+        "location": "layout"
       },
       {
         "id": "marginLeftEnabled",
         "type": "enabled",
         "format": "BL",
-        "fromUserData": true
+        "location": "layout"
       },
       {
         "id": "marginRightEnabled",
         "type": "enabled",
         "format": "BL",
-        "fromUserData": true
+        "location": "layout"
       },
       {
         "id": "marginTopEnabled",
         "type": "enabled",
         "format": "BL",
-        "fromUserData": true
+        "location": "layout"
       },
       {
         "id": "marginBottomEnabled",
         "type": "enabled",
         "format": "BL",
-        "fromUserData": true
+        "location": "layout"
       },
       {
         "id": "stretchWidth",
         "type": "checkbox",
         "format": "BL",
-        "fromUserData": true
+        "location": "userData"
       },
       {
         "id": "stretchHeight",
         "type": "checkbox",
         "format": "BL",
-        "fromUserData": true
+        "location": "userData"
       }
     ],
     "image_view": [
@@ -482,7 +482,7 @@
         "type": "dropArea",
         "format": "TE",
         "dropId": "texture",
-        "fromUserData": false
+        "location": "root"
       }
     ],
     "button": [
@@ -491,28 +491,28 @@
         "type": "dropArea",
         "format": "TE",
         "dropId": "texture",
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "downFrame",
         "type": "dropArea",
         "format": "TE",
         "dropId": "texture",
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "overFrame",
         "type": "dropArea",
         "format": "TE",
         "dropId": "texture",
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "disabledFrame",
         "type": "dropArea",
         "format": "TE",
         "dropId": "texture",
-        "fromUserData": false
+        "location": "root"
       }
     ],
     "text": [
@@ -520,13 +520,13 @@
         "id": "color",
         "type": "color",
         "format": "CL",
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "fontSize",
         "type": "number",
         "format": "PX",
-        "fromUserData": false,
+        "location": "root",
         "minValue": 1,
         "maxValue": 255
       },
@@ -534,19 +534,19 @@
         "id": "outlineEnabled",
         "type": "enabled",
         "format": "BL",
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "outlineColor",
         "type": "color",
         "format": "CL",
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "outlineSize",
         "type": "number",
         "format": "PX",
-        "fromUserData": false,
+        "location": "root",
         "minValue": 0,
         "maxValue": 255
       },
@@ -554,13 +554,13 @@
         "id": "shadowEnabled",
         "type": "enabled",
         "format": "BL",
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "shadowColor",
         "type": "color",
         "format": "CL",
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "shadowOffset",
@@ -569,33 +569,33 @@
         "formats": ["PX"],
         "minValue": -32768,
         "maxValue": 32767,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "horizontalAlign",
         "type": "toggleGroup",
         "format": "PX",
         "offset": 1,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "verticalAlign",
         "type": "toggleGroup",
         "format": "PX",
         "offset": 1,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "autoSize",
         "type": "checkbox",
         "format": "BL",
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "text",
         "type": "text",
         "format": "TX",
-        "fromUserData": false
+        "location": "root"
       }
     ],
     "slice9": [
@@ -605,7 +605,7 @@
         "format": "PX",
         "minValue": 0,
         "maxValue": 32767,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "rightSlice",
@@ -613,7 +613,7 @@
         "format": "PX",
         "minValue": 0,
         "maxValue": 32767,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "topSlice",
@@ -621,7 +621,7 @@
         "format": "PX",
         "minValue": 0,
         "maxValue": 32767,
-        "fromUserData": false
+        "location": "root"
       },
       {
         "id": "bottomSlice",
@@ -629,7 +629,7 @@
         "format": "PX",
         "minValue": 0,
         "maxValue": 32767,
-        "fromUserData": false
+        "location": "root"
       }
     ]
   },

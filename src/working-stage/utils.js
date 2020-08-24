@@ -9,7 +9,8 @@ import {
 } from "./constants";
 
 const { mCore } = window;
-const { view, ui, util } = mCore;
+
+const { view, ui, util, component } = mCore;
 const { geometry }  = mCore.util;
 
 function setSizing(element, size, isSliceEnabled = false) {
@@ -180,11 +181,15 @@ export function createElement(type, isRoot = false) {
         break;
     }
 
+    element.componentManager.addComponent(
+        component.ui.ComUILayout.create()
+    );
+
     element.userData = {
-        marginLeft: 0,
-        marginRight: 0,
-        marginTop: 0,
-        marginBottom: 0,
+        leftMargin: 0,
+        rightMargin: 0,
+        topMargin: 0,
+        bottomMargin: 0,
         marginLeftEnabled: false,
         marginRightEnabled: false,
         marginTopEnabled: false,

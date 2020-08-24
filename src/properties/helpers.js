@@ -1,6 +1,6 @@
 import { get, isEmpty } from "lodash";
 
-import { VALUE_FORMAT } from "../enum";
+import { PROPERTY_LOCATION, VALUE_FORMAT } from "../enum";
 import { FIELD_TYPE } from "./constants";
 
 const { mCore } = window;
@@ -12,7 +12,7 @@ export const generateSection = (sectionData, element, disabledProps) => {
 
     sectionData.forEach(data => {
         const { id } = data;
-        let value = data.fromUserData ? element.userData[id] : element[id];
+        let value = data.location !== PROPERTY_LOCATION.ROOT ? element.userData[id] : element[id];
 
         if (data.type === FIELD_TYPE.POINT) {
             value = { x: value.x, y: value.y, formatX: 0, formatY: 0 };

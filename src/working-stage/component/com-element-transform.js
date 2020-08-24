@@ -1,6 +1,6 @@
 import { EVENT, CURSOR } from "../enum";
 import { updateAnchor, getAnchorPosition, updatePosition } from "../utils";
-import { EDIT_MODE, STAGE_ELEMENT_PROP, VALUE_FORMAT, FIELD_TYPE } from "../../enum";
+import { EDIT_MODE, PROPERTY_LOCATION, STAGE_ELEMENT_PROP, VALUE_FORMAT } from "../../enum";
 
 const { mCore, PIXI } = window;
 const { math, geometry, color } = mCore.util;
@@ -207,15 +207,26 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         }
     }
 
-    _onChangeTransform({ data: { key, value, type, format, fromUserData, data } }) {
+    _onChangeTransform({ data: { key, value, type, format, location, data } }) {
         this._changeKey = key;
         const changeValue = this._getFormattedValue(value, format, data);
 
-        if (fromUserData) {
-            this._selectedElement.userData[key] = changeValue;
-        }
-        else {
+        switch (location) {
+        case PROPERTY_LOCATION.ROOT:
             this._selectedElement[key] = changeValue;
+            break;
+        case PROPERTY_LOCATION.USER_DATA:
+            this._selectedElement.userData[key] = changeValue;
+            break;
+        case PROPERTY_LOCATION.LAYOUT:
+            const layoutComponent = this._selectedElement.componentManager.getComponent(mCore.constant.COM_UI_LAYOUT_NAME);
+
+            layoutComponent.horizontalEdge = mCore.enumerator.ui.HORIZONTAL_ALIGN.LEFT;
+            layoutComponent[key] = changeValue;
+
+            this._selectedElement.userData[key] = changeValue;
+            this._selectedElement.doLayout();
+            break;
         }
 
         this._updateTransform();

@@ -27,7 +27,9 @@ export const PropertySection = ({
         </PropertyField>
     );
 
-    const handleExpansionChange = useCallback((event, isExpanded) => onExpansionChange(isExpanded ? id : PROPERTY_SECTION.NONE), [id, onExpansionChange]);
+    const handleExpansionChange = useCallback(
+        (event, isExpanded) => onExpansionChange(isExpanded ? id : PROPERTY_SECTION.NONE),
+        [id, onExpansionChange]);
 
     const sectionLocale = locales[id];
 

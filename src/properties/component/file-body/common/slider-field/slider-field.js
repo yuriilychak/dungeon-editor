@@ -1,21 +1,21 @@
-import React, {memo, useCallback } from "react";
+import React, { memo, useCallback } from "react";
 
 import Slider from '@material-ui/core/Slider';
 
-import {NumberField} from "../number-field";
+import { NumberField } from "../number-field";
 
 import "./slider-field.scss";
 
 const SliderField = ({
-                         id,
-                         value,
-                         minValue = 0,
-                         step = 1,
-                         maxValue,
-                         format,
-                         fromUserData,
-                         onChange
-                     }) => {
+    id,
+    value,
+    minValue = 0,
+    step = 1,
+    maxValue,
+    format,
+    location,
+    onChange
+}) => {
     const handleChange = useCallback((event, value) => onChange(value), [onChange]);
 
     return (
@@ -41,6 +41,6 @@ const SliderField = ({
             />
         </div>
     );
-}
+};
 
 export default memo(SliderField);

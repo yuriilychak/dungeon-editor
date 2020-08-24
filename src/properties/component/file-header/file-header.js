@@ -1,28 +1,28 @@
-import React, {memo} from "react";
+import React, { memo } from "react";
 import classNames from "classnames";
 
 import EditIcon from '@material-ui/icons/Edit';
 
-import {Icon, TitledField, ToolButton, ImagePreview} from "../../../common-ui";
-import {CheckBox} from "../file-body/common/check-box";
+import { Icon, TitledField, ToolButton, ImagePreview } from "../../../common-ui";
+import { CheckBox } from "../file-body/common/check-box";
 
 import "./file-header.scss";
 
 const FileHeader = ({
-                        isRoot,
-                        fileName,
-                        fileId,
-                        fileType,
-                        idTitle,
-                        iconName,
-                        iconSize,
-                        nameTitle,
-                        compressName,
-                        onSwitchCompressName,
-                        compressNameLabel,
-                        onRenameFile,
-                        preview
-                    }) => {
+    isRoot,
+    fileName,
+    fileId,
+    fileType,
+    idTitle,
+    iconName,
+    iconSize,
+    nameTitle,
+    compressName,
+    onSwitchCompressName,
+    compressNameLabel,
+    onRenameFile,
+    preview
+}) => {
     const iconSection = (
         <div className="properties-header-icon">
             <Icon
@@ -56,7 +56,7 @@ const FileHeader = ({
                     <div className="properties-header-name">
                         {fileName}
                     </div>
-                    <div className={classNames({"properties-header-name-icon-disabled": isRoot})}>
+                    <div className={classNames({ "properties-header-name-icon-disabled": isRoot })}>
                         <ToolButton
                             disabled={isRoot}
                             onClick={onRenameFile}
@@ -79,7 +79,7 @@ const FileHeader = ({
                 </div>
             </div>
         </div>
-    )
+    );
 };
 
 export default memo(FileHeader);
