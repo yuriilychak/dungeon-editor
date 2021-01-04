@@ -5,7 +5,8 @@ import {
     DEFAULT_FONT_SIZE,
     DEFAULT_PROGRESS,
     DEFAULT_SLICE,
-    DEFAULT_TEXT_COLOR
+    DEFAULT_TEXT_COLOR,
+    LAYOUT_CONFIG
 } from "./constants";
 
 const { mCore } = window;
@@ -237,4 +238,62 @@ export function updateAnchor(element, nextAnchor) {
 
 export function getAnchorPosition(element) {
     return geometry.pCompMult(geometry.pFromSize(element), element.anchor, true);
+}
+
+export function getHorizontalEdge(userData) {
+    const { HORIZONTAL_ALIGN } = mCore.enumerator.ui;
+
+    switch(true) {
+    case userData.marginLeftEnabled && userData.marginRightEnabled:
+        return HORIZONTAL_ALIGN.CENTER;
+    case userData.marginLeftEnabled:
+        return HORIZONTAL_ALIGN.LEFT;
+    case userData.marginRightEnabled:
+        return HORIZONTAL_ALIGN.RIGHT;
+    default:
+        return HORIZONTAL_ALIGN.NONE;
+    }
+}
+
+
+export function getVerticalEdge(userData) {
+    const { VERTICAL_ALIGN } = mCore.enumerator.ui;
+
+    switch(true) {
+    case userData.marginTopEnabled && userData.marginBottomEnabled:
+        return VERTICAL_ALIGN.MIDDLE;
+    case userData.marginTopEnabled:
+        return VERTICAL_ALIGN.TOP;
+    case userData.marginBottomEnabled:
+        return VERTICAL_ALIGN.BOTTOM;
+    default:
+        return VERTICAL_ALIGN.NONE;
+    }
+}
+
+export function updateMargin(layoutComponent, userData, direction) {
+    const { enabledKey, key } = LAYOUT_CONFIG[direction];
+    layoutComponent[key] = userData[enabledKey] ? userData[key] : 0;
+}
+
+export function generatePoint(x, y, formatX = 0, formatY = 0) {
+    return { x, y, formatX, formatY };
+}
+
+export function generateProp(key, value) {
+    return { key, value };
+}
+
+
+export function isLeftButton(data) {
+    return data.data.button === mCore.enumerator.MOUSE_BUTTON.LEFT;
+}
+
+export function extractBorderIndex(name) {
+    const radix = 10;
+    const indices = name.split("_");
+    return mCore.geometry.Point.create(
+        parseInt(indices[2], radix),
+        parseInt(indices[1], radix)
+    );
 }

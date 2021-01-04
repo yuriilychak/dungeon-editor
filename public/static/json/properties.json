@@ -18,8 +18,6 @@
       "outlineEnabled": "Properties_Edit_Common_Enabled",
       "shadowEnabled": "Properties_Edit_Common_Enabled",
       "autoSize": "Properties_Edit_Text_AutoSize",
-      "stretchWidth": "Properties_Edit_StretchWidth",
-      "stretchHeight": "Properties_Edit_StretchHeight",
       "marginTopEnabled": "Properties_Edit_MarginTop",
       "marginBottomEnabled": "Properties_Edit_MarginBottom",
       "marginLeftEnabled": "Properties_Edit_MarginLeft",
@@ -68,17 +66,13 @@
     "marginTopEnabled",
     "marginBottomEnabled",
     "marginLeftEnabled",
-    "marginRightEnabled",
-    "stretchWidth",
-    "stretchHeight"
+    "marginRightEnabled"
   ],
   "layoutDisabled": [
     "marginTopEnabled",
     "marginBottomEnabled",
     "marginLeftEnabled",
-    "marginRightEnabled",
-    "stretchWidth",
-    "stretchHeight"
+    "marginRightEnabled"
   ],
   "stageElementDisabled": [
     [],
@@ -97,9 +91,7 @@
       "marginTopEnabled",
       "marginBottomEnabled",
       "marginLeftEnabled",
-      "marginRightEnabled",
-      "stretchWidth",
-      "stretchHeight"
+      "marginRightEnabled"
     ],
     [],
     [],
@@ -199,8 +191,7 @@
             "children": [
               { "id": "rightMargin" }
             ]
-          },
-          { "id": "stretchWidth" }
+          }
         ]
       },
       {
@@ -217,8 +208,7 @@
             "children": [
               { "id": "bottomMargin" }
             ]
-          },
-          { "id": "stretchHeight" }
+          }
         ]
       }
     ],
@@ -462,18 +452,6 @@
         "type": "enabled",
         "format": "BL",
         "location": "layout"
-      },
-      {
-        "id": "stretchWidth",
-        "type": "checkbox",
-        "format": "BL",
-        "location": "userData"
-      },
-      {
-        "id": "stretchHeight",
-        "type": "checkbox",
-        "format": "BL",
-        "location": "userData"
       }
     ],
     "image_view": [

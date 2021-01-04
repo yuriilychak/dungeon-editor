@@ -1,19 +1,19 @@
-import React, {memo, useCallback, useMemo } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import classNames from "classnames";
-import {string, bool, func} from "prop-types";
+import { string, bool, func } from "prop-types";
 
-import {ToolButton, Icon } from "../../../../../common-ui";
-import {STYLES} from "./constants";
+import { ToolButton, Icon } from "../../../../../common-ui";
+import { STYLES } from "./constants";
 
 import "./toggle-field.scss";
 
 const ToggleField = ({
-                         id,
-                         label,
-                         value,
-                         disabled,
-                         onChange
-                     }) => {
+    id,
+    label,
+    value,
+    disabled,
+    onChange
+}) => {
     const classes = useMemo(() => ({
         root: classNames(STYLES.ROOT, { [STYLES.ROOT_DISABLED]: disabled }),
         icon: classNames({ [STYLES.ICON]: !value }),

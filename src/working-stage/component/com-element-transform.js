@@ -1,6 +1,7 @@
 import { EVENT, CURSOR } from "../enum";
-import { updateAnchor, getAnchorPosition, updatePosition } from "../utils";
+import { updateAnchor, getAnchorPosition, updatePosition, getHorizontalEdge, getVerticalEdge, updateMargin, generateProp, generatePoint, isLeftButton, extractBorderIndex } from "../utils";
 import { EDIT_MODE, PROPERTY_LOCATION, STAGE_ELEMENT_PROP, VALUE_FORMAT } from "../../enum";
+import { MARGIN_DIRECTION } from "../constants";
 
 const { mCore, PIXI } = window;
 const { math, geometry, color } = mCore.util;
@@ -132,7 +133,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
     }
 
     _onBorderOver({ target }) {
-        const index = this._extractBorderIndex(target.name);
+        const index = extractBorderIndex(target.name);
         const pointerPrefixes = [
             ["nwse", "ns", "nesw"],
             ["ew", "auto", "ew"],
@@ -155,7 +156,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
     }
 
     _onAnchorDrag({ data }) {
-        if (!this._isLeftButton(data)) {
+        if (!isLeftButton(data)) {
             return;
         }
 
@@ -221,14 +222,27 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         case PROPERTY_LOCATION.LAYOUT:
             const layoutComponent = this._selectedElement.componentManager.getComponent(mCore.constant.COM_UI_LAYOUT_NAME);
 
-            layoutComponent.horizontalEdge = mCore.enumerator.ui.HORIZONTAL_ALIGN.LEFT;
+            const { userData } = this._selectedElement;
+            const directionCount = MARGIN_DIRECTION.length;
+
+            userData[key] = changeValue;
             layoutComponent[key] = changeValue;
 
-            this._selectedElement.userData[key] = changeValue;
-            this._selectedElement.doLayout();
+            layoutComponent.isStretchWidth = userData.marginLeftEnabled && userData.marginRightEnabled;
+            layoutComponent.horizontalEdge = getHorizontalEdge(userData);
+
+            layoutComponent.isStretchHeight = userData.marginTopEnabled && userData.marginBottomEnabled;
+            layoutComponent.verticalEdge = getVerticalEdge(userData);
+
+            for(let i = 0; i < directionCount; ++i) {
+                updateMargin(layoutComponent, userData, MARGIN_DIRECTION[i]);
+            }
+
             break;
+        default:
         }
 
+        this._selectedElement.doLayout();
         this._updateTransform();
 
         this._dispatchResultChange(changeValue);
@@ -245,7 +259,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
     }
 
     _onElementClick({ target, data }) {
-        if (!this._isLeftButton(data)) {
+        if (!isLeftButton(data)) {
             return;
         }
 
@@ -279,19 +293,6 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         return geometry.pCompDiv(this._transform.scale, this.owner.parent.scale);
     }
 
-    _isLeftButton(data) {
-        return data.data.button === mCore.enumerator.MOUSE_BUTTON.LEFT;
-    }
-
-    _extractBorderIndex(name) {
-        const radix = 10;
-        const indices = name.split("_");
-        return mCore.geometry.Point.create(
-            parseInt(indices[2], radix),
-            parseInt(indices[1], radix)
-        );
-    }
-
     _onBorderDragStart({ data }) {
         if (this._editMode !== EDIT_MODE.SKEW) {
             return;
@@ -313,11 +314,11 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
     }
 
     _onBorderDrag({ data, target }) {
-        if (!this._isLeftButton(data)) {
+        if (!isLeftButton(data)) {
             return;
         }
 
-        const index = this._extractBorderIndex(target.name);
+        const index = extractBorderIndex(target.name);
 
         let changeValue;
 
@@ -446,7 +447,7 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
     }
 
     _canDrag(data) {
-        return this._isLeftButton(data) && !this._selectedElement.userData.isRoot;
+        return isLeftButton(data) && !this._selectedElement.userData.isRoot;
     }
 
     _onPositionDragStart({ data }) {
@@ -499,16 +500,16 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
 
     _dispatchChange(value) {
         this._changeCounter = 0;
-        const resultValue = mCore.util.type.isObject(value) ? this._generatePoint(value.x, value.y) : value;
+        const resultValue = mCore.util.type.isObject(value) ? generatePoint(value.x, value.y) : value;
 
-        const result = [this._generateProp(this._changeKey, resultValue)];
+        const result = [generateProp(this._changeKey, resultValue)];
 
         switch (this._changeKey) {
         case STAGE_ELEMENT_PROP.TEXT_OUTLINE_ENABLED: {
             if (!resultValue) {
                 result.push(
-                    this._generateProp(STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE, 0),
-                    this._generateProp(STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR, mCore.util.color.COLORS.WHITE)
+                    generateProp(STAGE_ELEMENT_PROP.TEXT_OUTLINE_SIZE, 0),
+                    generateProp(STAGE_ELEMENT_PROP.TEXT_OUTLINE_COLOR, mCore.util.color.COLORS.WHITE)
                 );
             }
             break;
@@ -516,18 +517,38 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         case STAGE_ELEMENT_PROP.TEXT_SHADOW_ENABLED: {
             if (!resultValue) {
                 result.push(
-                    this._generateProp(STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE, this._generatePoint(0, 0)),
-                    this._generateProp(STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR, mCore.util.color.COLORS.WHITE)
+                    generateProp(STAGE_ELEMENT_PROP.TEXT_SHADOW_SIZE, generatePoint(0, 0)),
+                    generateProp(STAGE_ELEMENT_PROP.TEXT_SHADOW_COLOR, mCore.util.color.COLORS.WHITE)
                 );
             }
             break;
         }
         case STAGE_ELEMENT_PROP.ANCHOR: {
             result.push(
-                this._generateProp(
+                generateProp(
                     STAGE_ELEMENT_PROP.POSITION,
-                    this._generatePoint(this._selectedElement.x, this._selectedElement.y)
+                    generatePoint(this._selectedElement.x, this._selectedElement.y)
                 ),
+            );
+            break;
+        }
+        case STAGE_ELEMENT_PROP.MARGIN_LEFT:
+        case STAGE_ELEMENT_PROP.MARGIN_RIGHT:
+        case STAGE_ELEMENT_PROP.MARGIN_BOTTOM:
+        case STAGE_ELEMENT_PROP.MARGIN_TOP:
+        case STAGE_ELEMENT_PROP.MARGIN_TOP_ENABLED:
+        case STAGE_ELEMENT_PROP.MARGIN_BOTTOM_ENABLED:
+        case STAGE_ELEMENT_PROP.MARGIN_RIGHT_ENABLED:
+        case STAGE_ELEMENT_PROP.MARGIN_LEFT_ENABLED: {
+            result.push(
+                generateProp(
+                    STAGE_ELEMENT_PROP.POSITION,
+                    generatePoint(this._selectedElement.x, this._selectedElement.y)
+                ),
+                generateProp(
+                    STAGE_ELEMENT_PROP.SIZE,
+                    generatePoint(this._selectedElement.width, this._selectedElement.height)
+                )
             );
             break;
         }
@@ -535,14 +556,6 @@ export default class ComElementTransform extends mCore.component.ui.ComUI {
         }
 
         this.listenerManager.dispatchEvent(EVENT.ELEMENT_CHANGE, result);
-    }
-
-    _generatePoint(x, y, formatX = 0, formatY = 0) {
-        return { x, y, formatX, formatY };
-    }
-
-    _generateProp(key, value) {
-        return { key, value };
     }
 
     _setSelectedElementListeners(

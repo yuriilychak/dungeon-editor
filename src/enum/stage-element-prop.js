@@ -23,13 +23,13 @@ const STAGE_ELEMENT_PROP = {
     TEXT_HORIZONTAL_ALIGN: "horizontalAlign",
     TEXT_VERTICAL_ALIGN: "verticalAlign",
     MARGIN_TOP_ENABLED: "marginTopEnabled",
-    MARGIN_TOP: "marginTop",
+    MARGIN_TOP: "topMargin",
     MARGIN_BOTTOM_ENABLED: "marginBottomEnabled",
-    MARGIN_BOTTOM: "marginBottom",
+    MARGIN_BOTTOM: "bottomMargin",
     MARGIN_LEFT_ENABLED: "marginLeftEnabled",
-    MARGIN_LEFT: "marginLeft",
+    MARGIN_LEFT: "leftMargin",
     MARGIN_RIGHT_ENABLED: "marginRightEnabled",
-    MARGIN_RIGHT: "marginRight",
+    MARGIN_RIGHT: "rightMargin",
     STRETCH_WIDTH: "stretchWidth",
     STRETCH_HEIGHT: "stretchHeight"
 };
